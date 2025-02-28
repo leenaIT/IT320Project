@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo"><img src="logo.png" alt="logo" height="80" width="80"></div>
+        
+        <div class="nav-container">
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Explore</a></li>
+                </ul>
+            </nav>
+            <div class="language-switch" onclick="toggleLanguage()">🌐 Language</div>
+        </div>
+
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </header>
+    <main>
+        <div class="menu">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Explore</a></li>
+            </ul>
+        </div>
+    
+        <div class="container">
+            <div class="logo-box"><img src="gif.gif" alt="logo" height="150" width="150"></div>
+            <div class="signup-box">
+                <h2>Create Your Account</h2><br>
+                <form onsubmit="return validateForm()">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" required>
+                    
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" required>
+                    
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                    
+                    <label for="password">Password</label>
+                    <input type="password" id="password" oninput="checkPasswordStrength()" required>
+                    <p class="password-requirements" id="password-error"> Password must be at least 8 characters long, include 1 letter, 1 number, and be case-sensitive.</p><br>
+                    
+                    <label for="phone">Mobile Number</label>
+                    <input type="tel" id="phone" placeholder="+966 5xxxxxxxx" required>
+                    
+                    <button type="submit">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        &copy; 2025 mehar.com
+    </footer>
+    <script>
+function checkPasswordStrength() {
+    let password = document.getElementById("password").value;
+    let errorText = document.getElementById("password-error");
+    
+    const strongPasswordPattern = /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/;
+    
+    if (strongPasswordPattern.test(password)) {
+        errorText.style.color = "green";
+        errorText.innerHTML = "✔ Strong password";
+    } else {
+        errorText.style.color = "red";
+        errorText.innerHTML = "❌ Password must be at least 8 characters long, include 1 letter, 1 number, and be case-sensitive.";
+    }
+}
+
+function validateForm() {
+    let password = document.getElementById("password").value;
+    const strongPasswordPattern = /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/;
+    
+    if (!strongPasswordPattern.test(password)) {
+        alert("Please enter a strong password before proceeding.");
+        return false;
+    }
+    return true;
+}
+
+function toggleLanguage() {
+    let htmlTag = document.documentElement;
+    let navLinks = document.querySelectorAll(".nav-links li a");
+
+    if (htmlTag.lang === "en") {
+        htmlTag.lang = "ar";
+        htmlTag.dir = "rtl";
+
+        // تحديث نص زر تغيير اللغة
+        document.querySelector(".language-switch").textContent = "🌐 اللغة";
+
+        // ترجمة النصوص في الصفحة
+        document.querySelector(".signup-box h2").textContent = "إنشاء حساب";
+        document.querySelector("label[for='first-name']").textContent = "الاسم الأول";
+        document.querySelector("label[for='last-name']").textContent = "اسم العائلة";
+        document.querySelector("label[for='email']").textContent = "البريد الإلكتروني";
+        document.querySelector("label[for='password']").textContent = "كلمة المرور";
+        document.querySelector(".password-requirements").textContent = "يجب أن تكون كلمة المرور 8 أحرف على الأقل، تحتوي على حرف واحد ورقم واحد، وتكون حساسة لحالة الأحرف.";
+        document.querySelector("label[for='phone']").textContent = "رقم الجوال";
+        document.querySelector("button").textContent = "إنشاء حساب";
+
+        // ترجمة عناصر القائمة
+        navLinks[0].textContent = "الرئيسية";
+        navLinks[1].textContent = "اتصل بنا";
+        navLinks[2].textContent = "استكشاف";
+
+    } else {
+        htmlTag.lang = "en";
+        htmlTag.dir = "ltr";
+
+        // إعادة النصوص إلى الإنجليزية
+        document.querySelector(".language-switch").textContent = "🌐 Language";
+        document.querySelector(".signup-box h2").textContent = "Create Your Account";
+        document.querySelector("label[for='first-name']").textContent = "First Name";
+        document.querySelector("label[for='last-name']").textContent = "Last Name";
+        document.querySelector("label[for='email']").textContent = "Email";
+        document.querySelector("label[for='password']").textContent = "Password";
+        document.querySelector(".password-requirements").textContent = "Password must be at least 8 characters long, include 1 letter, 1 number, and be case-sensitive.";
+        document.querySelector("label[for='phone']").textContent = "Mobile Number";
+        document.querySelector("button").textContent = "Create Account";
+
+        // إعادة القائمة إلى الإنجليزية
+        navLinks[0].textContent = "Home";
+        navLinks[1].textContent = "Contact Us";
+        navLinks[2].textContent = "Explore";
+    }
+}
+
+
+
+function toggleMenu() {
+    document.querySelector(".menu").classList.toggle("active");
+}
+
+
+    </script>
+</body>
+</html>
