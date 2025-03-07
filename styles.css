@@ -1,4 +1,5 @@
 
+
 * {
     margin: 0;
     padding: 0;
@@ -205,92 +206,6 @@ footer {
     background: rgba(67, 65, 65, 0.986);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .nav-links {
-        display: none;
-    }
-
-    .menu-toggle {
-        display: block;
-    }
-
-    .container {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .logo-box {
-        margin-bottom: 20px;
-    }
-    .description h1 {
-        font-size: 2em; /* تصغير حجم النص */
-    }
-
-    .description p {
-        font-size: 1.1em; /* تصغير حجم النص */
-    }
-
-    .container2 {
-        flex-direction: column; /* جعل الصور تحت بعضها على الشاشات الصغيرة */
-        height: auto; /* تعديل ارتفاع الحاوية */
-    }
-
-    .thumbnails {
-        flex-direction: column; /* عرض الصور المصغرة بشكل عمودي */
-        bottom: 0; /* التعديل على المسافة من الأسفل */
-        right: 10%;
-        padding: 10px 0;
-        gap: 10px;
-    }
-
-    .thumbnail {
-        width: 90%; /* جعل الصور المصغرة تأخذ مساحة أكبر على الجوال */
-        height: 150px; /* زيادة ارتفاع الصورة المصغرة */
-        margin: 0 auto; /* توسيط الصور المصغرة */
-    }
-
-    .arrow {
-        font-size: 1.5em; /* تقليل حجم الأسهم */
-    }
-
-    .image-counter {
-        font-size: 1em; /* تقليل حجم العداد */
-    }
-
-    .description {
-        bottom:550px ; /* رفع الوصف بمقدار معين على الجوال */
-    }
-}
-@media (max-width: 480px) {
-    .description {
-        bottom: 30%; /* رفع الوصف بمقدار معين على الجوال */
-    }
-
-    .thumbnail {
-        width: 100%; /* عرض الصورة المصغرة بالكامل */
-        height: 100px; /* تصغير حجم الصورة */
-    }
-
-    .container2 {
-        height: 400px; /* تقليل الارتفاع الكلي على الشاشات الصغيرة */
-    }
-
-    .description h1 {
-        font-size: 1em; /* تصغير الخط أكثر */
-    }
-
-    .description p {
-        font-size: 0.5em ; /* تصغير الخط أكثر */
-    }
-
-    .navigation {
-        position: absolute;
-        bottom: 10%;
-        right: 50%;
-        transform: translateX(50%);
-    }
-}
 /* homePage */
 .container2 {
     position: relative;
@@ -303,7 +218,7 @@ footer {
 
 .description {
     position: absolute;
-    bottom: 20%;
+    bottom: 35%;
     left: 10%;
     color: white;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
@@ -365,7 +280,7 @@ footer {
 .navigation {
     position: absolute;
     bottom: 5%;
-    right: 55%;
+    right: 43%;
     display: flex;
     align-items: center;
     gap: 20px;
@@ -375,13 +290,12 @@ footer {
     background: rgba(0, 0, 0, 0.5);
     color: white;
     border: none;
-    font-size: 2em;
+    font-size: 1.5em;
     padding: 10px;
     cursor: pointer;
     border-radius: 50%;
     transition: background 0.3s;
 }
-
 .arrow:hover {
     background: rgba(0, 0, 0, 0.8);
 }
@@ -389,4 +303,93 @@ footer {
 .image-counter {
     font-size: 1.2em;
     color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .logo-box {
+        margin-bottom: 20px;
+    }
+    .description h1 {
+        font-size: 2em; /* تصغير حجم النص */
+    }
+
+    .description p {
+        font-size: 1.1em; /* تصغير حجم النص */
+    }
+
+    .thumbnails {
+        flex-direction: row; /* عرض الصور المصغرة بشكل عمودي */
+        bottom: 0; /* التعديل على المسافة من الأسفل */
+        right: 10%;
+        padding: 10px 0;
+        gap: 10px;
+    }
+
+    .thumbnail {
+        width: 70%; /* جعل الصور المصغرة تأخذ مساحة أكبر على الجوال */
+        height: 150px; /* زيادة ارتفاع الصورة المصغرة */
+        margin: 0 auto; /* توسيط الصور المصغرة */
+    }
+
+    .arrow {
+        font-size: 1.5em; /* تقليل حجم الأسهم */
+    }
+
+    .image-counter {
+        font-size: 1em; /* تقليل حجم العداد */
+    }
+
+    .description {
+        bottom:250px ; /* رفع الوصف بمقدار معين على الجوال */
+    }
+    .navigation {
+        position: absolute;
+        right: 83%;
+        bottom: 25%;
+        transform: translateX(50%);
+    }
+}
+@media (max-width: 400px) {
+    .description {
+        bottom: 30%; /* رفع الوصف بمقدار معين على الجوال */
+    }
+
+    .thumbnail {
+        width: 100%; /* عرض الصورة المصغرة بالكامل */
+        height: 100px; /* تصغير حجم الصورة */
+    }
+
+    .container2 {
+        height: 400px; /* تقليل الارتفاع الكلي على الشاشات الصغيرة */
+    }
+
+    .description h1 {
+        font-size: 1em; /* تصغير الخط أكثر */
+    }
+
+    .description p {
+        font-size: 0.5em ; /* تصغير الخط أكثر */
+    }
+
+    .navigation {
+        position: absolute;
+        bottom: 80%;
+        top: 30%;
+        right: 50%;
+        transform: translateX(50%);
+    }
 }
