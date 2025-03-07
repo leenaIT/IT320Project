@@ -7,16 +7,16 @@
     <link rel="stylesheet" href="styles.css">
     <script defer src="script.js"></script>
 </head>
-<body>
-    <header>
+<body class="with-background ">
+    <header class="with-background ">
         <div class="logo"><img src="logo.png" alt="logo" height="80" width="80"></div>
         
         <div class="nav-container">
             <nav>
                 <ul class="nav-links">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Explore</a></li>
+                    <li><a href="homePage.html"> Home </a></li>
+                    <li><a href="#"> Contact Us </a></li>
+                    <li><a href="#"> Explore page</a></li>
                 </ul>
             </nav>
             <div class="language-switch" onclick="toggleLanguage()">🌐 Language</div>
@@ -24,14 +24,15 @@
 
         <div class="menu-toggle" onclick="toggleMenu()">☰</div>
     </header>
+
+    <div class="menu">
+        <ul>
+            <li><a href="homePage.html">Home</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Explore page</a></li>
+        </ul>
+    </div>
     <main>
-        <div class="menu">
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Contact Us</a></li>
-                <li><a href="#">Explore</a></li>
-            </ul>
-        </div>
     
         <div class="container">
             <div class="logo-box"><img src="gif.gif" alt="logo" height="150" width="150"></div>
@@ -93,6 +94,7 @@ function validateForm() {
 function toggleLanguage() {
     let htmlTag = document.documentElement;
     let navLinks = document.querySelectorAll(".nav-links li a");
+    let menuLinks = document.querySelectorAll(".menu ul li a");
 
     if (htmlTag.lang === "en") {
         htmlTag.lang = "ar";
@@ -111,40 +113,22 @@ function toggleLanguage() {
         document.querySelector("label[for='phone']").textContent = "رقم الجوال";
         document.querySelector("button").textContent = "إنشاء حساب";
 
-        // ترجمة عناصر القائمة
         navLinks[0].textContent = "الرئيسية";
         navLinks[1].textContent = "اتصل بنا";
         navLinks[2].textContent = "استكشاف";
 
+        menuLinks[0].textContent = "الرئيسية";
+        menuLinks[1].textContent = "اتصل بنا";
+        menuLinks[2].textContent = "استكشاف";
+
     } else {
-        htmlTag.lang = "en";
-        htmlTag.dir = "ltr";
-
-        // إعادة النصوص إلى الإنجليزية
-        document.querySelector(".language-switch").textContent = "🌐 Language";
-        document.querySelector(".signup-box h2").textContent = "Create Your Account";
-        document.querySelector("label[for='first-name']").textContent = "First Name";
-        document.querySelector("label[for='last-name']").textContent = "Last Name";
-        document.querySelector("label[for='email']").textContent = "Email";
-        document.querySelector("label[for='password']").textContent = "Password";
-        document.querySelector(".password-requirements").textContent = "Password must be at least 8 characters long, include 1 letter, 1 number, and be case-sensitive.";
-        document.querySelector("label[for='phone']").textContent = "Mobile Number";
-        document.querySelector("button").textContent = "Create Account";
-
-        // إعادة القائمة إلى الإنجليزية
-        navLinks[0].textContent = "Home";
-        navLinks[1].textContent = "Contact Us";
-        navLinks[2].textContent = "Explore";
+        location.reload();
     }
 }
-
-
 
 function toggleMenu() {
     document.querySelector(".menu").classList.toggle("active");
 }
-
-
-    </script>
+</script>
 </body>
 </html>

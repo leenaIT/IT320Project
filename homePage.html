@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>homePage</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body class="no-background ">
+
+    <header class="no-background ">
+        <div class="logo"><img src="logo.png" alt="logo" height="80" width="80"></div>
+        
+        <div class="nav-container">
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Explore page</a></li>
+                    <li><a href="logIn.html" class="login-signup" id="login-signup">Login/Signup</a></li> 
+                </ul>
+            </nav>
+            <div class="language-switch" onclick="toggleLanguage()">🌐 Language</div>
+        </div>
+    
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </header>
+    
+    <div class="menu">
+        <ul>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Explore page</a></li>
+            <li><a href="logIn.html" class="login-signup">Login/Signup</a></li> 
+        </ul>
+    </div>
+    
+    <div class="container2" id="container2" style="background-image: url('image1.jpg');">
+        <div class="description" id="description">
+            <h1>Japan Alps</h1>
+            <p>Nagano Prefecture</p>
+        </div>
+        
+        <div class="thumbnails" id="thumbnails">
+            <div class="thumbnail" data-image="image1.jpg" data-title="Japan Alps" data-description="Nagano Prefecture">
+                <img src="image1.jpg" alt="Japan Alps">
+                <h3>Japan Alps</h3>
+            </div>
+            <div class="thumbnail" data-image="image2.jpg" data-title="Sahara Desert" data-description="Marrakech Merzouga">
+                <img src="image2.jpg" alt="Sahara Desert">
+                <h3>Sahara Desert</h3>
+            </div>
+            <div class="thumbnail" data-image="image3.jpeg" data-title="Yosemite" data-description="National Park">
+                <img src="image3.jpeg" alt="Yosemite">
+                <h3>Yosemite</h3>
+            </div>
+            <div class="thumbnail" data-image="image4.jpg" data-title="Tarifa" data-description="Los Lances Beach">
+                <img src="image4.jpg" alt="Tarifa">
+                <h3>Tarifa</h3>
+            </div>
+            <div class="thumbnail" data-image="image5.jpg" data-title="Cappadocia" data-description="Göreme Valley">
+                <img src="image5.jpg" alt="Cappadocia">
+                <h3>Cappadocia</h3>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <button class="arrow" id="prev">&larr;</button>
+            <div class="image-counter">
+                <span id="current-image">1</span> / <span id="total-images">5</span>
+            </div>
+            <button class="arrow" id="next">&rarr;</button>
+        </div>
+    </div>
+    
+    <footer>
+        &copy; 2025 mehar.com
+    </footer>
+    <script>
+    const container = document.getElementById("container2");
+    const description = document.getElementById("description");
+    const thumbnails = document.querySelectorAll(".thumbnail");
+    const prevButton = document.getElementById("prev");
+    const nextButton = document.getElementById("next");
+    const currentImageSpan = document.getElementById("current-image");
+    const totalImagesSpan = document.getElementById("total-images");
+
+    let currentIndex = 0;
+
+    // تحديث العدد الإجمالي للصور
+    totalImagesSpan.textContent = thumbnails.length;
+
+    // تحديث الصورة والخلفية عند النقر على صورة مصغرة
+    const updateBackground = (index) => {
+      const thumbnail = thumbnails[index];
+      const image = thumbnail.getAttribute("data-image");
+      const title = thumbnail.getAttribute("data-title");
+      const desc = thumbnail.getAttribute("data-description");
+
+      container.style.backgroundImage = `url(${image})`;
+      description.querySelector("h1").textContent = title;
+      description.querySelector("p").textContent = desc;
+
+      thumbnails.forEach((thumb, i) => {
+        thumb.classList.toggle("active", i === index);  // تمييز الصورة النشطة
+      });
+
+      currentImageSpan.textContent = index + 1;  // تحديث الرقم الحالي للصورة
+    };
+
+    // إضافة حدث النقر على الصور المصغرة
+    thumbnails.forEach((thumbnail, index) => {
+      thumbnail.addEventListener("click", () => {
+        currentIndex = index;
+        updateBackground(index);
+      });
+    });
+
+    // الانتقال إلى الصورة السابقة
+    prevButton.addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
+      updateBackground(currentIndex);
+    });
+
+    // الانتقال إلى الصورة التالية
+    nextButton.addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % thumbnails.length;
+      updateBackground(currentIndex);
+    });
+
+    // تحديث الخلفية والصورة عند تحميل الصفحة لأول مرة
+    updateBackground(0);
+
+    // Toggle Language function
+      function toggleLanguage() {
+    let htmlTag = document.documentElement;
+    let navLinks = document.querySelectorAll(".nav-links li a");
+    let menuLinks = document.querySelectorAll(".menu ul li a");
+    let loginSignupButton = document.getElementById("login-signup");
+
+    if (htmlTag.lang === "en") {
+        htmlTag.lang = "ar";
+        htmlTag.dir = "rtl";
+
+        document.querySelector(".language-switch").textContent = "🌐 اللغة";
+
+        navLinks[0].textContent = "اتصل بنا";
+        navLinks[1].textContent = "استكشاف";
+        navLinks[2].textContent = "تسجيل الدخول/التسجيل"; // تغيير النص في اللينك
+
+        menuLinks[0].textContent = "اتصل بنا";
+        menuLinks[1].textContent = "استكشاف";
+        menuLinks[2].textContent = "تسجيل الدخول/التسجيل"; // تغيير النص في القائمة
+       
+        loginSignupButton.textContent = "تسجيل الدخول/التسجيل"; // تغيير النص في الزر
+
+    } else {
+        location.reload();
+    }
+}
+
+
+function toggleMenu() {
+    document.querySelector(".menu").classList.toggle("active");
+}
+
+</script>
+</body>
+</html>
+

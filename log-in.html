@@ -7,17 +7,17 @@
     <link rel="stylesheet" href="styles.css">
     <script defer src="script.js"></script>
 </head>
-<body>
+<body class="with-background " >
 
-    <header>
+    <header class="with-background ">
         <div class="logo"><img src="logo.png" alt="logo" height="80" width="80"></div>
         
         <div class="nav-container">
             <nav>
                 <ul class="nav-links">
-                    <li><a href="#"> Home </a></li>
+                    <li><a href="homePage.html"> Home </a></li>
                     <li><a href="#"> Contact Us </a></li>
-                    <li><a href="#"> Explore </a></li>
+                    <li><a href="#"> Explore page</a></li>
                 </ul>
             </nav>
             <div class="language-switch" onclick="toggleLanguage()">🌐 Language</div>
@@ -28,9 +28,9 @@
 
     <div class="menu">
         <ul>
-            <li><a href="#">Home</a></li>
+            <li><a href="homePage.html">Home</a></li>
             <li><a href="#">Contact Us</a></li>
-            <li><a href="#">Explore</a></li>
+            <li><a href="#">Explore page</a></li>
         </ul>
     </div>
 
@@ -45,9 +45,7 @@
 
                     <label for="password">Password</label>
                     <input type="password" id="password" required>
-                    
-                    <a href="#" class="forgot-password">Forgot your password?</a>
-                    
+                                        
                     <button type="submit">Login</button>
                 </form><br>
                 <p>Don't have an account? <a href="sign-up.html" class="sign-up-page">Create an account</a></p>
@@ -59,21 +57,20 @@
         &copy; 2025 mehar.com
     </footer>
     <script>
-       function toggleLanguage() {
+      function toggleLanguage() {
     let htmlTag = document.documentElement;
     let navLinks = document.querySelectorAll(".nav-links li a");
     let menuLinks = document.querySelectorAll(".menu ul li a");
 
     if (htmlTag.lang === "en") {
         htmlTag.lang = "ar";
-        htmlTag.dir = "rtl";
+        htmlTag.dir = "rtl"; 
 
         document.querySelector(".language-switch").textContent = " 🌐 اللغة  " ;
         document.querySelector(".login-box h2").textContent = "تسجيل الدخول إلى mehar.com";
         document.querySelector("label[for='email']").textContent = "البريد الإلكتروني";
         document.querySelector("input#email").placeholder = "mehar@email.com";
         document.querySelector("label[for='password']").textContent = "كلمة المرور";
-        document.querySelector(".forgot-password").textContent = "هل نسيت كلمة المرور؟";
         document.querySelector("button").textContent = "تسجيل الدخول";
         document.querySelector("p").innerHTML = "ليس لديك حساب؟ <a href='sign-up.html' class='sign-up-page'>إنشاء حساب</a>";
 
@@ -85,13 +82,16 @@
         menuLinks[1].textContent = "اتصل بنا";
         menuLinks[2].textContent = "استكشاف";
     } else {
-        location.reload(); // Reload to reset language to English
+        location.reload();
     }
 }
+
 
 function toggleMenu() {
     document.querySelector(".menu").classList.toggle("active");
 }
+
 </script>
 </body>
 </html>
+

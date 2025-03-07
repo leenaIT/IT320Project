@@ -1,3 +1,4 @@
+
 * {
     margin: 0;
     padding: 0;
@@ -5,7 +6,7 @@
     font-family: Arial, sans-serif;
 }
 
-body {
+body.with-background{
     background: url('image1.jpg') no-repeat center center/cover;
     display: flex;
     flex-direction: column;
@@ -13,16 +14,33 @@ body {
     color: white;
     backdrop-filter: blur(5px);
 }
-
+body.no-background {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: white;
+    background-color: rgb(221, 196, 175); ;
+}
 /* Header */
-header {
+header.with-background {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
     background: rgba(0, 0, 0, 0.7);
 }
-
+header.no-background {
+    position: absolute; /* الهيدر يكون فوق الصورة */
+    top: 0;
+    left: 0;
+    width: 100%; /* الهيدر يغطي العرض بالكامل */
+    background-color: rgba(0, 0, 0, 0.7); /* خلفية شبه شفافة */
+    z-index: 4; /* تأكد من أن الهيدر فوق العناصر الأخرى */
+    padding: 10px 20px; /* بعض المسافة حول المحتوى */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .nav-container {
     display: flex;
     align-items: center;
@@ -46,6 +64,11 @@ header {
     margin-left: 20px;
 }
 
+.login-signup {
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+}
 /* Hamburger Menu */
 .menu-toggle {
     display: none;
@@ -58,9 +81,10 @@ header {
     position: absolute;
     top: 60px;
     right: 20px;
-    background: rgba(0, 0, 0, 0.7);
+    background: #353129b0;
     border-radius: 8px;
     padding: 10px;
+    z-index: 5;
 }
 
 .menu.active {
@@ -80,6 +104,16 @@ header {
     color: white;
     text-decoration: none;
 }
+
+html[dir="rtl"] .menu ul li {
+    text-align: right; 
+}
+
+html[dir="rtl"] .menu.active {
+    right: auto;
+    left: 20px;
+}
+
 
 /* Main Content */
 main {
@@ -101,12 +135,6 @@ main {
     backdrop-filter: blur(10px);
     padding: 50px;
     border-radius: 10px;
-}
-
-.logo-box {
-    font-size: 48px;
-    font-weight: bold;
-    color: #ff007f;
 }
 
 .login-box{
@@ -195,4 +223,170 @@ footer {
     .logo-box {
         margin-bottom: 20px;
     }
+    .description h1 {
+        font-size: 2em; /* تصغير حجم النص */
+    }
+
+    .description p {
+        font-size: 1.1em; /* تصغير حجم النص */
+    }
+
+    .container2 {
+        flex-direction: column; /* جعل الصور تحت بعضها على الشاشات الصغيرة */
+        height: auto; /* تعديل ارتفاع الحاوية */
+    }
+
+    .thumbnails {
+        flex-direction: column; /* عرض الصور المصغرة بشكل عمودي */
+        bottom: 0; /* التعديل على المسافة من الأسفل */
+        right: 10%;
+        padding: 10px 0;
+        gap: 10px;
+    }
+
+    .thumbnail {
+        width: 90%; /* جعل الصور المصغرة تأخذ مساحة أكبر على الجوال */
+        height: 150px; /* زيادة ارتفاع الصورة المصغرة */
+        margin: 0 auto; /* توسيط الصور المصغرة */
+    }
+
+    .arrow {
+        font-size: 1.5em; /* تقليل حجم الأسهم */
+    }
+
+    .image-counter {
+        font-size: 1em; /* تقليل حجم العداد */
+    }
+
+    .description {
+        bottom:550px ; /* رفع الوصف بمقدار معين على الجوال */
+    }
+}
+@media (max-width: 480px) {
+    .description {
+        bottom: 30%; /* رفع الوصف بمقدار معين على الجوال */
+    }
+
+    .thumbnail {
+        width: 100%; /* عرض الصورة المصغرة بالكامل */
+        height: 100px; /* تصغير حجم الصورة */
+    }
+
+    .container2 {
+        height: 400px; /* تقليل الارتفاع الكلي على الشاشات الصغيرة */
+    }
+
+    .description h1 {
+        font-size: 1em; /* تصغير الخط أكثر */
+    }
+
+    .description p {
+        font-size: 0.5em ; /* تصغير الخط أكثر */
+    }
+
+    .navigation {
+        position: absolute;
+        bottom: 10%;
+        right: 50%;
+        transform: translateX(50%);
+    }
+}
+/* homePage */
+.container2 {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    transition: background 1s ease-in-out;
+}
+
+.description {
+    position: absolute;
+    bottom: 20%;
+    left: 10%;
+    color: white;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.description h1 {
+    margin: 0;
+    font-size: 3em;
+}
+
+.description p {
+    margin: 0.5em 0;
+    font-size: 1.2em;
+}
+
+.thumbnails {
+    position: absolute;
+    bottom: calc(5% + 60px);
+    right: 4%;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.thumbnail {
+    width: 180px;
+    height: 120px;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.thumbnail h3 {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    margin: 0;
+    color: white;
+    font-size: 0.9em;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.thumbnail:hover {
+    transform: scale(1.1);
+}
+
+.thumbnail.active {
+    opacity: 0.7;
+}
+
+.navigation {
+    position: absolute;
+    bottom: 5%;
+    right: 55%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.arrow {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 2em;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+
+.arrow:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.image-counter {
+    font-size: 1.2em;
+    color: white;
 }
