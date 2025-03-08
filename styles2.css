@@ -1,0 +1,137 @@
+
+/* Header Section */
+.profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #222;
+    color: white;
+    padding: 25px;
+    position: relative;
+    width: 100%;
+ 
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-left: 300px;
+    font-size: 15px;
+}
+
+.profile-picture {
+    width: 120px;
+    height: 120px;
+    background: black;
+    border-radius: 50%;
+    position: absolute;
+    top: 35px; /* Moves it down to poke out */
+    left: 80px; /* Adjust if needed */
+    border: 4px solid black; /* Optional: Adds a border for better visibility */
+}
+
+
+.details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 70px;
+}
+
+.details p {
+    margin: 5px 0;
+}
+
+.detail-title1, .detail-title2{
+    font-size:28px;
+    margin-left:-90px;
+    margin-right: 60px;
+    font-weight: bold;
+}
+/* For labels */
+.detail-label {
+    font-weight: bold;
+    font-size: 17px;
+    margin-top: 100px;
+
+}
+
+/* For answers */
+.detail-answer {
+    font-size:16px ;
+    font-weight: normal;
+    color: rgba(151, 150, 150, 0.696);
+    margin-top: 10px;
+    display: block;
+}
+
+.edit-icon {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Bio & Bookings Row */
+.content {
+    display: flex;
+    width: 100%;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.bio {
+    background: #d4921d;
+    padding: 15px;
+    border-radius: 40px;
+    width: 19%; /* 1/4 of the row */
+    text-align: center;
+    margin-top:-50px;
+    margin-left:30px;
+    
+}
+
+
+
+.bio h3{
+    margin-top:55px;
+    margin-bottom: 20px;
+   
+}
+
+.bookings {
+    width: 75%; /* 3/4 of the row */
+    background: white;
+    padding: 20px;
+    border-radius: 50px;
+    
+}
+
+.bookings h3{
+    font-size:17px;
+    color:black;
+    margin-left:10px;
+}
+.event{
+    color:black;
+} 
+/* Experiences & Wishlist Row */
+.bottom-section {
+    display: flex;
+    width: 100%;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.experiences {
+    width: 75%; /* 3/4 of the row */
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.wishlist {
+    width: 25%; /* 1/4 of the row */
+    background: #8b4a36;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}

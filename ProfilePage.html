@@ -1,8 +1,116 @@
-!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="styles2.css">
+    <link rel="stylesheet" href="styles.css">
 
-<p>h</p>
+    <style> 
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0 auto;
+        padding: 0;
+        background: #e5e5e5;}
 
 
+    </style>
+</head>
 
+<body>
+    <header>
+        <div class="logo"><img src="logo.png" alt="logo" height="80" width="80"></div>
+        
+        <div class="nav-container">
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#"> Home </a></li>
+                    <li><a href="#"> Contact Us </a></li>
+                    <li><a href="#"> Explore </a></li>
+                </ul>
+            </nav>
+            <div class="language-switch" onclick="toggleLanguage()">🌐 Language</div>
+        </div>
+
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </header>
+
+    
+    <section class="profile-header">
+        <div class="user-info">
+            <div class="profile-picture"></div>
+            <div class="details">
+                <p><span class="detail-title1">User <br></span> <span class="detail-title2">Profile </span></p>
+                <p><span class="detail-label">First Name</span><br><span class="detail-answer">Reema</span></p>
+                <p><span class="detail-label">Last Name</span><br><span class="detail-answer">Khalid</span></p>
+                <p><span class="detail-label">Email</span><br><span class="detail-answer">reemakhalid702@gmail.com</span></p>
+                <p><span class="detail-label">Mobile</span><br><span class="detail-answer">+966508395744</span></p>
+            </div>
+            
+        </div>
+        <div class="edit-icon">
+            <i class="fas fa-edit"></i>
+        </div>
+    </section>
+    
+    <section class="content">
+        <div class="bio">
+            <h3>BIO</h3>
+            <p>Always up for a new adventure and love diving into different workshops! Excited to meet people who are just as curious and passionate as I am.</p>
+        </div>
+        <div class="bookings">
+            <h3>My Bookings</h3>
+            <div class="timeline">
+                <img src="your-image.jpg" alt="Description of Image" class="container-image">
+                <div class="event"><span>Workshop 1</span><p>12 May 2025</p></div>
+                <div class="event"><span>Workshop 2</span><p>12 May 2025</p></div>
+                <div class="event"><span>Workshop 3</span><p>12 May 2025</p></div>
+                <div class="event"><span>Workshop 4</span><p>12 May 2025</p></div>
+                <div class="event"><span>Workshop 5</span><p>12 May 2025</p></div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="bottom-section">
+        <div class="experiences">
+            <h3>My Experiences</h3>
+            <div class="experience-cards">
+                <div class="card">
+                    <div class="image-placeholder"></div>
+                    <div class="card-content">
+                        <p><strong>Reema</strong></p>
+                        <p>The best workshop ever! I enjoyed it a lot, definitely would come again</p>
+                    </div>
+                    <div class="card-icons">
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wishlist">
+            <h3>WISHLIST</h3>
+            <div class="wishlist-items">
+                <div class="wishlist-item">
+                    <div class="wishlist-img"></div>
+                    <div class="wishlist-info">
+                        <p>Workshop 1</p>
+                        <p>120 SR</p>
+                        <button>Book Now</button>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        &copy; 2025 mehar.com
+    </footer>
+    <script>
+       functio
+    
+
+</body>
 </html>
