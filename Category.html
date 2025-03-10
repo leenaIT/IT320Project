@@ -1,43 +1,421 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Category page</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Discover the Desert</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     <style>
-          body{
-            background: #f5ebe0;
-          }
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: #FFFDF0;
+        }
 
+        .header {
+            position: relative;
+            width: 100%;
+            height: 550px;
+            background: url('workshops/stained-brushes-inside-pocket.jpg') no-repeat center center/cover;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding-left: 100px;
+            overflow: hidden; 
+        }
 
+        .header::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .nav {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            display: flex;
+            gap: 20px;
+            z-index: 2;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+        }
+
+        .nav span {
+            cursor: pointer;
+        }
+
+        .header-content {
+            z-index: 1;
+            margin-left: 150px; /* زيادة الهامش الأيسر لتحريك النص إلى اليمين أكثر */
+            margin-top: 50px; /* زيادة الهامش العلوي لإنزال النص قليلاً */
+        }
+
+        .header-content h1 {
+            font-family: 'Anton', sans-serif;
+            font-size: 70px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+
+        .header-content h1 span {
+            opacity: 0; /* إخفاء النص في البداية */
+            transform: translateY(20px); /* تحريك النص لأسفل قليلاً */
+            animation: fadeInUp 1.5s ease-out forwards; /* إضافة الحركة */
+        }
+
+        .header-content h1 span:nth-child(1) {
+            animation-delay: 0.5s; /* تأخير ظهور "DISCOVER THE" */
+        }
+
+        .header-content h1 span:nth-child(2) {
+            animation-delay: 1s; /* تأخير ظهور "DESSERT" */
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1; /* إظهار النص */
+                transform: translateY(0); /* إعادة النص إلى موضعه الأصلي */
+            }
+        }
+
+        .outline-text {
+            color: transparent;
+            -webkit-text-stroke: 2px white;
+            font-size: 200px; /* الحجم المعدل لكلمة "DESSERT" */
+        }
+
+        .header-content .quote {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #f4d47c;
+            margin-top: 15px;
+            font-size: 20px;
+            opacity: 0; /* إخفاء النص في البداية */
+            animation: fadeIn 2s ease-out 1.5s forwards; /* تأخير ظهور الاقتباس */
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1; 
+            }
+        }
+
+        .container {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .search-bar {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .search-bar input {
+            padding: 8px;
+            width: 200px;
+        }
+
+        .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.grid-item {
+    position: relative;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    overflow: hidden;
+    padding-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.grid-item img {
+    width: 100%;
+    height: 220px; /* تعديل ارتفاع الصورة */
+    object-fit: cover;
+    border-radius: 10px 10px 0 0; /* زوايا الصورة العلوية دائرية فقط */
+}
+
+.grid-item .tag {
+    position: absolute;
+    top: 15px;
+    left: -10px;
+    background-color: #A6D0D1;
+    color: #fff;
+    padding: 5px 15px;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 0 10px 10px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.grid-item h3 {
+    font-family: 'Montserrat', sans-serif;
+    margin: 10px 0 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+.grid-item p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 15px;
+}
+
+.grid-item .details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    margin-top: 10px;
+}
+
+.grid-item .price {
+    color: #5F9EA0;
+    font-weight: bold;
+    font-size: 15px;
+    background-color: #E9F5F5;
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+.grid-item .more-btn {
+    background-color: #A6D0D1;
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.grid-item .more-btn:hover {
+    background-color: #92BFC0;
+}
+
+.grid-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+        .footer {
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .filter-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 30px;
+    padding-top: 20px;
+}
+
+.filter-container select {
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-family: 'Montserrat', sans-serif;
+}
 
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo"><img src="logo.png" alt="logo" height="80" width="80"></div>
-        
-        <div class="nav-container">
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Explore</a></li>
-                </ul>
-            </nav>
-            <div class="language-switch" onclick="toggleLanguage()">🌐 Language</div>
+    <div class="header">
+        <div class="nav">
+            <span>Home</span>
+            <span>Explore</span>
+            <span>Booking History</span>
+            <span>Contact Us</span>
         </div>
-    </header>
+        <div class="header-content">
+            <h1>
+                <span>DISCOVER THE</span>
+                <span class="outline-text">DESSERT</span>
+            </h1>
+            <p class="quote">“Live out of a suitcase”</p>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Workshops</h2>
+        <div class="search-bar">
+            <input type="text" placeholder="Search">
+            <button>🔍</button>
+        </div>
 
-    <main>
-
-
+        <div class="filter-container">
+            <select id="locationFilter">
+                <option value="">كل المدن</option>
+                <option value="الرياض">الرياض</option>
+                <option value="جدة">جدة</option>
+                <option value="الدمام">الدمام</option>
+                <option value="الطائف">الطائف</option>
+            </select>
         
-    </main>
+            <input type="date" id="dateFilter">
+            
+            <select id="priceFilter">
+                <option value="">كل الأسعار</option>
+                <option value="100-150">أقل من 150 ريال</option>
+                <option value="150-200">150 - 200 ريال</option>
+                <option value="200">200 ريال فأكثر</option>
+            </select>
+        </div>
+        
     
-    <footer>
-        &copy; 2025 mehar.com
-    </footer>
+        <div class="grid">
+            <!-- عنصر 1 -->
+            <div class="grid-item" data-location="الرياض" data-date="2025-03-15" data-price="200">
+                <div class="tag">الرياض</div>
+                <img src="workshops\freepik__upload__87293.png" alt="Embroidery Workshop">
+                <h3>ورشة التطريز</h3>
+                <p>تعلم أساسيات التطريز وتنسيق الألوان والغرز.</p>
+                <div class="details">
+                    <span class="more-btn">عرض المزيد</span>
+                    <span class="price">200 ريال</span>
+                </div>
+            </div>
+            
+        
+            <!-- Item 2 -->
+            <div class="grid-item" data-location="الرياض" data-date="2025-03-15" data-price="200">
+                <div class="tag">جدة</div>
+                <img src="workshops\download (2).jpeg" alt="Candle Making Workshop">
+                <h3>تشكيل الشمع</h3>
+                <p>صناعة شموع جميلة ومزخرفة بأشكال مختلفة.</p>
+                <div class="details">
+                    <span class="more-btn">عرض المزيد</span>
+                    <span class="price">200 ريال</span>
+                </div>
+            </div>
+        
+            <div class="grid-item" data-location="الرياض" data-date="2025-03-15" data-price="200">
+                <div class="tag">الرياض</div>
+                <img src="workshops\young-child-making-diy-project-from-upcycled-materials.jpg" alt="Tote Bag Painting">
+                <h3>الرسم على التوت باث</h3>
+                <p>تزيين حقائب قماشية برسومات فريدة من إبداعك.</p>
+                <div class="details">
+                    <span class="more-btn">عرض المزيد</span>
+                    <span class="price">200 ريال</span>
+                </div>
+            </div>
+        
+            <div class="grid-item" data-location="الرياض" data-date="2025-03-15" data-price="200">
+                <div class="tag">جدة</div>
+                <img src="workshops\top-view-woman-knitting.jpg" alt="Crochet Basics">
+                <h3>أساسيات الكروشيه</h3>
+                <p>تعرف على الأساسيات وطريقة صناعة قطع من الكروشيه.</p>
+                <div class="details">
+                    <span class="more-btn">عرض المزيد</span>
+                    <span class="price">200 ريال</span>
+                </div>
+            </div>
+        
+            <div class="grid-item" data-location="الرياض" data-date="2025-03-15" data-price="200">
+                <div class="tag">الدمام</div>
+                <img src="workshops\Canvas Step by Step paint event.jpeg" alt="Free Drawing">
+                <h3>الرسم الحر</h3>
+                <p>اكتشف موهبتك من خلال تقنيات الرسم الإبداعي.</p>
+                <div class="details">
+                    <span class="more-btn">عرض المزيد</span>
+                    <span class="price">200 ريال</span>
+                </div>
+            </div>
+        
+            <div class="grid-item" data-location="الرياض" data-date="2025-03-15" data-price="200">
+                <div class="tag">الطائف</div>
+                <img src="workshops\view-hands-engaged-it-yourself-project.jpg" alt="Pottery Workshop">
+                <h3>تشكيل الفخار</h3>
+                <p>تعرف على تقنيات تشكيل الفخار وصناعة القطع اليدوية.</p>
+                <div class="details">
+                    <span class="more-btn">عرض المزيد</span>
+                    <span class="price">200 ريال</span>
+                </div>
+            </div>
+            <div class="grid-item" data-location="الرياض" data-date="2025-03-15" data-price="200">
+                <div class="tag">الطائف</div>
+                <img src="workshops\close-up-hand-painting-pocket-with-pink.jpg" alt="Pottery Workshop">
+                <h3>تشكيل الفخار</h3>
+                <p>تعرف على تقنيات تشكيل الفخار وصناعة القطع اليدوية.</p>
+                <div class="details">
+                    <span class="more-btn">عرض المزيد</span>
+                    <span class="price">200 ريال</span>
+                </div>
+            </div>
+            <div class="grid-item" data-location="الرياض" data-date="2025-03-15" data-price="200">
+                <div class="tag">الطائف</div>
+                <img src="workshops\download (1).jpeg" alt="Pottery Workshop">
+                <h3>تشكيل الفخار</h3>
+                <p>تعرف على تقنيات تشكيل الفخار وصناعة القطع اليدوية.</p>
+                <div class="details">
+                    <span class="more-btn">عرض المزيد</span>
+                    <span class="price">200 ريال</span>
+                </div>
+            </div>
+        
+    </div>
+
+    <div class="footer">
+    </div>
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const locationFilter = document.getElementById('locationFilter');
+    const priceFilter = document.getElementById('priceFilter');
+    const dateFilter = document.getElementById('dateFilter');
+    const items = document.querySelectorAll('.grid-item');
+
+    function filterItems() {
+        const location = locationFilter.value;
+        const price = priceFilter.value;
+        const date = dateFilter.value;
+
+        items.forEach(item => {
+            const itemLocation = item.getAttribute('data-location');
+            const itemPrice = parseInt(item.getAttribute('data-price'));
+            const itemDate = item.getAttribute('data-date');
+
+            let locationMatch = location === '' || itemLocation === location;
+
+            let priceMatch = false;
+            if (price === "") {
+                priceMatch = true;
+            } else if (price === '200') {
+                priceMatch = itemPrice >= 200;
+            } else if (price === '150-200') {
+                priceMatch = itemPrice >= 150 && itemPrice < 200;
+            } else if (price === '100-150') {
+                priceMatch = itemPrice < 150;
+            }
+
+            let dateMatch = !date || itemDate === date;
+
+            if (locationMatch && priceMatch && dateMatch) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+
+    locationFilter.addEventListener('change', filterItems);
+    priceFilter.addEventListener('change', filterItems);
+    dateFilter.addEventListener('change', filterItems);
+});
+</script>    
 </body>
 </html>
