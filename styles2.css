@@ -1,4 +1,15 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
 
+html, body {
+    width: 100%;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    margin: 0;
+    height: 100%; 
+}
 /* Header Section */
 .profile-header {
     display: flex;
@@ -6,11 +17,12 @@
     justify-content: space-between;
     background: #222;
     color: white;
-    padding: 25px;
+    padding: 18px;
     position: relative;
     width: 100%;
     white-space: nowrap;
- 
+    margin-top: 0px;
+    box-sizing: border-box;
 }
 
 .user-info {
@@ -19,6 +31,7 @@
     gap: 40px;
     margin-left: 300px;
     font-size: 15px;
+margin-top: 10px;
 }
 
 .profile-picture {
@@ -29,8 +42,8 @@
     position: absolute;
     top: 35px; /* Moves it down to poke out */
     left: 80px; /* Adjust if needed */
-    border: 4px solid black; 
-    background-image: url("profile-pic.png"); /* Set the image */
+    border: 2px solid black; 
+    background-image: url("workshops/profile-pic.png"); /* Set the image */
     background-size: cover; /* Ensure it covers the circle */
     background-position: center; /* Center the image */
     background-size: 99%;
@@ -72,7 +85,7 @@
 .edit-btn1 {
     position: absolute;
     cursor: pointer;
-    margin-right: -50px;
+    right: 20px;
      transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
 }
 
@@ -91,22 +104,24 @@
 }
 
 .bio {
-    background: #e6dd91;
+    font-family: 'Playfair Display'; 
+    background: #fde5b7;
+    color: #d48d00;
     padding: 15px;
     border-radius: 40px;
     width: 19%; /* 1/4 of the row */
     text-align: center;
     margin-top:-50px;
     margin-left:25px;
-    
+    font-size: 0.9em;
 }
 
 
 
 .bio h3{
-    margin-top:55px;
+    margin-top:70px;
     margin-bottom: 20px;
-   
+   color:#d48d00;
 }
 
 .bookings {
@@ -115,18 +130,36 @@
     padding: 20px;
     border-radius: 50px;
     position: relative;
-    padding-bottom: 120px;
+    padding-bottom: 180px;
     min-height: 210px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    box-sizing: border-box;
+    margin-right: 13px;
 }
 
 .bookings h3{
     font-size:17px;
     color:black;
     margin-left:10px;
-    
+
 }
 
+.bookings a {
+    text-decoration: none;
+    color: inherit; /* Keeps it the same as surrounding text */
+    display: inline-block;
+}
 
+.bookings a:hover {
+    transform: scale(1.1); 
+    transition: transform 0.3s ease-in-out;
+}
+
+.bookings a:visited,
+.bookings a:active {
+    text-decoration: none;
+    color: inherit;
+}
 
 .booking-image{
 margin-top:-130px;
@@ -142,7 +175,7 @@ height: 70px;
 background: darkred;
 border-radius: 50%;
 position: absolute;
-top: 16px; 
+top: 46px; 
 left: 193px; 
 background-image: url("workshops/workshop2.jpeg"); /* Set the image */
 background-position: bottom center; 
@@ -157,7 +190,7 @@ transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
     background: darkred;
     border-radius: 50%;
     position: absolute;
-    top: 135px; 
+    top: 175px; 
     left: 323px; 
     background-image: url("workshops/workshop6.jpeg"); /* Set the image */
     background-position: bottom center; 
@@ -173,10 +206,10 @@ transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
         background: darkred;
         border-radius: 50%;
         position: absolute;
-        top: 16px;
+        top: 46px;
         left: 453px; 
-        background-image: url("image5.jpg"); /* Set the image */
-        background-position: bottom center; 
+        background-image: url("workshops/Bento-торт Мастер-Класс.jpeg"); /* Set the image */
+        background-position:  center; 
         background-size: 100%; 
         transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
 
@@ -188,9 +221,9 @@ transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
             background: darkred;
             border-radius: 50%;
             position: absolute;
-            top: 135px; 
+            top: 175px; 
             left: 585px;
-            background-image: url("image4.jpg"); /* Set the image */
+            background-image: url("workshops/image4.jpg"); /* Set the image */
             background-position: bottom center; 
             background-size: 178%; 
             transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
@@ -203,9 +236,9 @@ transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
                 background: darkred;
                 border-radius: 50%;
                 position: absolute;
-                top: 16px;
+                top: 46px;
                 left: 713px; 
-                background-image: url("image1.jpg"); /* Set the image */
+                background-image: url("workshops/image1.jpg"); /* Set the image */
                 background-position: -60%;
                 background-position: bottom center; 
                 background-size: 180%;
@@ -222,35 +255,35 @@ transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
 .event1{
     color:black;
     position: absolute;
-top: 24px; 
+top: 46px; 
 left: 270px;
 } 
 
 .event2{
     color:black;
     position: absolute;
-bottom: 18px;
+bottom: 25px;
 left: 400px;
 }
 
 .event3{
     color:black;
     position: absolute;
-top: 24px; 
+top: 46px; 
 left: 530px;
 } 
 
 .event4{
     color:black;
     position: absolute;
-bottom: 18px;
+bottom: 25px;
 left: 662px;
 }
 
 .event5{
     color:black;
     position: absolute;
-top: 24px; 
+top: 46px; 
 left: 790px;
 } 
 
@@ -264,35 +297,36 @@ left: 790px;
 /* Experiences & Wishlist Row */
 .bottom-section {
     display: flex;
-   
+     flex-direction: column;
     margin-top: 10px;
-    gap: 20px; 
+    gap: 20px;
+    box-sizing: border-box; 
 }
 
 .experiences {
-    width: 50%; /* 3/4 of the row */
+    width: 100%; 
     padding: 10px;
     border-radius: 10px;
     margin-left:23px;
     margin-right: 20px;
     gap:-10px;
+    box-sizing: border-box;
 }
 
 
 .experiences h3{
     font-size:20px;
- 
+ color: black;
 }
 
 /* Styling for the button */
 .add-post-btn2 {
     border: none;
     cursor: pointer;
-    position: absolute;
+    position: relative;
     padding: 5px;
     width:35px; /* Set width of button to make it square */
     height: 35px; /* Set height of button to make it square */
-  margin-top: -13px;
   margin-left: 30px;
   
 }
@@ -335,13 +369,24 @@ left: 790px;
 
 .experience-cards {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-left: 55px;
+    flex-wrap: nowrap;
+    justify-content: left;
+    align-items: center;;
     margin-bottom:100px;
-    margin-right:25px;
-    width:1000px;
-}
+    width:90%;
+    height: 100%;
+    gap: 3em;
+    scroll-behavior: smooth;
+    overflow-x: auto;  /* Enable horizontal scrolling */
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    margin-left: 55px;  /* Optional: space from the left side */
+    padding-bottom: 2em; 
+padding-top: 2em;}
+
+.experience-cards::-webkit-scrollbar {
+    display: none; /* Hide scrollbar  */
+}  
 .user-circle1{
     border-radius: 50%;
     background: grey;
@@ -349,7 +394,7 @@ left: 790px;
     height: 27px;
     position:absolute;
   margin-left:-2px;  
-  background-image: url("profile-pic.png"); /* Set the image */
+  background-image: url("workshops/profile-pic.png"); /* Set the image */
   background-size: cover; /* Ensure it covers the circle */
   background-position: center; /* Center the image */
   background-size: 99%; 
@@ -362,7 +407,7 @@ left: 790px;
     height: 27px;
     position:absolute;
   margin-left:-2px; 
-  background-image: url("profile-pic.png"); /* Set the image */
+  background-image: url("workshops/profile-pic.png"); /* Set the image */
   background-size: cover; /* Ensure it covers the circle */
   background-position: center; /* Center the image */
   background-size: 99%;   
@@ -374,7 +419,7 @@ left: 790px;
     height: 27px;
     position:absolute;
   margin-left:-2px; 
-  background-image: url("profile-pic.png"); /* Set the image */
+  background-image: url("workshops/profile-pic.png"); /* Set the image */
   background-size: cover; /* Ensure it covers the circle */
   background-position: center; /* Center the image */
   background-size: 99%;   
@@ -386,7 +431,7 @@ left: 790px;
     height: 27px;
     position:absolute;
   margin-left:-2px;
-  background-image: url("profile-pic.png"); /* Set the image */
+  background-image: url("workshops/profile-pic.png"); /* Set the image */
   background-size: cover; /* Ensure it covers the circle */
   background-position: center; /* Center the image */
   background-size: 99%;    
@@ -397,10 +442,13 @@ left: 790px;
 
 .card p strong{
     margin-left:35px;
+    color: black;
 }
 
 .card {
-    width: 28%; /* Adjust for responsiveness */
+    flex-shrink: 0;
+    flex-grow: 1;
+    width: 25%; /* Adjust for responsiveness */
     background: white;
     border-radius: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -408,12 +456,20 @@ left: 790px;
     text-align: center;
     transition: transform 0.2s ease-in-out;
     margin: 0;
-    height: 88%;
+    height: auto;
+    scroll-snap-align: start;
+    box-sizing: border-box;
 }
 
+.card .content {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis; /* For long text truncation if necessary */
+    word-wrap: break-word; /* Ensure long words don't overflow */
+}
 
 .image-placeholder1{
-    background-image: url("post1.jpeg"); /* Set the image */
+    background-image: url("workshops/post1.jpeg"); /* Set the image */
     background-position: -60%;
     background-position:  center; 
     background-size: 100%; 
@@ -423,7 +479,7 @@ left: 790px;
 }
 
 .image-placeholder2{
-    background-image: url("post2.jpeg"); /* Set the image */
+    background-image: url("workshops/post2.jpeg"); /* Set the image */
     background-position: -60%;
     background-position:  center; 
     background-size: 100%; 
@@ -433,7 +489,7 @@ left: 790px;
 }
 
 .image-placeholder3{
-    background-image: url("post3.jpeg"); /* Set the image */
+    background-image: url("workshops/post3.jpeg"); /* Set the image */
     background-position: -60%;
     background-position:  center; 
     background-size: 100%; 
@@ -444,7 +500,7 @@ left: 790px;
 
 
 .image-placeholder4{
-    background-image: url("post4.jpeg"); /* Set the image */
+    background-image: url("workshops/post4.jpeg"); /* Set the image */
     background-position: -60%;
     background-position: bottom center; 
     background-size: 100%; 
@@ -452,6 +508,26 @@ left: 790px;
     height: 150px;
     border-radius: 20px;
 }
+.image-placeholder5{
+    background-image: url("workshops/Cozy Up This Winter with DIY Scented Candles! 🕯️🌿.jpeg");
+    background-position: -60%;
+    background-position:  center; 
+    background-size: 100%; 
+    width: 100%;
+    height: 150px;
+    border-radius: 20px;
+}
+.image-placeholder6{
+    background-image:url("workshops/Madriguera Workshop-Face Collection.jpeg");
+    background-position: -60%;
+    background-position:   bottom center; 
+    background-size: 100%; 
+    width: 100%;
+    height: 150px;
+    border-radius: 20px;
+}
+
+
 .card-content {
     margin-top: 15px;
     background: #f5f5f5;
@@ -486,7 +562,10 @@ font-size:13px;
 
 .post-btn {
     display: flex;
-    gap: 3px;
+   width:100%;
+   gap: 50px;
+   justify-content: space-between;
+   margin-top: 10px;
 }
 
 .edit-btn , .delete-btn{
@@ -499,6 +578,10 @@ font-size:13px;
    position: relative;
 }
 
+.delete-btn{
+margin-right:0px;
+}
+
 .delete-btn:hover .tooltip , .edit-btn:hover .tooltip{
     opacity: 1;
 }
@@ -509,52 +592,6 @@ button img {
 
 button:hover {
     transform: scale(1.1); /* Slightly increase the size on hover */
-}
-
-.first-card {
-    display: block; /* Initially, the first card is visible */
-    
-}
-
-.fourth-card {
-    display: none; /* Initially, 4th card is hidden */
-}
-
-.arrow {
-    position: absolute;
-    transform: translateY(-50%);
-    color: #333;
-    cursor: pointer;
-    transition: opacity 0.3s ease;
-    top:780px;
-    width: 40px;  /* Set the width */
-    height: 40px;
-    font-size: 12px;
-    display: flex; /* Enable flexbox */
-    justify-content: center; /* Horizontally center the arrow */
-    align-items: center;
- 
-}
-
-#left-arrow {
-    left: 10px;
-    display: none; /* Initially hidden */
-  left: 10px;
-}
-
-#right-arrow {
- 
-    display: block; /* Initially shown */
-   right: 287px;
-}
-
-/* Arrow hover effect */
-.arrow:hover {
-    color: #ff6347; /* Change to a color of your choice on hover */
-}
-
-.first-card, .fourth-card {
-    transition: all 0.3s ease;
 }
 
 .view-all-btn {
@@ -573,8 +610,8 @@ button:hover {
     width: 130px; 
     height: 40px;
     position: relative;
-    bottom: 120px;
-    left:490px;
+    bottom: 440px;
+     left:45%;
 }
 
 .view-all-btn:hover .tooltip {
@@ -595,57 +632,56 @@ button:hover {
 /* wihslist*/
 
 .wishlist {
-    width: 24%; /* 1/4 of the row */
-    background: #8b4a36;
-    color: white;
+    width: 95%; /* Take 80% of the width */
+    background: #fde5b7;
+    color: #d48d00;
     padding: 10px;
     border-radius: 25px;
-    margin-right: 20px;
-    margin-bottom: 50px;
+    margin: 40px auto; /* Center horizontally and add margin */
     display: flex;
-    align-items: flex-start; /* Align items at the top */
-    flex-direction: column;
-    flex-wrap: wrap;
-    height: 500px; /* Set a fixed height for the wishlist container */
-    
+    align-items: center; /* Align items at the center */
+    justify-content: flex-start; /* Align items from the left */
+    flex-direction: row; /* Arrange children horizontally */
+    flex-wrap: nowrap; /* Prevent wrapping */
+    height: 60%; /* Fixed height */
+    box-sizing: border-box;
+    margin-bottom: 40px;
+    overflow-x: hidden;
 }
+
+
 .wishlist-items {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-height: 100%; /* Prevent exceeding the container */
+    flex-direction: row; /* Make items horizontal */
+    gap: 10px; /* Space between items */
+    height: 100%; /* Prevent exceeding the container */
     width: 100%; /* Ensure it takes full width */
-    padding-right: 10px; /* Space for scrollbar */
-    margin-left: 0; /* Remove negative margin */
-    margin-top: 30px;
-    overflow-y: auto; /* Enable vertical scrolling */
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-    margin-left: -120px;
+    overflow-y: hidden; /* Prevent vertical scrolling */
+    overflow-x: auto;  /* Enable horizontal scrolling */
+    scroll-snap-type: x mandatory;
 }
 
-/* Optional: Add a scrollbar style to make it more visible */
+
+/* Scrollbar appearance for wishlist items container */
 .wishlist-items::-webkit-scrollbar {
-    width: 3px;
-    margin-right: -20px;
+    display: none; 
 }
 
-.wishlist-items::-webkit-scrollbar-track {
-    background: transparent; /* Keeps the track invisible */
-}
-.wishlist-items::-webkit-scrollbar-thumb {
-    background-color:rgba(0, 0, 0, 0.8);
-    border-radius: 5px;
-}
+
 
 .wishlist-item {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: center;
     padding: 10px;
     border-radius: 10px;
-    width: 60%; /* Ensure the item is fully contained within the wishlist */
-    position: relative;
-    color: white;
+    width: 100%; /* Width for each wishlist item */
+    height: 90%;
+    color: black;
+    background: #FFFDF0;
+    margin-left: 10px;
 }
+
 
 .wishlist-img img {
     width: 65px;
@@ -664,6 +700,7 @@ button:hover {
     display: flex;
     align-items: center;
     margin-left: 10px;
+    gap: 0.2em;
 }
 
 .price {
@@ -736,19 +773,6 @@ button:hover {
     left: 10px;
 }
 
-.wishlist-divider {
-    border: 1.5px solid orange;
-    margin: 5px 0;
-    width: 100%;
-    margin-right: 20px;
-}
-
-hr {
-    border: 1.5px solid orange;
-    margin: 5px 0;
-    width: 100%;
-    margin-right: 20px;
-}
 
 .wishlist-divider {
     border: 1.5px solid orange;
@@ -757,6 +781,12 @@ hr {
     margin-right: 20px;
 }
 
+.wishlist-divider1 {
+    width: 1px; /* Change width to make it vertical */
+    height: 100%; /* Take the full height of the parent container */
+    border: 1.5px solid orange;
+    margin: 0 auto; /* Center the divider vertically */
+}
 
 .card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
