@@ -7,19 +7,24 @@ body {
     background: #f6f3dd;
 }
 /* Header */
-
 header {
-    position: absolute; 
+    position: fixed; /* استخدام fixed بدلاً من absolute */
     top: 0;
     left: 0;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 4;
-    padding: 10px 20px; 
+    padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-sizing: border-box; /* مهم لضمان عدم تجاوز الحدود */
 }
+
+body {
+    padding-top: 60px; /* إضافة مساحة أعلى لتفادي التداخل مع الهيدر */
+}
+
 .nav-container {
     display: flex;
     align-items: center;
@@ -48,6 +53,7 @@ header {
     color: white;
     text-decoration: none;
 }
+
 /* Hamburger Menu */
 .menu-toggle {
     display: none;
@@ -69,7 +75,6 @@ header {
 .menu.active {
     display: block;
 }
-
 .menu ul {
     list-style: none;
     padding: 0;
@@ -92,8 +97,6 @@ html[dir="rtl"] .menu.active {
     right: auto;
     left: 20px;
 }
-
-  
 /* Footer */
 
 footer {
@@ -173,5 +176,4 @@ footer {
         .logo-box {
             margin-bottom: 20px;
         }
-       
     }
