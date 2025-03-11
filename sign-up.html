@@ -33,29 +33,35 @@
         </ul>
     </div>
     <main>
-    
         <div class="container">
-            <div class="logo-box"><img src="workshops/gif.gif" alt="logo" height="150" width="150"></div>
+            <div class="logo-box">
+                <img src="workshops/gif.gif" alt="logo" height="150" width="150">
+            </div>
             <div class="signup-box">
                 <h2>Create Your Account</h2><br>
-                <form onsubmit="return validateForm()">
+                <form action="" method="" onsubmit="return validateForm()">
                     <label for="first-name">First Name</label>
-                    <input type="text" id="first-name" required>
-                    
+                    <input type="text" id="first-name">
+                    <span class="error-message" id="first-name-error"></span>
+    
                     <label for="last-name">Last Name</label>
-                    <input type="text" id="last-name" required>
-                    
+                    <input type="text" id="last-name">
+                    <span class="error-message" id="last-name-error"></span>
+    
                     <label for="email">Email</label>
-                    <input type="email" id="email" required>
-                    
+                    <input type="email" id="email">
+                    <span class="error-message" id="email-error"></span>
+    
                     <label for="password">Password</label>
                     <input type="password" id="password" oninput="checkPasswordStrength()" required>
-                    <p class="password-requirements" id="password-error"> Password must be at least 8 characters long, include 1 letter, 1 number, and be case-sensitive.</p><br>
-                    
+                    <p class="password-requirements" id="password-error"> 
+                    Password must be at least 8 characters long, include 1 letter, 1 number, and be case-sensitive.</p><br>
+    
                     <label for="phone">Mobile Number</label>
-                    <input type="tel" id="phone" placeholder="+966 5xxxxxxxx" required>
-                    
-                    <button type="submit">Create Account</button>
+                    <input type="tel" id="phone" placeholder="+966 5xxxxxxxx">
+                    <span class="error-message" id="phone-error"></span>
+    
+                    <button type="button" onclick="validateAndRedirect() ">Create Account</button>
                 </form>
             </div>
         </div>
@@ -165,6 +171,31 @@ function toggleLanguage() {
 
 function toggleMenu() {
     document.querySelector(".menu").classList.toggle("active");
+}
+
+function validateAndRedirect() {
+    let firstName = document.getElementById("first-name").value.trim();
+    let lastName = document.getElementById("last-name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let password = document.getElementById("password").value.trim();
+    let phone = document.getElementById("phone").value.trim();
+
+    if (firstName === "" || lastName === "" || email === "" || password === "" || phone === "") {
+        alert("Please fill in all fields before proceeding.");
+        return;
+    }
+
+    window.location.href = "ProfilePage.html";
+    return false; // Ensures the page doesn't reload
+
+}
+
+function validateEmail() {
+    let email = document.getElementById("email").value.trim();
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        document.getElementById("email-error").innerText = "Invalid email format.";
+        isValid = false;}
 }
 </script>
 </body>

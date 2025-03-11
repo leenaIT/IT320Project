@@ -39,14 +39,14 @@
             <div class="logo-box"><img src="workshops/gif.gif" alt="logo" height="150" width="150"></div>
             <div class="login-box">
                 <h2>Login to mehar.com</h2>
-                <form>
+                <form action="" method="">
                     <label for="email">Email</label>
                     <input type="email" id="email" placeholder="you@email.com" required>
 
                     <label for="password">Password</label>
                     <input type="password" id="password" required>
                                         
-                    <button type="submit">Login</button>
+                    <button type="button" onclick="validateAndRedirect()">Login</button>
                 </form><br>
                 <p>Don't have an account? <a href="sign-up.html" class="sign-up-page">Create an account</a></p>
             </div>
@@ -127,6 +127,23 @@
 function toggleMenu() {
     document.querySelector(".menu").classList.toggle("active");
 }
+
+
+function validateAndRedirect() {
+    let email = document.getElementById("email").value.trim();
+    let password = document.getElementById("password").value.trim();
+
+    if (email === "" || password === "") {
+        alert("Please fill in all fields before proceeding.");
+        return false; // Prevents redirection if fields are empty
+    }
+
+    // Redirect to profile page if validation passes
+    window.location.href = "ProfilePage.html";
+    
+    return false; // Ensures the page doesn't reload
+}
+
 
 </script>
 </body>

@@ -153,6 +153,12 @@ main {
     width: 300px;
     background: rgba(24, 18, 1, 0.956);
 }
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+}
 .login-box h2 {
     margin-bottom: 15px;
 }
@@ -320,7 +326,6 @@ button {
     font-family: 'Montserrat', sans-serif;
 }
 
-/* وضع الهيدر والمحتوى بجانب بعض */
 .header-about-container {
     display: flex;
     align-items: center;
@@ -653,6 +658,28 @@ footer {
         right: 83%;
         bottom: 25%;
         transform: translateX(50%);
+    }
+    .header-about-container {
+        text-align: center;
+        padding: 20px;
+    }
+
+    .header-content-about h1 {
+        font-size: 1rem;
+    }
+
+    .header-content-about .quote {
+        font-size: 1rem;
+    }
+
+    .about-description {
+        font-size: 0.9rem;
+    }
+
+    .about-btn {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
     }
 }
 @media (max-width: 400px) {
