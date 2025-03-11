@@ -13,17 +13,16 @@
         }
 
         .logo {
-    position: absolute;
-    top: 0px;
-    left: 20px;
-    padding: 8px;
-}
+            position: absolute;
+            top: 0px;
+            left: 20px;
+            padding: 8px;
+        }
 
-.logo img {
-    width: 100px; /* ضبط الحجم */
-    height: auto;
-}
-
+        .logo img {
+            width: 100px;
+            height: auto;
+        }
 
         .header {
             position: relative;
@@ -33,7 +32,7 @@
             color: white;
             display: flex;
             align-items: center;
-            overflow: hidden; 
+            overflow: hidden;
         }
 
         .header::before {
@@ -63,8 +62,8 @@
 
         .header-content {
             z-index: 1;
-            margin-left: 150px; /* زيادة الهامش الأيسر لتحريك النص إلى اليمين أكثر */
-            margin-top: 50px; /* زيادة الهامش العلوي لإنزال النص قليلاً */
+            margin-left: 150px;
+            margin-top: 50px;
         }
 
         .header-content h1 {
@@ -79,20 +78,20 @@
         }
 
         .header-content h1 span {
-            opacity: 0; /* إخفاء النص في البداية */
-            transform: translateY(20px); /* تحريك النص لأسفل قليلاً */
-            animation: fadeInUp 1.5s ease-out forwards; /* إضافة الحركة */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1.5s ease-out forwards;
         }
 
         .header-content h1 span:nth-child(1) {
-            animation-delay: 0.5s; /* تأخير ظهور "DISCOVER THE" */
+            animation-delay: 0.5s;
         }
 
         .header-content h1 span:nth-child(2) {
-            animation-delay: 1s; /* تأخير ظهور "DESSERT" */
+            animation-delay: 1s;
         }
 
-        @keyframes fadeInUp { 
+        @keyframes fadeInUp {
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -102,7 +101,7 @@
         .outline-text {
             color: transparent;
             -webkit-text-stroke: 2px white;
-            font-size: 200px; /* الحجم المعدل لكلمة "DESSERT" */
+            font-size: 200px;
         }
 
         .header-content .quote {
@@ -111,13 +110,13 @@
             color: #f4d47c;
             margin-top: 15px;
             font-size: 20px;
-            opacity: 0; 
-            animation: fadeIn 2s ease-out 1.5s forwards; 
+            opacity: 0;
+            animation: fadeIn 2s ease-out 1.5s forwards;
         }
 
         @keyframes fadeIn {
             to {
-                opacity: 1; 
+                opacity: 1;
             }
         }
 
@@ -127,173 +126,179 @@
         }
 
         .grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding: 20px;
-}
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
 
-.grid-item {
-    position: relative;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    overflow: hidden;
-    padding-bottom: 15px;
-    transition: transform 0.3s ease;
-}
+        .grid-item {
+            position: relative;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            overflow: hidden;
+            padding-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
 
-.grid-item img {
-    width: 100%;
-    height: 220px; /* تعديل ارتفاع الصورة */
-    object-fit: cover;
-    border-radius: 10px 10px 0 0; /* زوايا الصورة العلوية دائرية فقط */
-}
+        .grid-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
 
-.grid-item .tag {
-    position: absolute;
-    top: 15px;
-    left: -10px;
-    background-color: #A6D0D1;
-    color: #fff;
-    padding: 5px 15px;
-    font-size: 14px;
-    font-family: 'Montserrat', sans-serif;
-    border-radius: 0 10px 10px 0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
+        .grid-item .tag {
+            position: absolute;
+            top: 15px;
+            left: -10px;
+            background-color: #A6D0D1;
+            color: #fff;
+            padding: 5px 15px;
+            font-size: 14px;
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
 
-.grid-item h3 {
-    font-family: 'Montserrat', sans-serif;
-    margin: 10px 5px 5px 5px; 
-    font-size: 16px;
+        .grid-item h3 {
+            font-family: 'Montserrat', sans-serif;
+            margin: 10px 5px 5px 5px;
+            font-size: 16px;
+            color: #333;
+            text-align: center;
+        }
+
+        .grid-item p {
+            font-size: 14px;
+            color: #555;
+            margin: 5px 15px;
+            text-align: center;
+        }
+
+        .grid-item .details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            margin-top: 10px;
+        }
+
+        .grid-item .price {
     color: #333;
-    text-align: center;
-}
-
-.grid-item p {
-    font-size: 14px;
-    color: #555;
-    margin: 5px 15px;
-    text-align: center;
-
-}
-
-.grid-item .details {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 15px;
-    margin-top: 10px;
-}
-
-.grid-item .price {
-    color: #5F9EA0;
     font-weight: bold;
-    font-size: 15px;
-    background-color: #E9F5F5;
-    padding: 5px 15px;
-    border-radius: 20px;
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-direction: row-reverse; /* يجعل الرمز على يسار الرقم */
 }
 
-.grid-item .more-btn {
-    background-color: #A6D0D1;
-    color: #fff;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 13px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+.riyal-icon {
+    width: 12px !important;
+    height: 12px !important;
+    vertical-align: middle;
 }
 
-.grid-item .more-btn:hover {
-    background-color: #92BFC0;
-}
 
-.grid-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
+        .grid-item .more-btn {
+            background-color: #A6D0D1;
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .grid-item .more-btn:hover {
+            background-color: #92BFC0;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
 
         .footer {
             text-align: center;
             padding: 10px;
             margin-top: 20px;
         }
- .search-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 40px; /* زيادة المسافة بين البحث والفلتر */
-}
 
-.search-input-container {
-    position: relative;
-    width: 550px; /* تأكدي من عرض مناسب */
-}
+        .search-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+        }
 
-.search-input {
-    padding: 10px 40px 10px 10px; /* ترك مساحة للأيقونة */
-    width: 100%;
-    height: 50px; /* زيادة ارتفاع مربع البحث */
-    border-radius: 8px;
-    border: solid gray 1.3px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px; /* تحسين وضوح النص */
-}
+        .search-input-container {
+            position: relative;
+            width: 550px;
+        }
 
-.filter-btn {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px; /* جعله متناسقًا مع مربع البحث */
-}
+        .search-input {
+            padding: 10px 40px 10px 10px;
+            width: 100%;
+            height: 50px;
+            border-radius: 8px;
+            border: solid gray 1.3px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+        }
 
-.filter-icon {
-    width: 40px !important; /* تكبير الأيقونة */
-    height: 50px !important; /* تكبير الأيقونة */
-    object-fit: contain;
+        .filter-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
 
-}
+        .filter-icon {
+            width: 40px !important;
+            height: 50px !important;
+            object-fit: contain;
+        }
 
-.search-icon, .filter-icon {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
+        .search-icon, .filter-icon {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
 
-.search-icon {
-    position: absolute;
-    right: 0px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 24px; /* تكبير الأيقونة */
-    height: 24px;
-    cursor: pointer;
-}
+        .search-icon {
+            position: absolute;
+            right: 0px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
 
+        .filter-icon {
+            position: static;
+        }
 
-.filter-icon {
-    position: static; /* لزر الفلتر يجب عدم استخدام absolute */
-}
+        .filter-btn {
+            background-color: transparent;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            margin-left: 20px;
+        }
 
-
-
-.filter-btn {
-    background-color: transparent; /* Remove background color */
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    margin-left: 20px; /* Add space between search box and filter button */
-}
-
-   .filter-box {
+        .filter-box {
             background-color: #282869;
             padding: 15px;
             border-radius: 10px;
@@ -301,6 +306,7 @@
             margin: 0 auto;
             display: none;
         }
+
         .filter-box select,
         .filter-box input {
             width: 100%;
@@ -309,86 +315,85 @@
             border-radius: 5px;
             border: none;
         }
+
         .filter-box label {
             margin-bottom: 5px;
             display: block;
         }
+
         .filter-action {
             text-align: center;
         }
+
         .footer {
-    background: #ffb936; /* لون الخلفية */
-    color: white;
-    padding: 0px 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+            background: #ffb936;
+            color: white;
+            padding: 0px 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    max-width: 1200px; /* عرض الفوتر */
-}
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+        }
 
-.footer-left, .footer-right {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.contact-item img, 
-.social-icons img {
-    width: 28px; /* حجم موحد */
-    height: 28px;
-    object-fit: contain; /* ضمان عدم تشوه الأيقونات */
-}
+        .footer-left, .footer-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
+        .contact-item img,
+        .social-icons img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+        }
 
-.contact-info, .social-icons {
-    display: flex;
-    flex-direction: row; /* ترتيب الأيقونات بشكل أفقي */
-    gap: 20px; /* المسافة بين الأيقونات */
-    align-items: center; /* محاذاة العناصر */
-}
+        .contact-info, .social-icons {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            align-items: center;
+        }
 
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-.contact-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+        .contact-item img, .social-icons img {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
 
-.contact-item img, .social-icons img {
-    width: 30px; /* حجم الأيقونة */
-    height: 30px;
-    cursor: pointer;
-}
-#facebook,#email,#lacation{
-    width: 40px; /* حجم الأيقونة */
-    height: 40px;   
-}
+        #facebook, #email, #location {
+            width: 40px;
+            height: 40px;
+        }
 
-.footer-center {
-    text-align: center;
-    margin-top: 10px;
-    font-size: 14px;
-}
+        .footer-center {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
 
-
-.filter-btn {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-}
-
-
-
+        .filter-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
@@ -396,13 +401,12 @@
         <div class="logo">
             <img src="workshops/logo.png" alt="Logo">
         </div>
-                <div class="nav">
+        <div class="nav">
             <span>Home</span>
             <span>Explore</span>
             <span>Booking History</span>
             <span>Contact Us</span>
             <span><div class="language-switch" onclick="toggleLanguage()">🌐 Language</div></span>
-
         </div>
         <div class="header-content">
             <h1>
@@ -415,181 +419,180 @@
     <div class="container">
         <div class="search-container">
             <div class="search-input-container">
-                <input type="text" class="search-input" placeholder="! ابحث عن اهتمامك ">
+                <input type="text" class="search-input" placeholder="Search for your interest!">
                 <img src="/IT320Project/workshops/360_F_558272798_DNqj4q2TXE7EsDM9Zp2wdyap8gzatwlF.webp" alt="Search Icon" class="search-icon">
             </div>
             <button class="filter-btn" onclick="toggleFilterBox()">
                 <img src="/IT320Project/workshops/Adobe Express - file.png" alt="Filter Icon" class="filter-icon">
             </button>
         </div>
-        
-        </div>
-        
-        
         <div class="filter-box" id="filterBox">
-            <label for="price">السعر:</label>
+            <label for="price">Price:</label>
             <select id="price">
-                <option>الكل</option>
-                <option>أقل من 150 ريال</option>
-                <option>150 - 200 ريال</option>
-                <option>200 ريال فأكثر</option>
+                <option>All</option>
+                <option>Less than 150 SAR</option>
+                <option>150 - 200 SAR</option>
+                <option>More than 200 SAR</option>
             </select>
-        
-            <label for="city">المدينة:</label>
+            <label for="city">City:</label>
             <select id="city">
-                <option>الكل</option>
-                <option>الرياض</option>
-                <option>جدة</option>
-                <option>الدمام</option>
-                <option>الطائف</option>
+                <option>All</option>
+                <option>Riyadh</option>
+                <option>Jeddah</option>
+                <option>Dammam</option>
+                <option>Taif</option>
             </select>
-        
-            <label for="date">التاريخ:</label>
+            <label for="date">Date:</label>
             <input type="date" id="date">
-        
-            <label for="type">نوع الورشة:</label>
+            <label for="type">Workshop Type:</label>
             <select id="type">
-                <option>الكل</option>
-                <option>أونلاين</option>
-                <option>حضوري</option>
-                <option>كلاهما</option>
+                <option>All</option>
+                <option>Online</option>
+                <option>In-person</option>
+                <option>Both</option>
             </select>
-        
             <div class="filter-action">
-                <button class="filter-btn">تطبيق</button>
+                <button class="filter-btn">Apply</button>
             </div>
         </div>
-        
-    
         <div class="grid">
-            <!-- عنصر 1 -->
-            <div class="grid-item" data-location="الرياض" data-date="2025-03-15" data-price="200">
-                <div class="tag">الرياض</div>
-                <img src="workshops\freepik__upload__87293.png" alt="Embroidery Workshop">
-                <h3>ورشة التطريز</h3>
-                <p>تعلم أساسيات التطريز وتنسيق الألوان والغرز.</p>
+            <div class="grid-item" data-location="Riyadh" data-date="2025-03-15" data-price="200">
+                <div class="tag">Riyadh</div>
+                <img src="workshops/freepik__upload__87293.png" alt="Embroidery Workshop">
+                <h3>Embroidery Workshop</h3>
+                <p>Learn the basics of embroidery and color coordination.</p>
                 <div class="details">
-                    <span class="more-btn">عرض المزيد</span>
-                    <span class="price">200 ريال</span>
+                    <span class="more-btn">View More</span>
+                    <span class="price">
+                        270 <img src="/IT320Project/riyal.png" alt="SAR" class="riyal-icon">
+                    </span>
                 </div>
             </div>
-            
-        
-            <!-- Item 2 -->
-            <div class="grid-item" data-location="الرياض" data-date="2025-03-15" data-price="200">
-                <div class="tag">جدة</div>
-                <img src="workshops\download (2).jpeg" alt="Candle Making Workshop">
-                <h3>تشكيل الشمع</h3>
-                <p>صناعة شموع جميلة ومزخرفة بأشكال مختلفة.</p>
+            <div class="grid-item" data-location="Jeddah" data-date="2025-03-15" data-price="200">
+                <div class="tag">Jeddah</div>
+                <img src="workshops/download (2).jpeg" alt="Candle Making Workshop">
+                <h3>Candle Making</h3>
+                <p>Create beautiful and decorative candles.</p>
                 <div class="details">
-                    <span class="more-btn">عرض المزيد</span>
-                    <span class="price">200 ريال</span>
+                    <span class="more-btn">View More</span>
+                    <span class="price">
+                        170 <img src="/IT320Project/riyal.png" alt="SAR" class="riyal-icon">
+                    </span>
                 </div>
             </div>
-        
-            <div class="grid-item" data-location="الرياض" data-date="2025-03-15" data-price="200">
-                <div class="tag">الرياض</div>
-                <img src="workshops\young-child-making-diy-project-from-upcycled-materials.jpg" alt="Tote Bag Painting">
-                <h3>الرسم على التوت باث</h3>
-                <p>تزيين حقائب قماشية برسومات فريدة من إبداعك.</p>
+            <div class="grid-item" data-location="Riyadh" data-date="2025-03-15" data-price="200">
+                <div class="tag">Riyadh</div>
+                <img src="workshops/young-child-making-diy-project-from-upcycled-materials.jpg" alt="Tote Bag Painting">
+                <h3>Customize Your Tote Bag</h3>
+                <p>Decorate your tote bag with unique designs.</p>
                 <div class="details">
-                    <span class="more-btn">عرض المزيد</span>
-                    <span class="price">200 ريال</span>
+                    <span class="more-btn">View More</span>
+                    <span class="price">
+                        190 <img src="/IT320Project/riyal.png" alt="SAR" class="riyal-icon">
+                    </span>
                 </div>
             </div>
-        
-            <div class="grid-item" data-location="الرياض" data-date="2025-03-15" data-price="200">
-                <div class="tag">جدة</div>
-                <img src="workshops\top-view-woman-knitting.jpg" alt="Crochet Basics">
-                <h3>أساسيات الكروشيه</h3>
-                <p>تعرف على الأساسيات وطريقة صناعة قطع من الكروشيه.</p>
+            <div class="grid-item" data-location="Jeddah" data-date="2025-03-15" data-price="200">
+                <div class="tag">Jeddah</div>
+                <img src="workshops/top-view-woman-knitting.jpg" alt="Crochet Basics">
+                <h3>Crochet Basics</h3>
+                <p>Learn the basics of crochet and create handmade items.</p>
                 <div class="details">
-                    <span class="more-btn">عرض المزيد</span>
-                    <span class="price">200 ريال</span>
+                    <span class="more-btn">View More</span>
+                    <span class="price">
+                        230 <img src="/IT320Project/riyal.png" alt="SAR" class="riyal-icon">
+                    </span>
                 </div>
             </div>
-        
-            <div class="grid-item" data-location="الرياض" data-date="2025-03-15" data-price="200">
-                <div class="tag">الدمام</div>
-                <img src="workshops\Canvas Step by Step paint event.jpeg" alt="Free Drawing">
-                <h3>الرسم الحر</h3>
-                <p>اكتشف موهبتك من خلال تقنيات الرسم الإبداعي.</p>
+            <div class="grid-item" data-location="Dammam" data-date="2025-03-15" data-price="200">
+                <div class="tag">Dammam</div>
+                <img src="workshops/Canvas Step by Step paint event.jpeg" alt="Free Drawing">
+                <h3>Free Drawing</h3>
+                <p>Discover your talent through creative drawing techniques.</p>
                 <div class="details">
-                    <span class="more-btn">عرض المزيد</span>
-                    <span class="price">200 ريال</span>
+                    <span class="more-btn">View More</span>
+                    <span class="price">
+                        145 <img src="/IT320Project/riyal.png" alt="SAR" class="riyal-icon">
+                    </span>
                 </div>
             </div>
-        
-            <div class="grid-item" data-location="الرياض" data-date="2025-03-15" data-price="200">
-                <div class="tag">الطائف</div>
-                <img src="workshops\view-hands-engaged-it-yourself-project.jpg" alt="Pottery Workshop">
-                <h3>تشكيل الفخار</h3>
-                <p>تعرف على تقنيات تشكيل الفخار وصناعة القطع اليدوية.</p>
+            <div class="grid-item" data-location="Taif" data-date="2025-03-15" data-price="200">
+                <div class="tag">Taif</div>
+                <img src="workshops/view-hands-engaged-it-yourself-project.jpg" alt="Soap Making">
+                <h3>Soap Making</h3>
+                <p>Learn the techniques of soap making.</p>
                 <div class="details">
-                    <span class="more-btn">عرض المزيد</span>
-                    <span class="price">200 ريال</span>
+                    <span class="more-btn">View More</span>
+                    <span class="price">
+                        150 <img src="/IT320Project/riyal.png" alt="SAR" class="riyal-icon">
+                    </span>
                 </div>
             </div>
-            <div class="grid-item" data-location="الرياض" data-date="2025-03-15" data-price="200">
-                <div class="tag">الطائف</div>
-                <img src="workshops\close-up-hand-painting-pocket-with-pink.jpg" alt="Pottery Workshop">
-                <h3>تشكيل الفخار</h3>
-                <p>تعرف على تقنيات تشكيل الفخار وصناعة القطع اليدوية.</p>
+            <div class="grid-item" data-location="Taif" data-date="2025-03-15" data-price="200">
+                <div class="tag">Taif</div>
+                <img src="workshops/close-up-hand-painting-pocket-with-pink.jpg" alt="Clothes Painting">
+                <h3>Clothes Painting</h3>
+                <p>Unleash your creativity by painting on clothes.</p>
                 <div class="details">
-                    <span class="more-btn">عرض المزيد</span>
-                    <span class="price">200 ريال</span>
+                    <span class="more-btn">View More</span>
+                    <span class="price">
+                        210 <img src="/IT320Project/riyal.png" alt="SAR" class="riyal-icon">
+                    </span>
                 </div>
             </div>
-            <div class="grid-item" data-location="الرياض" data-date="2025-03-15" data-price="200">
-                <div class="tag">الطائف</div>
-                <img src="workshops\download (1).jpeg" alt="Pottery Workshop">
-                <h3>تشكيل الفخار</h3>
-                <p>تعرف على تقنيات تشكيل الفخار وصناعة القطع اليدوية.</p>
+            <div class="grid-item" data-location="Taif" data-date="2025-03-15" data-price="200">
+                <div class="tag">Taif</div>
+                <img src="workshops/download (1).jpeg" alt="Pottery Workshop">
+                <h3>Pottery Workshop</h3>
+                <p>Learn pottery techniques and create handmade pieces.</p>
                 <div class="details">
-                    <span class="more-btn">عرض المزيد</span>
-                    <span class="price">200 ريال</span>
+                    <span class="more-btn">View More</span>
+                    <span class="price">
+                        200 <img src="/IT320Project/riyal.png" alt="SAR" class="riyal-icon">
+                    </span>
+                    
                 </div>
             </div>
-        
+        </div>
     </div>
-
     <footer class="footer">
         <div class="footer-content">
-            <!-- جهـة اليسار: معلومات الاتصال -->
             <div class="footer-left">
                 <h4>Get In Touch</h4>
                 <div class="contact-info">
                     <div class="contact-item">
-                        <img src="/IT320Project\workshops\360_F_553663238_v4Tva6Ie5Z5MhwCw0TknszcWuQ1ZAwQx.png" alt="Phone">
+                        <img src="/IT320Project/workshops/360_F_553663238_v4Tva6Ie5Z5MhwCw0TknszcWuQ1ZAwQx.png" alt="Phone">
                     </div>
                     <div class="contact-item">
-                        <img id="email"src="/IT320Project\workshops\360_F_181003490_CxW4fQ0H3VypIIsPkFGpMDviO8ysWjOZ.png" alt="Email">
+                        <img id="email" src="/IT320Project/workshops/360_F_181003490_CxW4fQ0H3VypIIsPkFGpMDviO8ysWjOZ.png" alt="Email">
                     </div>
                     <div class="contact-item">
-                        <img id="lacation"src="/IT320Project\workshops\360_F_254622588_6OClHyYpak64rVI8y9QVjUvDlStsDEu9.png" alt="Location">
+                        <img id="location" src="/IT320Project/workshops/360_F_254622588_6OClHyYpak64rVI8y9QVjUvDlStsDEu9.png" alt="Location">
                     </div>
                 </div>
             </div>
-    
-            <!-- جهـة اليمين: مواقع التواصل الاجتماعي -->
             <div class="footer-right">
                 <h4>Follow Us</h4>
                 <div class="social-icons">
-                    <img id="facebook"src="/IT320Project/workshops/black-square-outline-facebook-icon-7017516951347228u34mgnk68.png" alt="Facebook">
-                    <img src="/IT320Project\workshops\twitter-icon-256x227-kf6zqma5.png" alt="Twitter">
-                    <img src="/IT320Project\workshops\121.png" alt="Instagram">
+                    <img id="facebook" src="/IT320Project/workshops/black-square-outline-facebook-icon-7017516951347228u34mgnk68.png" alt="Facebook">
+                    <img src="/IT320Project/workshops/twitter-icon-256x227-kf6zqma5.png" alt="Twitter">
+                    <img src="/IT320Project/workshops/121.png" alt="Instagram">
                 </div>
             </div>
         </div>
-    
-        <!-- حقوق النشر في الأسفل -->
         <div class="footer-center">
             <p>© 2024 Website. All rights reserved.</p>
         </div>
     </footer>
-    
-
-
-
+    <script>
+        function toggleFilterBox() {
+            const filterBox = document.getElementById('filterBox');
+            if (filterBox.style.display === 'none' || filterBox.style.display === '') {
+                filterBox.style.display = 'block';
+            } else {
+                filterBox.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
