@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حجز الورشة</title>
-    <link href="styles.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
@@ -17,9 +16,173 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            backdrop-filter: blur(5px);
             
         }
+
+        header {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box; /* مهم لضمان عدم تجاوز الحدود */
+}
+
+
+
+.nav-container {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.language-switch {
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 20px;
+}
+
+.login-signup {
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+}
+
+/* Hamburger Menu */
+.menu-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.menu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background: #353129b0;
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 5;
+}
+
+.menu.active {
+    display: block;
+}
+.menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu ul li {
+    padding: 10px;
+}
+
+.menu ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+html[dir="rtl"] .menu ul li {
+    text-align: right; 
+}
+
+html[dir="rtl"] .menu.active {
+    right: auto;
+    left: 20px;
+}
+/* Footer */
+
+footer {
+    margin-top: 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0; 
+    position: relative;
+    flex-wrap: wrap;
+    color: #fefefe;
+    background: rgba(0, 0, 0, 0.848);
+    height: 130px; 
+    border-top: 2px solid #f9b013ec; 
+    }
+    
+    .footer-left-1, .footer-center-1, .footer-right-1 {
+    flex: 1;
+    padding: 0.5em; 
+    text-align: center;
+    }
+    
+    .footer-center-1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+    
+    .footer-logo-1 {
+    width: 100px;
+    }
+    
+    .contact-info-1 {
+    display: flex;
+    gap: 10px; 
+    align-items: center;
+    }
+    
+    .footer-left-1 img, .footer-right-1 img, .social-icon-1 {
+    max-width: 1.5em; 
+    height: auto;
+    margin-right: 0.5em; 
+    }
+    
+    .single-line-1 {
+    white-space: nowrap;
+    }
+    
+    .footer-bottom-1 {
+    width: 100%;
+    text-align: center;
+    margin-top: 0em; 
+    }
+    
+    .footer-bottom-1 p {
+    padding: 0.5em; 
+    background-color: #ffffff;
+    font-size: 0.75em; 
+    color: #f9b013ec;
+    border-top: 0.0625em solid #ccc; 
+    }
+
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+        }
+    
+        .menu-toggle {
+            display: block;
+        }
+    
+        .container {
+            flex-direction: column;
+            text-align: center;
+        }
+    
+        .logo-box {
+            margin-bottom: 20px;
+        }
+    }
 
         
 
@@ -29,6 +192,7 @@
             margin: 0;
             padding: 0;
             flex-direction: row-reverse; 
+            margin-top: -100px; /* إزالة المسافة من أعلى */
         }
 
         .booking-container {
@@ -36,7 +200,7 @@
             flex-direction: column;
             gap: 30px;
             width: 75%; /* ثلاثة أرباع الصفحة */
-            background-color: #fffdf0ee;
+            background-color: #ffffffed;
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             order: 1;
@@ -60,16 +224,16 @@
             margin-top: 200px;
             
         }
-/*
-        img {
-            width: 120%;  الصورة أكبر من المساحة 
+
+        .i {
+            width: 120%;  
             height: 90%;
             position: absolute;
             top: 0;
             left: -50%;
             border-radius: 10px;
         }
-*/
+
         #sub {
             background-color: #A6D0D1;
             color: white;
@@ -171,7 +335,7 @@
         width: 14%;
         height: 18%;
         margin-left: 104%;
-        margin-top: 40.5%; 
+        margin-top: 41.5%; 
     }
 
     #workshop-requirements{
@@ -325,13 +489,13 @@ margin-right: 20px;
             <h2 id="workshop-title">تشكيل الفخار</h2>
             <p id="workshop-description"> اكتشف فن تشكيل الفخار وصنع الأواني اليدوية في ورشتنا الممتعة. تعلم كيفية تحويل الطين إلى قطع فنية باستخدام تقنيات التشكيل والتلوين، مع توجيه متخصصين. الورشة موجهة للمبتدئين وتمنحك الفرصة للتعبير عن إبداعك في بيئة مريحة.</p>
             <div class="line"><p></p></div>
-            <p> <img id="req" src="workshops/req.png" alt=" "><span id="workshop-requirements">يفضل ارتداء ملابس لا تتأثر بالأوساخ</span></p>
-            <p id="work-loc"> <img id="loc" src="workshops/loc.png" alt=" " > <br><br>  الرياض </p>
-            <p id="work-time"> <img id="time" src="workshops/time.png" alt=" " > <br><br> 3 ساعات</p>
-            <p id="work-age"> <img id="age" src="workshops/age.png" alt=" " >+8 سنوات </p>
+            <p> <img id="req" class="i" src="workshops/req.png"  alt=" "><span id="workshop-requirements">يفضل ارتداء ملابس لا تتأثر بالأوساخ</span></p>
+            <p id="work-loc"> <img id="loc" class="i" src="workshops/loc.png" alt=" " > <br><br>  الرياض </p>
+            <p id="work-time"> <img id="time" class="i" src="workshops/time.png" alt=" " > <br><br> 3 ساعات</p>
+            <p id="work-age"> <img id="age" class="i" src="workshops/age.png" alt=" " >+8 سنوات </p>
             <div class="line"><p></p></div>
 
-            <h3 id="work-ava"> <img id="avaT" src="workshops/avaT.png" alt=" " >  الأوقات المتاحة :</h3>
+            <h3 id="work-ava"> <img id="avaT" class="i" src="workshops/avaT.png" alt=" " >  الأوقات المتاحة :</h3>
             <div id="workshop-times">
                 <button class="time-button" id="time1" onclick="selectTime('time1')" >السبت <br> 2025, 11 April <br> 15:00 - 18:00</button>
                 <button class="time-button" id="time2" onclick="selectTime('time2')">السبت <br> 2025, 11 April <br> 9:00 - 11:00</button>
@@ -345,7 +509,7 @@ margin-right: 20px;
         </div>
 
         <div class="image-container">
-            <img id="workshop-image" src="workshops/pottery.jpg " alt="صورة الورشة">
+            <img id="workshop-image" class="i" src="workshops/pottery.jpg " alt="صورة الورشة">
         </div>
     </div>
 
@@ -355,7 +519,7 @@ margin-right: 20px;
     
 
     <div class="carousel-item left">
-        <img src="مهار.jpg" alt="">
+        <img class="i" src="مهار.jpg" alt="">
         <h3>سما خالد</h3>
         <p>
 "الورشة كانت رهيبة! الجو فيها كان مره حلو، والناس هنا ودودين.
@@ -364,7 +528,7 @@ margin-right: 20px;
     <p class="stars">★★★★★</p>
       </div>
       <div class="carousel-item active">
-        <img src="مهار.jpg" alt="">
+        <img class="i" src="مهار.jpg" alt="">
         <h3>جمانة محمد</h3>
         <p>
 "صراحة، الورشة كانت ممتعة وفادتني كثير. المدرب كان مريح جدًا
@@ -373,7 +537,7 @@ margin-right: 20px;
     <p class="stars">★★★★☆</p>
       </div>
       <div class="carousel-item right">
-        <img src="مهار.jpg" alt="">
+        <img class="i" src="مهار.jpg" alt="">
         <h3>العنود</h3>
         <p>
 "إذا كنت تحب الإبداع، هذه الورشة هي مكانك! الجو حلو
@@ -382,7 +546,7 @@ margin-right: 20px;
     <p class="stars">★★★★★</p>
       </div>
       <div class="carousel-item">
-        <img src="مهار.jpg" alt="">
+        <img class="i" src="مهار.jpg" alt="">
         <h3>نورة ابراهيم</h3>
         <p>
 "ورشة تشكيل الفخار كانت شي خرافي! تعلمت أشياء جديدة
@@ -391,7 +555,7 @@ margin-right: 20px;
     <p class="stars">★★★★★</p>
       </div>
       <div class="carousel-item">
-        <img src="مهار.jpg" alt="">
+        <img class="i"src="مهار.jpg" alt="">
         <h3>الجوهرة</h3>
         <p>
 "أنا كنت حابة أتعلم الفخار لفترة طويلة، ولما حضرت الورشة
