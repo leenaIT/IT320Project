@@ -10,7 +10,7 @@
     font-weight: bold;
 }
 
-.nav span a {
+.nav span a , .language-switch{
     text-decoration: none;
     color: white;
     font-size: 16px;
@@ -19,13 +19,12 @@
 }
 
 /* تغيير اللون عند التحويم */
-.nav span a:hover {
+.nav span a:hover , .language-switch:hover {
     color: rgb(255, 209, 59);
-    transform: scale(1.1);
 }
 
 /* تغيير اللون عند النقر */
-.nav span a:active {
+.nav span a:active , .language-switch:active  {
     color: yellow;
     transform: scale(0.9);
 }
