@@ -8,12 +8,8 @@ body {
 }
 /* Header */
 header {
-    position: fixed; /* استخدام fixed بدلاً من absolute */
-    top: 0;
-    left: 0;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.7);
-    z-index: 4;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;

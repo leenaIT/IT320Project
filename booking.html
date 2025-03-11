@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حجز الورشة</title>
-    
+    <link href="styles.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
@@ -60,16 +60,16 @@
             margin-top: 200px;
             
         }
-
+/*
         img {
-            width: 120%; /* الصورة أكبر من المساحة */
+            width: 120%;  الصورة أكبر من المساحة 
             height: 90%;
             position: absolute;
             top: 0;
             left: -50%;
             border-radius: 10px;
         }
-
+*/
         #sub {
             background-color: #A6D0D1;
             color: white;
@@ -294,6 +294,31 @@ margin-right: 20px;
     </style>
 </head>
 <body>
+
+  <header class="no-background">
+    <div class="logo"><img src="workshops/logo.png" alt="logo" height="80" width="80"></div>
+    
+    <div class="nav-container">
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="Explore.html">Explore page</a></li>
+                <li><a href="log-in.html" class="login-signup" id="login-signup">Login/Signup</a></li> 
+            </ul>
+        </nav>
+        <div class="language-switch" onclick="toggleLanguage()">🌐 Language</div>
+    </div>
+
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+</header>
+
+<div class="menu">
+  <ul>
+      <li><a href="#">Contact Us</a></li>
+      <li><a href="Explore.html">Explore page</a></li>
+      <li><a href="log-in.html" class="login-signup">Login/Signup</a></li> 
+  </ul>
+</div>
 
     <div class="main-container">
         <div class="booking-container">
