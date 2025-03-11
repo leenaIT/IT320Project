@@ -46,19 +46,35 @@
         }
 
         .nav {
-            position: absolute;
-            top: 20px;
-            right: 40px;
-            display: flex;
-            gap: 20px;
-            z-index: 2;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: bold;
-        }
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    display: flex;
+    gap: 20px;
+    z-index: 2;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+}
 
-        .nav span {
-            cursor: pointer;
-        }
+.nav span a {
+    text-decoration: none; /* إزالة الخط تحت النص */
+    color: white; /* لون النص الافتراضي */
+    font-size: 16px;
+    padding: 5px 10px; /* إضافة مساحة للنقر */
+    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+/* تغيير اللون عند التحويم */
+.nav span a:hover {
+    color: rgb(255, 209, 59); /* اللون عند تمرير الماوس */
+    transform: scale(1.1); /* تكبير النص قليلاً */
+}
+
+/* تغيير اللون عند النقر */
+.nav span a:active {
+    color: yellow;
+    transform: scale(0.9); /* تصغير النص عند النقر */
+}
 
         .header-content {
             z-index: 1;
@@ -402,10 +418,10 @@
             <img src="workshops/logo.png" alt="Logo">
         </div>
         <div class="nav">
-            <span>Home</span>
-            <span>Explore</span>
-            <span>Booking History</span>
-            <span>Contact Us</span>
+            <span><a href="homePage.html">Home</a></span>
+            <span><a href="Explore.html">Explore</a></span>
+            <span><a href="ProfilePage.html">Profile page</a></span>
+            <span><a href="#footer">Contact Us</a></span>
             <span><div class="language-switch" onclick="toggleLanguage()">🌐 Language</div></span>
         </div>
         <div class="header-content">
@@ -555,7 +571,7 @@
             </div>
         </div>
     </div>
-    <footer class="footer">
+    <footer class="footer" id="footer">
         <div class="footer-content">
             <div class="footer-left">
                 <h4>Get In Touch</h4>
