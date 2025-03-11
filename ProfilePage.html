@@ -13,7 +13,8 @@
         margin: 0 auto;
         padding: 0;
         background: #e5e5e5;}
-
+button{ background: none;
+border: none;}
 
     </style>
 </head>
@@ -25,15 +26,13 @@
         <div class="nav-container">
             <nav>
                 <ul class="nav-links">
-                    <li><a href="#"> Home </a></li>
-                    <li><a href="#"> Contact Us </a></li>
-                    <li><a href="#"> Explore </a></li>
+                    <li class="homepage-link"><a href="#">Home</a></li>
+                    <li class="contact-link"><a href="#">Contact Us</a></li>
+                    <li class="explore-link"><a href="#">Explore</a></li>
                 </ul>
             </nav>
             <div class="language-switch" onclick="toggleLanguage()">🌐 Language</div>
         </div>
-
-        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
     </header>
 
     
@@ -49,9 +48,10 @@
             </div>
             
         </div>
-        <div class="edit-icon">
-            <i class="fas fa-edit"></i>
-        </div>
+        <button>
+            <img src="edit-btn.png" alt="edit icon" class="edit-btn1">
+            <span class="tooltip"> Edit Porfile </span>
+        </button>
     </section>
     
     <section class="content">
@@ -62,55 +62,305 @@
         <div class="bookings">
             <h3>My Bookings</h3>
             <div class="timeline">
-                <img src="your-image.jpg" alt="Description of Image" class="container-image">
-                <div class="event"><span>Workshop 1</span><p>12 May 2025</p></div>
-                <div class="event"><span>Workshop 2</span><p>12 May 2025</p></div>
-                <div class="event"><span>Workshop 3</span><p>12 May 2025</p></div>
-                <div class="event"><span>Workshop 4</span><p>12 May 2025</p></div>
-                <div class="event"><span>Workshop 5</span><p>12 May 2025</p></div>
+                <img src="timeline.png" alt="timeline pic" class="booking-image">
+                <div class="event-photo1"> </div>
+                <div class="event-photo2"> </div>
+                <div class="event-photo3"> </div>
+                <div class="event-photo4"> </div>
+                <div class="event-photo5"> </div>
+                <div class="event1"><span>Workshop 1</span><p>12 May 2025</p></div>
+                <div class="event2"><span>Workshop 2</span><p>20 April 2025</p></div>
+                <div class="event3"><span>Workshop 3</span><p>07 April 2025</p></div>
+                <div class="event4"><span>Workshop 4</span><p>10 March 2025</p></div>
+                <div class="event5"><span>Workshop 5</span><p>08 February 2025</p></div>
             </div>
         </div>
     </section>
     
-    <section class="bottom-section">
+    
+        <div class="title-addbtn">
         <div class="experiences">
-            <h3>My Experiences</h3>
+            <h3>My Experiences 
+                <button class="add-post-btn2">
+                    <img src="add-post-btn.png" alt="Add Post">
+                    <span class="tooltip">Add New Post</span>
+                </button> <!-- Add button for adding a new post -->
+            </h3>  </div> </div>
+           
+
+        <section class="bottom-section">
+    
             <div class="experience-cards">
-                <div class="card">
-                    <div class="image-placeholder"></div>
+
+    <!-- Arrows -->
+    <span id="left-arrow" class="arrow" onclick="toggleVisibility('left')">←</span>
+
+                <div class="card first-card" >
+                    <div class="image-placeholder1"></div>
+                    <div class="post-name"> Workshop 1</div>
                     <div class="card-content">
-                        <p><strong>Reema</strong></p>
-                        <p>The best workshop ever! I enjoyed it a lot, definitely would come again</p>
+                        <div class="profile">
+                            <div class="user-circle1"></div>
+                            <p><strong>Reema</strong></p>
+                        </div>
+                        <p class="experience-text">The best workshop ever! I enjoyed it a lot, definitely would come again.</p>
                     </div>
-                    <div class="card-icons">
-                        <i class="fas fa-edit"></i>
-                        <i class="fas fa-trash"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="wishlist">
-            <h3>WISHLIST</h3>
-            <div class="wishlist-items">
-                <div class="wishlist-item">
-                    <div class="wishlist-img"></div>
-                    <div class="wishlist-info">
-                        <p>Workshop 1</p>
-                        <p>120 SR</p>
-                        <button>Book Now</button>
-                        <i class="fas fa-star"></i>
+                    <div class="post-btn">
+                        <button class="edit-btn">
+                            <img src="edit-btn.png" alt="Edit">
+                            <span class="tooltip">  Edit Post </span>
+                        </button>
+                        <button class="delete-btn">
+                            <img src="trash-btn.png" alt="Delete">
+                            <span class="tooltip">  Delete Post </span>
+                        </button>
                     </div>
                 </div>
-            </div>
-        </div>
+            
+                
+                <div class="card">
+                    <div class="image-placeholder2"></div>
+                    <div class="post-name"> Workshop 2</div>
+                    <div class="card-content">
+                        <div class="profile">
+                            <i class="user-circle2"></i>
+                            <p><strong>Reema</strong></p>
+                        </div>
+                        <p class="experience-text">An amazing experience, I learned a lot and had fun.The instructor is the best </p>
+                    </div>
+                    <div class="post-btn">
+                        <button class="edit-btn">
+                            <img src="edit-btn.png" alt="Edit">
+                            <span class="tooltip">  Edit Post </span>
+                        </button>
+                        <button class="delete-btn">
+                            <img src="trash-btn.png" alt="Delete">
+                            <span class="tooltip">  Delete Post </span>
+                        </button>
+                    </div>
+                </div>
+    
+                <div class="card">
+                    <div class="image-placeholder3"></div>
+                    <div class="post-name"> Workshop 3</div>
+                    <div class="card-content">
+                        <div class="profile">
+                            <i class="user-circle3"></i>
+                            <p><strong>Reema</strong></p>
+                        </div>
+                        <p class="experience-text">Highly recommend this Activity to everyone especially with your friends</p>
+                    </div>
+                    <div class="post-btn">
+                        <button class="edit-btn">
+                            <img src="edit-btn.png" alt="Edit">
+                            <span class="tooltip">  Edit Post </span>
+                        </button>
+                        <button class="delete-btn">
+                            <img src="trash-btn.png" alt="Delete">
+                            <span class="tooltip">  Delete Post </span>
+                        </button>
+                    </div>
+                </div>
+    
+                <!-- arrows--> 
+                <span id="right-arrow" class="arrow" onclick="toggleVisibility('right')">→</span>
+                
+                <div class="card fourth-card">
+                    <div class="image-placeholder4"></div>
+                    <div class="post-name"> Workshop 4</div>
+                    <div class="card-content">
+                        <div class="profile">
+                            <i class="user-circle4"></i>
+                            <p><strong>Reema</strong></p>
+                        </div>
+                        <p class="experience-text">such a unique experience! Everyone has to try this at least once </p>
+                    </div>
+                    <div class="post-btn">
+                        <button class="edit-btn">
+                            <img src="edit-btn.png" alt="Edit">
+                            <span class="tooltip">  Edit Post </span>
+                        </button>
+                        <button class="delete-btn">
+                            <img src="trash-btn.png" alt="Delete">
+                            <span class="tooltip">  Delete Post </span>
+                        </button>
+                    </div>
+                </div>
+                
+                    </div>
+                
+                    <div class="wishlist">
+                        <h3 style="text-align: center; margin-bottom: 6px;">WISHLIST</h3>
+                        <hr class="wishlist-divider">
+                    
+                        <div class="wishlist-items">
+                            <!-- Start of wishlist item -->
+                            <div class="wishlist-item">
+                                <div class="wishlist-img">
+                                    <img src="image2.jpg" alt="Workshop Image">
+                                </div>
+                                <div class="wishlist-info">
+                                    <p class="workshop-name">Sahara Desert</p>
+                                    <div class="price-section">
+                                        <p class="price">250</p>
+                                        <img src="riyal.png" alt="SR" class="currency-icon">
+                                    </div>
+                                    <div class="wishlist-actions">
+                                        <button class="book-now"> Book Now </button>
+                                        <button class="wishlist-star">
+                                            <img src="filled-star.png" alt="Favorite">
+                                            <span class="tooltip">Remove Favorite</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="wishlist-divider">
+                    
+                            <!-- 2nd wishlist -->
+                            <div class="wishlist-item">
+                                <div class="wishlist-img">
+                                    <img src="image5.jpg" alt="Workshop Image">
+                                </div>
+                                <div class="wishlist-info">
+                                    <p class="workshop-name">Canvas Creations</p>
+                                    <div class="price-section">
+                                        <p class="price">80</p>
+                                        <img src="riyal.png" alt="SR" class="currency-icon">
+                                    </div>
+                                    <div class="wishlist-actions">
+                                        <button class="book-now"> Book Now </button>
+                                        <button class="wishlist-star">
+                                            <img src="filled-star.png" alt="Favorite">
+                                            <span class="tooltip">Remove Favorite</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="wishlist-divider">
+                    
+                            <!-- 3rd wishlist -->
+                            <div class="wishlist-item">
+                                <div class="wishlist-img">
+                                    <img src="image1.jpg" alt="Workshop Image">
+                                </div>
+                                <div class="wishlist-info">
+                                    <p class="workshop-name">The Art of Pottery</p>
+                                    <div class="price-section">
+                                        <p class="price">120</p>
+                                        <img src="riyal.png" alt="SR" class="currency-icon">
+                                    </div>
+                                    <div class="wishlist-actions">
+                                        <button class="book-now"> Book Now </button>
+                                        <button class="wishlist-star">
+                                            <img src="filled-star.png" alt="Favorite">
+                                            <span class="tooltip">Remove Favorite</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="wishlist-divider">
+                    
+                            <!-- 4th wishlist -->
+                            <div class="wishlist-item">
+                                <div class="wishlist-img">
+                                    <img src="image4.jpg" alt="Workshop Image">
+                                </div>
+                                <div class="wishlist-info">
+                                    <p class="workshop-name">Tarifa</p>
+                                    <div class="price-section">
+                                        <p class="price">450</p>
+                                        <img src="riyal.png" alt="SR" class="currency-icon">
+                                    </div>
+                                    <div class="wishlist-actions">
+                                        <button class="book-now"> Book Now </button>
+                                        <button class="wishlist-star">
+                                            <img src="filled-star.png" alt="Favorite">
+                                            <span class="tooltip">Remove Favorite</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="wishlist-divider">
+                    
+                            <!-- 5th wishlist -->
+                            <div class="wishlist-item">
+                                <div class="wishlist-img">
+                                    <img src="workshops/workshop6.jpeg" alt="Workshop Image">
+                                </div>
+                                <div class="wishlist-info">
+                                    <p class="workshop-name">Dough & Fire</p>
+                                    <div class="price-section">
+                                        <p class="price">90</p>
+                                        <img src="riyal.png" alt="SR" class="currency-icon">
+                                    </div>
+                                    <div class="wishlist-actions">
+                                        <button class="book-now"> Book Now </button>
+                                        <button class="wishlist-star">
+                                            <img src="filled-star.png" alt="Favorite">
+                                            <span class="tooltip">Remove Favorite</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="wishlist-divider">
+                        </div>
+                    </div>
+                    
+                    
+
     </section>
+    <button class="view-all-btn">View All 
+        <span class="tooltip"> View All Posts</span>
+    </button>
     
     <footer>
         &copy; 2025 mehar.com
     </footer>
     <script>
-       functio
+       
     
+       function toggleVisibility(direction) {
+    const newPostContainer = document.querySelector('.fourth-card');
+    const firstCard = document.querySelector('.first-card');
+    const leftArrow = document.getElementById('left-arrow');
+    const rightArrow = document.getElementById('right-arrow');
 
+    if (direction === 'left') {
+        // If the left arrow is clicked, toggle content visibility
+        if (newPostContainer.style.display === 'none') {
+            newPostContainer.style.display = 'block'; // Show the new post form
+            firstCard.style.display = 'none'; // Hide the first card
+            rightArrow.style.display = 'none'; // Hide right arrow
+            leftArrow.style.display = 'block'; // Show left arrow
+        } else {
+            newPostContainer.style.display = 'none'; // Hide the new post form
+            firstCard.style.display = 'block'; // Show the first card
+            leftArrow.style.display = 'none'; // Hide left arrow
+            rightArrow.style.display = 'block'; // Show right arrow
+        }
+    } else if (direction === 'right') {
+        // If the right arrow is clicked, toggle content visibility
+        if (firstCard.style.display === 'none') {
+            firstCard.style.display = 'block'; // Show first card
+            newPostContainer.style.display = 'none'; // Hide new post form
+            leftArrow.style.display = 'none'; // Hide left arrow
+            rightArrow.style.display = 'block'; // Show right arrow
+        } else {
+            firstCard.style.display = 'none'; // Hide the first card
+            newPostContainer.style.display = 'block'; // Show new post form
+            rightArrow.style.display = 'none'; // Hide right arrow
+            leftArrow.style.display = 'block'; // Show left arrow
+        }
+    }
+}
+
+window.addEventListener('load', () => {
+    document.querySelectorAll('.wishlist-img').forEach((img) => {
+        img.classList.add('loaded');
+    });
+});
+
+
+        </script>
 </body>
 </html>
