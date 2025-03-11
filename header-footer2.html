@@ -6,91 +6,50 @@
     <title>homePage</title>
     <link rel="stylesheet" href="styles.css">
     <script defer src="script.js"></script>
-
-    
-
 </head>
 <body>
-    <div class="header">
-        <div class="logo">
-            <img src="workshops/logo.png" alt="Logo">
+<!-- navbar.html -->
+<div class="nav">
+    <span><a href="homePage.html">Home</a></span>
+    <span><a href="Explore.html">Explore</a></span>
+    <span><a href="ProfilePage.html">Profile Page</a></span>
+    <span><a href="#footer">Contact Us</a></span>
+    <span><div class="language-switch" onclick="toggleLanguage()">🌐 Language</div></span>
+</div>
+
+
+<!-- footer.html -->
+<footer class="footer" id="footer">
+    <div class="footer-content">
+        <div class="footer-left">
+            <h4>Get In Touch</h4>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <img src="/IT320Project/workshops/360_F_553663238_v4Tva6Ie5Z5MhwCw0TknszcWuQ1ZAwQx.png" alt="Phone">
+                </div>
+                <div class="contact-item">
+                    <img id="email" src="/IT320Project/workshops/360_F_181003490_CxW4fQ0H3VypIIsPkFGpMDviO8ysWjOZ.png" alt="Email">
+                </div>
+                <div class="contact-item">
+                    <img id="location" src="/IT320Project/workshops/360_F_254622588_6OClHyYpak64rVI8y9QVjUvDlStsDEu9.png" alt="Location">
+                </div>
+            </div>
         </div>
-        <div class="nav">
-            <span>Home</span>
-            <span>Explore</span>
-            <span>Booking History</span>
-            <span>Contact Us</span>
-            <span><div class="language-switch" onclick="toggleLanguage()">🌐 Language</div></span>
+        <div class="footer-right">
+            <h4>Follow Us</h4>
+            <div class="social-icons">
+                <img id="facebook" src="/IT320Project/workshops/black-square-outline-facebook-icon-7017516951347228u34mgnk68.png" alt="Facebook">
+                <img src="/IT320Project/workshops/twitter-icon-256x227-kf6zqma5.png" alt="Twitter">
+                <img src="/IT320Project/workshops/121.png" alt="Instagram">
+            </div>
         </div>
     </div>
-   
-   
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-left">
-                <h4>Get In Touch</h4>
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <img src="/IT320Project/workshops/360_F_553663238_v4Tva6Ie5Z5MhwCw0TknszcWuQ1ZAwQx.png" alt="Phone">
-                    </div>
-                    <div class="contact-item">
-                        <img id="email" src="/IT320Project/workshops/360_F_181003490_CxW4fQ0H3VypIIsPkFGpMDviO8ysWjOZ.png" alt="Email">
-                    </div>
-                    <div class="contact-item">
-                        <img id="location" src="/IT320Project/workshops/360_F_254622588_6OClHyYpak64rVI8y9QVjUvDlStsDEu9.png" alt="Location">
-                    </div>
-                </div>
-            </div>
-            <div class="footer-right">
-                <h4>Follow Us</h4>
-                <div class="social-icons">
-                    <img id="facebook" src="/IT320Project/workshops/black-square-outline-facebook-icon-7017516951347228u34mgnk68.png" alt="Facebook">
-                    <img src="/IT320Project/workshops/twitter-icon-256x227-kf6zqma5.png" alt="Twitter">
-                    <img src="/IT320Project/workshops/121.png" alt="Instagram">
-                </div>
-            </div>
-        </div>
-        <div class="footer-center">
-            <p>© 2024 Website. All rights reserved.</p>
-        </div>
-    </footer>
-    <script>
-   
-    // Toggle Language function
-      function toggleLanguage() {
-    let htmlTag = document.documentElement;
-    let navLinks = document.querySelectorAll(".nav-links li a");
-    let menuLinks = document.querySelectorAll(".menu ul li a");
-    let loginSignupButton = document.getElementById("login-signup");
-
-    if (htmlTag.lang === "en") {
-        htmlTag.lang = "ar";
-        htmlTag.dir = "rtl";
-
-        document.querySelector(".language-switch").textContent = "🌐 اللغة";
-
-        navLinks[0].textContent = "اتصل بنا";
-        navLinks[1].textContent = "استكشاف";
-        navLinks[2].textContent = "تسجيل الدخول/التسجيل"; // تغيير النص في اللينك
-
-        menuLinks[0].textContent = "اتصل بنا";
-        menuLinks[1].textContent = "استكشاف";
-        menuLinks[2].textContent = "تسجيل الدخول/التسجيل"; // تغيير النص في القائمة
-       
-        loginSignupButton.textContent = "تسجيل الدخول/التسجيل"; // تغيير النص في الزر
-
-    } else {
-        location.reload();
-    }
-}
+    <div class="footer-center">
+        <p>© 2024 Website. All rights reserved.</p>
+    </div>
+</footer>
 
 
-function toggleMenu() {
-    document.querySelector(".menu").classList.toggle("active");
-}
-
-
-</script>
 </body>
 </html>
 
