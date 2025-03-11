@@ -6,6 +6,8 @@
     <title>homePage</title>
     <link rel="stylesheet" href="styles.css">
     <script defer src="script.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body class="no-background ">
 
@@ -16,8 +18,8 @@
             <nav>
                 <ul class="nav-links">
                     <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Explore page</a></li>
-                    <li><a href="logIn.html" class="login-signup" id="login-signup">Login/Signup</a></li> 
+                    <li><a href="Explore.html">Explore page</a></li>
+                    <li><a href="log-in.html" class="login-signup" id="login-signup">Login/Signup</a></li> 
                 </ul>
             </nav>
             <div class="language-switch" onclick="toggleLanguage()">🌐 Language</div>
@@ -29,36 +31,35 @@
     <div class="menu">
         <ul>
             <li><a href="#">Contact Us</a></li>
-            <li><a href="#">Explore page</a></li>
-            <li><a href="logIn.html" class="login-signup">Login/Signup</a></li> 
+            <li><a href="Explore.html">Explore page</a></li>
+            <li><a href="log-in.html" class="login-signup">Login/Signup</a></li> 
         </ul>
     </div>
-    
     <div class="container2" id="container2" style="background-image: url('image1.jpg');">
         <div class="description" id="description">
-            <h1>Japan Alps</h1>
-            <p>Nagano Prefecture</p>
+            <h1>Pottery</h1>
+            <p>Crafting clay into beautiful shapes</p>
         </div>
         
         <div class="thumbnails" id="thumbnails">
-            <div class="thumbnail" data-image="image1.jpg" data-title="Japan Alps" data-description="Nagano Prefecture">
-                <img src="image1.jpg" alt="Japan Alps">
-                <h3>Japan Alps</h3>
+            <div class="thumbnail" data-image="image1.jpg" data-title="Pottery" data-description="Crafting clay into unique and artistic shapes">
+                <img src="image1.jpg" alt="Pottery">
+                <h3>Pottery</h3>
             </div>
-            <div class="thumbnail" data-image="image2.jpg" data-title="Sahara Desert" data-description="Marrakech Merzouga">
-                <img src="image2.jpg" alt="Sahara Desert">
-                <h3>Sahara Desert</h3>
+            <div class="thumbnail" data-image="workshops/workshop3.jpeg" data-title="Painting" data-description="Hand-painting and decorating ceramic pieces with creative designs">
+                <img src="workshops/workshop3.jpeg" alt="Painting">
+                <h3>Painting</h3>
             </div>
-            <div class="thumbnail" data-image="image3.jpeg" data-title="Yosemite" data-description="National Park">
-                <img src="image3.jpeg" alt="Yosemite">
-                <h3>Yosemite</h3>
+            <div class="thumbnail" data-image="workshops/workshop2.jpeg" data-title="Pizza Making" data-description="Mixing fresh ingredients to prepare homemade pizza from scratch">
+                <img src="workshops/workshop2.jpeg" alt="Pizza Making">
+                <h3>Pizza Making</h3>
             </div>
-            <div class="thumbnail" data-image="image4.jpg" data-title="Tarifa" data-description="Los Lances Beach">
-                <img src="image4.jpg" alt="Tarifa">
-                <h3>Tarifa</h3>
+            <div class="thumbnail" data-image="image4.jpg" data-title="Stargazing" data-description="Observing stars and constellations to explore the wonders of the universe">
+                <img src="image4.jpg" alt="Stargazing">
+                <h3>Stargazing</h3>
             </div>
         </div>
-        
+    </div>
         <div class="navigation">
             <button class="arrow" id="prev">&larr;</button>
             <div class="image-counter">
@@ -67,9 +68,133 @@
             <button class="arrow" id="next">&rarr;</button>
         </div>
     </div>
-    <br><br><br><br>
+    
+    <section id="about" class="about-section">
+        <div class="header-about-container">
+            <div class="header-about">
+                <div class="header-content-about">
+                    <h1>
+                        <span>Welcome to</span>
+                        <span class="outline-text">Mehar</span>
+                    </h1>
+                    <p class="quote">“Your gateway to discovering new workshops and experiences.”</p>
+                </div>
+            </div>
+    
+            <div class="about-content">
+                <div class="about-description">
+                    <p>
+                        Mehar is your ultimate platform to discover and book workshops tailored to your interests. Whether you are eager to learn a new skill or dive deeper into a hobby, we offer personalized recommendations that match your preferences. Take a quick survey to explore workshops that suit you best and enjoy seamless booking management.
+                    </p>
+                    <p class="survey">
+                        Ready to find the perfect workshop for you? Click the link below to take the survey and get personalized suggestions!
+                    </p>
+                    <br>
+                    <a href="Survey.html" class="about-btn">Take the Survey</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="cont-reviws">
+        <h2 id="cli">Patient Testimonials</h2>
+        <div class="reviews">
+            <div class="carousel-item left">
+                <img src="profile-picture.jpg" alt="Client">
+                <h3>Lina Al-Zahrani</h3>
+                <pre>
+                  "This platform made it easy for me to find new experiences to explore. 
+                   The process was simple, and I loved how I could find workshops that
+                    matched my personal goals and interests. Highly recommended!" </pre>
+        <br>
+        <p class="stars">★★★★★</p>
+              </div>
+              <div class="carousel-item active">
+                <img src="profile-picture.jpg" alt="Client">
+                <h3>Sarah Al-Najjar</h3>
+                <pre>
+                   "I had an amazing experience exploring new workshops
+                    through this platform.From the personalized recommendations
+                    to the seamless booking process, I felt truly supported every
+                    step of the way. The workshop I attended exceeded my expectations!"</pre>
+        <br>
+        <p class="stars">★★★★☆</p>
+              </div>
+              <div class="carousel-item right">
+                <img src="profile-picture.jpg" alt="Client">
+                <h3>Mohammed Al-Saeed</h3>
+                <pre>
+                    "This platform has made it so easy for me to discover workshops 
+                     that suit my interests. I never knew there were so many exciting
+                     opportunities to learn and grow.The experience was easy to navigate
+                     and truly enjoyable!" </pre>
+        <br>
+        <p class="stars">★★★★★</p>
+              </div>
+              <div class="carousel-item">
+                <img src="profile-picture.jpg" alt="Client">
+                <h3>Ayesha Al-Qhtani</h3>
+                <pre>
+                    "What really stood out for me was how the platform took the time
+                     to recommend workshops based on my personal interests. I felt like
+                     the experience was customized to my needs,and I learned so much!"</pre>
+        <br>
+        <p class="stars">★★★★★</p>
+              </div>
+              <div class="carousel-item">
+                <img src="profile-picture.jpg" alt="Client">
+                <h3>Khaled Al-Otaibi</h3>
+                <pre>
+                    "I was looking for workshops that would help me improve my skills 
+                     and I found just what I needed.The recommendations were spot on
+                     and the whole process was so easy to follow.I’m excited to book
+                     more workshops in the future!" </pre>
+        <br>
+        <p class="stars">★★★★☆</p>
+              </div>
+              
+        </div>    
+    </section>
+    <br>
+   
     <footer>
-        &copy; 2025 mehar.com
+        <div class="footer-left-1">
+            <h4>Get In Touch</h4>
+            <div class="contact-info-1" id="contact-us">
+                <div class="contact-item-1">
+                    <img src="phone1.png" alt="Phone Icon">
+                    <span class="single-line-1">+996 58765 43210</span>
+                </div>
+                <div class="contact-item-1">
+                    <img src="mail-icon.png" alt="Email Icon">
+                    <span class="single-line-1">mehar@gmail.com</span>
+                </div>
+                <div class="contact-item-1">
+                    <img src="location1.png" alt="Location Icon">
+                    <span class="single-line-1">Saudi Arabia</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-center-1">
+            <a href="index.html">
+            <img src="logo.png" alt="Logo" class="footer-logo-1 logo-toggle">
+        </a>
+        </div>
+        
+        <div class="footer-right-1" id="contact">
+            <p><strong>Social media</strong></p>
+            <div class="social-icons-1">
+                
+                <img src="facebook1.png" alt="Facebook">
+                <img src="X1.png" alt="Twitter">
+                <img src="instagram1.png" alt="Instagram">
+                <img src="linkedin1.png" alt="LinkedIn">
+            </div>
+        </div>
+        
+        <div class="footer-bottom-1">
+            <p>© 2024 Website. All rights reserved.</p>
+        </div>
     </footer>
     <script>
     const container = document.getElementById("container2");
@@ -158,6 +283,57 @@
 function toggleMenu() {
     document.querySelector(".menu").classList.toggle("active");
 }
+
+
+(function reviewsCarousel() {
+  const carouselItems = document.querySelectorAll(".carousel-item");
+  let activeIndex = 1; 
+
+  function updateReviewsCarousel() {
+    carouselItems.forEach((item, index) => {
+      item.classList.remove("active", "left", "right", "hidden");
+
+      if (index === activeIndex) {
+        item.classList.add("active");
+      } else if (index === (activeIndex - 1 + carouselItems.length) % carouselItems.length) {
+        item.classList.add("left");
+      } else if (index === (activeIndex + 1) % carouselItems.length) {
+        item.classList.add("right");
+      } else {
+        item.classList.add("hidden");
+      }
+    });
+  }
+
+  function nextReview() {
+    activeIndex = (activeIndex + 1) % carouselItems.length;
+    updateReviewsCarousel();
+  }
+
+  function prevReview() {
+    activeIndex = (activeIndex - 1 + carouselItems.length) % carouselItems.length;
+    updateReviewsCarousel();
+  }
+
+  function handleClick(event) {
+    const clickedIndex = [...carouselItems].indexOf(event.currentTarget);
+    if (clickedIndex !== activeIndex) {
+      activeIndex = clickedIndex;
+      updateReviewsCarousel();
+    }
+  }
+
+  let autoScroll = setInterval(nextReview, 2000);
+
+  carouselItems.forEach((item) => {
+    item.addEventListener("click", handleClick);
+    item.addEventListener("mouseover", () => clearInterval(autoScroll));
+    item.addEventListener("mouseleave", () => autoScroll = setInterval(nextReview, 5000));
+  });
+
+  updateReviewsCarousel();
+})();
+
 
 </script>
 </body>
