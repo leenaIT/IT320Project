@@ -12,6 +12,19 @@
             background: #FFFDF0;
         }
 
+        .logo {
+    position: absolute;
+    top: 0px;
+    left: 20px;
+    padding: 8px;
+}
+
+.logo img {
+    width: 100px; /* ضبط الحجم */
+    height: auto;
+}
+
+
         .header {
             position: relative;
             width: 100%;
@@ -79,10 +92,10 @@
             animation-delay: 1s; /* تأخير ظهور "DESSERT" */
         }
 
-        @keyframes fadeInUp {
+        @keyframes fadeInUp { 
             to {
-                opacity: 1; /* إظهار النص */
-                transform: translateY(0); /* إعادة النص إلى موضعه الأصلي */
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
@@ -98,8 +111,8 @@
             color: #f4d47c;
             margin-top: 15px;
             font-size: 20px;
-            opacity: 0; /* إخفاء النص في البداية */
-            animation: fadeIn 2s ease-out 1.5s forwards; /* تأخير ظهور الاقتباس */
+            opacity: 0; 
+            animation: fadeIn 2s ease-out 1.5s forwards; 
         }
 
         @keyframes fadeIn {
@@ -152,15 +165,18 @@
 
 .grid-item h3 {
     font-family: 'Montserrat', sans-serif;
-    margin: 10px 0 5px;
+    margin: 10px 5px 5px 5px; 
     font-size: 16px;
     color: #333;
+    text-align: center;
 }
 
 .grid-item p {
     font-size: 14px;
     color: #555;
     margin: 5px 15px;
+    text-align: center;
+
 }
 
 .grid-item .details {
@@ -204,31 +220,189 @@
             padding: 10px;
             margin-top: 20px;
         }
-
-        .filter-container {
+ .search-container {
     display: flex;
-    gap: 15px;
+    align-items: center;
     justify-content: center;
-    margin-bottom: 30px;
-    padding-top: 20px;
+    gap: 40px; /* زيادة المسافة بين البحث والفلتر */
 }
 
-.filter-container select {
-    padding: 8px 12px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    font-family: 'Montserrat', sans-serif;
+.search-input-container {
+    position: relative;
+    width: 550px; /* تأكدي من عرض مناسب */
 }
+
+.search-input {
+    padding: 10px 40px 10px 10px; /* ترك مساحة للأيقونة */
+    width: 100%;
+    height: 50px; /* زيادة ارتفاع مربع البحث */
+    border-radius: 8px;
+    border: solid gray 1.3px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px; /* تحسين وضوح النص */
+}
+
+.filter-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px; /* جعله متناسقًا مع مربع البحث */
+}
+
+.filter-icon {
+    width: 40px !important; /* تكبير الأيقونة */
+    height: 50px !important; /* تكبير الأيقونة */
+    object-fit: contain;
+
+}
+
+.search-icon, .filter-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.search-icon {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px; /* تكبير الأيقونة */
+    height: 24px;
+    cursor: pointer;
+}
+
+
+.filter-icon {
+    position: static; /* لزر الفلتر يجب عدم استخدام absolute */
+}
+
+
+
+.filter-btn {
+    background-color: transparent; /* Remove background color */
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-left: 20px; /* Add space between search box and filter button */
+}
+
+   .filter-box {
+            background-color: #282869;
+            padding: 15px;
+            border-radius: 10px;
+            width: 350px;
+            margin: 0 auto;
+            display: none;
+        }
+        .filter-box select,
+        .filter-box input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+        .filter-box label {
+            margin-bottom: 5px;
+            display: block;
+        }
+        .filter-action {
+            text-align: center;
+        }
+        .footer {
+    background: #ffb936; /* لون الخلفية */
+    color: white;
+    padding: 0px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px; /* عرض الفوتر */
+}
+
+.footer-left, .footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.contact-item img, 
+.social-icons img {
+    width: 28px; /* حجم موحد */
+    height: 28px;
+    object-fit: contain; /* ضمان عدم تشوه الأيقونات */
+}
+
+
+.contact-info, .social-icons {
+    display: flex;
+    flex-direction: row; /* ترتيب الأيقونات بشكل أفقي */
+    gap: 20px; /* المسافة بين الأيقونات */
+    align-items: center; /* محاذاة العناصر */
+}
+
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.contact-item img, .social-icons img {
+    width: 30px; /* حجم الأيقونة */
+    height: 30px;
+    cursor: pointer;
+}
+#facebook,#email,#lacation{
+    width: 40px; /* حجم الأيقونة */
+    height: 40px;   
+}
+
+.footer-center {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+
+.filter-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+
 
     </style>
 </head>
 <body>
     <div class="header">
-        <div class="nav">
+        <div class="logo">
+            <img src="workshops/logo.png" alt="Logo">
+        </div>
+                <div class="nav">
             <span>Home</span>
             <span>Explore</span>
             <span>Booking History</span>
             <span>Contact Us</span>
+            <span><div class="language-switch" onclick="toggleLanguage()">🌐 Language</div></span>
+
         </div>
         <div class="header-content">
             <h1>
@@ -239,24 +413,51 @@
         </div>
     </div>
     <div class="container">
-        <h2>Workshops</h2>
-        <div class="filter-container">
-            <select id="locationFilter">
-                <option value="">كل المدن</option>
-                <option value="الرياض">الرياض</option>
-                <option value="جدة">جدة</option>
-                <option value="الدمام">الدمام</option>
-                <option value="الطائف">الطائف</option>
+        <div class="search-container">
+            <div class="search-input-container">
+                <input type="text" class="search-input" placeholder="! ابحث عن اهتمامك ">
+                <img src="/IT320Project/workshops/360_F_558272798_DNqj4q2TXE7EsDM9Zp2wdyap8gzatwlF.webp" alt="Search Icon" class="search-icon">
+            </div>
+            <button class="filter-btn" onclick="toggleFilterBox()">
+                <img src="/IT320Project/workshops/Adobe Express - file.png" alt="Filter Icon" class="filter-icon">
+            </button>
+        </div>
+        
+        </div>
+        
+        
+        <div class="filter-box" id="filterBox">
+            <label for="price">السعر:</label>
+            <select id="price">
+                <option>الكل</option>
+                <option>أقل من 150 ريال</option>
+                <option>150 - 200 ريال</option>
+                <option>200 ريال فأكثر</option>
             </select>
         
-            <input type="date" id="dateFilter">
-            
-            <select id="priceFilter">
-                <option value="">كل الأسعار</option>
-                <option value="100-150">أقل من 150 ريال</option>
-                <option value="150-200">150 - 200 ريال</option>
-                <option value="200">200 ريال فأكثر</option>
+            <label for="city">المدينة:</label>
+            <select id="city">
+                <option>الكل</option>
+                <option>الرياض</option>
+                <option>جدة</option>
+                <option>الدمام</option>
+                <option>الطائف</option>
             </select>
+        
+            <label for="date">التاريخ:</label>
+            <input type="date" id="date">
+        
+            <label for="type">نوع الورشة:</label>
+            <select id="type">
+                <option>الكل</option>
+                <option>أونلاين</option>
+                <option>حضوري</option>
+                <option>كلاهما</option>
+            </select>
+        
+            <div class="filter-action">
+                <button class="filter-btn">تطبيق</button>
+            </div>
         </div>
         
     
@@ -352,52 +553,43 @@
         
     </div>
 
-    <div class="footer">
-    </div>
-    <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const locationFilter = document.getElementById('locationFilter');
-    const priceFilter = document.getElementById('priceFilter');
-    const dateFilter = document.getElementById('dateFilter');
-    const items = document.querySelectorAll('.grid-item');
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- جهـة اليسار: معلومات الاتصال -->
+            <div class="footer-left">
+                <h4>Get In Touch</h4>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <img src="/IT320Project\workshops\360_F_553663238_v4Tva6Ie5Z5MhwCw0TknszcWuQ1ZAwQx.png" alt="Phone">
+                    </div>
+                    <div class="contact-item">
+                        <img id="email"src="/IT320Project\workshops\360_F_181003490_CxW4fQ0H3VypIIsPkFGpMDviO8ysWjOZ.png" alt="Email">
+                    </div>
+                    <div class="contact-item">
+                        <img id="lacation"src="/IT320Project\workshops\360_F_254622588_6OClHyYpak64rVI8y9QVjUvDlStsDEu9.png" alt="Location">
+                    </div>
+                </div>
+            </div>
+    
+            <!-- جهـة اليمين: مواقع التواصل الاجتماعي -->
+            <div class="footer-right">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <img id="facebook"src="/IT320Project/workshops/black-square-outline-facebook-icon-7017516951347228u34mgnk68.png" alt="Facebook">
+                    <img src="/IT320Project\workshops\twitter-icon-256x227-kf6zqma5.png" alt="Twitter">
+                    <img src="/IT320Project\workshops\121.png" alt="Instagram">
+                </div>
+            </div>
+        </div>
+    
+        <!-- حقوق النشر في الأسفل -->
+        <div class="footer-center">
+            <p>© 2024 Website. All rights reserved.</p>
+        </div>
+    </footer>
+    
 
-    function filterItems() {
-        const location = locationFilter.value;
-        const price = priceFilter.value;
-        const date = dateFilter.value;
 
-        items.forEach(item => {
-            const itemLocation = item.getAttribute('data-location');
-            const itemPrice = parseInt(item.getAttribute('data-price'));
-            const itemDate = item.getAttribute('data-date');
 
-            let locationMatch = location === '' || itemLocation === location;
-
-            let priceMatch = false;
-            if (price === "") {
-                priceMatch = true;
-            } else if (price === '200') {
-                priceMatch = itemPrice >= 200;
-            } else if (price === '150-200') {
-                priceMatch = itemPrice >= 150 && itemPrice < 200;
-            } else if (price === '100-150') {
-                priceMatch = itemPrice < 150;
-            }
-
-            let dateMatch = !date || itemDate === date;
-
-            if (locationMatch && priceMatch && dateMatch) {
-                item.style.display = '';
-            } else {
-                item.style.display = 'none';
-            }
-        });
-    }
-
-    locationFilter.addEventListener('change', filterItems);
-    priceFilter.addEventListener('change', filterItems);
-    dateFilter.addEventListener('change', filterItems);
-});
-</script>    
 </body>
 </html>
