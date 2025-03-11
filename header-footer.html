@@ -3,56 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>homePage</title>
     <link rel="stylesheet" href="styles.css">
     <script defer src="script.js"></script>
-</head>
-<body class="with-background " >
 
-    <header class="with-background ">
+</head>
+<body>
+
+    <header>
         <div class="logo"><img src="workshops/logo.png" alt="logo" height="80" width="80"></div>
         
         <div class="nav-container">
             <nav>
                 <ul class="nav-links">
-                    <li><a href="homePage.html"> Home </a></li>
-                    <li><a href="#"> Contact Us </a></li>
-                    <li><a href="Explore.html"> Explore page</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="Explore.html">Explore page</a></li>
+                    <li><a href="log-in.html" class="login-signup" id="login-signup">Login/Signup</a></li> 
                 </ul>
             </nav>
             <div class="language-switch" onclick="toggleLanguage()">🌐 Language</div>
         </div>
-
+    
         <div class="menu-toggle" onclick="toggleMenu()">☰</div>
     </header>
-
+    
     <div class="menu">
         <ul>
-            <li><a href="homePage.html">Home</a></li>
             <li><a href="#">Contact Us</a></li>
             <li><a href="Explore.html">Explore page</a></li>
+            <li><a href="log-in.html" class="login-signup">Login/Signup</a></li> 
         </ul>
     </div>
-
-    <main>
-        <div class="container">
-            <div class="logo-box"><img src="workshops/gif.gif" alt="logo" height="150" width="150"></div>
-            <div class="login-box">
-                <h2>Login to mehar.com</h2>
-                <form action="" method="">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="you@email.com" required>
-
-                    <label for="password">Password</label>
-                    <input type="password" id="password" required>
-                                        
-                    <button type="button" onclick="validateAndRedirect()">Login</button>
-                </form><br>
-                <p>Don't have an account? <a href="sign-up.html" class="sign-up-page">Create an account</a></p>
-            </div>
-        </div>
-    </main>
-
+   
+   
     <footer>
         <div class="footer-left-1">
             <h4>Get In Touch</h4>
@@ -94,30 +77,30 @@
         </div>
     </footer>
     <script>
+   
+    // Toggle Language function
       function toggleLanguage() {
     let htmlTag = document.documentElement;
     let navLinks = document.querySelectorAll(".nav-links li a");
     let menuLinks = document.querySelectorAll(".menu ul li a");
+    let loginSignupButton = document.getElementById("login-signup");
 
     if (htmlTag.lang === "en") {
         htmlTag.lang = "ar";
-        htmlTag.dir = "rtl"; 
+        htmlTag.dir = "rtl";
 
-        document.querySelector(".language-switch").textContent = " 🌐 اللغة  " ;
-        document.querySelector(".login-box h2").textContent = "تسجيل الدخول إلى mehar.com";
-        document.querySelector("label[for='email']").textContent = "البريد الإلكتروني";
-        document.querySelector("input#email").placeholder = "mehar@email.com";
-        document.querySelector("label[for='password']").textContent = "كلمة المرور";
-        document.querySelector("button").textContent = "تسجيل الدخول";
-        document.querySelector("p").innerHTML = "ليس لديك حساب؟ <a href='sign-up.html' class='sign-up-page'>إنشاء حساب</a>";
+        document.querySelector(".language-switch").textContent = "🌐 اللغة";
 
-        navLinks[0].textContent = "الرئيسية";
-        navLinks[1].textContent = "اتصل بنا";
-        navLinks[2].textContent = "استكشاف";
+        navLinks[0].textContent = "اتصل بنا";
+        navLinks[1].textContent = "استكشاف";
+        navLinks[2].textContent = "تسجيل الدخول/التسجيل"; // تغيير النص في اللينك
 
-        menuLinks[0].textContent = "الرئيسية";
-        menuLinks[1].textContent = "اتصل بنا";
-        menuLinks[2].textContent = "استكشاف";
+        menuLinks[0].textContent = "اتصل بنا";
+        menuLinks[1].textContent = "استكشاف";
+        menuLinks[2].textContent = "تسجيل الدخول/التسجيل"; // تغيير النص في القائمة
+       
+        loginSignupButton.textContent = "تسجيل الدخول/التسجيل"; // تغيير النص في الزر
+
     } else {
         location.reload();
     }
@@ -126,22 +109,6 @@
 
 function toggleMenu() {
     document.querySelector(".menu").classList.toggle("active");
-}
-
-
-function validateAndRedirect() {
-    let email = document.getElementById("email").value.trim();
-    let password = document.getElementById("password").value.trim();
-
-    if (email === "" || password === "") {
-        alert("Please fill in all fields before proceeding.");
-        return false; // Prevents redirection if fields are empty
-    }
-
-    // Redirect to profile page if validation passes
-    window.location.href = "ProfilePage.html";
-    
-    return false; // Ensures the page doesn't reload
 }
 
 

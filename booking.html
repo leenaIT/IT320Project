@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حجز الورشة</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+        body {
+            font-family:'Cairo', sans-serif;
+            text-align: center;
+            margin: 0;
+            background-color: #ffffff;
+            background: url('workshops/work1.jpg')  center center/cover;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            backdrop-filter: blur(5px);
+            
+        }
+
+        
+
+        .main-container {
+            display: flex;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            flex-direction: row-reverse; 
+        }
+
+        .booking-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            width: 75%; /* ثلاثة أرباع الصفحة */
+            background-color: #fffdf0ee;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            order: 1;
+            margin-right: 0; /* إزالة المسافة !!!!!!!*/
+            margin-top: 100px;
+            height: 750px;
+            text-align: right;
+            padding-right: 200px;
+        }
+
+        .booking-details {
+            text-align: right;
+            flex: 1;
+        }
+
+        .image-container {
+            position: relative;
+            width: 25%;
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 200px;
+            
+        }
+
+        img {
+            width: 120%; /* الصورة أكبر من المساحة */
+            height: 90%;
+            position: absolute;
+            top: 0;
+            left: -50%;
+            border-radius: 10px;
+        }
+
+        #sub {
+            background-color: #A6D0D1;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100px;
+        }
+
+        button:hover {
+            background-color: #c0e9eb88;
+        }
+
+        .time-button {
+            display: block;
+            background-color: #ffffff;
+            color: #333;
+            border: 1.5px solid #A6D0D1;
+            padding: 8px;
+            margin: 5px auto;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 20%;
+            height: 100%;
+        }
+
+        .time-button.selected {
+            background-color: #c0e9eb88;
+            color: white;
+            font-weight: bold;
+        }
+
+        #workshop-times {
+            display: flex;
+            gap: 5px;
+            margin-top: -15px;
+        }
+
+        #workshop-title {
+            text-align: center;
+            color:#125250;
+        }
+
+        #workshop-description {
+            text-align: center;
+        }
+
+        .pri {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .line {
+        width: 70%;
+        height: 1px;
+        background-color: #A6D0D1; /* تغيير اللون */
+        flex: 1;
+        margin-left: 135px;
+    }
+    .Lline {
+        width: 80%;
+        height: 1px;
+        background-color: #A6D0D1; /* تغيير اللون */
+        flex: 1;
+        margin-left: 100px;
+    }
+
+    #req{
+        width: 4%;
+        height: 5%;
+        margin-left: 110%;
+        margin-top: 28%;
+    }
+
+    #loc{
+        width: 16%;
+        height: 22%;
+        margin-left: 95%;
+        margin-top: 28.8%; 
+    }
+
+    #time{
+        width: 16%;
+        height: 22%;
+        margin-left: 75%;
+        margin-top: 29%; 
+    }
+
+    #age{
+        width: 16%;
+        height: 22%;
+        margin-left: 55%;
+        margin-top: 29%; 
+    }
+
+    #avaT{
+        width: 14%;
+        height: 18%;
+        margin-left: 104%;
+        margin-top: 40.5%; 
+    }
+
+    #workshop-requirements{
+        margin-right: 95px;
+    }
+
+    #work-loc{
+        margin-right: 145px;
+        margin-top: -9px;
+    }
+
+    #work-time{
+        margin-right: 425px;
+        margin-top: -135px;
+    }
+
+    #work-age{
+        margin-right: 700px;
+        margin-top: -75px;
+    }
+
+    #work-ava{
+        margin-right: 80px;
+        margin-top: -7px;
+    }
+
+    
+.carousel-item {
+    position: absolute;
+      width: 400px;
+      height: 250px;
+      opacity: 0.5;
+      transform: scale(0.8);
+      transition: all 0.5s ease;
+      text-align: center;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 87, 125, 0.2);
+      padding: 20px;
+
+      word-wrap: break-word; /* يقطع الكلمات الطويلة وينزلها سطر جديد */
+    box-sizing: border-box; /* يضمن أن الـ padding لا يزيد حجم المربع */
+  }
+
+  .carousel-item img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    position: absolute;
+    top: -30px;
+    left: 30px;
+    border: 4px solid #ffffff; 
+  }
+
+  .carousel-item h3 {
+    margin: 10px 0 5px;
+    font-size: 1.2em;
+    margin-top: 30px;
+    color: #53766a;
+  }
+
+ #st{
+    margin-top: -30px;
+ }
+
+  .carousel-item.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 3;
+    left: 50%;
+    transform: translateX(-50%) scale(1);
+  }
+
+  .carousel-item.left {
+    left: 1%;
+    transform: translateX(0) scale(0.8);
+    z-index: 2;
+  }
+
+  .carousel-item.right {
+    left: 67.5%;
+    transform: translateX(0) scale(0.8);
+    z-index: 2;
+  }
+
+  .carousel-item.hidden {
+    opacity: 0;
+    z-index: 1;
+    transform: scale(0.6);
+  }
+
+  .reviews {
+    position: relative;
+      width: 100%;
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      overflow: visible;
+}
+
+#cli {
+    font-size: 36px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #125250;
+    text-align: center;
+}
+
+
+
+.stars{
+color: #125250;
+text-align: right;
+margin-right: 20px;
+}
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="booking-container">
+            <h2 id="workshop-title">تشكيل الفخار</h2>
+            <p id="workshop-description"> اكتشف فن تشكيل الفخار وصنع الأواني اليدوية في ورشتنا الممتعة. تعلم كيفية تحويل الطين إلى قطع فنية باستخدام تقنيات التشكيل والتلوين، مع توجيه متخصصين. الورشة موجهة للمبتدئين وتمنحك الفرصة للتعبير عن إبداعك في بيئة مريحة.</p>
+            <div class="line"><p></p></div>
+            <p> <img id="req" src="workshops/req.png" alt=" "><span id="workshop-requirements">يفضل ارتداء ملابس لا تتأثر بالأوساخ</span></p>
+            <p id="work-loc"> <img id="loc" src="workshops/loc.png" alt=" " > <br><br>  الرياض </p>
+            <p id="work-time"> <img id="time" src="workshops/time.png" alt=" " > <br><br> 3 ساعات</p>
+            <p id="work-age"> <img id="age" src="workshops/age.png" alt=" " >+8 سنوات </p>
+            <div class="line"><p></p></div>
+
+            <h3 id="work-ava"> <img id="avaT" src="workshops/avaT.png" alt=" " >  الأوقات المتاحة :</h3>
+            <div id="workshop-times">
+                <button class="time-button" id="time1" onclick="selectTime('time1')" >السبت <br> 2025, 11 April <br> 15:00 - 18:00</button>
+                <button class="time-button" id="time2" onclick="selectTime('time2')">السبت <br> 2025, 11 April <br> 9:00 - 11:00</button>
+                <button class="time-button" id="time3" onclick="selectTime('time3')">الجمعة <br> 2025, 11 April <br>  13:00 - 15:00 </button>
+            </div>
+
+            <div class="pri">
+                <button id="sub" onclick="confirmBooking()">تأكيد الحجز</button>
+                <p><strong>السعر:</strong> <span id="workshop-price"></span> ريال</p>
+            </div>
+        </div>
+
+        <div class="image-container">
+            <img id="workshop-image" src="workshops/pottery.jpg " alt="صورة الورشة">
+        </div>
+    </div>
+
+    <br><br>
+    <h2 id="cli">آراء ملهمة</h2><br>
+<div class="reviews">
+    
+
+    <div class="carousel-item left">
+        <img src="مهار.jpg" alt="">
+        <h3>سما خالد</h3>
+        <p>
+"الورشة كانت رهيبة! الجو فيها كان مره حلو، والناس هنا ودودين.
+ تعلمت كيف أشتغل على الفخار بنفسي، كانت تجربة ممتعة
+  وما رح أندم عليها."</p>
+    <p class="stars">★★★★★</p>
+      </div>
+      <div class="carousel-item active">
+        <img src="مهار.jpg" alt="">
+        <h3>جمانة محمد</h3>
+        <p>
+"صراحة، الورشة كانت ممتعة وفادتني كثير. المدرب كان مريح جدًا
+ ويشرح كل شيء بطريقة حلوة، ما حسيت بالملل. 
+ مكان جميل والأجواء رائعة."</p>
+    <p class="stars">★★★★☆</p>
+      </div>
+      <div class="carousel-item right">
+        <img src="مهار.jpg" alt="">
+        <h3>العنود</h3>
+        <p>
+"إذا كنت تحب الإبداع، هذه الورشة هي مكانك! الجو حلو
+ والناس هنا محترفين. كل شيء كان مرتب وواضح،
+  وإن شاء الله أرجع مرة ثانية."</p>
+    <p class="stars">★★★★★</p>
+      </div>
+      <div class="carousel-item">
+        <img src="مهار.jpg" alt="">
+        <h3>نورة ابراهيم</h3>
+        <p>
+"ورشة تشكيل الفخار كانت شي خرافي! تعلمت أشياء جديدة
+ وأنا ما كنت متوقع أني أقدر أعمل شغلات حلوة.
+  المدرب كان مره محترف والجو كله حيوية."</p>
+    <p class="stars">★★★★★</p>
+      </div>
+      <div class="carousel-item">
+        <img src="مهار.jpg" alt="">
+        <h3>الجوهرة</h3>
+        <p>
+"أنا كنت حابة أتعلم الفخار لفترة طويلة، ولما حضرت الورشة
+ كانت فوق توقعاتي. الجو كان مريح، والمدرب خلى كل شيء بسيط وممتع.
+  التجربة كانت رائعة وما رح تكون الأخيرة."</p>
+  <p class="stars" id="st">★★★★☆</p>
+      </div>
+      <br>
+
+      
+</div>
+<br>
+
+
+
+    <script>
+        let selectedTime = null;
+
+        function selectTime(timeId) {
+            // إزالة التحديد من كل الأزرار
+            const buttons = document.querySelectorAll('.time-button');
+            buttons.forEach(button => button.classList.remove('selected'));
+
+            // إضافة التحديد للزر الذي تم النقر عليه
+            document.getElementById(timeId).classList.add('selected');
+            selectedTime = timeId; // حفظ الوقت المحدد
+        }
+
+        function confirmBooking() {
+            if (!selectedTime) {
+                alert("يرجى اختيار وقت الحجز قبل التأكيد.");
+                return;
+            }
+            alert("تم تأكيد الحجز للوقت: " + document.getElementById(selectedTime).innerText);
+        }
+    </script>
+
+<script>
+    const carouselItems = document.querySelectorAll('.carousel-item');
+    let activeIndex = 1; // Start with the second item as active
+
+    function updateCarousel() {
+      carouselItems.forEach((item, index) => {
+        item.classList.remove('active', 'left', 'right');
+        if (index === activeIndex) {
+          item.classList.add('active');
+        } else if (index === (activeIndex - 1 + carouselItems.length) % carouselItems.length) {
+          item.classList.add('left');
+        } else if (index === (activeIndex + 1) % carouselItems.length) {
+          item.classList.add('right');
+        }
+      });
+    }
+
+    function handleClick(event) {
+      const clickedIndex = [...carouselItems].indexOf(event.currentTarget);
+      if (clickedIndex !== activeIndex) {
+        activeIndex = clickedIndex;
+        updateCarousel();
+      }
+    }
+
+    carouselItems.forEach(item => {
+      item.addEventListener('click', handleClick);
+    });
+
+    updateCarousel();
+</script>
+
+</body>
+</html>
