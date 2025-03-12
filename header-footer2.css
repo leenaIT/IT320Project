@@ -33,6 +33,13 @@
 }
 
 .footer {
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+
+.footer {
     background: #FF9D23;
     color: white;
     padding: 20px 50px;
