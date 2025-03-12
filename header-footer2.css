@@ -17,21 +17,26 @@
     padding: 5px 10px;
     transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
+.nav span a, .language-switch {
+    color: #FF9D23;
+    text-decoration: none;
+    font-size: 18px;
+}
 
 /* تغيير اللون عند التحويم */
 .nav span a:hover , .language-switch:hover {
-    color: rgb(255, 209, 59);
+    color: #E5D0AC;
 }
 
 /* تغيير اللون عند النقر */
 .nav span a:active , .language-switch:active  {
-    color: yellow;
+    color: #E5D0AC;
     transform: scale(0.9);
 }
 
 /* 🔥 Footer Styles */
 .footer {
-    background: #ffb936;
+    background: #FF9D23;
     color: white;
     padding: 20px 50px;
     display: flex;
