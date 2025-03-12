@@ -1,4 +1,3 @@
-/* 🔥 Navbar Styles */
 .nav {
     position: absolute;
     top: 20px;
@@ -10,31 +9,29 @@
     font-weight: bold;
 }
 
-.nav span a , .language-switch{
+.nav span a, .language-switch {
     text-decoration: none;
     color: white;
     font-size: 16px;
     padding: 5px 10px;
     transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
+
 .nav span a, .language-switch {
     color: #FF9D23;
     text-decoration: none;
     font-size: 18px;
 }
 
-/* تغيير اللون عند التحويم */
-.nav span a:hover , .language-switch:hover {
+.nav span a:hover, .language-switch:hover {
     color: #E5D0AC;
 }
 
-/* تغيير اللون عند النقر */
-.nav span a:active , .language-switch:active  {
+.nav span a:active, .language-switch:active {
     color: #E5D0AC;
     transform: scale(0.9);
 }
 
-/* 🔥 Footer Styles */
 .footer {
     background: #FF9D23;
     color: white;
