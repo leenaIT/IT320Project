@@ -223,16 +223,16 @@ button {
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
 }
 .description h1, .thumbnails h3 {
-    font-family: 'Playfair Display', serif; /* خط فاخر للعناوين */
-    font-size: 26px; /* حجم واضح */
-    font-weight: 700; /* سماكة قوية */
-    color: #ffffff; /* لون غامق وأنيق */
-    text-transform: uppercase; /* تحويل النص إلى حروف كبيرة */
-    letter-spacing: 2px; /* توسيع المسافات بين الحروف */
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; 
+    font-weight: 700; 
+    color: #ffffff; 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
 }
 
 .description p, .thumbnails p {
-    font-family: 'Poppins', sans-serif; /* خط حديث للنصوص */
+    font-family: 'Poppins', sans-serif; 
     font-size: 16px;
     font-weight: 500;
     color: #ffffff;
@@ -242,7 +242,7 @@ button {
 .description h1 {
     margin: 0;
     font-size: 3em;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* ظل خفيف لإضافة لمسة فخامة */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); 
 
 }
 
@@ -282,7 +282,7 @@ button {
     left: 5px;
     margin: 0;
     color: white;
-    font-size: 20px; /* جعل العناوين داخل الصور أكثر وضوحًا */
+    font-size: 20px; 
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
 }
 
@@ -334,7 +334,7 @@ button {
     padding: 0 5%;
 }
 
-/* ضبط عرض كل عنصر بحيث يكونوا بجانب بعض */
+
 .header-about {
     flex: 1;
     height: 500px;
@@ -364,7 +364,7 @@ button {
     color: white;
 }
 
-/* النصوص تظهر بالتدريج */
+
 .header-content-about h1 {
     font-family: 'Anton', sans-serif;
     font-size: 50px;
@@ -388,7 +388,6 @@ button {
     font-size: 18px;
 }
 
-/* ضبط النص ليكون بنفس ارتفاع الهيدر */
 .about-content {
     flex: 1;
     max-width: 600px;
@@ -396,19 +395,19 @@ button {
 }
 
 .about-description {
-    font-family: 'Mulish', sans-serif;    font-size: 20px; /* أكبر شوي ليكون أوضح */
-    font-weight: 400; /* وزن متوسط للتوازن */
+    font-family: 'Mulish', sans-serif;    font-size: 20px; 
+    font-weight: 400; 
     color: #333333;
-    line-height: 1.5; /* زيادة التباعد لراحة القراءة */
+    line-height: 1.5; 
 }
 .header-content-about h1 {
     font-family: 'Playfair Display', serif;
     font-size: 50px;
-    font-weight: 600; /* تخليه عريض شوي */
+    font-weight: 600; 
 }
 
 .header-content-about .quote {
-    font-family: 'Lora', serif; /* يعطي لمسة فخامة */
+    font-family: 'Lora', serif; 
     font-style: italic;
     font-size: 22px;
     color: #f4d47c;
@@ -621,37 +620,37 @@ footer {
         margin-bottom: 20px;
     }
     .description h1 {
-        font-size: 2em; /* تصغير حجم النص */
+        font-size: 2em; 
     }
 
     .description p {
-        font-size: 1.1em; /* تصغير حجم النص */
+        font-size: 1.1em; 
     }
 
     .thumbnails {
-        flex-direction: row; /* عرض الصور المصغرة بشكل عمودي */
-        bottom: 0; /* التعديل على المسافة من الأسفل */
+        flex-direction: row; 
+        bottom: 0; 
         right: 10%;
         padding: 10px 0;
         gap: 10px;
     }
 
     .thumbnail {
-        width: 70%; /* جعل الصور المصغرة تأخذ مساحة أكبر على الجوال */
-        height: 150px; /* زيادة ارتفاع الصورة المصغرة */
-        margin: 0 auto; /* توسيط الصور المصغرة */
+        width: 70%; 
+        height: 150px; 
+        margin: 0 auto; 
     }
 
     .arrow {
-        font-size: 1.5em; /* تقليل حجم الأسهم */
+        font-size: 1.5em; 
     }
 
     .image-counter {
-        font-size: 1em; /* تقليل حجم العداد */
+        font-size: 1em; 
     }
 
     .description {
-        bottom:250px ; /* رفع الوصف بمقدار معين على الجوال */
+        bottom:250px ; 
     }
     .navigation {
         position: absolute;
@@ -684,24 +683,24 @@ footer {
 }
 @media (max-width: 400px) {
     .description {
-        bottom: 30%; /* رفع الوصف بمقدار معين على الجوال */
+        bottom: 30%; 
     }
 
     .thumbnail {
-        width: 100%; /* عرض الصورة المصغرة بالكامل */
-        height: 100px; /* تصغير حجم الصورة */
+        width: 100%;
+        height: 100px; 
     }
 
     .container2 {
-        height: 400px; /* تقليل الارتفاع الكلي على الشاشات الصغيرة */
+        height: 400px; 
     }
 
     .description h1 {
-        font-size: 1em; /* تصغير الخط أكثر */
+        font-size: 1em; 
     }
 
     .description p {
-        font-size: 0.5em ; /* تصغير الخط أكثر */
+        font-size: 0.5em ; 
     }
 
     .navigation {
