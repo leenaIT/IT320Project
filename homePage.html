@@ -207,10 +207,9 @@
 
     let currentIndex = 0;
 
-    // تحديث العدد الإجمالي للصور
+    
     totalImagesSpan.textContent = thumbnails.length;
 
-    // تحديث الصورة والخلفية عند النقر على صورة مصغرة
     const updateBackground = (index) => {
       const thumbnail = thumbnails[index];
       const image = thumbnail.getAttribute("data-image");
@@ -222,13 +221,12 @@
       description.querySelector("p").textContent = desc;
 
       thumbnails.forEach((thumb, i) => {
-        thumb.classList.toggle("active", i === index);  // تمييز الصورة النشطة
+        thumb.classList.toggle("active", i === index);  
       });
 
-      currentImageSpan.textContent = index + 1;  // تحديث الرقم الحالي للصورة
+      currentImageSpan.textContent = index + 1;  
     };
 
-    // إضافة حدث النقر على الصور المصغرة
     thumbnails.forEach((thumbnail, index) => {
       thumbnail.addEventListener("click", () => {
         currentIndex = index;
@@ -236,19 +234,16 @@
       });
     });
 
-    // الانتقال إلى الصورة السابقة
     prevButton.addEventListener("click", () => {
       currentIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
       updateBackground(currentIndex);
     });
 
-    // الانتقال إلى الصورة التالية
     nextButton.addEventListener("click", () => {
       currentIndex = (currentIndex + 1) % thumbnails.length;
       updateBackground(currentIndex);
     });
 
-    // تحديث الخلفية والصورة عند تحميل الصفحة لأول مرة
     updateBackground(0);
 
     // Toggle Language function
@@ -265,12 +260,12 @@
         document.querySelector(".language-switch").textContent = "🌐 اللغة";
 
         navLinks[0].textContent = "استكشاف";
-        navLinks[1].textContent = "تسجيل الدخول/التسجيل"; // تغيير النص في اللينك
+        navLinks[1].textContent = "تسجيل الدخول/التسجيل"; 
 
         menuLinks[0].textContent = "استكشاف";
-        menuLinks[1].textContent = "تسجيل الدخول/التسجيل"; // تغيير النص في القائمة
+        menuLinks[1].textContent = "تسجيل الدخول/التسجيل"; 
        
-        loginSignupButton.textContent = "تسجيل الدخول/التسجيل"; // تغيير النص في الزر
+        loginSignupButton.textContent = "تسجيل الدخول/التسجيل"; 
 
     } else {
         location.reload();
