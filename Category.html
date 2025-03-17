@@ -127,7 +127,7 @@
             position: absolute;
             top: 15px;
             left: -10px;
-            background-color: #A6D0D1;
+            background-color: #FF9D23;
             color: #fff;
             padding: 5px 15px;
             font-size: 14px;
@@ -140,7 +140,7 @@
             font-family: 'Montserrat', sans-serif;
             margin: 10px 5px 5px 5px;
             font-size: 16px;
-            color: #333;
+            color: #FF9D23;
             text-align: center;
         }
 
@@ -161,7 +161,6 @@
 
         .grid-item .price {
             color: #333;
-            font-weight: bold;
             background: none;
             padding: 0;
             border-radius: 0;
@@ -177,19 +176,32 @@
             vertical-align: middle;
         }
 
-        .grid-item .more-btn {
-            background-color: #A6D0D1;
-            color: #fff;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 13px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+        .more-btn {
+    display: inline-block; /* لجعل الرابط يبدو كزر */
+    background-color: #FDE5B7;
+    color: #333;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    text-decoration: none; /* إزالة الخط السفلي من الرابط */
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease; /* تأثير سلس */
+}
+
+/* تأثير التحويم (Hover) */
+.more-btn:hover {
+    background-color: #FF9D23;
+    transform: scale(1.1); /* تكبير الزر */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* إضافة ظل */
+    color: white;
+}
 
         .grid-item .more-btn:hover {
-            background-color: #92BFC0;
-        }
+    background-color: #FF9D23;
+    transform: scale(1.1); /* تكبير الزر */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* إضافة ظل */
+}
 
         .grid-item:hover {
             transform: translateY(-5px);
@@ -214,7 +226,7 @@
             width: 100%;
             height: 50px;
             border-radius: 8px;
-            border: solid gray 1.3px;
+            border: solid #FF9D23 1.5px;
             font-family: 'Montserrat', sans-serif;
             font-size: 16px;
         }
@@ -375,7 +387,7 @@
                 <h3>Embroidery Workshop</h3>
                 <p>Learn the basics of embroidery and color coordination.</p>
                 <div class="details">
-                    <span class="more-btn">More details</span>
+                    <a href="booking.html" class="more-btn">More details</a>
                     <span class="price">
                         270 <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
                     </span>
@@ -387,7 +399,7 @@
                 <h3>Candle Making</h3>
                 <p>Create beautiful and decorative candles.</p>
                 <div class="details">
-                    <span class="more-btn">More details</span>
+                    <a href="booking.html" class="more-btn">More details</a>
                     <span class="price">
                         170 <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
                     </span>
@@ -399,7 +411,7 @@
                 <h3>Customize Your Tote Bag</h3>
                 <p>Decorate your tote bag with unique designs.</p>
                 <div class="details">
-                    <span class="more-btn">More details</span>
+                    <a href="booking.html" class="more-btn">More details</a>
                     <span class="price">
                         190 <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
                     </span>
@@ -411,7 +423,7 @@
                 <h3>Crochet Basics</h3>
                 <p>Learn the basics of crochet and create handmade items.</p>
                 <div class="details">
-                    <span class="more-btn">More details</span>
+                    <a href="booking.html" class="more-btn">More details</a>
                     <span class="price">
                         230 <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
                     </span>
@@ -423,7 +435,7 @@
                 <h3>Free Drawing</h3>
                 <p>Discover your talent through creative drawing techniques.</p>
                 <div class="details">
-                    <span class="more-btn">More details</span>
+                    <a href="booking.html" class="more-btn">More details</a>
                     <span class="price">
                         145 <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
                     </span>
@@ -435,7 +447,7 @@
                 <h3>Soap Making</h3>
                 <p>Learn the techniques of soap making.</p>
                 <div class="details">
-                    <span class="more-btn">More details</span>
+                    <a href="booking.html" class="more-btn">More details</a>
                     <span class="price">
                         150 <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
                     </span>
@@ -447,7 +459,7 @@
                 <h3>Clothes Painting</h3>
                 <p>Unleash your creativity by painting on clothes.</p>
                 <div class="details">
-                    <span class="more-btn">More details</span>
+                    <a href="booking.html" class="more-btn">More details</a>
                     <span class="price">
                         210 <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
                     </span>
@@ -459,7 +471,7 @@
                 <h3>Pottery Workshop</h3>
                 <p>Learn pottery techniques and create handmade pieces.</p>
                 <div class="details">
-                    <span class="more-btn">More details</span>
+                    <a href="booking.html" class="more-btn">More details</a>
                     <span class="price">
                         200 <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
                     </span>
