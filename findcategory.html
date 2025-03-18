@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Page</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    
+    <!-- Font Awesome (Icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    background-color: #FFFDF0;
+    text-align: center;
+}
+
+/* الهيدر */
+.header {
+    background: #FFF3E0;
+    padding: 40px 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* شريط التنقل */
+.navbar {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.navbar a {
+    color: #333;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+/* تصميم الحاوية داخل الهيدر */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+/* المحتوى النصي */
+.header-text {
+    text-align: left;
+    max-width: 45%;
+}
+
+.header-text h1 {
+    font-size: 42px;
+    font-weight: bold;
+    color: #333;
+}
+
+.highlight {
+    color: #FF9D23;
+}
+
+.header-text p {
+    font-size: 18px;
+    color: #555;
+    margin-top: 10px;
+}
+/* تصميم أزرار الفئات */
+.category-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 20px;
+}
+
+.category-btn {
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(135deg, #FF9D23, #FF6200);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+/* تأثير عند التمرير */
+.category-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* أيقونات الفئات */
+.category-btn i {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+/* تصميم بطاقات الأنشطة الأسبوعية */
+.activities-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.activity-card {
+    width: 180px;
+    height: 180px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+    color: #333;
+}
+
+/* تأثير عند التمرير */
+.activity-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* الفوتر */
+.footer {
+    background: #333;
+    color: white;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+</style>
+</head>
+<body>
+
+    <!-- الهيدر -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="#">Contact us</a>
+            <a href="#">Category</a>
+            <a href="#">Explore</a>
+            <a href="#">Booking History</a>
+            <a href="#">Language</a>
+        </nav>
+
+        <div class="header-container">
+            <!-- المحتوى النصي -->
+            <div class="header-text" data-aos="fade-right">
+                <h1>Discover the <span class="highlight">Best Workshops</span></h1>
+                <p>Explore various categories of workshops including Cooking, Adventure, and Art. Enhance your skills and experience unique moments.</p>
+                <a href="#categories" class="explore-btn">Explore Now</a>
+            </div>
+            </div></header>
+    <!-- قسم الفئات -->
+  <!-- قسم الفئات -->
+<section class="category-section">
+    <h2 class="section-title">Find Category!</h2>
+    <div class="category-container">
+        <div class="category-btn" data-aos="fade-up">
+            <img src="cooking.jpg" alt="Cooking">
+            <span>Cooking</span>
+        </div>
+        <div class="category-btn" data-aos="fade-up" data-aos-delay="200">
+            <img src="adventure.jpg" alt="Adventure">
+            <span>Adventure</span>
+        </div>
+        <div class="category-btn" data-aos="fade-up" data-aos-delay="400">
+            <img src="art.jpg" alt="Art">
+            <span>Art</span>
+        </div>
+    </div>
+</section>
+
+    <!-- الأنشطة الأسبوعية -->
+    <section class="activities-section">
+        <h2 class="section-title">Week Activity!</h2>
+        <div class="activities-container">
+            <div class="activity-card" data-aos="fade-up">
+                <span>Workshop 1</span>
+            </div>
+            <div class="activity-card" data-aos="fade-up" data-aos-delay="200">
+                <span>Workshop 2</span>
+            </div>
+            <div class="activity-card" data-aos="fade-up" data-aos-delay="400">
+                <span>Workshop 3</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer class="footer">
+        <p>© 2024 Website. All rights reserved.</p>
+    </footer>
+
+    <!-- AOS Animation Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+
+</body>
+</html>
