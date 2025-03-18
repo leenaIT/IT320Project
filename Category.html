@@ -211,9 +211,10 @@
       
         .search-container {
     display: flex;
-    align-items: مثبف;
-    justify-content: center;
+    align-items: center;
+    justify-content: flex-start; /* Align to the left */
     gap: 40px;
+    padding-left: 13px; /* Add padding to match the header content */
 }
 
 .search-input-container {
@@ -222,17 +223,18 @@
 }
 
 /* تحسين مربع الإدخال */
+
 .search-input {
-    padding: 12px 50px 12px 15px;
+    padding: 12px 50px 12px 15px; /* Add padding to the right to make space for the icon */
     width: 100%;
     height: 55px;
-    border-radius: 25px; /* جعل الحواف أكثر نعومة */
-    border: solid 2px #FF9D23; /* لون الحدود متناسق مع التصميم */
+    border-radius: 25px;
+    border: solid 2px #FF9D23;
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     color: #333;
-    transition: all 0.3s ease-in-out; /* تحسين التأثيرات */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* إضافة ظل خفيف */
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* تأثير عند النقر أو التركيز على مربع البحث */
@@ -266,15 +268,15 @@
             transform: translateY(-50%);
         }
 
-        .search-icon {
-            position: absolute;
-            right: 0px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-        }
+.search-icon {
+    position: absolute;
+    right: 0.1px; /* Adjust this value to position the icon inside the box */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
 
         .filter-icon {
             position: static;
@@ -287,33 +289,76 @@
             cursor: pointer;
             margin-left: 20px;
         }
-
         .filter-box {
-            background-color: #282869;
-            padding: 15px;
-            border-radius: 10px;
-            width: 350px;
-            margin: 0 auto;
-            display: none;
-        }
+    background-color: #FFFDF0; /* شفافية مع لون أبيض */
+    padding: 15px; /* تقليل الحشو */
+    border-radius: 15px;
+    width: 250px; /* تصغير العرض */
+    position: absolute; /* تغيير من fixed إلى absolute */
+    top: 200px; /* التعديل حسب الموقع المطلوب */
+    right:300px; /* التعديل حسب الموقع المطلوب */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* إضافة ظل */
+    z-index: 1000; /* للتأكد من ظهوره فوق العناصر الأخرى */
+    display: none; /* يظل مخفيًا حتى يتم الضغط على الزر */
+    backdrop-filter: blur(10px); /* تأثير ضبابي خلف الصندوق */
+    border: 1px solid rgba(255, 157, 35, 0.3); /* حدود متناسقة مع لون الصفحة */
+}
 
-        .filter-box select,
-        .filter-box input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: none;
-        }
 
-        .filter-box label {
-            margin-bottom: 5px;
-            display: block;
-        }
+.filter-box select,
+.filter-box input {
+    width: 100%;
+    padding: 8px; /* تقليل الحشو */
+    margin-bottom: 10px; /* تقليل المسافة */
+    border-radius: 8px;
+    border: 1px solid #FF9D23; /* لون الحدود متناسق مع التصميم */
+    background-color: #FFFDF0; /* خلفية شفافة */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px; /* تصغير حجم الخط */
+    color: #333;
+}
 
-        .filter-action {
-            text-align: center;
-        }
+input:focus, select:focus, button:focus {
+    outline: none; /* إزالة الحدود الرمادية */
+}
+input[type="date"] {
+    width: 230px; /* ضبط العرض ليكون متناسقًا */
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #FF9D23;
+    background-color: #FFFDF0;
+    font-size: 14px; /* تحسين وضوح الخط */
+    color: #333;
+}
+
+
+.filter-box label {
+    margin-bottom: 6px; /* تقليل المسافة */
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px; /* تصغير حجم الخط */
+    color: #FF9D23; /* لون النص متناسق مع التصميم */
+}
+
+.filter-action {
+    text-align: center;
+}
+
+.filter-action button {
+    background-color: #FF9D23; /* لون الزر متناسق مع التصميم */
+    color: white;
+    padding: 8px 16px; /* تصغير حجم الزر */
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px; /* تصغير حجم الخط */
+    transition: background-color 0.3s ease;
+}
+
+.filter-action button:hover {
+    background-color: #e68a1f; /* لون الزر عند التحويم */
+}
 
         .filter-btn {
             background-color: transparent;
@@ -521,14 +566,14 @@
         </div>
     </footer>
     <script>
-        function toggleFilterBox() {
-            const filterBox = document.getElementById('filterBox');
-            if (filterBox.style.display === 'none' || filterBox.style.display === '') {
-                filterBox.style.display = 'block';
-            } else {
-                filterBox.style.display = 'none';
-            }
-        }
+function toggleFilterBox() {
+    const filterBox = document.getElementById('filterBox');
+    if (filterBox.style.display === 'none' || filterBox.style.display === '') {
+        filterBox.style.display = 'block';
+    } else {
+        filterBox.style.display = 'none';
+    }
+}
     </script>
 </body>
 </html>
