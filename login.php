@@ -8,15 +8,15 @@
     <script defer src="script.js"></script>
 </head>
 <body class="with-background " >
- <?php
-// Enable error reporting for debugging
+<?php
+// Start session before anything else
+session_name('unique_session_name_for_project1');
+session_start();
+
+// Enable error reporting
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 ini_set('log_errors', 1);
-
-// Start session
-session_name('unique_session_name_for_project1');
-session_start();
 
 // Database connection settings
 $Shost = "localhost";
@@ -30,8 +30,9 @@ if (!$Sconnection) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-// Check if form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// Check if form is submitted safely
+if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
+
     // Validate if email and password are provided
     if (empty($_POST['email']) || empty($_POST['password'])) {
         header("Location: login.php?error=Please fill in all fields");
