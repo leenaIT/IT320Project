@@ -9,7 +9,7 @@
 </head>
 <body class="with-background " >
 <?php
-// Start session before anything else
+// Start session before anything elsee
 session_name('unique_session_name_for_project1');
 session_start();
 
