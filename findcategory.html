@@ -15,142 +15,166 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="header-footer2.css">
 
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            background-color: #FFFDF0;
+            text-align: center;
+        }
 
-<style>
-body {
-    font-family: 'Montserrat', sans-serif;
-    margin: 0;
-    background-color: #FFFDF0;
-    text-align: center;
-}
+        /* الهيدر */
+        .header {
+            background: #FFF3E0;
+            padding: 40px 5%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
-/* الهيدر */
-.header {
-    background: #FFF3E0;
-    padding: 40px 5%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+        /* شريط التنقل */
+        .navbar {
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+        }
 
-/* شريط التنقل */
-.navbar {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-}
+        .navbar a {
+            color: #333;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
 
-.navbar a {
-    color: #333;
-    text-decoration: none;
-    margin: 0 15px;
-    font-weight: bold;
-}
+        /* تصميم الحاوية داخل الهيدر */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            width: 100%;
+            margin-top: 30px;
+        }
 
-/* تصميم الحاوية داخل الهيدر */
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    width: 100%;
-    margin-top: 30px;
-}
+        /* المحتوى النصي */
+        .header-text {
+            text-align: left;
+            max-width: 45%;
+        }
 
-/* المحتوى النصي */
-.header-text {
-    text-align: left;
-    max-width: 45%;
-}
+        .header-text h1 {
+            font-size: 42px;
+            font-weight: bold;
+            color: #333;
+        }
 
-.header-text h1 {
-    font-size: 42px;
-    font-weight: bold;
-    color: #333;
-}
+        .highlight {
+            color: #FF9D23;
+        }
 
-.highlight {
-    color: #FF9D23;
-}
+        .header-text p {
+            font-size: 18px;
+            color: #555;
+            margin-top: 10px;
+        }
 
-.header-text p {
-    font-size: 18px;
-    color: #555;
-    margin-top: 10px;
-}
-/* تصميم أزرار الفئات */
-.category-container {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    padding: 20px;
-}
+        /* تصميم أزرار الفئات */
+        .category-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
 
-.category-btn {
-    width: 150px;
-    height: 150px;
-    background: linear-gradient(135deg, #FF9D23, #FF6200);
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
-    text-transform: uppercase;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease-in-out;
-    cursor: pointer;
-}
+        .category-btn {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+        }
 
-/* تأثير عند التمرير */
-.category-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
-}
+        .category-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-/* أيقونات الفئات */
-.category-btn i {
-    font-size: 30px;
-    margin-bottom: 8px;
-}
+        .category-btn span {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-transform: uppercase;
+        }
 
-/* تصميم بطاقات الأنشطة الأسبوعية */
-.activities-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-}
+        /* تأثير عند التمرير */
+        .category-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+        }
 
-.activity-card {
-    width: 180px;
-    height: 180px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    font-weight: bold;
-    text-transform: uppercase;
-    transition: all 0.3s ease-in-out;
-    color: #333;
-}
+        .section-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
 
-/* تأثير عند التمرير */
-.activity-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
+        /* تصميم قسم أفضل الورش */
+        .top-workshops {
+            padding: 40px 5%;
+            background: #FFF3E0;
+        }
 
+        .workshops-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
 
+        .workshop-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
 
-</style>
+        .workshop-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .workshop-card h3 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .workshop-card p {
+            font-size: 14px;
+            color: #555;
+            margin: 0 10px 10px;
+        }
+
+        .workshop-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
 </head>
 <body>
 
@@ -167,78 +191,85 @@ body {
         <div class="header-container">
             <!-- المحتوى النصي -->
             <div class="header-text" data-aos="fade-right">
-                <h1>Discover the <span class="highlight">Best Workshops</span></h1>
+                <h1>Discover the <span class="highlight">Best Categories</span></h1>
                 <p>Explore various categories of workshops including Cooking, Adventure, and Art. Enhance your skills and experience unique moments.</p>
             </div>
-            </div></header>
-    <!-- قسم الفئات -->
-  <!-- قسم الفئات -->
-<section class="category-section">
-    <h2 class="section-title">Find Category!</h2>
-    <div class="category-container">
-        <div class="category-btn" data-aos="fade-up">
-            <img src="cooking.jpg" alt="Cooking">
-            <span>Cooking</span>
         </div>
-        <div class="category-btn" data-aos="fade-up" data-aos-delay="200">
-            <img src="adventure.jpg" alt="Adventure">
-            <span>Adventure</span>
-        </div>
-        <div class="category-btn" data-aos="fade-up" data-aos-delay="400">
-            <img src="art.jpg" alt="Art">
-            <span>Art</span>
-        </div>
-    </div>
-</section>
+    </header>
 
-    <!-- الأنشطة الأسبوعية -->
-    <section class="activities-section">
-        <h2 class="section-title">Week Activity!</h2>
-        <div class="activities-container">
-            <div class="activity-card" data-aos="fade-up">
-                <span>Workshop 1</span>
+    <!-- قسم الفئات -->
+    <section class="category-section">
+        <h2 class="section-title">Find Your Category!</h2>
+        <div class="category-container">
+            <div class="category-btn" data-aos="fade-up">
+                <img src="/IT320Project/workshops/Мастер-Класс по бенто тортам.jpeg" alt="Cooking">
+                <span>Cooking</span>
             </div>
-            <div class="activity-card" data-aos="fade-up" data-aos-delay="200">
-                <span>Workshop 2</span>
+            <div class="category-btn" data-aos="fade-up" data-aos-delay="200">
+                <img src="/IT320Project\workshops\post3.jpeg" alt="Adventure">
+                <span>Adventure</span>
             </div>
-            <div class="activity-card" data-aos="fade-up" data-aos-delay="400">
-                <span>Workshop 3</span>
+            <div class="category-btn" data-aos="fade-up" data-aos-delay="400">
+                <img src="/IT320Project\workshops\Гончарный круг.jpeg" alt="Art">
+                <span>Art</span>
             </div>
         </div>
     </section>
 
-   <!-- footer.html -->
-<hr style="color:black; border-width:2px;">
-<footer class="footer" id="footer">
-    <div class="footer-content">
-        <div class="footer-left">
-            <h4>Get In Touch</h4>
-            <div class="contact-info">
-                <div class="contact-item">
-                    <img src="workshops/360_F_553663238_v4Tva6Ie5Z5MhwCw0TknszcWuQ1ZAwQx.png" alt="Phone">
+    <!-- قسم أفضل الورش -->
+    <section class="top-workshops">
+        <h2 class="section-title">Top Workshops</h2>
+        <div class="workshops-grid">
+            <div class="workshop-card" data-aos="fade-up">
+                <img src="/IT320Project/workshops/workshop1.jpg" alt="Workshop 1">
+                <h3>Workshop 1</h3>
+                <p>Learn the basics of cooking with our expert chefs.</p>
+            </div>
+            <div class="workshop-card" data-aos="fade-up" data-aos-delay="200">
+                <img src="/IT320Project/workshops/workshop2.jpg" alt="Workshop 2">
+                <h3>Workshop 2</h3>
+                <p>Explore the wilderness with our adventure guides.</p>
+            </div>
+            <div class="workshop-card" data-aos="fade-up" data-aos-delay="400">
+                <img src="/IT320Project/workshops/workshop3.jpg" alt="Workshop 3">
+                <h3>Workshop 3</h3>
+                <p>Unleash your creativity with our art workshops.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer.html -->
+    <hr style="color:black; border-width:2px;">
+    <footer class="footer" id="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <h4>Get In Touch</h4>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <img src="workshops/360_F_553663238_v4Tva6Ie5Z5MhwCw0TknszcWuQ1ZAwQx.png" alt="Phone">
+                    </div>
+                    <div class="contact-item">
+                        <img id="email" src="workshops/360_F_181003490_CxW4fQ0H3VypIIsPkFGpMDviO8ysWjOZ.png" alt="Email">
+                    </div>
+                    <div class="contact-item">
+                        <img id="location" src="workshops/360_F_254622588_6OClHyYpak64rVI8y9QVjUvDlStsDEu9.png" alt="Location">
+                    </div>
                 </div>
-                <div class="contact-item">
-                    <img id="email" src="workshops/360_F_181003490_CxW4fQ0H3VypIIsPkFGpMDviO8ysWjOZ.png" alt="Email">
-                </div>
-                <div class="contact-item">
-                    <img id="location" src="workshops/360_F_254622588_6OClHyYpak64rVI8y9QVjUvDlStsDEu9.png" alt="Location">
+            </div>
+            <div class="footer-right">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <img id="facebook" src="workshops/black-square-outline-facebook-icon-7017516951347228u34mgnk68.png" alt="Facebook">
+                    <img src="workshops/twitter-icon-256x227-kf6zqma5.png" alt="Twitter">
+                    <img src="workshops/121.png" alt="Instagram">
                 </div>
             </div>
         </div>
-        <div class="footer-right">
-            <h4>Follow Us</h4>
-            <div class="social-icons">
-                <img id="facebook" src="workshops/black-square-outline-facebook-icon-7017516951347228u34mgnk68.png" alt="Facebook">
-                <img src="workshops/twitter-icon-256x227-kf6zqma5.png" alt="Twitter">
-                <img src="workshops/121.png" alt="Instagram">
-            </div>
+        <div class="footer-center">
+            <p>© 2024 Website. All rights reserved.</p>
         </div>
-    </div>
-    <div class="footer-center">
-        
-        <p>© 2024 Website. All rights reserved.</p>
-    </div>
-</footer>
+    </footer>
+
     <!-- AOS Animation Script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
