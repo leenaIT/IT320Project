@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="styles.css">
-    <script defer src="script.js"></script>
-</head>
-<body class="with-background " >
 <?php
-// Start session before anything elsee
 session_name('unique_session_name_for_project1');
 session_start();
 
@@ -30,116 +19,122 @@ if (!$Sconnection) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-// Check if form is submitted safely
-if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
+// Initialize error message variable
+$errorMessage = "";
 
-    // Validate if email and password are provided
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST['email']) || empty($_POST['password'])) {
-        header("Location: login.php?error=Please fill in all fields");
-        exit();
-    }
-
-    $email = trim($_POST['email']);
-    $password = $_POST['password'];
-
-    // Query to fetch user data based on email
-    $query = "SELECT UserID, Password FROM users WHERE Email = ?";
-    $stmt = mysqli_prepare($Sconnection, $query);
-
-    if (!$stmt) {
-        die("Query preparation failed: " . mysqli_error($Sconnection));
-    }
-
-    // Bind the email parameter
-    mysqli_stmt_bind_param($stmt, "s", $email);
-    
-    // Execute the query
-    if (!mysqli_stmt_execute($stmt)) {
-        die("Query execution failed: " . mysqli_error($Sconnection));
-    }
-
-    // Store result
-    mysqli_stmt_store_result($stmt);
-
-    // Check if user exists
-    if (mysqli_stmt_num_rows($stmt) > 0) {
-        mysqli_stmt_bind_result($stmt, $user_id, $hashed_password);
-        mysqli_stmt_fetch($stmt);
-
-        
-          // Hash the entered password using SHA-256 to compare it with the stored hash
-    $hashed_entered_password = hash('sha256', $password);
-
-    // Verify if the entered password's hash matches the stored hash
-    if ($hashed_entered_password === $hashed_password) {
-        // Password matches, log the user in
-        $_SESSION['user_id'] = $user_id;
-          // Debugging: Check if session is set correctly
-            error_log("User logged in: " . $_SESSION['user_id']);
-            var_dump($_SESSION); // Debugging session data
-
-            // Redirect to profile page
-            header("Location: profile.php");
-            exit();
-        } else {
-            // Password doesn't match
-            header("Location: login.php?error=Incorrect email or password");
-            exit();
-        }
+        $errorMessage = "❌ Please fill in all fields!";
     } else {
-        // User not found
-        header("Location: login.php?error=User not found");
-        exit();
-    }
+        $email = trim($_POST['email']);
+        $password = $_POST['password'];
 
-    // Close statement and connection
-    mysqli_stmt_close($stmt);
-    mysqli_close($Sconnection);
+        // Query to fetch user data based on email
+        $query = "SELECT UserID, Password FROM users WHERE Email = ?";
+        $stmt = mysqli_prepare($Sconnection, $query);
+
+        if (!$stmt) {
+            $errorMessage = "❌ Database query error!";
+        } else {
+            mysqli_stmt_bind_param($stmt, "s", $email);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_store_result($stmt);
+
+            if (mysqli_stmt_num_rows($stmt) > 0) {
+                mysqli_stmt_bind_result($stmt, $user_id, $hashed_password);
+                mysqli_stmt_fetch($stmt);
+
+                // Hash the entered password to compare
+                $hashed_entered_password = hash('sha256', $password);
+
+                if ($hashed_entered_password === $hashed_password) {
+                    $_SESSION['user_id'] = $user_id;
+                    header("Location: profile.php");
+                    exit();
+                } else {
+                    $errorMessage = "❌ Incorrect email or password!";
+                }
+            } else {
+                $errorMessage = "❌ User not found!";
+            }
+
+            mysqli_stmt_close($stmt);
+        }
+    }
 }
+
+mysqli_close($Sconnection);
 ?>
 
-    <header class="with-background ">
-        <div class="logo"><img src="workshops/logo.png" alt="logo" height="80" width="80"></div>
-        
-        <div class="nav-container">
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="homePage.html"> Home </a></li>
-                    <li><a href="Explore.html"> Explore page</a></li>
-                </ul>
-            </nav>
-            <div class="language-switch" onclick="toggleLanguage()">🌐 Language</div>
-        </div>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+    <style>
+        .alert {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff4d4d;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="with-background">
 
-        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-    </header>
-
-    <div class="menu">
-        <ul>
-            <li><a href="homePage.html">Home</a></li>
-            <li><a href="Explore.html">Explore page</a></li>
-        </ul>
+<header class="with-background">
+    <div class="logo"><img src="workshops/logo.png" alt="logo" height="80" width="80"></div>
+    <div class="nav-container">
+        <nav>
+            <ul class="nav-links">
+                <li><a href="homePage.php">Home</a></li>
+                <li><div class="language-switch" onclick="toggleLanguage()">🌐 Language</div></li>
+            </ul>
+        </nav>
     </div>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+</header>
 
-    <main>
-        <div class="container">
-            <div class="logo-box"><img src="workshops/gif.gif" alt="logo" height="150" width="150"></div>
-            <div class="login-box">
-                <h2>Login to mehar.com</h2>
-                <form action="login.php" method="POST">
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email" placeholder="you@email.com" required>
+<div class="menu">
+    <ul>
+        <li><a href="homePage.php">Home</a></li>
+        <li><div class="language-switch" onclick="toggleLanguage()">🌐 Language</div></li>
+    </ul>
+</div>
 
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-                                    
-    <button type="submit">Login</button>
-</form>
-<br>
-                <p>Don't have an account? <a href="sign-up.html" class="sign-up-page">Create an account</a></p>
-            </div>
+<?php if (!empty($errorMessage)): ?>
+    <div id="alert-box" class="alert"><?php echo $errorMessage; ?></div>
+<?php endif; ?>
+
+<main>
+    <div class="container">
+        <div class="logo-box"><img src="workshops/gif.gif" alt="logo" height="150" width="150"></div>
+        <div class="login-box">
+            <h2>Login to mehar.com</h2>
+            <form action="login.php" method="POST">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" placeholder="you@email.com" required>
+
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required>
+
+                <button type="submit">Login</button>
+            </form>
+            <br>
+            <p>Don't have an account? <a href="signup.php" class="sign-up-page">Create an account</a></p>
         </div>
-    </main>
+    </div>
+</main>
 
     <footer>
         <div class="footer-left-1">
@@ -170,10 +165,10 @@ if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
             <p><strong>Social media</strong></p>
             <div class="social-icons-1">
                 
-                <img src="workshops/facebook1.png" alt="Facebook">
+                <img src="workshops/facebook11.png" alt="Facebook">
                 <img src="workshops/X1.png" alt="Twitter">
-                <img src="workshops/instagram1.png" alt="Instagram">
-                <img src="workshops/linkedin1.png" alt="LinkedIn">
+                <img src="workshops/instagram.png" alt="Instagram">
+                <img src="workshops/linkedin.png" alt="LinkedIn">
             </div>
         </div>
         
@@ -181,40 +176,45 @@ if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
             <p>© 2024 Website. All rights reserved.</p>
         </div>
     </footer>
-    <script>
-      function toggleLanguage() {
-    let htmlTag = document.documentElement;
-    let navLinks = document.querySelectorAll(".nav-links li a");
-    let menuLinks = document.querySelectorAll(".menu ul li a");
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var alertBox = document.getElementById("alert-box");
+        if (alertBox) {
+            alertBox.style.display = "block";
+            setTimeout(function() {
+                alertBox.style.display = "none";
+            }, 3000); // Hide after 3 seconds
+        }
+    });
 
-    if (htmlTag.lang === "en") {
-        htmlTag.lang = "ar";
-        htmlTag.dir = "rtl"; 
+    function toggleLanguage() {
+        let htmlTag = document.documentElement;
+        let navLinks = document.querySelectorAll(".nav-links li a");
+        let menuLinks = document.querySelectorAll(".menu ul li a");
 
-        document.querySelector(".language-switch").textContent = " 🌐 اللغة  " ;
-        document.querySelector(".login-box h2").textContent = "تسجيل الدخول إلى mehar.com";
-        document.querySelector("label[for='email']").textContent = "البريد الإلكتروني";
-        document.querySelector("input#email").placeholder = "mehar@email.com";
-        document.querySelector("label[for='password']").textContent = "كلمة المرور";
-        document.querySelector("button").textContent = "تسجيل الدخول";
-        document.querySelector("p").innerHTML = "ليس لديك حساب؟ <a href='sign-up.html' class='sign-up-page'>إنشاء حساب</a>";
+        if (htmlTag.lang === "en") {
+            htmlTag.lang = "ar";
+            htmlTag.dir = "rtl"; 
 
-        navLinks[0].textContent = "الرئيسية";
-        navLinks[1].textContent = "استكشاف";
+            document.querySelector(".language-switch").textContent = " 🌐 اللغة  ";
+            document.querySelector(".login-box h2").textContent = "تسجيل الدخول إلى mehar.com";
+            document.querySelector("label[for='email']").textContent = "البريد الإلكتروني";
+            document.querySelector("input#email").placeholder = "mehar@email.com";
+            document.querySelector("label[for='password']").textContent = "كلمة المرور";
+            document.querySelector("button").textContent = "تسجيل الدخول";
+            document.querySelector("p").innerHTML = "ليس لديك حساب؟ <a href='sign-up.html' class='sign-up-page'>إنشاء حساب</a>";
 
-        menuLinks[0].textContent = "الرئيسية";
-        menuLinks[1].textContent = "استكشاف";
-    } else {
-        location.reload();
+            navLinks[0].textContent = "الرئيسية";
+            navLinks[1].textContent = "استكشاف";
+        } else {
+            location.reload();
+        }
     }
-}
 
-
-function toggleMenu() {
-    document.querySelector(".menu").classList.toggle("active");
-}
-
+    function toggleMenu() {
+        document.querySelector(".menu").classList.toggle("active");
+    }
 </script>
+
 </body>
 </html>
-
