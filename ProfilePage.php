@@ -1,5 +1,6 @@
 <?php
 session_start();
+ini_set('display_errors',1);
 require 'database.php'; 
 
 // Check if the user is logged in
@@ -12,7 +13,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 // Fetch user data from database
-$sql = "SELECT FirstName, LastName, Email, Mobile, ProfilePhoto FROM users WHERE UserID = ?";
+$sql = "SELECT FirstName, LastName, Email, Mobile, ProfilePhoto,bio FROM users WHERE UserID = ?";
 $stmt = $connection->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
@@ -21,6 +22,20 @@ $user = $result->fetch_assoc();
 
 // Set default profile photo if not uploaded
 $photo = !empty($user['ProfilePhoto']) ? 'uploads/' . $user['ProfilePhoto'] : 'uploads/default.jpg';
+
+// Fetch last 4 bookings for the user with workshop title
+$sql = "SELECT w.Title, w.imageURL, b.BookingDate FROM booking b
+        JOIN workshop w ON b.WorkshopID = w.WorkshopID
+        WHERE b.UserID = ? 
+        ORDER BY b.BookingDate DESC LIMIT 5"; // Limiting to last 4 bookings
+$stmt = $connection->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$bookings = $result->fetch_all(MYSQLI_ASSOC);
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -63,8 +78,8 @@ border:none;}
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-image: url('<?php echo htmlspecialchars($photo); ?>'); /* Set dynamic image */
-        }
+            background-image: url(<?php echo $photo ?>);
+       }
     </style>
 </head>
 
@@ -109,39 +124,57 @@ border:none;}
             </p>
         </div>
     </div>
-    <form action="edit_profile.php" method="GET">
-        <button type="submit">
-            <img src="workshops/edit-btn.png" alt="edit icon" class="edit-btn1">
-            <span class="tooltip">Edit Profile</span>
-        </button>
-    </form>
+    <!-- Edit Profile Button -->
+<form action="edit_profile.php" method="GET">
+    <button type="button" id="editButton">
+        <img src="workshops/edit-btn.png" alt="edit icon" class="edit-btn1">
+        <span class="tooltip">Edit Profile</span>
+    </button>
+</form>
 </section>
 
 
     
     <section class="content">
-        <div class="bio">
-            <h3>BIO</h3>
-            <p>Always up for a new adventure and love diving into different workshops! Excited to meet people who are just as curious and passionate as I am.</p>
-        </div>
-        <div class="bookings">
-            <h3>
-                <a href="booking-history"> My Bookings</a>
-                </h3>
-            <div class="timeline">
-                <img src="workshops/timeline.png" alt="timeline pic" class="booking-image">
-                <div class="event-photo1"> </div>
-                <div class="event-photo2"> </div>
-                <div class="event-photo3"> </div>
-                <div class="event-photo4"> </div>
-                <div class="event-photo5"> </div>
-                <div class="event1"><span>Workshop 1</span><p>12 May 2025</p></div>
-                <div class="event2"><span>Workshop 2</span><p>20 April 2025</p></div>
-                <div class="event3"><span>Workshop 3</span><p>07 April 2025</p></div>
-                <div class="event4"><span>Workshop 4</span><p>10 March 2025</p></div>
-                <div class="event5"><span>Workshop 5</span><p>08 February 2025</p></div>
-            </div>
-        </div>
+       <div class="bio">
+    <h3>BIO</h3>
+    <?php if (!empty($user['bio'])): ?>
+        <p><?php echo htmlspecialchars($user['bio']); ?></p>
+    <?php else: ?>
+        <p>No bio available.</p> <!-- Optional message if bio is empty -->
+    <?php endif; ?>
+</div>
+
+       <div class="bookings">
+    <h3>
+        <a href="booking-history.php">My Bookings</a>
+    </h3>
+    <div class="timeline">
+        <img src="workshops/timeline.png" alt="timeline pic" class="booking-image">
+        
+       
+
+        
+        <?php
+        $eventCount = 1;
+        foreach ($bookings as $booking) {
+            $workshopImage = 'url(' . htmlspecialchars($booking['imageURL']) . ')';
+
+            echo '<div class="event' . $eventCount . '">';
+            echo '<span>' . htmlspecialchars($booking['Title']) . '</span>';
+            echo '<p>' . date('d F Y', strtotime($booking['BookingDate'])) . '</p>';
+            echo '</div>';
+
+            echo '<div class="event-photo' . $eventCount . '" style="background-image: ' . $workshopImage . ';"></div>';
+            $eventCount++;
+        }
+        ?>
+    </div>
+</div>
+
+
+
+
     </section>
     
     
@@ -305,7 +338,7 @@ border:none;}
                             <div class="wishlist-item">
                             
                                 <div class="wishlist-img">
-                                    <img src="workshops/download (2).jpeg" alt="Workshop Image">
+                                    <img src="workshops/image1.jpg" alt="Workshop Image">
                                 </div>
                                 <div class="wishlist-info">
                                     <p class="workshop-name">Candle Making</p>
@@ -454,6 +487,45 @@ border:none;}
     </div>
 </footer>
 
+    <!-- Modal for Edit Profile -->
+<div id="editProfileModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Edit Profile</h2>
+
+        <!-- Profile picture fixed under the heading -->
+        <form action="edit_profile.php" method="POST" enctype="multipart/form-data">
+        <div class="profile-picture-container">
+            <img id="currentProfilePic" src="<?php echo !empty($user['ProfilePhoto']) ? 'uploads/' . $user['ProfilePhoto'] : 'uploads/default.jpg'; ?>" alt="Profile Picture" class="current-picture">
+            <input  style="margin-top:20px;" type="file" name="profile_photo" id="profilePhotoInput">
+        </div>
+
+        <!-- Form inputs for user information -->
+        <div class="form-input">
+            
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="first_name" value="<?php echo htmlspecialchars($user['FirstName']); ?>" required><br>
+
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="last_name" value="<?php echo htmlspecialchars($user['LastName']); ?>" required><br>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['Email']); ?>" required><br>
+
+                <label for="mobile">Mobile</label>
+                <input type="tel" pattern="\+?[0-9]{1,4}[\s\-]?[0-9]+[\s\-]?[0-9]+[\s\-]?[0-9]+" id="mobile" name="mobile" value="<?php echo htmlspecialchars($user['Mobile']); ?>" required><br>
+
+                <label for="bio">Bio</label>
+                <textarea id="bio" name="bio"><?php echo htmlspecialchars($user['bio'] ?: ''); ?></textarea><br>
+
+                <button type="submit" name="update_profile" id="updateProfile">Save Changes</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+    
     <script>
        
     
@@ -514,7 +586,7 @@ wishlistItemsContainer.addEventListener('mousemove', (e) => {
   e.preventDefault();
   const x = e.pageX - wishlistItemsContainer.offsetLeft;
   const walk = (x - startX) * 2; // Adjust scrolling speed (increase multiplier for faster scroll)
-  w
+  
 });
 
 // Event listener to handle loading images
@@ -525,9 +597,37 @@ window.addEventListener('load', () => {
 });
 
 
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get the modal and button elements
+        const modal = document.getElementById("editProfileModal");
+        const btn = document.getElementById("editButton");
+        const span = document.querySelector(".close");
+
+        // Ensure elements exist before adding event listeners
+        if (modal && btn && span) {
+            // Show the modal when the Edit button is clicked
+            btn.addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent any default action if it's a form
+                modal.style.display = "block"; // Show the modal
+            });
+
+            // Close the modal when the close button (X) is clicked
+            span.onclick = function() {
+                modal.style.display = "none"; // Hide the modal
+            }
+
+            // Close the modal if the user clicks outside of it
+            window.onclick = function(event) {
+                if (event.target === modal) {
+                    modal.style.display = "none"; // Hide the modal if clicked outside
+                }
+            }
+        }
+    });
 
 
+</script>
 
-        </script>
+
 </body>
 </html>
