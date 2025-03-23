@@ -2,6 +2,7 @@
 session_name('unique_session_name_for_project1');
 session_start();
 
+
 // Enable error reporting
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -45,11 +46,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 mysqli_stmt_fetch($stmt);
 
                 // Hash the entered password to compare
-                $hashed_entered_password = hash('sha256', $password);
+                if (password_verify($password, $hashed_password)) {
 
-                if ($hashed_entered_password === $hashed_password) {
                     $_SESSION['user_id'] = $user_id;
-                    header("Location: profile.php");
+                    header("Location: ProfilePage.php");
                     exit();
                 } else {
                     $errorMessage = "❌ Incorrect email or password!";
@@ -127,7 +127,6 @@ mysqli_close($Sconnection);
 
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" required>
-
                 <button type="submit">Login</button>
             </form>
             <br>

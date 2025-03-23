@@ -34,20 +34,7 @@ html, body {
 margin-top: 10px;
 }
 
-.profile-picture {
-    width: 120px;
-    height: 120px;
-    background: black;
-    border-radius: 50%;
-    position: absolute;
-    top: 35px; /* Moves it down to poke out */
-    left: 80px; /* Adjust if needed */
-    border: 2px solid black; 
-    background-image: url("workshops/profile-pic.png"); /* Set the image */
-    background-size: cover; /* Ensure it covers the circle */
-    background-position: center; /* Center the image */
-    background-size: 99%;
-}
+
 
 
 .details {

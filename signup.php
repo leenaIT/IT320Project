@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->bind_param("sssss", $firstName, $lastName, $email, $hashedPassword, $phone);
                 if ($stmt->execute()) {
                     $_SESSION["user_email"] = $email;
-                    header("Location: profile.php");
+                    header("Location: ProfilePage.php");
                     exit();
                 } else {
                     $errorMessage = "❌ Registration failed!";

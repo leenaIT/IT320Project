@@ -1,3 +1,27 @@
+<?php
+session_start();
+include 'database.php'; 
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Get user ID from session
+$user_id = $_SESSION['user_id'];
+
+// Fetch user data from database
+$sql = "SELECT FirstName, LastName, Email, Mobile, ProfilePhoto FROM users WHERE UserID = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+// Set default profile photo if not uploaded
+$photo = !empty($user['ProfilePhoto']) ? 'uploads/' . $user['ProfilePhoto'] : 'uploads/default.jpg';
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,36 +56,56 @@ border:none;}
 
 <body>
     <div class="header-container1">
-    <!-- navbar.html -->
+    <!-- navbar html -->
      <header>
 <div class="nav">
-    <span><a href="homePage.html">Home</a></span>
-    <span><a href="Explore.html">Explore</a></span>
-    <span><a href="ProfilePage.html">Profile</a></span>
-    <span><a href="findcategory.html">Category</a></span>
+    <span><a href="homePage.php">Home</a></span>
+    <span><a href="Explore.php">Explore</a></span>
+    <span><a href="ProfilePage.php">Profile</a></span>
+    <span><a href="findcategory.php">Category</a></span>
     
 
-    <span><div class="language-switch" onclick="toggleLanguage()">🌐 Language</div></span>
+    <div> <span class="language-switch" onclick="toggleLanguage()">🌐 Language</span></div>
 </div>
-     </header>  
-    <section class="profile-header">
-        <div class="user-info">
-            <div class="profile-picture"></div>
-            <div class="details">
-                <p><span class="detail-title1">User <br></span> <span class="detail-title2">Profile </span></p>
-                <p><span class="detail-label">First Name</span><br><span class="detail-answer">Reema</span></p>
-                <p><span class="detail-label">Last Name</span><br><span class="detail-answer">Khalid</span></p>
-                <p><span class="detail-label">Email</span><br><span class="detail-answer">reemakhalid702@gmail.com</span></p>
-                <p><span class="detail-label">Mobile</span><br><span class="detail-answer">+966508395744</span></p>
-            </div>
-            
+     </header> 
         </div>
-        <button>
+   <section class="profile-header">
+    <div class="user-info">
+        <div class="profile-picture">
+            <img src="<?php echo htmlspecialchars($photo); ?>" alt="Profile Photo" style="width: 70px; height: 70px; border-radius: 50%;">
+        </div>
+        <div class="details">
+            <p>
+                <span class="detail-title1">User <br></span>
+                <span class="detail-title2">Profile</span>
+            </p>
+            <p>
+                <span class="detail-label">First Name</span><br>
+                <span class="detail-answer"><?php echo htmlspecialchars($user['FirstName']); ?></span>
+            </p>
+            <p>
+                <span class="detail-label">Last Name</span><br>
+                <span class="detail-answer"><?php echo htmlspecialchars($user['LastName']); ?></span>
+            </p>
+            <p>
+                <span class="detail-label">Email</span><br>
+                <span class="detail-answer"><?php echo htmlspecialchars($user['Email']); ?></span>
+            </p>
+            <p>
+                <span class="detail-label">Mobile</span><br>
+                <span class="detail-answer"><?php echo htmlspecialchars($user['Mobile']); ?></span>
+            </p>
+        </div>
+    </div>
+    <form action="edit_profile.php" method="GET">
+        <button type="submit">
             <img src="workshops/edit-btn.png" alt="edit icon" class="edit-btn1">
-            <span class="tooltip"> Edit Profile </span>
+            <span class="tooltip">Edit Profile</span>
         </button>
-    </section>
-</div>
+    </form>
+</section>
+
+
     
     <section class="content">
         <div class="bio">

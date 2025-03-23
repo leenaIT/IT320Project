@@ -321,6 +321,7 @@ button {
     font-size: 1.2em;
     color: white;
 }
+
 .about-section {
     padding: 30px 0;
     font-family: 'Montserrat', sans-serif;
@@ -434,14 +435,48 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; 
-    white-space: nowrap; 
-    
-    }
+    overflow: visible; 
+}
+
+.carousel-item {
+    position: absolute;
+    width: 600px;  
+    height: 350px;  
+    opacity: 0.5;
+    transform: scale(0.8);
+    transition: all 0.5s ease;
+    text-align: center;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;  
+    overflow: visible;}
+
+.carousel-item p {
+    font-size: 0.9em;
+    color: #333333;
+    margin-top: 20px;
+    word-wrap: break-word; 
+    white-space: normal; 
+    text-align: center; 
+    padding: 10px;
+    max-width: 90%; 
+    margin: auto;
+}
+
+.stars {
+    color:#FFFF00;
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
     .cont-reviws{
         background-color:#fde5b7;
         border-radius: 50px;
-
     }
 
     #cli{
@@ -456,30 +491,18 @@ button {
     }
     
     
-    .carousel-item {
-    position: absolute;
-        width: 600px;
-        height: 250px;
-        max-width: 80%;
-        opacity: 0.5;
-        transform: scale(0.8);
-        transition: all 0.5s ease;
-        text-align: center;
-        background: #fff;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        padding: 20px;
-    }
-    
-    .carousel-item img {
+   .carousel-item img {
     width: 70px;
-    height: 90px;
+    height: 70px;
     border-radius: 50%;
     position: absolute;
-    top: -30px;
-    left: 30px;
-    border: 4px solid #ffffff; 
-    }
+    top: -35px; 
+    left: 10%;
+    transform: translateX(-50%); 
+    border: 4px solid #ffffff;
+    background-color: #fff;
+}
+
     
     .carousel-item h3 {
     font-family: "WondarQuason", sans-serif;
@@ -489,11 +512,6 @@ button {
     color:  #f9c866;
     }
     
-    .carousel-item pre {
-    font-size: 0.9em;
-    color: #555;
-    margin-top: 20px;
-    }
     
     .carousel-item.active {
     opacity: 1;
@@ -510,7 +528,7 @@ button {
     }
     
     .carousel-item.right {
-    left: 67.5%;
+    right: 1%;
     transform: translateX(0) scale(0.8);
     z-index: 2;
     }
@@ -520,13 +538,7 @@ button {
     z-index: 1;
     transform: scale(0.6);
     }
-    
-    .stars{
-    color: rgb(255, 242, 0);
-    text-align: right;
-    margin-right: 20px;
-    }
-    
+        
 /* Footer */
 
 footer {
@@ -537,9 +549,8 @@ footer {
     padding: 0; 
     position: relative;
     flex-wrap: wrap;
-    color: #fefefe;
-    background: rgba(0, 0, 0, 0.848);
-    height: 130px; 
+    color: #333333;
+    background: rgba(245, 245, 240, 0.85); 
     border-top: 2px solid #f9b013ec; 
     }
     
@@ -655,33 +666,90 @@ footer {
     .navigation {
         position: absolute;
         right: 83%;
-        bottom: 25%;
+        top: 39%;
         transform: translateX(50%);
     }
     .header-about-container {
-        text-align: center;
-        padding: 20px;
+        flex-direction: row;
+        gap: 20px;
+    }
+
+    .header-about {
+        height: 350px;
     }
 
     .header-content-about h1 {
-        font-size: 1rem;
+        font-size: 40px;
+    }
+
+    .outline-text {
+        font-size: 60px;
     }
 
     .header-content-about .quote {
-        font-size: 1rem;
+        font-size: 16px;
+    }
+
+    .about-content {
+        max-width: 90%;
+        text-align: center;
     }
 
     .about-description {
-        font-size: 0.9rem;
+        font-size: 14px;
     }
 
     .about-btn {
-        width: 100%;
-        text-align: center;
-        padding: 12px;
+        font-size: 16px;
+        padding: 8px 20px;
+    }
+    
+    .thumbnail h3 {
+        font-size: 0.9em; /* اجعل حجم الخط أصغر */
+    }
+    .reviews {
+        justify-content: center;
+    }
+
+    .carousel-item {
+        max-width: 300px;
+        padding: 15px;
+    }
+
+    .carousel-item img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .carousel-item h3 {
+        font-size: 18px;
+    }
+
+    .review-text {
+        font-size: 14px;
+    }
+
+    #cli {
+        font-size: 28px;
+    }
+    .carousel-item.left,
+    .carousel-item.right {
+        display: block; 
+    }
+    .carousel-item.left {
+    left: 0%;
+    transform: translateX(0) scale(0.8);
+    z-index: 2;
+    }
+    
+    .carousel-item.right {
+    right: 0%;
+    transform: translateX(0) scale(0.8);
+    z-index: 2;
     }
 }
-@media (max-width: 400px) {
+
+@media (max-width: 500px) {
     .description {
         bottom: 30%; 
     }
@@ -704,10 +772,64 @@ footer {
     }
 
     .navigation {
-        position: absolute;
-        bottom: 80%;
-        top: 30%;
-        right: 50%;
-        transform: translateX(50%);
+        display: none;     }
+
+    .arrow {
+        font-size: 0.5em;  /* تقليص حجم الأسهم */
+        padding: 8px;  /* تقليل الحجم */
     }
+
+    .image-counter {
+        font-size: 0.8em;
+    }
+    
+    .thumbnail h3 {
+        font-size: 0.5em; /* اجعل حجم الخط أصغر */
+    }
+    
+    .header-about-container {
+        flex-direction: row;
+        gap: 20px;
+    }
+
+    .header-about {
+        height: 350px;
+    }
+
+    .header-content-about h1 {
+        font-size: 20px;
+    }
+
+    .outline-text {
+        font-size: 40px;
+    }
+
+    .header-content-about .quote {
+        font-size: 16px;
+    }
+
+    .about-content {
+        max-width: 90%;
+        text-align: center;
+    }
+
+    .about-description {
+        font-size: 12px;
+    }
+
+    .about-btn {
+        font-size: 16px;
+        padding: 8px 20px;
+    }
+    .carousel-item.left {
+    left: -5%;
+    transform: translateX(0) scale(0.8);
+    z-index: 2;
+    }
+    
+    .carousel-item.right {
+    transform: translateX(0) scale(0.8);
+    z-index: 2;
+    }
+    
 }
