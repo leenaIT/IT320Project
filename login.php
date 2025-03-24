@@ -1,6 +1,6 @@
 <?php
-session_name('unique_session_name_for_project1');
 session_start();
+session_name('unique_session_name_for_project1');
 
 
 // Enable error reporting

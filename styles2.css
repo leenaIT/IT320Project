@@ -7,6 +7,7 @@
 html, body {
     width: 100%;
     overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-y: auto;
     margin: 0;
     height: 100%; 
 }
@@ -156,86 +157,55 @@ position: absolute;
 
 }
 
-.event-photo1{
-width: 70px;
-height: 70px;
-background: darkred;
-border-radius: 50%;
-position: absolute;
-top: 46px; 
-left: 193px; 
-background-image: url("workshops/workshop2.jpeg"); /* Set the image */
-background-position: bottom center; 
-background-size: 90%; 
-transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
 
-}
-
-.event-photo2{
+.event-photo1, .event-photo2, .event-photo3, .event-photo4, .event-photo5 {
     width: 70px;
     height: 70px;
-    background: darkred;
+    background: #222;
     border-radius: 50%;
     position: absolute;
+    transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
+      background-repeat: no-repeat;
+}
+
+.event-photo1 {
+    top: 46px; 
+    left: 193px; 
+    background-position:  center; 
+    background-size: 90%; 
+}
+
+.event-photo2 {
     top: 175px; 
     left: 323px; 
-    background-image: url("workshops/workshop6.jpeg"); /* Set the image */
-    background-position: bottom center; 
+    background-position:  center; 
     background-size: 100%; 
-    transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
+}
 
-    }
+.event-photo3 {
+    top: 46px;
+    left: 453px; 
+    background-position: center; 
+    background-size: 100%; 
+}
 
+.event-photo4 {
+    top: 175px; 
+    left: 585px;
+    background-position:  center; 
+    background-size: 178%; 
+}
+
+.event-photo5 {
+    top: 46px;
+    left: 713px; 
+    background-position:  center; 
+    background-size: 180%;
+}
    
-    .event-photo3{
-        width: 70px;
-        height: 70px;
-        background: darkred;
-        border-radius: 50%;
-        position: absolute;
-        top: 46px;
-        left: 453px; 
-        background-image: url("workshops/Bento-торт Мастер-Класс.jpeg"); /* Set the image */
-        background-position:  center; 
-        background-size: 100%; 
-        transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
-
-        }
-
-        .event-photo4{
-            width: 70px;
-            height: 70px;
-            background: darkred;
-            border-radius: 50%;
-            position: absolute;
-            top: 175px; 
-            left: 585px;
-            background-image: url("workshops/image4.jpg"); /* Set the image */
-            background-position: bottom center; 
-            background-size: 178%; 
-            transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
- 
-            }
-
-            .event-photo5{
-                width: 70px;
-                height: 70px;
-                background: darkred;
-                border-radius: 50%;
-                position: absolute;
-                top: 46px;
-                left: 713px; 
-                background-image: url("workshops/image1.jpg"); /* Set the image */
-                background-position: -60%;
-                background-position: bottom center; 
-                background-size: 180%;
-                transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
- 
-                }
-                
-                .event-photo1:hover,.event-photo2:hover, .event-photo3:hover ,.event-photo4:hover ,.event-photo5:hover{
-                    transform: scale(1.1);
-                }
+ .event-photo1:hover,.event-photo2:hover, .event-photo3:hover ,.event-photo4:hover ,.event-photo5:hover{
+        transform: scale(1.1);
+  }
 
 
                 
@@ -364,7 +334,6 @@ left: 790px;
     height: 100%;
     gap: 3em;
     scroll-behavior: smooth;
-    overflow-x: auto;  /* Enable horizontal scrolling */
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     margin-left: 55px;  /* Optional: space from the left side */
@@ -496,7 +465,7 @@ padding-top: 2em;}
     border-radius: 20px;
 }
 .image-placeholder5{
-    background-image: url("workshops/Cozy Up This Winter with DIY Scented Candles! 🕯️🌿.jpeg");
+    background-image: url("workshops/post4.jpeg");
     background-position: -60%;
     background-position:  center; 
     background-size: 100%; 
@@ -630,7 +599,7 @@ button img {
     height: 60%; /* Fixed height */
     box-sizing: border-box;
     margin-bottom: 40px;
-    overflow-x: hidden;
+  
 }
 
 
@@ -790,5 +759,148 @@ button img {
         opacity: 1;
     }
    
-    
-    
+   /* Modal Style (initially hidden) */
+   
+ #editProfileModal {
+    display: none; /* Hide the modal by default */
+ 
+}
+
+/* Modal Background */
+.modal {
+  display: none; /* Hide modal by default */
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #222;
+  color:white;
+  padding: 20px;
+  width: 50%; /* Adjust the width as needed */
+  height:80%;
+  max-width: 400px; /* Set a max-width for the modal */
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  left:38%;
+  top:10%;
+    overflow-y:auto;
+     overflow-x: hidden;
+}
+
+/* Close Button */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: #aaa;
+  cursor: pointer;
+}
+
+/* Hover effect for close button */
+.close:hover,
+.close:focus {
+  color: whitesmoke;
+  text-decoration: none;
+   transform: scale(1.1); 
+}
+
+/* Profile Picture container */
+.profile-picture-container {
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  margin-bottom: 20px;
+  margin-top: 20px; /* Space above the profile picture */
+  gap:10px;
+}
+
+/* Profile Picture Styling */
+.current-picture {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 2px solid #ccc; /* Optional: border around the image */
+}
+
+/* Change Picture Button Styling */
+#updateProfile {
+  padding: 6px 12px; /* Adjust padding to control size */
+  background-color: #f4b42b;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  border-radius: 5px;
+  height: 30px;  /* Set a fixed height for the button */
+  width: 110px;  /* Set a fixed width for the button */
+  display: inline-flex; /* Ensure the button remains in a line with other elements */
+  justify-content: center; /* Center text inside the button */
+  align-items: center; /* Center text vertically */
+  margin-top:2em;
+}
+
+#updateProfile:hover {
+  background-color: #e9a600;
+}
+
+.form-input input[type="text"],
+.form-input input[type="email"],
+.form-input input[type="file"],
+.form-input input[type="tel"],
+.form-input textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 5px; /* Add space between form fields */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+background-color:  #FFFDF0;
+}
+
+
+.form-input textarea {
+    overflow:auto;
+}
+/* Apply custom scrollbar styles to all scrollable elements */
+::-webkit-scrollbar {
+    width: 8px; /* Set the width of the scrollbar */
+    height: 8px; /* Set the height of the scrollbar (for horizontal scrolling) */
+}
+
+/* Style the track (background) of the scrollbar */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 10px;
+}
+
+/* Style the thumb (the actual draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+    background-color: #f4b42b; /* Yellowish color for the thumb */
+    border-radius: 10px;
+    border: 2px solid #ccc; /* Add a light border to the thumb */
+}
+
+/* Hover effect for the thumb */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #e0a800; /* Darker shade of yellow on hover */
+}
+
+/* Style for horizontal scrollbars */
+::-webkit-scrollbar-thumb:horizontal {
+    background-color: #f4b42b;
+}
+
