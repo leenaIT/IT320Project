@@ -200,7 +200,7 @@
 
         <a href="category.php?category=Cooking">
             <div class="category-btn" data-aos="fade-up">
-                <img src="workshops/Мастер-Класс по бенто тортам.jpeg" alt="Cooking">
+                <img src="workshops/cake_art.jpeg" alt="Cooking">
                 <span>Cooking</span>
             </div>
         </a>
@@ -214,7 +214,7 @@
 
         <a href="category.php?category=Art">
             <div class="category-btn" data-aos="fade-up" data-aos-delay="400">
-                <img src="workshops/Гончарный круг.jpeg" alt="Art">
+                <img src="workshops/drawing.jpeg" alt="Art">
                 <span>Art</span>
             </div>
         </a>
