@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,13 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Category Page</title>
     
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
     
-    <!-- AOS Animation Library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     
-    <!-- Font Awesome (Icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="header-footer2.css">
 
@@ -178,7 +176,6 @@
 </head>
 <body>
 
-    <!-- الهيدر -->
     <header class="header">
         <div class="nav">
             <span><a href="homePage.html">Home</a></span>
@@ -197,26 +194,35 @@
         </div>
     </header>
 
-    <!-- قسم الفئات -->
-    <section class="category-section">
-        <h2 class="section-title">Find Your Category!</h2>
-        <div class="category-container">
+<section class="category-section">
+    <h2 class="section-title">Find Your Category!</h2>
+    <div class="category-container">
+
+        <a href="category.php?category=Cooking">
             <div class="category-btn" data-aos="fade-up">
-                <img src="/IT320Project/workshops/Мастер-Класс по бенто тортам.jpeg" alt="Cooking">
+                <img src="workshops/Мастер-Класс по бенто тортам.jpeg" alt="Cooking">
                 <span>Cooking</span>
             </div>
+        </a>
+
+        <a href="category.php?category=Adventure">
             <div class="category-btn" data-aos="fade-up" data-aos-delay="200">
-                <img src="/IT320Project\workshops\post3.jpeg" alt="Adventure">
+                <img src="workshops/post3.jpeg" alt="Adventure">
                 <span>Adventure</span>
             </div>
+        </a>
+
+        <a href="category.php?category=Art">
             <div class="category-btn" data-aos="fade-up" data-aos-delay="400">
-                <img src="/IT320Project\workshops\Гончарный круг.jpeg" alt="Art">
+                <img src="workshops/Гончарный круг.jpeg" alt="Art">
                 <span>Art</span>
             </div>
-        </div>
-    </section>
+        </a>
 
-    <!-- قسم أفضل الورش -->
+    </div>
+</section>
+
+
     <section class="top-workshops">
         <h2 class="section-title">Top Workshops</h2>
         <div class="workshops-grid">

@@ -1,3 +1,18 @@
+<?php
+session_start();
+require 'database.php';
+
+$category = $_GET['category'];
+
+$stmt = $connection->prepare("SELECT Title, ShortDes, Location, Price, ImageURL FROM workshop WHERE Category = ? AND Location != 'Dammam'");
+$stmt->bind_param("s", $category);
+$stmt->execute();
+$result = $stmt->get_result();
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -436,103 +451,21 @@ input[type="date"] {
             </div>
         </div>
         <div class="grid">
-            <div class="grid-item" data-location="Riyadh" data-date="2025-03-15" data-price="200">
-                <div class="tag">Riyadh</div>
-                <img src="workshops/freepik__upload__87293.png" alt="Embroidery Workshop">
-                <h3>Embroidery Workshop</h3>
-                <p>Learn the basics of embroidery and color coordination.</p>
-                <div class="details">
-                    <a href="booking.html" class="more-btn">More details</a>
-                    <span class="price">
-                        270 <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
-                    </span>
-                </div>
-            </div>
-            <div class="grid-item" data-location="Jeddah" data-date="2025-03-15" data-price="200">
-                <div class="tag">Jeddah</div>
-                <img src="workshops/download (2).jpeg" alt="Candle Making Workshop">
-                <h3>Candle Making</h3>
-                <p>Create beautiful and decorative candles.</p>
-                <div class="details">
-                    <a href="booking.html" class="more-btn">More details</a>
-                    <span class="price">
-                        170 <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
-                    </span>
-                </div>
-            </div>
-            <div class="grid-item" data-location="Riyadh" data-date="2025-03-15" data-price="200">
-                <div class="tag">Riyadh</div>
-                <img src="workshops/young-child-making-diy-project-from-upcycled-materials.jpg" alt="Tote Bag Painting">
-                <h3>Customize Your Tote Bag</h3>
-                <p>Decorate your tote bag with unique designs.</p>
-                <div class="details">
-                    <a href="booking.html" class="more-btn">More details</a>
-                    <span class="price">
-                        190 <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
-                    </span>
-                </div>
-            </div>
-            <div class="grid-item" data-location="Jeddah" data-date="2025-03-15" data-price="200">
-                <div class="tag">Jeddah</div>
-                <img src="workshops/top-view-woman-knitting.jpg" alt="Crochet Basics">
-                <h3>Crochet Basics</h3>
-                <p>Learn the basics of crochet and create handmade items.</p>
-                <div class="details">
-                    <a href="booking.html" class="more-btn">More details</a>
-                    <span class="price">
-                        230 <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
-                    </span>
-                </div>
-            </div>
-            <div class="grid-item" data-location="Dammam" data-date="2025-03-15" data-price="200">
-                <div class="tag">Dammam</div>
-                <img src="workshops/Canvas Step by Step paint event.jpeg" alt="Free Drawing">
-                <h3>Free Drawing</h3>
-                <p>Discover your talent through creative drawing techniques.</p>
-                <div class="details">
-                    <a href="booking.html" class="more-btn">More details</a>
-                    <span class="price">
-                        145 <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
-                    </span>
-                </div>
-            </div>
-            <div class="grid-item" data-location="Taif" data-date="2025-03-15" data-price="200">
-                <div class="tag">Taif</div>
-                <img src="workshops/view-hands-engaged-it-yourself-project.jpg" alt="Soap Making">
-                <h3>Soap Making</h3>
-                <p>Learn the techniques of soap making.</p>
-                <div class="details">
-                    <a href="booking.html" class="more-btn">More details</a>
-                    <span class="price">
-                        150 <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
-                    </span>
-                </div>
-            </div>
-            <div class="grid-item" data-location="Taif" data-date="2025-03-15" data-price="200">
-                <div class="tag">Taif</div>
-                <img src="workshops/close-up-hand-painting-pocket-with-pink.jpg" alt="Clothes Painting">
-                <h3>Clothes Painting</h3>
-                <p>Unleash your creativity by painting on clothes.</p>
-                <div class="details">
-                    <a href="booking.html" class="more-btn">More details</a>
-                    <span class="price">
-                        210 <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
-                    </span>
-                </div>
-            </div>
-            <div class="grid-item" data-location="Taif" data-date="2025-03-15" data-price="200">
-                <div class="tag">Taif</div>
-                <img src="workshops/download (1).jpeg" alt="Pottery Workshop">
-                <h3>Pottery Workshop</h3>
-                <p>Learn pottery techniques and create handmade pieces.</p>
-                <div class="details">
-                    <a href="booking.html" class="more-btn">More details</a>
-                    <span class="price">
-                        200 <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
-                    </span>
-                </div>
-            </div>
+            <?php while ($row = $result->fetch_assoc()): ?>
+    <div class="grid-item">
+        <div class="tag"><?php echo $row['Location']; ?></div>
+        <img src="<?php echo $row['ImageURL']; ?>" alt="<?php echo $row['Title']; ?>">
+        <h3><?php echo $row['Title']; ?></h3>
+        <p><?php echo $row['ShortDes']; ?></p>
+        <div class="details">
+            <a href="booking.php" class="more-btn">More details</a>
+            <span class="price">
+                <?php echo $row['Price']; ?>
+                <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
+            </span>
         </div>
+    </div>
+<?php endwhile; ?>
     </div>
     <hr style="color:black; border-width:2px;">
     <footer class="footer" id="footer">
