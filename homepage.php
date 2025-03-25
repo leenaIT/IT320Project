@@ -23,34 +23,206 @@ if ($conn->connect_error) {
     <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="header.css">
+    <style>
+   footer {
+            margin-top: 2em;
+            padding: 1em 2em;
+            background-color: #fffefc;
+            border-top: 2px solid #f9b013ec;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+
+        .footer-left-1,
+        .footer-center-1,
+        .footer-right-1 {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.5em;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* وسط الفوتر */
+        .footer-center-1 {
+            justify-content: center;
+        }
+
+        .footer-logo-1 {
+            width: 100px;
+        }
+
+        .contact-info-1 {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: nowrap;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .contact-item-1 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .single-line-1 {
+            white-space: nowrap;
+        }
+
+        /* أيقونات السوشال ميديا */
+        .social-icons-1 {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .footer-bottom-1 {
+            width: 100%;
+            text-align: center;
+            margin-top: 0.5em;
+        }
+
+        .footer-bottom-1 p {
+            padding: 0.5em;
+            background-color: #ffffff;
+            font-size: 0.75em;
+            color: #f9b013ec;
+            border-top: 1px solid #ccc;
+        }
+
+        .icon-phone {
+            width: 30px;
+            height: 30px;
+        }
+
+        .icon-email {
+            width: 42px;
+            height: 42px;
+        }
+
+        .icon-location {
+            width: 42px;
+            height: 42px;
+        }
+
+        .icon-facebook,
+        .icon-twitter,
+        .icon-instagram {
+            width: 35px;
+            height: 35px;
+        }
+
+        @media (max-width: 768px) {
+            footer {
+                flex-direction: column;
+                align-items: center;
+                padding: 1em;
+            }
+            
+            .footer-left-1,
+            .footer-center-1,
+            .footer-right-1 {
+                width: 100%;
+                margin-bottom: 1em;
+                padding: 0.5em 0;
+            }
+
+            .contact-info-1 {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .contact-item-1 {
+                flex: 0 0 auto;
+                margin: 0 5px;
+            }
+
+            .footer-logo-1 {
+                width: 80px;
+                margin: 10px 0;
+            }
+
+            .social-icons-1 {
+                margin: 15px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contact-info-1 {
+                gap: 10px;
+            }
+            
+            .icon-phone,
+            .icon-email,
+            .icon-location {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .icon-facebook,
+            .icon-twitter,
+            .icon-instagram {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .footer-logo-1 {
+                width: 70px;
+            }
+        }
+    </style>
 </head>
 <body class="no-background ">
 
     <header class="no-background ">
         <div class="logo"><img src="workshops/logo.png" alt="logo" height="80" width="80"></div>
         
-        <div class="nav-container">
-            <nav>
-                <ul class="nav-links">
-                  <li><a href="Category.php">Category </a></li>
-                    <li><a href="Explore.php">Explore </a></li>
-                    <li><a href="login.php" class="login-signup" id="login-signup">Login/Signup</a></li> 
-                    <li><div class="language-switch" onclick="toggleLanguage()">🌐 Language</div></li>
-                </ul>
-            </nav>
+   
+<!-- زر الهامبرغر المحسن -->
+<div class="hamburger" onclick="toggleMenu(this)">
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+</div>
+
+<!-- القائمة المتنقلة المحسنة -->
+<div class="mobile-nav-container">
+    <nav class="mobile-nav">
+        <a href="Explore.php">Explore</a>
+        <a href="login.php">Login/Signup</a>
+        <a href="findcategory.php">Category</a>
+        <div class="mobile-language-switch" onclick="toggleLanguage()">
+            🌐 Language
         </div>
-    
-        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-    </header>
-    
-    <div class="menu">
-        <ul>
-            <li><a href="Category.php">Category</a></li> 
-            <li><a href="Explore.php">Explore</a></li>
-            <li><a href="login.php" class="login-signup">Login/Signup</a></li>
-            <li><div class="language-switch" onclick="toggleLanguage()">🌐 Language</div></li>
-        </ul>
+    </nav>
+</div>
+
+<!-- القائمة الأصلية للكمبيوتر -->
+<nav class="desktop-nav">
+     <a href="Explore.php">Explore</a>
+        <a href="login.php">Login/Signup</a>
+        <a href="findcategory.php">Category</a>
+    <div class="language-switch" onclick="toggleLanguage()">
+        🌐 Language
     </div>
+</nav>
+
+    </header>
+
     <?php
 $sql_description = "SELECT Title, ShortDes, ImageURL FROM workshop WHERE WorkshopID = 4";
 $result_desc = $conn->query($sql_description);
@@ -155,46 +327,47 @@ $result = $conn->query($sql);
     
     <br>
    
-    <footer>
-        <div class="footer-left-1">
-            <h4>Get In Touch</h4>
-            <div class="contact-info-1" id="contact-us">
-                <div class="contact-item-1">
-                    <img src="workshops/phone1.png" alt="Phone Icon">
-                    <span class="single-line-1">+996 58765 43210</span>
-                </div>
-                <div class="contact-item-1">
-                    <img src="workshops/mail-icon.png" alt="Email Icon">
-                    <span class="single-line-1">mehar@gmail.com</span>
-                </div>
-                <div class="contact-item-1">
-                    <img src="workshops/location1.png" alt="Location Icon">
-                    <span class="single-line-1">Saudi Arabia</span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer-center-1">
-            <a href="index.html">
+<footer>
+    <div class="footer-left-1">
+        <h4>Get In Touch</h4>
+        <div class="contact-info-1" id="contact-us">
+    <div class="contact-item-1">
+        <img src="workshops/phone.png" class="icon-phone">
+        <span class="single-line-1">+996 58765 43210</span>
+    </div>
+    <div class="contact-item-1">
+        <img src="workshops/mail.png" class="icon-email">
+        <span class="single-line-1">mehar@gmail.com</span>
+    </div>
+    <div class="contact-item-1">
+        <img src="workshops/location.png" class="icon-location">
+        <span class="single-line-1">Saudi Arabia</span>
+    </div>
+</div>
+
+    </div>
+
+    <div class="footer-center-1">
+        <a href="index.html">
             <img src="workshops/logo.png" alt="Logo" class="footer-logo-1 logo-toggle">
         </a>
+    </div>
+
+    <div class="footer-right-1" id="contact">
+        <h4>Social Media</h4>
+        <div class="social-icons-1">
+            <img src="workshops/Facebook_icon_(black).svg" alt="Facebook" class="icon-facebook">
+            <img src="workshops/X1.png" alt="Twitter" class="icon-twitter">
+            <img src="workshops/CIS-A2K_Instagram_Icon_(Black).svg" alt="Instagram" class="icon-instagram">
         </div>
-        
-        <div class="footer-right-1" id="contact">
-            <p><strong>Social media</strong></p>
-            <div class="social-icons-1">
-                
-                <img src="workshops/facebook11.png" alt="Facebook">
-                <img src="workshops/X1.png" alt="Twitter">
-                <img src="workshops/instagram.png" alt="Instagram">
-                <img src="workshops/linkedin.png" alt="LinkedIn">
-            </div>
-        </div>
-        
-        <div class="footer-bottom-1">
-            <p>© 2024 Website. All rights reserved.</p>
-        </div>
-    </footer>
+    </div>
+
+    <!-- الخط السفلي -->
+    <div class="footer-bottom-1">
+        <p>© 2024 Website. All rights reserved.</p>
+    </div>
+</footer>
+
     <script>
     const container = document.getElementById("container2");
     const description = document.getElementById("description");
@@ -272,9 +445,17 @@ $result = $conn->query($sql);
 }
 
 
-function toggleMenu() {
-    document.querySelector(".menu").classList.toggle("active");
+function toggleMenu(button) {
+    button.classList.toggle('active');
+    document.querySelector('.mobile-nav-container').classList.toggle('show');
+    
+    document.body.style.overflow = button.classList.contains('active') ? 'hidden' : '';
 }
+
+
+
+
+
 
 (function reviewsCarousel() {
   const carouselItems = document.querySelectorAll(".carousel-item");
@@ -329,4 +510,3 @@ function toggleMenu() {
 </script>
 </body>
 </html>
-

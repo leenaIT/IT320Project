@@ -21,7 +21,7 @@ body.no-background {
     min-height: 100vh;
     color: white;
     font-family: 'Mulish', sans-serif;
-    background: #f6f3dd;
+    background: #FFFDF0;
 }
 /* Header */
 header.with-background {
@@ -42,78 +42,6 @@ header.no-background {
     align-items: center;
     font-family: 'Montserrat', sans-serif;
 
-}
-.nav-container {
-    display: flex;
-    align-items: center;
-}
-
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-}
-
-.nav-links li a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-}
-
-.language-switch {
-    cursor: pointer;
-    font-size: 18px;
-    margin-left: 20px;
-}
-
-.login-signup {
-    font-size: 18px;
-    color: white;
-    text-decoration: none;
-}
-/* Hamburger Menu */
-.menu-toggle {
-    display: none;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.menu {
-    display: none;
-    position: absolute;
-    top: 60px;
-    right: 20px;
-    background: #353129b0;
-    border-radius: 8px;
-    padding: 10px;
-    z-index: 5;
-}
-
-.menu.active {
-    display: block;
-}
-
-.menu ul {
-    list-style: none;
-    padding: 0;
-}
-
-.menu ul li {
-    padding: 10px;
-}
-
-.menu ul li a {
-    color: white;
-    text-decoration: none;
-}
-
-html[dir="rtl"] .menu ul li {
-    text-align: right; 
-}
-
-html[dir="rtl"] .menu.active {
-    right: auto;
-    left: 20px;
 }
 
 
@@ -538,78 +466,7 @@ button {
     z-index: 1;
     transform: scale(0.6);
     }
-        
-/* Footer */
 
-footer {
-    margin-top: 0px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0; 
-    position: relative;
-    flex-wrap: wrap;
-    color: #333333;
-    background: rgba(245, 245, 240, 0.85); 
-    border-top: 2px solid #f9b013ec; 
-    }
-    
-    .footer-left-1, .footer-center-1, .footer-right-1 {
-    flex: 1;
-    padding: 0.5em; 
-    text-align: center;
-    }
-    
-    .footer-center-1 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    }
-    
-    .footer-logo-1 {
-    width: 100px;
-    }
-    
-    .contact-info-1 {
-    display: flex;
-    gap: 10px; 
-    align-items: center;
-    }
-    
-    .footer-left-1 img, .footer-right-1 img, .social-icon-1 {
-    max-width: 1.5em; 
-    height: auto;
-    margin-right: 0.5em; 
-    }
-    
-    .single-line-1 {
-    white-space: nowrap;
-    }
-    
-    .footer-bottom-1 {
-    width: 100%;
-    text-align: center;
-    margin-top: 0em; 
-    }
-    
-    .footer-bottom-1 p {
-    padding: 0.5em; 
-    background-color: #ffffff;
-    font-size: 0.75em; 
-    color: #f9b013ec;
-    border-top: 0.0625em solid #ccc; 
-    }
-    @media (max-width: 768px) {
-    .carousel-item {
-        width: 90%;
-        max-width: 90%;
-    }
-    
-    .carousel-item.left,
-    .carousel-item.right {
-        display: none;
-    }
-    }
     
 
 /* Responsive */

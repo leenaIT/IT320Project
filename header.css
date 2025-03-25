@@ -1,0 +1,145 @@
+.desktop-nav {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    display: flex;
+    gap: 20px;
+    z-index: 100;
+    font-weight: bold;
+}
+
+.desktop-nav a,
+.language-switch {
+    text-decoration: none;
+    color: #FF9D23;
+    font-size: 16px;
+    padding: 8px 15px;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 45px;
+    height: 45px;
+    background: white;
+    border: 2px solid #FF9D23;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.hamburger-line {
+    display: block;
+    width: 22px;
+    height: 2.5px;
+    background: #FF9D23;
+    margin: 3px 0;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.hamburger:hover {
+    transform: scale(1.05);
+    background-color: #fff4e4;
+}
+
+.hamburger.active {
+    background: #FF9D23;
+}
+
+.hamburger.active .hamburger-line {
+    background: white;
+}
+
+.hamburger.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* ====== القائمة الجانبية للجوال ====== */
+.mobile-nav-container {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: #fffefc;
+    z-index: 999;
+    transition: all 0.5s ease;
+    padding: 80px 30px;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-nav-container.show {
+    right: 0;
+}
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.mobile-nav a,
+.mobile-language-switch {
+    color: #333;
+    background-color: #fffefc;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 12px 15px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+
+    border-bottom: 1px solid #FF9D23; /* ✅ الخط البرتقالي */
+}
+
+.mobile-nav a:hover,
+.mobile-language-switch:hover {
+    background-color: #ffe9ca;
+    transform: translateX(8px);
+    color: #FF9D23;
+}
+
+.mobile-nav a:before {
+    content: "➤";
+    color: #FF9D23;
+    margin-right: 10px;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav a:hover:before {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .desktop-nav {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+}
+
