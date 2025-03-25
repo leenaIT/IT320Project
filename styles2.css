@@ -74,13 +74,20 @@ margin-top: 10px;
     position: absolute;
     cursor: pointer;
     right: 20px;
-     transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
 }
 
 .edit-btn1:hover .tooltip {
     opacity: 1;
+    margin-bottom:40px;
+    margin-left:-20px;
+    
 }
 
+.edit-btn1:hover {
+   transform: scale(1.1);  
+    transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
+
+}
 
 /* Bio & Bookings Row */
 .content {
@@ -125,26 +132,29 @@ margin-top: 10px;
     margin-right: 13px;
 }
 
-.bookings h3{
-    font-size:17px;
-    color:black;
+#openBookingModal{
+    font-size:15px;
+    color:white;
     margin-left:10px;
-
+    margin-bottom: 30px;
+font-family: 'sans-serif';
+ background-color: rgba(0, 0, 0, 0.5); /* Transparent gray */
+  cursor: pointer;
+  border-radius: 5px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+letter-spacing: 1px;
 }
 
-.bookings a {
-    text-decoration: none;
-    color: inherit; /* Keeps it the same as surrounding text */
-    display: inline-block;
+
+#openBookingModal:hover {
+ color: #ff9800; /* Orange text */
+    background-color: rgba(23, 22, 22, 0.815); 
+    transform: scale(1.02);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
 }
 
-.bookings a:hover {
-    transform: scale(1.1); 
-    transition: transform 0.3s ease-in-out;
-}
-
-.bookings a:visited,
-.bookings a:active {
+#openBookingModal:visited,
+#openBookingModal:active {
     text-decoration: none;
     color: inherit;
 }
@@ -799,7 +809,7 @@ button img {
 }
 
 /* Close Button */
-.close {
+.close , .close1{
   position: absolute;
   top: 10px;
   right: 10px;
@@ -810,7 +820,9 @@ button img {
 
 /* Hover effect for close button */
 .close:hover,
-.close:focus {
+.close:focus,
+.close1:hover,
+.close1:focus{
   color: whitesmoke;
   text-decoration: none;
    transform: scale(1.1); 
@@ -904,3 +916,302 @@ background-color:  #FFFDF0;
     background-color: #f4b42b;
 }
 
+#bookingModal{
+    display:none;
+}
+
+/* Modal Background */
+.modal1 {
+  display: none;
+  position: fixed;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal Content */
+.modal-content1 {
+  background-color: #222;
+  color: white;
+  padding: 20px;
+  width: 90%;
+  height: 90%;
+  max-width: 900px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+    z-index: 10;
+}
+
+/* Tabs Container */
+.tabs {
+  background-color: #fde5b7;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #ddd;
+  display:flex;
+  justify-content: center;
+  gap:10px;
+margin-top:10px;
+}
+
+/* Tab Links */
+.tablinks {
+  background-color: inherit;
+  border: none;
+  outline: none;
+  display: inline-block;
+  padding: 14px 20px;
+  font-size: 17px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-right: 5px;
+   color: #d48d00;
+   font-weight: bold;
+}
+
+.tablinks:hover {
+  background-color: #ddd;
+}
+
+.tablinks.active {
+  background-color: #d48d00;
+  color: white;
+  font-weight: bold;
+}
+
+/* Tab Content */
+.tabcontent {
+  display: none; /* Hide all content by default */
+  padding: 20px;
+  background-color: #222;
+  border-top: none;
+}
+
+/* Style for booking items */
+.booking-item {
+  display: flex;
+  flex-direction: row ;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 15px;
+  color:black;
+  background-color: #FFFDF0;
+  box-shadow: 0 0.25em 0.625em rgba(0, 0, 0, 0.2); 
+  border-radius: 25px;
+  position: relative;
+}
+
+.booking-item img {
+  width: 210px;
+  height: 210px;
+  object-fit: cover;
+  margin-left: 20px;
+  margin-top: 20px;
+  border-radius: 20px;
+}
+.booking-info strong{
+    display:flex;
+    flex-direction: column;
+      border-radius: 0.625em; /* 10px */
+    box-shadow: 0 0.0625em 0.1875em rgba(0, 0, 0, 0.2); 
+    background-color: whitesmoke; 
+    padding: 0.25em 0.5em; /* 4px 8px */
+    color: #333;
+    margin-bottom: 10px;
+    margin-top: 30px;
+    
+}
+.booking-info {
+margin-left:20px;
+font-family: roboto;}
+
+.workshop-info strong{
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.625em; /* 10px */
+    box-shadow: 0 0.0625em 0.1875em rgba(0, 0, 0, 0.2); 
+    background-color: whitesmoke; 
+    padding: 0.25em 0.5em; /* 4px 8px */
+    color: #333;
+     font-weight: bold;
+     margin-bottom: 10px;
+     margin-top: 30px;
+
+}
+.workshop-info p {
+  margin-left:80px;
+ font-family: roboto;
+}
+
+.orange-box{
+     align-self: center;
+    margin-left: auto;
+    margin-top:150px;
+    background-color: #f6f3dd;
+    height:130px;
+    width:210px;
+    box-shadow: 0 0.0625em 0.1875em rgba(0, 0, 0, 0.2);
+     border-radius: 0.625em;
+      margin-right: 20px;
+}
+.totalPrice{
+    font-family: roboto;
+    align-self: center;
+    margin-left: 20px;
+     display: flex; 
+     align-items: center;/* Aligns items in a row */
+     margin-top:20px;
+    font-size: 18px;
+    box-shadow: 0 0.0625em 0.1875em rgba(0, 0, 0, 0.2); 
+    background-color: #fdefb2; 
+    width:100%;
+    height:20px;
+    overflow: visible;
+}
+
+.totalPrice img {
+  width: 30px;  /* Adjust the image width */
+  height: 30px; /* Adjust the image height */
+  margin-bottom:19px;
+  border-radius: 1px;  
+padding:6px;
+}
+ 
+.rebook-btn{
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 110px;
+    height: 30px;
+    margin-left: 60px;
+    margin-top: 10px; 
+    
+}
+.rebook-btn:hover{
+      color: #ff9800; /* Orange text */
+    background-color: rgba(23, 22, 22, 0.815); 
+    transform: scale(1.02);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+/* Make sure the modal is centered */
+@media screen and (max-width: 600px) {
+  .modal-content1 {
+    width: 95%;
+  }
+
+  .tablinks {
+    font-size: 14px;
+  }
+}
+
+.empty-message {
+  text-align: center;
+  color: white; /* White text for a clean contrast */
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 90px;
+  margin-left: 200px;
+  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.1); /* Light transparent background */
+  border: 1.5px dashed white; /* Smaller dashed border */
+  border-radius: 6px; /* Slightly rounded corners */
+  display: inline-block;
+  width: 45%;
+}
+.booking-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+ 
+}
+
+.booking-actions img {
+    width: 25px;  
+    height: 25px;
+    border-radius: 5px;  
+    cursor: pointer;
+}
+
+
+.booking-actions img:hover {
+    transform: scale(1.1);
+}
+
+.star-rating {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.star {
+    font-size: 30px;
+    color: #d3d3d3;  /* Light gray color */
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.star.selected {
+    color: #ffcc00;  /* Gold color for selected stars */
+}
+
+textarea {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.review-form {
+    margin-top: 10px;
+}
+
+.review-btn {
+   background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 110px;
+    height: 30px;
+    margin-left: 60px;
+    margin-top: -10px; 
+}
+.review-btn:hover{
+    color: #ff9800; /* Orange text */
+    background-color: rgba(23, 22, 22, 0.815); 
+    transform: scale(1.02);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.submit-review-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}

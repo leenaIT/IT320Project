@@ -5,7 +5,7 @@ require 'database.php';
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: hoempage.php");
     exit();
 }
 
@@ -14,25 +14,57 @@ $user_id = $_SESSION['user_id'];
 
 // Fetch user data from database
 $sql = "SELECT FirstName, LastName, Email, Mobile, ProfilePhoto,bio FROM users WHERE UserID = ?";
-$stmt = $connection->prepare($sql);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
+$stmt1 = $connection->prepare($sql);
+$stmt1->bind_param("i", $user_id);
+$stmt1->execute();
+$result1 = $stmt1->get_result();
+$user = $result1->fetch_assoc();
 
 // Set default profile photo if not uploaded
 $photo = !empty($user['ProfilePhoto']) ? 'uploads/' . $user['ProfilePhoto'] : 'uploads/default.jpg';
 
 // Fetch last 4 bookings for the user with workshop title
-$sql = "SELECT w.Title, w.imageURL, b.BookingDate FROM booking b
+$sql2 = "SELECT w.Title, w.imageURL, b.BookingDate FROM booking b
         JOIN workshop w ON b.WorkshopID = w.WorkshopID
         WHERE b.UserID = ? 
         ORDER BY b.BookingDate DESC LIMIT 5"; // Limiting to last 4 bookings
-$stmt = $connection->prepare($sql);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$bookings = $result->fetch_all(MYSQLI_ASSOC);
+$stmt2 = $connection->prepare($sql2);
+$stmt2->bind_param("i", $user_id);
+$stmt2->execute();
+$result2 = $stmt2->get_result();
+$bookings = $result2->fetch_all(MYSQLI_ASSOC);
+
+
+// Query to get bookings for the specific user, including workshop details
+$query = "
+    SELECT b.BookingID,b.BID, b.BookingDate, b.UserID, b.WorkshopID, 
+           w.ImageURL, w.Category, w.Location, w.Type, w.Price,w.Title 
+    FROM booking b
+    JOIN workshop w ON b.WorkshopID = w.WorkshopID
+    WHERE b.UserID = ?
+    ORDER BY b.BookingDate DESC";
+$stmt3 = $connection->prepare($query);
+$stmt3->bind_param('i', $user_id);  // Bind the userId to the query
+$stmt3->execute();
+$result3 = $stmt3->get_result();
+
+
+// Separate bookings into upcoming and completed
+$upcomingBookings = [];
+$completedBookings = [];
+
+$currentDateTime = date('Y-m-d H:i:s');
+
+while ($booking = $result3->fetch_assoc()) {
+    // Compare the current date with the booking's date
+    if ($booking['BookingDate'] < $currentDateTime) {
+        // If the booking date is in the past, mark it as completed
+        $completedBookings[] = $booking;
+    } else {
+        // Otherwise, mark it as upcoming
+        $upcomingBookings[] = $booking;
+    }
+}
 
 
 
@@ -126,7 +158,7 @@ border:none;}
     </div>
     <!-- Edit Profile Button -->
 <form action="edit_profile.php" method="GET">
-    <button type="button" id="editButton">
+    <button type="button" id="editButton" class="edit-btn1">
         <img src="workshops/edit-btn.png" alt="edit icon" class="edit-btn1">
         <span class="tooltip">Edit Profile</span>
     </button>
@@ -146,15 +178,15 @@ border:none;}
 </div>
 
        <div class="bookings">
-    <h3>
-        <a href="booking-history.php">My Bookings</a>
-    </h3>
+   
+           <button id="openBookingModal">  View Bookings </button>
+
+    
     <div class="timeline">
         <img src="workshops/timeline.png" alt="timeline pic" class="booking-image">
         
-       
+  
 
-        
         <?php
         $eventCount = 1;
         foreach ($bookings as $booking) {
@@ -171,13 +203,134 @@ border:none;}
         ?>
     </div>
 </div>
-
-
-
-
-    </section>
+      </section>
     
+      <!-- Modal Background -->
+<div id="bookingModal" class="modal1">
+  <!-- Modal Content -->
+  <div class="modal-content1">
+    <!-- Close Button -->
+    <span class="close1">&times;</span>
     
+    <!-- Tabs for ALL, Upcoming, and Completed bookings -->
+    <div class="tabs">
+      <button class="tablinks" onclick="openTab(event, 'All')">ALL</button>
+      <button class="tablinks" onclick="openTab(event, 'Upcoming')">Upcoming</button>
+      <button class="tablinks" onclick="openTab(event, 'Completed')">Completed</button>
+    </div>
+
+    <!-- Modal Content for All bookings -->
+<div id="All" class="tabcontent">
+  <?php if (!empty($upcomingBookings) || !empty($completedBookings)): ?>
+    <?php foreach (array_merge($upcomingBookings, $completedBookings) as $booking): ?>
+<div class="booking-item" id="<?php echo $booking['BookingID']; ?>">
+          
+          <div class="booking-actions">
+   <img src="workshops/edit-btn.png" class="edit-booking" data-id="<?php echo $booking['BookingID']; ?>">
+        <img src="workshops/trash-btn.png" class="delete-booking" alt='delete' onclick="deleteBooking(<?php echo $booking['BookingID']; ?>)">
+    </div>
+          
+        <img src="<?php echo $booking['ImageURL']; ?>" alt="Workshop Image" style="width:100px; height:100px;">
+        <div class='booking-info'>
+          <p><strong>Booking ID:</strong> <?php echo $booking['BID']; ?></p>
+          <p><strong> Workshop Title:</strong> <?php echo $booking['Title']; ?></p>
+        <p><strong>Booking Date:</strong></p> <p class='booking-date'> <?php echo $booking['BookingDate']; ?> </p>
+        </div>
+        <div class="workshop-info">
+          <p><strong>Category:</strong> <?php echo $booking['Category']; ?></p>
+          <p><strong>Location:</strong> <?php echo $booking['Location']; ?></p>
+          <p><strong> Type [in-person/online]:</strong> <?php echo $booking['Type']; ?></p>
+        </div>
+        <div class='orange-box'>
+          <p class="totalPrice"><strong> Total Price: </strong> 
+            <img src='workshops/riyal.png' alt='currency pic'><?php echo $booking['Price']; ?>
+          </p>
+          <button class='rebook-btn'>Book Now </button>
+        </div>
+      </div>
+    <?php endforeach; ?>
+  <?php else: ?>
+    <p class="empty-message">No bookings found.</p>
+  <?php endif; ?>
+</div>
+
+<!-- Modal Content for Upcoming bookings -->
+<div id="Upcoming" class="tabcontent">
+  <?php if (!empty($upcomingBookings)): ?>
+    <?php foreach ($upcomingBookings as $booking): ?>
+<div class="booking-item" id="<?php echo $booking['BookingID']; ?>">
+          
+          <div class="booking-actions">
+   <img src="workshops/edit-btn.png" class="edit-booking" data-id="<?php echo $booking['BookingID']; ?>">
+        <img src="workshops/trash-btn.png" class="delete-booking" alt='delete' onclick="deleteBooking(<?php echo $booking['BookingID']; ?>)">
+    </div>
+          
+        <img src="<?php echo $booking['ImageURL']; ?>" alt="Workshop Image" style="width:100px; height:100px;">
+        <div class='booking-info'>
+          <p><strong>Booking ID:</strong> <?php echo $booking['BID']; ?></p>
+          <p><strong> Workshop Title:</strong> <?php echo $booking['Title']; ?></p>
+          <p><strong>Booking Date:</strong></p> <p class='booking-date'> <?php echo $booking['BookingDate']; ?> </p>
+        </div>
+        <div class="workshop-info">
+          <p><strong>Category:</strong> <?php echo $booking['Category']; ?></p>
+          <p><strong>Location:</strong> <?php echo $booking['Location']; ?></p>
+          <p><strong> Type [in-person/online]:</strong> <?php echo $booking['Type']; ?></p>
+        </div>
+        <div class='orange-box'>
+          <p class="totalPrice"><strong> Total Price: </strong> 
+            <img src='workshops/riyal.png' alt='currency pic'><?php echo $booking['Price']; ?>
+          </p>
+          <button class='rebook-btn'>Book Now </button>
+        </div>
+      </div>
+    <?php endforeach; ?>
+  <?php else: ?>
+    <p class="empty-message">No upcoming bookings.</p>
+  <?php endif; ?>
+</div>
+
+<!-- Completed bookings section -->
+<div id="Completed" class="tabcontent">
+    <?php if (!empty($completedBookings)): ?>
+        <?php foreach ($completedBookings as $booking): ?>
+            <div class="booking-item" id="booking-<?php echo $booking['BookingID']; ?>">
+                <div class="booking-actions">
+                    <img src="workshops/edit-btn.png" class="edit-booking" data-id="<?php echo $booking['BookingID']; ?>">
+                    <img src="workshops/trash-btn.png" class="delete-booking" alt="delete" onclick="deleteBooking(<?php echo $booking['BookingID']; ?>)">
+                </div>
+
+                <img src="<?php echo $booking['ImageURL']; ?>" alt="Workshop Image" style="width:100px; height:100px;">
+                <div class="booking-info">
+                    <p><strong>Booking ID:</strong> <?php echo $booking['BID']; ?></p>
+                    <p><strong>Workshop Title:</strong> <?php echo $booking['Title']; ?></p>
+                    <p><strong>Booking Date:</strong></p>
+                    <p class="booking-date"><?php echo $booking['BookingDate']; ?></p>
+                </div>
+                <div class="workshop-info">
+                    <p><strong>Category:</strong> <?php echo $booking['Category']; ?></p>
+                    <p><strong>Location:</strong> <?php echo $booking['Location']; ?></p>
+                    <p><strong>Type [in-person/online]:</strong> <?php echo $booking['Type']; ?></p>
+                </div>
+                <div class="orange-box">
+                    <p class="totalPrice"><strong>Total Price:</strong> 
+                        <img src="workshops/riyal.png" alt="currency pic"><?php echo $booking['Price']; ?>
+                    </p>
+                    <!-- Submit Review Button -->
+                    <div id="review-section-<?php echo $booking['BookingID']; ?>"></div> <!-- Review section -->
+                    <button id="review-btn-<?php echo $booking['BookingID']; ?>" class="review-btn" data-workshopid="<?php echo $booking['WorkshopID']; ?>" data-bookingid="<?php echo $booking['BookingID']; ?>">Submit Review</button>
+                    <button class="rebook-btn">Book Now</button>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p class="empty-message">No completed bookings.</p>
+    <?php endif; ?>
+</div>
+
+  </div>
+</div>
+
+
         <div class="title-addbtn">
         <div class="experiences">
             <h3>My Experiences 
@@ -484,7 +637,7 @@ border:none;}
     <div class="footer-center">
         
         <p>© 2024 Website. All rights reserved.</p>
-    </div>
+    </div> 
 </footer>
 
     <!-- Modal for Edit Profile -->
@@ -524,109 +677,11 @@ border:none;}
     </div>
 </div>
 
+    <script src='profile-page.js'> </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    
-    <script>
-       
-    
-       let isMouseDown = false;
-let startX;
-let scrollLeft;
-
-const cardsContainer = document.querySelector('.experience-cards');
-
-cardsContainer.addEventListener('mousedown', (e) => {
-  isMouseDown = true;
-  startX = e.pageX - cardsContainer.offsetLeft;
-  scrollLeft = cardsContainer.scrollLeft;
-  cardsContainer.style.cursor = 'grabbing';
-});
-
-cardsContainer.addEventListener('mouseleave', () => {
-  isMouseDown = false;
-  cardsContainer.style.cursor = 'grab';
-});
-
-cardsContainer.addEventListener('mouseup', () => {
-  isMouseDown = false;
-  cardsContainer.style.cursor = 'grab';
-});
-
-cardsContainer.addEventListener('mousemove', (e) => {
-  if (!isMouseDown) return; // Only move if mouse is down
-  e.preventDefault();
-  const x = e.pageX - cardsContainer.offsetLeft;
-  const walk = (x - startX) * 2; // Adjust scrolling speed
-  cardsContainer.scrollLeft = scrollLeft - walk;
-});
-
-
-
-const wishlistItemsContainer = document.querySelector('.wishlist-items'); // Select the wishlist-items container
-
-wishlistItemsContainer.addEventListener('mousedown', (e) => {
-  isMouseDown = true;
-  startX = e.pageX - wishlistItemsContainer.offsetLeft;
-  scrollLeft = wishlistItemsContainer.scrollLeft;
-  wishlistItemsContainer.style.cursor = 'grabbing'; // Change cursor to grabbing
-});
-
-wishlistItemsContainer.addEventListener('mouseleave', () => {
-  isMouseDown = false;
-  wishlistItemsContainer.style.cursor = 'grab'; // Change cursor to grab when mouse leaves
-});
-
-wishlistItemsContainer.addEventListener('mouseup', () => {
-  isMouseDown = false;
-  wishlistItemsContainer.style.cursor = 'grab'; // Change cursor to grab when mouse is released
-});
-
-wishlistItemsContainer.addEventListener('mousemove', (e) => {
-  if (!isMouseDown) return; // Only move if mouse is down
-  e.preventDefault();
-  const x = e.pageX - wishlistItemsContainer.offsetLeft;
-  const walk = (x - startX) * 2; // Adjust scrolling speed (increase multiplier for faster scroll)
-  
-});
-
-// Event listener to handle loading images
-window.addEventListener('load', () => {
-    document.querySelectorAll('.wishlist-img').forEach((img) => {
-        img.classList.add('loaded');
-    });
-});
-
-
-    document.addEventListener("DOMContentLoaded", function() {
-        // Get the modal and button elements
-        const modal = document.getElementById("editProfileModal");
-        const btn = document.getElementById("editButton");
-        const span = document.querySelector(".close");
-
-        // Ensure elements exist before adding event listeners
-        if (modal && btn && span) {
-            // Show the modal when the Edit button is clicked
-            btn.addEventListener("click", function(event) {
-                event.preventDefault(); // Prevent any default action if it's a form
-                modal.style.display = "block"; // Show the modal
-            });
-
-            // Close the modal when the close button (X) is clicked
-            span.onclick = function() {
-                modal.style.display = "none"; // Hide the modal
-            }
-
-            // Close the modal if the user clicks outside of it
-            window.onclick = function(event) {
-                if (event.target === modal) {
-                    modal.style.display = "none"; // Hide the modal if clicked outside
-                }
-            }
-        }
-    });
-
-
-</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 
 </body>
