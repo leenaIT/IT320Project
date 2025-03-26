@@ -15,7 +15,6 @@
     <style>
 
         
-   /* ====== الفوتر ====== */
 footer {
     margin-top: 2em;
     padding: 1em 2em;
@@ -40,7 +39,6 @@ footer {
     align-items: center;
 }
 
-/* وسط الفوتر */
 .footer-center-1 {
     justify-content: center;
 }
@@ -49,7 +47,6 @@ footer {
     width: 100px;
 }
 
-/* ✅ كل أيقونة + النص جنب بعض، والكل في نفس السطر */
 .contact-info-1 {
     display: flex;
     flex-direction: row;
@@ -58,16 +55,16 @@ footer {
     gap: 20px;
     flex-wrap: nowrap;
     margin-top: 10px;
-    width: 100%; /* ✅ ياخذ كامل مساحة الفوتر */
+    width: 100%; 
 }
 
 
 
 .contact-item-1 {
     display: flex;
-    align-items: center; /* محاذاة الأيقونة مع النص */
-    gap: 8px; /* مسافة بين الأيقونة والنص */
-    white-space: nowrap; /* منع انقسام النص */
+    align-items: center; 
+    gap: 8px; 
+    white-space: nowrap; 
 }
 
 
@@ -75,7 +72,6 @@ footer {
     white-space: nowrap;
 }
 
-/* أيقونات السوشال ميديا */
 .social-icons-1 {
     display: flex;
     justify-content: center;
@@ -83,7 +79,6 @@ footer {
     margin-top: 10px;
 }
 
-/* النص اللي تحت */
 .footer-bottom-1 {
     width: 100%;
     text-align: center;
@@ -98,12 +93,10 @@ footer {
     border-top: 1px solid #ccc;
 }
 
-/* ====== أحجام الأيقونات (حسب طلبك) ====== */
 .icon-phone {
-    display: inline-block !important;  /* تأكيد ظهور العنصر */
+    display: inline-block !important;  
     width: 30px !important;
     height: 30px !important;
-   /* إلغاء الطفو */
 }
 
 .icon-phone {
@@ -174,7 +167,6 @@ footer {
 
       
 
-        /* تصميم الحاوية داخل الهيدر */
         .header-container {
             display: flex;
             justify-content: space-between;
@@ -186,7 +178,6 @@ footer {
 
         }
 
-        /* المحتوى النصي */
         .header-text {
             text-align: left;
             max-width: 45%;
@@ -208,7 +199,6 @@ footer {
             margin-top: 10px;
         }
 
-        /* تصميم أزرار الفئات */
         .category-container {
             display: flex;
             justify-content: center;
@@ -250,7 +240,6 @@ footer {
             text-transform: uppercase;
         }
 
-        /* تأثير عند التمرير */
         .category-btn:hover {
             transform: scale(1.1);
             box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
@@ -263,7 +252,6 @@ footer {
             margin-bottom: 20px;
         }
 
-        /* تصميم قسم أفضل الورش */
         .top-workshops {
             padding: 40px 5%;
             background: #FFF3E0;
@@ -311,19 +299,16 @@ footer {
 </head>
 <body class="no-background ">
  <header>
-    <!-- اللوقو في الوسط -->
     <div class="logo">
         <img src="workshops/logo.png" alt="logo">
     </div>
 
-    <!-- زر الهامبرغر -->
     <div class="hamburger" onclick="toggleMenu(this)">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
     </div>
 
-    <!-- قائمة الجوال -->
     <div class="mobile-nav-container">
         <nav class="mobile-nav">
             <a href="Explore.php">Explore</a>
@@ -335,7 +320,6 @@ footer {
         </nav>
     </div>
 
-    <!-- قائمة سطح المكتب -->
     <nav class="desktop-nav">
         <a href="Explore.php">Explore</a>
         <a href="login.php">Login/Signup</a>
@@ -349,7 +333,6 @@ footer {
 
 
 <div class="header-container">
-            <!-- المحتوى النصي -->
             <div class="header-text" data-aos="fade-right">
                 <h1>Discover the <span class="highlight">Best Categories</span></h1>
                 <p>Explore various categories of workshops including Cooking, Adventure, and Art. Enhance your skills and experience unique moments.</p>
@@ -409,7 +392,6 @@ footer {
     </section>
 
     <!-- footer.html -->
-   <!-- الفوتر -->
 <footer>
     <div class="footer-left-1">
         <h4>Get In Touch</h4>
@@ -449,7 +431,6 @@ footer {
     </div>
 </footer>
 
-    <!-- AOS Animation Script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
         AOS.init();
@@ -457,7 +438,6 @@ footer {
     button.classList.toggle('active');
     document.querySelector('.mobile-nav-container').classList.toggle('show');
     
-    // إيقاف التمرير عند فتح القائمة
     document.body.style.overflow = button.classList.contains('active') ? 'hidden' : '';
 }
 
