@@ -50,7 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </script>";
 
         } else {
-            // ✅ إذا كل شيء صحيح، يتم تشفير كلمة المرور وإدخال البيانات
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
             $query = "INSERT INTO users (FirstName, LastName, Email, Password, Mobile) VALUES (?, ?, ?, ?, ?)";
             $stmt = $connection->prepare($query);
@@ -82,8 +81,13 @@ $connection->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="header.css">
         <script defer src="script.js"></script>
-         <style>html, body {
+         <style>
+             
+
+           
+    html, body {
     height: 100%;
     margin: 0;
     padding: 0;
@@ -94,35 +98,37 @@ $connection->close();
 </head>
 <body class="with-background">
 
-    <header class="with-background ">
-        <div class="logo"><img src="workshops/logo.png" alt="logo" height="80" width="80"></div>
-        
-   
-<!-- زر الهامبرغر المحسن -->
-<div class="hamburger" onclick="toggleMenu(this)">
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-</div>
-
-<!-- القائمة المتنقلة المحسنة -->
-<div class="mobile-nav-container">
-    <nav class="mobile-nav">
-         <a href="homePage.php">Home</a>
-        <div class="mobile-language-switch" onclick="toggleLanguage()">
-            🌐 Language
-        </div>
-    </nav>
-</div>
-
-<!-- القائمة الأصلية للكمبيوتر -->
-<nav class="desktop-nav">
-     <a href="homePage.php">Home</a>
-    <div class="language-switch" onclick="toggleLanguage()">
-        🌐 Language
+<header>
+    <!-- اللوقو في الوسط -->
+    <div class="logo">
+        <img src="workshops/logo.png" alt="logo">
     </div>
-</nav>
-    </header>
+
+    <!-- زر الهامبرغر -->
+    <div class="hamburger" onclick="toggleMenu(this)">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+    </div>
+
+    <!-- قائمة الجوال -->
+    <div class="mobile-nav-container">
+        <nav class="mobile-nav">
+            <a href="homepage.php">Home</a>
+            <div class="mobile-language-switch" onclick="toggleLanguage()">
+                🌐 Language
+            </div>
+        </nav>
+    </div>
+
+    <!-- قائمة سطح المكتب -->
+    <nav class="desktop-nav">
+        <a href="homepage.php">Home</a>
+       <a href="#" class="language-switch" onclick="toggleLanguage()">🌐 Language</a>
+
+    </nav>
+</header>
+
 
     
     <div id="alert-box" class="alert"><?php echo $errorMessage; ?></div>
@@ -246,9 +252,9 @@ function toggleMenu(button) {
     button.classList.toggle('active');
     document.querySelector('.mobile-nav-container').classList.toggle('show');
     
+    // إيقاف التمرير عند فتح القائمة
     document.body.style.overflow = button.classList.contains('active') ? 'hidden' : '';
 }
-
 
         function checkPasswordStrength() {
             let password = document.getElementById("password").value;

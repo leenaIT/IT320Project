@@ -2,31 +2,35 @@
 session_start();
 require 'database.php';
 
-$category = $_GET['category'] ?? 'Art'; // احتياطي لو مافي قيمة
+$category = $_GET['category'] ?? 'Art';
 
-// نستخدمها للفلتر
+$isCleared = isset($_GET['category']) && !isset($_GET['price']) && !isset($_GET['type']) && !isset($_GET['date']) && !isset($_GET['city']);
+
 $filterCategory = $_GET['cat'] ?? $category;
-$location = $_GET['city'] ?? '';
-$price = $_GET['price'] ?? '';
-$type = $_GET['type'] ?? '';
-$date = $_GET['date'] ?? '';
+$location = $isCleared ? '' : ($_GET['city'] ?? '');
+$price    = $isCleared ? '' : ($_GET['price'] ?? '');
+$type     = $isCleared ? '' : ($_GET['type'] ?? '');
+$date     = $isCleared ? '' : ($_GET['date'] ?? '');
 
 $conditions = [];
 $params = [];
 $types = "";
 
-$query = "SELECT Title, ShortDes, Location, Price, ImageURL FROM workshop WHERE 1=1";
+$query = "SELECT DISTINCT w.WorkshopID, w.Title, w.ShortDes, w.Location, w.Price, w.ImageURL 
+          FROM workshop w 
+          LEFT JOIN workshop_schedule s ON w.WorkshopID = s.WorkshopID 
+          WHERE w.Location != 'Dammam'";
 
-// Category (من صفحة التوجيه أو الفلتر)
+// Category
 if (!empty($filterCategory) && $filterCategory !== "All") {
-    $query .= " AND Category = ?";
+    $query .= " AND w.Category = ?";
     $params[] = $filterCategory;
     $types .= "s";
 }
 
 // Location
 if (!empty($location) && $location !== "All") {
-    $query .= " AND Location = ?";
+    $query .= " AND w.Location = ?";
     $params[] = $location;
     $types .= "s";
 }
@@ -34,32 +38,29 @@ if (!empty($location) && $location !== "All") {
 // Price
 if (!empty($price)) {
     if ($price == 'Less than 150 SAR') {
-        $query .= " AND Price < 150";
+        $query .= " AND w.Price < 150";
     } elseif ($price == '150 - 200 SAR') {
-        $query .= " AND Price BETWEEN 150 AND 200";
+        $query .= " AND w.Price BETWEEN 150 AND 200";
     } elseif ($price == 'More than 200 SAR') {
-        $query .= " AND Price > 200";
+        $query .= " AND w.Price > 200";
     }
 }
 
 // Type
 if (!empty($type) && $type !== "All") {
-    $query .= " AND Type = ?";
+    $query .= " AND w.Type = ?";
     $params[] = $type;
     $types .= "s";
 }
 
 // Date
-if (!empty($date)) {
-    $query .= " AND Date = ?";
+if (!empty($date) && $date !== "All") {
+    $query .= " AND s.Date = ?";
     $params[] = $date;
     $types .= "s";
 }
 
-// Exclude Dammam
-$query .= " AND Location IS NOT NULL AND Location != 'Dammam'";
-
-// Prepare and execute
+// تنفيذ الاستعلام
 $stmt = $connection->prepare($query);
 if (!empty($params)) {
     $stmt->bind_param($types, ...$params);
@@ -68,13 +69,39 @@ $stmt->execute();
 $result = $stmt->get_result();
 ?>
 
+<script>
+function toggleFilterBox() {
+    const filterBox = document.getElementById('filterBox');
+    filterBox.style.display = (filterBox.style.display === 'none' || filterBox.style.display === '') ? 'block' : 'none';
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const input = document.querySelector(".search-input");
+    const items = document.querySelectorAll(".grid-item");
+
+    input.addEventListener("input", function () {
+        const keyword = this.value.toLowerCase();
+
+        items.forEach(item => {
+            const title = item.querySelector("h3").textContent.toLowerCase();
+            if (title.includes(keyword)) {
+                item.style.display = "block";
+            } else {
+                item.style.display = "none";
+            }
+        });
+    });
+});
+</script>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Art</title>
+<title><?php echo htmlspecialchars($filterCategory); ?></title>
     <link rel="stylesheet" href="header.css">
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     <style>
@@ -123,16 +150,16 @@ footer {
     gap: 20px;
     flex-wrap: nowrap;
     margin-top: 10px;
-    width: 100%; /* ✅ ياخذ كامل مساحة الفوتر */
+    width: 100%; 
 }
 
 
 
 .contact-item-1 {
     display: flex;
-    align-items: center; /* محاذاة الأيقونة مع النص */
-    gap: 8px; /* مسافة بين الأيقونة والنص */
-    white-space: nowrap; /* منع انقسام النص */
+    align-items: center; 
+    gap: 8px; 
+    white-space: nowrap;
 }
 
 
@@ -140,7 +167,6 @@ footer {
     white-space: nowrap;
 }
 
-/* أيقونات السوشال ميديا */
 .social-icons-1 {
     display: flex;
     justify-content: center;
@@ -148,7 +174,6 @@ footer {
     margin-top: 10px;
 }
 
-/* النص اللي تحت */
 .footer-bottom-1 {
     width: 100%;
     text-align: center;
@@ -163,12 +188,10 @@ footer {
     border-top: 1px solid #ccc;
 }
 
-/* ====== أحجام الأيقونات (حسب طلبك) ====== */
 .icon-phone {
-    display: inline-block !important;  /* تأكيد ظهور العنصر */
+    display: inline-block !important; 
     width: 30px !important;
     height: 30px !important;
-   /* إلغاء الطفو */
 }
 
 .icon-phone {
@@ -399,30 +422,29 @@ footer {
         }
 
         .more-btn {
-    display: inline-block; /* لجعل الرابط يبدو كزر */
+    display: inline-block; 
     background-color: #FDE5B7;
     color: #333;
     padding: 8px 20px;
     border-radius: 20px;
     font-size: 12px;
-    text-decoration: none; /* إزالة الخط السفلي من الرابط */
+    text-decoration: none; 
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease; /* تأثير سلس */
+    transition: all 0.3s ease; 
 }
 
-/* تأثير التحويم (Hover) */
 .more-btn:hover {
     background-color: #FF9D23;
-    transform: scale(1.1); /* تكبير الزر */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* إضافة ظل */
+    transform: scale(1.1); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
     color: white;
 }
 
         .grid-item .more-btn:hover {
     background-color: #FF9D23;
-    transform: scale(1.1); /* تكبير الزر */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* إضافة ظل */
+    transform: scale(1.1); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
 }
 
         .grid-item:hover {
@@ -431,68 +453,39 @@ footer {
         }
 
       
-        .search-container {
+      .search-container {
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: flex-start; /* Align to the left */
-    gap: 40px;
-    padding-left: 13px; /* Add padding to match the header content */
+    margin-bottom: 20px;
+    gap: 12px;
 }
 
 .search-input-container {
     position: relative;
-    width: 550px;
+    width: 100%;
+    max-width: 500px;
 }
-
-/* تحسين مربع الإدخال */
 
 .search-input {
-    padding: 12px 50px 12px 15px; /* Add padding to the right to make space for the icon */
     width: 100%;
-    height: 55px;
-    border-radius: 25px;
-    border: solid 2px #FF9D23;
-    font-family: 'Montserrat', sans-serif;
+    padding: 12px 40px 12px 20px;
+    border: 2px solid #FF9D23;
+    border-radius: 10px;
     font-size: 16px;
-    color: #333;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    font-family: 'Montserrat', sans-serif;
+    transition: border 0.3s ease;
 }
 
-/* تأثير عند النقر أو التركيز على مربع البحث */
 .search-input:focus {
     outline: none;
-    border-color: #FF9D23; /* تغيير لون الحدود */
-    background-color: #fff; /* جعل الخلفية بيضاء عند التركيز */
+    border-color: #FFA833;
 }
-        .filter-btn {
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-        }
-
-        .filter-icon {
-            width: 40px !important;
-            height: 50px !important;
-            object-fit: contain;
-        }
-
-        .search-icon, .filter-icon {
-            width: 24px;
-            height: 24px;
-            object-fit: contain;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-        }
 
 .search-icon {
     position: absolute;
-    right: 0.1px; /* Adjust this value to position the icon inside the box */
+    right: 10px;
     top: 50%;
     transform: translateY(-50%);
     width: 24px;
@@ -500,9 +493,28 @@ footer {
     cursor: pointer;
 }
 
-        .filter-icon {
-            position: static;
-        }
+.search-container > .filter-btn {
+    border: none;
+    border-radius: 20%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+    padding: 0;
+    margin-left: 0;
+}
+
+.search-container > .filter-btn:hover {
+    background-color:#FF9D23;
+}
+
+.filter-icon {
+    width: 30px;
+    height: 30px;
+}
 
         .filter-btn {
             background-color: transparent;
@@ -579,7 +591,7 @@ input[type="date"] {
 }
 
 .filter-action button:hover {
-    background-color: #e68a1f; /* لون الزر عند التحويم */
+    background-color: #FF9D23; /* لون الزر عند التحويم */
 }
 
         .filter-btn {
@@ -595,7 +607,7 @@ input[type="date"] {
 </head>
 <body>
     <div class="header">
-      <header>
+     <header>
     <!-- اللوقو في الوسط -->
     <div class="logo">
         <img src="workshops/logo.png" alt="logo">
@@ -622,15 +634,13 @@ input[type="date"] {
 
     <!-- قائمة سطح المكتب -->
     <nav class="desktop-nav">
-        <a href="homepage.php">Home</a>
-        <a href="">Explore</a>
+        <a href="Explore.php">Explore</a>
+        <a href="login.php">Login/Signup</a>
         <a href="findcategory.php">Category</a>
-        <div class="language-switch" onclick="toggleLanguage()">
-            🌐 Language
-        </div>
+        <a href="#" class="language-switch" onclick="toggleLanguage()">🌐 Language</a>
+
     </nav>
 </header>
- 
         <div class="header-content">
             <h1>
                 <span>DISCOVER THE</span>
@@ -643,7 +653,6 @@ input[type="date"] {
         <div class="search-container">
             <div class="search-input-container">
                 <input type="text" class="search-input" placeholder="Search for your interest!">
-                <img src="/IT320Project/workshops/360_F_558272798_DNqj4q2TXE7EsDM9Zp2wdyap8gzatwlF.webp" alt="Search Icon" class="search-icon">
             </div>
             <button class="filter-btn" onclick="toggleFilterBox()">
                 <img src="/IT320Project/workshops/Adobe Express - file.png" alt="Filter Icon" class="filter-icon">
@@ -685,7 +694,10 @@ input[type="date"] {
 
     <div class="filter-action">
         <button type="submit" class="filter-btn">Apply</button>
+            <a href="category.php?category=<?php echo urlencode($filterCategory); ?>" class="filter-btn" style="margin-top:10px; background-color:#ccc; color:#333; padding:8px 16px; border-radius:20px; text-decoration:none; display:inline-block;">Clear Filters</a>
+
     </div>
+
 </form>
 
         </div>
@@ -698,8 +710,7 @@ input[type="date"] {
             <h3><?php echo $row['Title']; ?></h3>
             <p><?php echo $row['ShortDes']; ?></p>
             <div class="details">
-                <a href="booking.php" class="more-btn">More details</a>
-                <span class="price">
+<a href="booking.php?workshopID=<?php echo $row['WorkshopID']; ?>" class="more-btn">More details</a>                <span class="price">
                     <?php echo $row['Price']; ?>
                     <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
                 </span>
