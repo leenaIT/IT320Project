@@ -2,15 +2,71 @@
 session_start();
 require 'database.php';
 
-$category = $_GET['category'];
+$category = $_GET['category'] ?? 'Art'; // احتياطي لو مافي قيمة
 
-$stmt = $connection->prepare("SELECT Title, ShortDes, Location, Price, ImageURL FROM workshop WHERE Category = ? AND Location != 'Dammam'");
-$stmt->bind_param("s", $category);
+// نستخدمها للفلتر
+$filterCategory = $_GET['cat'] ?? $category;
+$location = $_GET['city'] ?? '';
+$price = $_GET['price'] ?? '';
+$type = $_GET['type'] ?? '';
+$date = $_GET['date'] ?? '';
+
+$conditions = [];
+$params = [];
+$types = "";
+
+$query = "SELECT Title, ShortDes, Location, Price, ImageURL FROM workshop WHERE 1=1";
+
+// Category (من صفحة التوجيه أو الفلتر)
+if (!empty($filterCategory) && $filterCategory !== "All") {
+    $query .= " AND Category = ?";
+    $params[] = $filterCategory;
+    $types .= "s";
+}
+
+// Location
+if (!empty($location) && $location !== "All") {
+    $query .= " AND Location = ?";
+    $params[] = $location;
+    $types .= "s";
+}
+
+// Price
+if (!empty($price)) {
+    if ($price == 'Less than 150 SAR') {
+        $query .= " AND Price < 150";
+    } elseif ($price == '150 - 200 SAR') {
+        $query .= " AND Price BETWEEN 150 AND 200";
+    } elseif ($price == 'More than 200 SAR') {
+        $query .= " AND Price > 200";
+    }
+}
+
+// Type
+if (!empty($type) && $type !== "All") {
+    $query .= " AND Type = ?";
+    $params[] = $type;
+    $types .= "s";
+}
+
+// Date
+if (!empty($date)) {
+    $query .= " AND Date = ?";
+    $params[] = $date;
+    $types .= "s";
+}
+
+// Exclude Dammam
+$query .= " AND Location IS NOT NULL AND Location != 'Dammam'";
+
+// Prepare and execute
+$stmt = $connection->prepare($query);
+if (!empty($params)) {
+    $stmt->bind_param($types, ...$params);
+}
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
-
-
 
 
 <!DOCTYPE html>
@@ -19,12 +75,163 @@ $result = $stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Art</title>
-    <link rel="stylesheet" href="header-footer2.css">
+    <link rel="stylesheet" href="header.css">
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     <style>
+        
+               
+   /* ====== الفوتر ====== */
+footer {
+    margin-top: 2em;
+    padding: 1em 2em;
+    background-color: #fffefc;
+    border-top: 2px solid #f9b013ec;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.footer-left-1,
+.footer-center-1,
+.footer-right-1 {
+    flex: 1;
+    min-width: 250px;
+    padding: 0.5em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* وسط الفوتر */
+.footer-center-1 {
+    justify-content: center;
+}
+
+.footer-logo-1 {
+    width: 100px;
+}
+
+/* ✅ كل أيقونة + النص جنب بعض، والكل في نفس السطر */
+.contact-info-1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+    margin-top: 10px;
+    width: 100%; /* ✅ ياخذ كامل مساحة الفوتر */
+}
+
+
+
+.contact-item-1 {
+    display: flex;
+    align-items: center; /* محاذاة الأيقونة مع النص */
+    gap: 8px; /* مسافة بين الأيقونة والنص */
+    white-space: nowrap; /* منع انقسام النص */
+}
+
+
+.single-line-1 {
+    white-space: nowrap;
+}
+
+/* أيقونات السوشال ميديا */
+.social-icons-1 {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* النص اللي تحت */
+.footer-bottom-1 {
+    width: 100%;
+    text-align: center;
+    margin-top: 0.5em;
+}
+
+.footer-bottom-1 p {
+    padding: 0.5em;
+    background-color: #ffffff;
+    font-size: 0.75em;
+    color: #f9b013ec;
+    border-top: 1px solid #ccc;
+}
+
+/* ====== أحجام الأيقونات (حسب طلبك) ====== */
+.icon-phone {
+    display: inline-block !important;  /* تأكيد ظهور العنصر */
+    width: 30px !important;
+    height: 30px !important;
+   /* إلغاء الطفو */
+}
+
+.icon-phone {
+    position: relative !important;
+    left: 0 !important;
+    right: auto !important;
+}
+
+.icon-email {
+    width: 42px !important;
+    height: 42px !important;
+    
+}
+
+.icon-location {
+    width: 42px !important;
+    height: 42px !important;
+    margin-top: 6px !important;
+}
+
+.icon-facebook {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+.icon-twitter {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+.icon-instagram {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+/* ✅ Responsive للجوال */
+@media (max-width: 768px) {
+    .footer-left-1,
+    .footer-center-1,
+    .footer-right-1 {
+        flex: 100%;
+        margin-bottom: 1em;
+    }
+
+    .contact-info-1 {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .icon-phone,
+    .icon-email,
+    .icon-location,
+    .icon-facebook,
+    .icon-twitter,
+    .icon-instagram {
+        transform: scale(0.9);
+    }
+}
         body {
             margin: 0;
-            font-family: 'Montserrat', sans-serif;
             background: #FFFDF0;
         }
 
@@ -388,15 +595,42 @@ input[type="date"] {
 </head>
 <body>
     <div class="header">
-        <header>
-            <div class="nav">
-                <span><a href="homePage.html">Home</a></span>
-                <span><a href="Explore.html">Explore</a></span>
-                <span><a href="logIn.html" class="login-signup" id="login-signup">Login/Signup</a></span>
-                <span><a href="Category.html">Category</a></span>
-                <span><div class="language-switch" onclick="toggleLanguage()">🌐 Language</div></span>
+      <header>
+    <!-- اللوقو في الوسط -->
+    <div class="logo">
+        <img src="workshops/logo.png" alt="logo">
+    </div>
+
+    <!-- زر الهامبرغر -->
+    <div class="hamburger" onclick="toggleMenu(this)">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+    </div>
+
+    <!-- قائمة الجوال -->
+    <div class="mobile-nav-container">
+        <nav class="mobile-nav">
+            <a href="Explore.php">Explore</a>
+            <a href="login.php">Login/Signup</a>
+            <a href="findcategory.php">Category</a>
+            <div class="mobile-language-switch" onclick="toggleLanguage()">
+                🌐 Language
             </div>
-        </header>  
+        </nav>
+    </div>
+
+    <!-- قائمة سطح المكتب -->
+    <nav class="desktop-nav">
+        <a href="homepage.php">Home</a>
+        <a href="">Explore</a>
+        <a href="findcategory.php">Category</a>
+        <div class="language-switch" onclick="toggleLanguage()">
+            🌐 Language
+        </div>
+    </nav>
+</header>
+ 
         <div class="header-content">
             <h1>
                 <span>DISCOVER THE</span>
@@ -415,89 +649,106 @@ input[type="date"] {
                 <img src="/IT320Project/workshops/Adobe Express - file.png" alt="Filter Icon" class="filter-icon">
             </button>
         </div>
-        <div class="filter-box" id="filterBox">
-            <label for="price">Price:</label>
-            <select id="price">
-                <option>All</option>
-                <option>Less than 150 SAR</option>
-                <option>150 - 200 SAR</option>
-                <option>More than 200 SAR</option>
-            </select>
-            <label for="city">City:</label>
-            <select id="city">
-                <option>All</option>
-                <option>Riyadh</option>
-                <option>Jeddah</option>
-                <option>Dammam</option>
-                <option>Taif</option>
-            </select>
-            <label for="date">Date:</label>
-            <input type="date" id="date">
-            <label for="type">Workshop Type:</label>
-            <select id="type">
-                <option>All</option>
-                <option>Online</option>
-                <option>In-person</option>
-                <option>Both</option>
-            </select>
-            <label for="cat">Category:</label>
-            <select id="cat">
-                <option>Art</option>
-                <option>Adventure</option>
-                <option>Cooking</option>
-            </select>
-            <div class="filter-action">
-                <button class="filter-btn">Apply</button>
+    <form method="GET" class="filter-box" id="filterBox">
+    <label for="price">Price:</label>
+    <select name="price" id="price">
+        <option>All</option>
+        <option>Less than 150 SAR</option>
+        <option>150 - 200 SAR</option>
+        <option>More than 200 SAR</option>
+    </select>
+
+    <label for="city">City:</label>
+    <select name="city" id="city">
+        <option>All</option>
+        <option>Riyadh</option>
+        <option>Jeddah</option>
+    </select>
+
+    <label for="date">Date:</label>
+    <input type="date" name="date" id="date">
+
+    <label for="type">Workshop Type:</label>
+    <select name="type" id="type">
+        <option>All</option>
+        <option>Online</option>
+        <option>In-person</option>
+        <option>Both</option>
+    </select>
+
+  <label for="cat">Category:</label>
+<select name="cat" id="cat" disabled>
+    <option selected><?php echo htmlspecialchars($filterCategory); ?></option>
+</select>
+<input type="hidden" name="cat" value="<?php echo htmlspecialchars($filterCategory); ?>">
+
+
+    <div class="filter-action">
+        <button type="submit" class="filter-btn">Apply</button>
+    </div>
+</form>
+
+        </div>
+     <div class="grid">
+<?php if ($result->num_rows > 0): ?>
+    <?php while ($row = $result->fetch_assoc()): ?>
+        <div class="grid-item">
+            <div class="tag"><?php echo $row['Location']; ?></div>
+            <img src="<?php echo $row['ImageURL']; ?>" alt="<?php echo $row['Title']; ?>">
+            <h3><?php echo $row['Title']; ?></h3>
+            <p><?php echo $row['ShortDes']; ?></p>
+            <div class="details">
+                <a href="booking.php" class="more-btn">More details</a>
+                <span class="price">
+                    <?php echo $row['Price']; ?>
+                    <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
+                </span>
             </div>
         </div>
-        <div class="grid">
-            <?php while ($row = $result->fetch_assoc()): ?>
-    <div class="grid-item">
-        <div class="tag"><?php echo $row['Location']; ?></div>
-        <img src="<?php echo $row['ImageURL']; ?>" alt="<?php echo $row['Title']; ?>">
-        <h3><?php echo $row['Title']; ?></h3>
-        <p><?php echo $row['ShortDes']; ?></p>
-        <div class="details">
-            <a href="booking.php" class="more-btn">More details</a>
-            <span class="price">
-                <?php echo $row['Price']; ?>
-                <img src="workshops/riyal.png" alt="SAR" class="riyal-icon">
-            </span>
+    <?php endwhile; ?>
+<?php else: ?>
+    <div class="no-results">No workshops found for the selected criteria.</div>
+<?php endif; ?>
+</div>
+
+  <footer>
+    <div class="footer-left-1">
+        <h4>Get In Touch</h4>
+        <div class="contact-info-1" id="contact-us">
+            <div class="contact-item-1">
+                <img src="workshops/phone.png" alt="Phone Icon" class="icon-phone">
+                <span class="single-line-1">+996 58765 43210</span>
+            </div>
+            <div class="contact-item-1">
+                <img src="workshops/mail.png" alt="Email Icon" class="icon-email">
+                <span class="single-line-1">mehar@gmail.com</span>
+            </div>
+            <div class="contact-item-1">
+                <img src="workshops/location.png" alt="Location Icon" class="icon-location">
+                <span class="single-line-1">Saudi Arabia</span>
+            </div>
         </div>
     </div>
-<?php endwhile; ?>
+    
+    <div class="footer-center-1">
+        <a href="index.html">
+            <img src="workshops/logo.png" alt="Logo" class="footer-logo-1 logo-toggle">
+        </a>
     </div>
-    <hr style="color:black; border-width:2px;">
-    <footer class="footer" id="footer">
-        <div class="footer-content">
-            <div class="footer-left">
-                <h4>Get In Touch</h4>
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <img src="workshops/360_F_553663238_v4Tva6Ie5Z5MhwCw0TknszcWuQ1ZAwQx.png" alt="Phone">
-                    </div>
-                    <div class="contact-item">
-                        <img id="email" src="workshops/360_F_181003490_CxW4fQ0H3VypIIsPkFGpMDviO8ysWjOZ.png" alt="Email">
-                    </div>
-                    <div class="contact-item">
-                        <img id="location" src="workshops/360_F_254622588_6OClHyYpak64rVI8y9QVjUvDlStsDEu9.png" alt="Location">
-                    </div>
-                </div>
-            </div>
-            <div class="footer-right">
-                <h4>Follow Us</h4>
-                <div class="social-icons">
-                    <img id="facebook" src="workshops/black-square-outline-facebook-icon-7017516951347228u34mgnk68.png" alt="Facebook">
-                    <img src="workshops/twitter-icon-256x227-kf6zqma5.png" alt="Twitter">
-                    <img src="workshops/121.png" alt="Instagram">
-                </div>
-            </div>
+    
+    <div class="footer-right-1" id="contact">
+        <h4>Social media</h4>
+        <div class="social-icons-1">
+            <img src="workshops/Facebook_icon_(black).svg" alt="Facebook" class="icon-facebook">
+            <img src="workshops/X1.png" alt="Twitter" class="icon-twitter">
+            <img src="workshops/CIS-A2K_Instagram_Icon_(Black).svg" alt="Instagram" class="icon-instagram">
         </div>
-        <div class="footer-center">
-            
-            <p>© 2024 Website. All rights reserved.</p>
-        </div>
-    </footer>
+    </div>
+    
+    <div class="footer-bottom-1">
+        <p>© 2024 Website. All rights reserved.</p>
+    </div>
+</footer>
     <script>
 function toggleFilterBox() {
     const filterBox = document.getElementById('filterBox');

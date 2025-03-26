@@ -1,6 +1,5 @@
 <?php
 session_start();
-session_name('unique_session_name_for_project1');
 
 
 // Enable error reporting
@@ -74,43 +73,45 @@ mysqli_close($Sconnection);
     <title>Login</title>
     <link rel="stylesheet" href="styles.css">
     <script defer src="script.js"></script>
-    <style>
-        .alert {
-            position: fixed;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #ff4d4d;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            display: none;
-            z-index: 1000;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-        }
-    </style>
+    <style>html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+</style>
 </head>
 <body class="with-background">
 
-<header class="with-background">
-    <div class="logo"><img src="workshops/logo.png" alt="logo" height="80" width="80"></div>
-    <div class="nav-container">
-        <nav>
-            <ul class="nav-links">
-                <li><a href="homePage.php">Home</a></li>
-                <li><div class="language-switch" onclick="toggleLanguage()">🌐 Language</div></li>
-            </ul>
-        </nav>
-    </div>
-    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-</header>
-
-<div class="menu">
-    <ul>
-        <li><a href="homePage.php">Home</a></li>
-        <li><div class="language-switch" onclick="toggleLanguage()">🌐 Language</div></li>
-    </ul>
+    <header class="with-background ">
+        <div class="logo"><img src="workshops/logo.png" alt="logo" height="80" width="80"></div>
+        
+   
+<!-- زر الهامبرغر المحسن -->
+<div class="hamburger" onclick="toggleMenu(this)">
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
 </div>
+
+<!-- القائمة المتنقلة المحسنة -->
+<div class="mobile-nav-container">
+    <nav class="mobile-nav">
+         <a href="homePage.php">Home</a>
+        <div class="mobile-language-switch" onclick="toggleLanguage()">
+            🌐 Language
+        </div>
+    </nav>
+</div>
+
+<!-- القائمة الأصلية للكمبيوتر -->
+<nav class="desktop-nav">
+     <a href="homePage.php">Home</a>
+    <div class="language-switch" onclick="toggleLanguage()">
+        🌐 Language
+    </div>
+</nav>
+    </header>
 
 <?php if (!empty($errorMessage)): ?>
     <div id="alert-box" class="alert"><?php echo $errorMessage; ?></div>
@@ -134,47 +135,47 @@ mysqli_close($Sconnection);
         </div>
     </div>
 </main>
+ 
+<footer>
+    <div class="footer-left-1">
+        <h4>Get In Touch</h4>
+        <div class="contact-info-1" id="contact-us">
+    <div class="contact-item-1">
+        <img src="workshops/phone.png" class="icon-phone">
+        <span class="single-line-1">+996 58765 43210</span>
+    </div>
+    <div class="contact-item-1">
+        <img src="workshops/mail.png" class="icon-email">
+        <span class="single-line-1">mehar@gmail.com</span>
+    </div>
+    <div class="contact-item-1">
+        <img src="workshops/location.png" class="icon-location">
+        <span class="single-line-1">Saudi Arabia</span>
+    </div>
+</div>
 
-    <footer>
-        <div class="footer-left-1">
-            <h4>Get In Touch</h4>
-            <div class="contact-info-1" id="contact-us">
-                <div class="contact-item-1">
-                    <img src="workshops/phone1.png" alt="Phone Icon">
-                    <span class="single-line-1">+996 58765 43210</span>
-                </div>
-                <div class="contact-item-1">
-                    <img src="workshops/mail-icon.png" alt="Email Icon">
-                    <span class="single-line-1">mehar@gmail.com</span>
-                </div>
-                <div class="contact-item-1">
-                    <img src="workshops/location1.png" alt="Location Icon">
-                    <span class="single-line-1">Saudi Arabia</span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer-center-1">
-            <a href="index.html">
+    </div>
+
+    <div class="footer-center-1">
+        <a href="index.html">
             <img src="workshops/logo.png" alt="Logo" class="footer-logo-1 logo-toggle">
         </a>
+    </div>
+
+    <div class="footer-right-1" id="contact">
+        <h4>Social Media</h4>
+        <div class="social-icons-1">
+            <img src="workshops/Facebook_icon_(black).svg" alt="Facebook" class="icon-facebook">
+            <img src="workshops/X1.png" alt="Twitter" class="icon-twitter">
+            <img src="workshops/CIS-A2K_Instagram_Icon_(Black).svg" alt="Instagram" class="icon-instagram">
         </div>
-        
-        <div class="footer-right-1" id="contact">
-            <p><strong>Social media</strong></p>
-            <div class="social-icons-1">
-                
-                <img src="workshops/facebook11.png" alt="Facebook">
-                <img src="workshops/X1.png" alt="Twitter">
-                <img src="workshops/instagram.png" alt="Instagram">
-                <img src="workshops/linkedin.png" alt="LinkedIn">
-            </div>
-        </div>
-        
-        <div class="footer-bottom-1">
-            <p>© 2024 Website. All rights reserved.</p>
-        </div>
-    </footer>
+    </div>
+
+    <!-- الخط السفلي -->
+    <div class="footer-bottom-1">
+        <p>© 2024 Website. All rights reserved.</p>
+    </div>
+</footer>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var alertBox = document.getElementById("alert-box");
@@ -210,9 +211,12 @@ mysqli_close($Sconnection);
         }
     }
 
-    function toggleMenu() {
-        document.querySelector(".menu").classList.toggle("active");
-    }
+    function toggleMenu(button) {
+    button.classList.toggle('active');
+    document.querySelector('.mobile-nav-container').classList.toggle('show');
+    
+    document.body.style.overflow = button.classList.contains('active') ? 'hidden' : '';
+}
 </script>
 
 </body>

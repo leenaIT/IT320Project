@@ -6,14 +6,14 @@
     box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
-
-body.with-background{
+body.with-background {
     background: url('workshops/image1.jpg') no-repeat center center/cover;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
     color: white;
     backdrop-filter: blur(5px);
+    background-attachment: fixed;
 }
 body.no-background {
     display: flex;
@@ -24,6 +24,155 @@ body.no-background {
     background: #FFFDF0;
 }
 /* Header */
+ .alert {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff4d4d;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        
+          .desktop-nav {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    display: flex;
+    gap: 20px;
+    z-index: 100;
+    font-weight: bold;
+}
+
+.desktop-nav a,
+.language-switch {
+    text-decoration: none;
+    color: #FF9D23;
+    font-size: 16px;
+    padding: 8px 15px;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 45px;
+    height: 45px;
+    background: white;
+    border: 2px solid #FF9D23;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.hamburger-line {
+    display: block;
+    width: 22px;
+    height: 2.5px;
+    background: #FF9D23;
+    margin: 3px 0;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.hamburger:hover {
+    transform: scale(1.05);
+    background-color: #fff4e4;
+}
+
+.hamburger.active {
+    background: #FF9D23;
+}
+
+.hamburger.active .hamburger-line {
+    background: white;
+}
+
+.hamburger.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* ====== القائمة الجانبية للجوال ====== */
+.mobile-nav-container {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: #fffefc;
+    z-index: 999;
+    transition: all 0.5s ease;
+    padding: 80px 30px;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-nav-container.show {
+    right: 0;
+}
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.mobile-nav a,
+.mobile-language-switch {
+    color: #333;
+    background-color: #fffefc;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 12px 15px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+
+    border-bottom: 1px solid #FF9D23; /* ✅ الخط البرتقالي */
+}
+
+.mobile-nav a:hover,
+.mobile-language-switch:hover {
+    background-color: #ffe9ca;
+    transform: translateX(8px);
+    color: #FF9D23;
+}
+
+.mobile-nav a:before {
+    content: "➤";
+    color: #FF9D23;
+    margin-right: 10px;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav a:hover:before {
+    opacity: 1;
+}
+
 header.with-background {
     display: flex;
     justify-content: space-between;
@@ -31,12 +180,12 @@ header.with-background {
     padding: 15px 20px;
 }
 header.no-background {
-    position: absolute; /* الهيدر يكون فوق الصورة */
+    position: absolute; 
     top: 0;
     left: 0;
-    width: 100%; /* الهيدر يغطي العرض بالكامل */
-    z-index: 4; /* تأكد من أن الهيدر فوق العناصر الأخرى */
-    padding: 10px 20px; /* بعض المسافة حول المحتوى */
+    width: 100%; 
+    z-index: 4; 
+    padding: 10px 20px; 
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -467,9 +616,180 @@ button {
     transform: scale(0.6);
     }
 
-    
+    /*footer*/
+    footer {
+            margin-top: 2em;
+            padding: 1em 2em;
+            background-color: #fffefc;
+            border-top: 2px solid #f9b013ec;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
 
+        .footer-left-1,
+        .footer-center-1,
+        .footer-right-1 {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.5em;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* وسط الفوتر */
+        .footer-center-1 {
+            justify-content: center;
+        }
+
+        .footer-logo-1 {
+            width: 100px;
+        }
+
+        .contact-info-1 {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: nowrap;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .contact-item-1 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .single-line-1 {
+            white-space: nowrap;
+        }
+
+        /* أيقونات السوشال ميديا */
+        .social-icons-1 {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .footer-bottom-1 {
+            width: 100%;
+            text-align: center;
+            margin-top: 0.5em;
+        }
+
+        .footer-bottom-1 p {
+            padding: 0.5em;
+            background-color: #ffffff;
+            font-size: 0.75em;
+            color: #f9b013ec;
+            border-top: 1px solid #ccc;
+        }
+
+        .icon-phone {
+            width: 30px;
+            height: 30px;
+        }
+
+        .icon-email {
+            width: 42px;
+            height: 42px;
+        }
+
+        .icon-location {
+            width: 42px;
+            height: 42px;
+        }
+
+        .icon-facebook,
+        .icon-twitter,
+        .icon-instagram {
+            width: 35px;
+            height: 35px;
+        }
 /* Responsive */
+
+        @media (max-width: 768px) {
+            footer {
+                flex-direction: column;
+                align-items: center;
+                padding: 1em;
+            }
+            
+            .footer-left-1,
+            .footer-center-1,
+            .footer-right-1 {
+                width: 100%;
+                margin-bottom: 1em;
+                padding: 0.5em 0;
+            }
+
+            .contact-info-1 {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .contact-item-1 {
+                flex: 0 0 auto;
+                margin: 0 5px;
+            }
+
+            .footer-logo-1 {
+                width: 80px;
+                margin: 10px 0;
+            }
+
+            .social-icons-1 {
+                margin: 15px 0;
+            }
+        }
+
+        
+@media (max-width: 768px) {
+    .desktop-nav {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+}
+
+
+        @media (max-width: 480px) {
+            .contact-info-1 {
+                gap: 10px;
+            }
+            
+            .icon-phone,
+            .icon-email,
+            .icon-location {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .icon-facebook,
+            .icon-twitter,
+            .icon-instagram {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .footer-logo-1 {
+                width: 70px;
+            }
+        }
+
 @media (max-width: 768px) {
     .nav-links {
         display: none;

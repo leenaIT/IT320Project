@@ -6,44 +6,173 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Category Page</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
-    
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="header-footer2.css">
+    <link rel="stylesheet" href="header.css">
 
     <style>
+
+        
+   /* ====== الفوتر ====== */
+footer {
+    margin-top: 2em;
+    padding: 1em 2em;
+    background-color: #fffefc;
+    border-top: 2px solid #f9b013ec;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.footer-left-1,
+.footer-center-1,
+.footer-right-1 {
+    flex: 1;
+    min-width: 250px;
+    padding: 0.5em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* وسط الفوتر */
+.footer-center-1 {
+    justify-content: center;
+}
+
+.footer-logo-1 {
+    width: 100px;
+}
+
+/* ✅ كل أيقونة + النص جنب بعض، والكل في نفس السطر */
+.contact-info-1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+    margin-top: 10px;
+    width: 100%; /* ✅ ياخذ كامل مساحة الفوتر */
+}
+
+
+
+.contact-item-1 {
+    display: flex;
+    align-items: center; /* محاذاة الأيقونة مع النص */
+    gap: 8px; /* مسافة بين الأيقونة والنص */
+    white-space: nowrap; /* منع انقسام النص */
+}
+
+
+.single-line-1 {
+    white-space: nowrap;
+}
+
+/* أيقونات السوشال ميديا */
+.social-icons-1 {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* النص اللي تحت */
+.footer-bottom-1 {
+    width: 100%;
+    text-align: center;
+    margin-top: 0.5em;
+}
+
+.footer-bottom-1 p {
+    padding: 0.5em;
+    background-color: #ffffff;
+    font-size: 0.75em;
+    color: #f9b013ec;
+    border-top: 1px solid #ccc;
+}
+
+/* ====== أحجام الأيقونات (حسب طلبك) ====== */
+.icon-phone {
+    display: inline-block !important;  /* تأكيد ظهور العنصر */
+    width: 30px !important;
+    height: 30px !important;
+   /* إلغاء الطفو */
+}
+
+.icon-phone {
+    position: relative !important;
+    left: 0 !important;
+    right: auto !important;
+}
+
+.icon-email {
+    width: 42px !important;
+    height: 42px !important;
+    
+}
+
+.icon-location {
+    width: 42px !important;
+    height: 42px !important;
+    margin-top: 6px !important;
+}
+
+.icon-facebook {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+.icon-twitter {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+.icon-instagram {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+/* ✅ Responsive للجوال */
+@media (max-width: 768px) {
+    .footer-left-1,
+    .footer-center-1,
+    .footer-right-1 {
+        flex: 100%;
+        margin-bottom: 1em;
+    }
+
+    .contact-info-1 {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .icon-phone,
+    .icon-email,
+    .icon-location,
+    .icon-facebook,
+    .icon-twitter,
+    .icon-instagram {
+        transform: scale(0.9);
+    }
+}
+
         body {
-            font-family: 'Montserrat', sans-serif;
             margin: 0;
             background-color: #FFFDF0;
             text-align: center;
         }
 
-        /* الهيدر */
-        .header {
-            background: #FFF3E0;
-            padding: 40px 5%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* شريط التنقل */
-        .navbar {
-            display: flex;
-            justify-content: flex-end;
-            width: 100%;
-        }
-
-        .navbar a {
-            color: #333;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-        }
+      
 
         /* تصميم الحاوية داخل الهيدر */
         .header-container {
@@ -52,7 +181,9 @@
             align-items: center;
             max-width: 1200px;
             width: 100%;
-            margin-top: 30px;
+            margin-left: 20px;
+            margin-top: 150px;
+
         }
 
         /* المحتوى النصي */
@@ -85,7 +216,11 @@
             padding: 20px;
             flex-wrap: wrap;
         }
+        .category-section h2{
+            margin-top: 30px;
+        }
 
+        
         .category-btn {
             position: relative;
             width: 200px;
@@ -174,26 +309,55 @@
         }
     </style>
 </head>
-<body>
+<body class="no-background ">
+ <header>
+    <!-- اللوقو في الوسط -->
+    <div class="logo">
+        <img src="workshops/logo.png" alt="logo">
+    </div>
 
-    <header class="header">
-        <div class="nav">
-            <span><a href="homePage.html">Home</a></span>
-            <span><a href="Explore.html">Explore</a></span>
-            <span><a href="logIn.html" class="login-signup" id="login-signup">Login/Signup</a></span>
-            <span><a href="Category.html">Category</a></span>
-            <span><div class="language-switch" onclick="toggleLanguage()">🌐 Language</div></span>
+    <!-- زر الهامبرغر -->
+    <div class="hamburger" onclick="toggleMenu(this)">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+    </div>
+
+    <!-- قائمة الجوال -->
+    <div class="mobile-nav-container">
+        <nav class="mobile-nav">
+            <a href="Explore.php">Explore</a>
+            <a href="login.php">Login/Signup</a>
+            <a href="findcategory.php">Category</a>
+            <div class="mobile-language-switch" onclick="toggleLanguage()">
+                🌐 Language
+            </div>
+        </nav>
+    </div>
+
+    <!-- قائمة سطح المكتب -->
+    <nav class="desktop-nav">
+        <a href="Explore.php">Explore</a>
+        <a href="login.php">Login/Signup</a>
+        <a href="findcategory.php">Category</a>
+        <div class="language-switch" onclick="toggleLanguage()">
+            🌐 Language
         </div>
+    </nav>
+</header>
 
-        <div class="header-container">
+
+
+<div class="header-container">
             <!-- المحتوى النصي -->
             <div class="header-text" data-aos="fade-right">
                 <h1>Discover the <span class="highlight">Best Categories</span></h1>
                 <p>Explore various categories of workshops including Cooking, Adventure, and Art. Enhance your skills and experience unique moments.</p>
             </div>
         </div>
-    </header>
 
+
+       
 <section class="category-section">
     <h2 class="section-title">Find Your Category!</h2>
     <div class="category-container">
@@ -245,41 +409,58 @@
     </section>
 
     <!-- footer.html -->
-    <hr style="color:black; border-width:2px;">
-    <footer class="footer" id="footer">
-        <div class="footer-content">
-            <div class="footer-left">
-                <h4>Get In Touch</h4>
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <img src="workshops/360_F_553663238_v4Tva6Ie5Z5MhwCw0TknszcWuQ1ZAwQx.png" alt="Phone">
-                    </div>
-                    <div class="contact-item">
-                        <img id="email" src="workshops/360_F_181003490_CxW4fQ0H3VypIIsPkFGpMDviO8ysWjOZ.png" alt="Email">
-                    </div>
-                    <div class="contact-item">
-                        <img id="location" src="workshops/360_F_254622588_6OClHyYpak64rVI8y9QVjUvDlStsDEu9.png" alt="Location">
-                    </div>
-                </div>
+   <!-- الفوتر -->
+<footer>
+    <div class="footer-left-1">
+        <h4>Get In Touch</h4>
+        <div class="contact-info-1" id="contact-us">
+            <div class="contact-item-1">
+                <img src="workshops/phone.png" alt="Phone Icon" class="icon-phone">
+                <span class="single-line-1">+996 58765 43210</span>
             </div>
-            <div class="footer-right">
-                <h4>Follow Us</h4>
-                <div class="social-icons">
-                    <img id="facebook" src="workshops/black-square-outline-facebook-icon-7017516951347228u34mgnk68.png" alt="Facebook">
-                    <img src="workshops/twitter-icon-256x227-kf6zqma5.png" alt="Twitter">
-                    <img src="workshops/121.png" alt="Instagram">
-                </div>
+            <div class="contact-item-1">
+                <img src="workshops/mail.png" alt="Email Icon" class="icon-email">
+                <span class="single-line-1">mehar@gmail.com</span>
+            </div>
+            <div class="contact-item-1">
+                <img src="workshops/location.png" alt="Location Icon" class="icon-location">
+                <span class="single-line-1">Saudi Arabia</span>
             </div>
         </div>
-        <div class="footer-center">
-            <p>© 2024 Website. All rights reserved.</p>
+    </div>
+    
+    <div class="footer-center-1">
+        <a href="index.html">
+            <img src="workshops/logo.png" alt="Logo" class="footer-logo-1 logo-toggle">
+        </a>
+    </div>
+    
+    <div class="footer-right-1" id="contact">
+        <h4>Social media</h4>
+        <div class="social-icons-1">
+            <img src="workshops/Facebook_icon_(black).svg" alt="Facebook" class="icon-facebook">
+            <img src="workshops/X1.png" alt="Twitter" class="icon-twitter">
+            <img src="workshops/CIS-A2K_Instagram_Icon_(Black).svg" alt="Instagram" class="icon-instagram">
         </div>
-    </footer>
+    </div>
+    
+    <div class="footer-bottom-1">
+        <p>© 2024 Website. All rights reserved.</p>
+    </div>
+</footer>
 
     <!-- AOS Animation Script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
         AOS.init();
+ function toggleMenu(button) {
+    button.classList.toggle('active');
+    document.querySelector('.mobile-nav-container').classList.toggle('show');
+    
+    // إيقاف التمرير عند فتح القائمة
+    document.body.style.overflow = button.classList.contains('active') ? 'hidden' : '';
+}
+
     </script>
 
 </body>

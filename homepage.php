@@ -188,40 +188,42 @@ if ($conn->connect_error) {
 </head>
 <body class="no-background ">
 
-    <header class="no-background ">
-        <div class="logo"><img src="workshops/logo.png" alt="logo" height="80" width="80"></div>
-        
-   
-<!-- زر الهامبرغر المحسن -->
-<div class="hamburger" onclick="toggleMenu(this)">
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-</div>
+   <header>
+    <!-- اللوقو في الوسط -->
+    <div class="logo">
+        <img src="workshops/logo.png" alt="logo">
+    </div>
 
-<!-- القائمة المتنقلة المحسنة -->
-<div class="mobile-nav-container">
-    <nav class="mobile-nav">
+    <!-- زر الهامبرغر -->
+    <div class="hamburger" onclick="toggleMenu(this)">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+    </div>
+
+    <!-- قائمة الجوال -->
+    <div class="mobile-nav-container">
+        <nav class="mobile-nav">
+            <a href="Explore.php">Explore</a>
+            <a href="login.php">Login/Signup</a>
+            <a href="findcategory.php">Category</a>
+            <div class="mobile-language-switch" onclick="toggleLanguage()">
+                🌐 Language
+            </div>
+        </nav>
+    </div>
+
+    <!-- قائمة سطح المكتب -->
+    <nav class="desktop-nav">
         <a href="Explore.php">Explore</a>
         <a href="login.php">Login/Signup</a>
         <a href="findcategory.php">Category</a>
-        <div class="mobile-language-switch" onclick="toggleLanguage()">
+        <div class="language-switch" onclick="toggleLanguage()">
             🌐 Language
         </div>
     </nav>
-</div>
+</header>
 
-<!-- القائمة الأصلية للكمبيوتر -->
-<nav class="desktop-nav">
-     <a href="Explore.php">Explore</a>
-        <a href="login.php">Login/Signup</a>
-        <a href="findcategory.php">Category</a>
-    <div class="language-switch" onclick="toggleLanguage()">
-        🌐 Language
-    </div>
-</nav>
-
-    </header>
 
     <?php
 $sql_description = "SELECT Title, ShortDes, ImageURL FROM workshop WHERE WorkshopID = 4";
@@ -445,11 +447,13 @@ $result = $conn->query($sql);
 }
 
 
+
 function toggleMenu(button) {
     button.classList.toggle('active');
     document.querySelector('.mobile-nav-container').classList.toggle('show');
-    
     document.body.style.overflow = button.classList.contains('active') ? 'hidden' : '';
+        document.body.style.overflow = button.classList.contains('active') ? 'hidden' : '';
+
 }
 
 

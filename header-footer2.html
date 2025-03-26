@@ -7,35 +7,43 @@
     <link rel="stylesheet" href="styles.css">
     <script defer src="script.js"></script>
 </head>
-<body>
+<body class="no-background ">
     
-    
-    
-<div class="hamburger" onclick="toggleMenu(this)">
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-</div>
+<header>
+    <!-- اللوقو في الوسط -->
+    <div class="logo">
+        <img src="workshops/logo.png" alt="logo">
+    </div>
 
-<div class="mobile-nav-container">
-    <nav class="mobile-nav">
+    <!-- زر الهامبرغر -->
+    <div class="hamburger" onclick="toggleMenu(this)">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+    </div>
+
+    <!-- قائمة الجوال -->
+    <div class="mobile-nav-container">
+        <nav class="mobile-nav">
+            <a href="Explore.php">Explore</a>
+            <a href="login.php">Login/Signup</a>
+            <a href="findcategory.php">Category</a>
+            <div class="mobile-language-switch" onclick="toggleLanguage()">
+                🌐 Language
+            </div>
+        </nav>
+    </div>
+
+    <!-- قائمة سطح المكتب -->
+    <nav class="desktop-nav">
         <a href="Explore.php">Explore</a>
         <a href="login.php">Login/Signup</a>
         <a href="findcategory.php">Category</a>
-        <div class="mobile-language-switch" onclick="toggleLanguage()">
+        <div class="language-switch" onclick="toggleLanguage()">
             🌐 Language
         </div>
     </nav>
-</div>
-
-<nav class="desktop-nav">
-     <a href="Explore.php">Explore</a>
-        <a href="login.php">Login/Signup</a>
-        <a href="findcategory.php">Category</a>
-    <div class="language-switch" onclick="toggleLanguage()">
-        🌐 Language
-    </div>
-</nav>
+</header>
 
 
 
