@@ -218,9 +218,8 @@ if ($conn->connect_error) {
         <a href="Explore.php">Explore</a>
         <a href="login.php">Login/Signup</a>
         <a href="findcategory.php">Category</a>
-        <div class="language-switch" onclick="toggleLanguage()">
-            🌐 Language
-        </div>
+        <a href="#" class="language-switch" onclick="toggleLanguage()">🌐 Language</a>
+
     </nav>
 </header>
 
