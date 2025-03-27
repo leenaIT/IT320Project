@@ -72,6 +72,7 @@ mysqli_close($Sconnection);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="header.css">
     <script defer src="script.js"></script>
     <style>html, body {
     height: 100%;
@@ -83,35 +84,37 @@ mysqli_close($Sconnection);
 </head>
 <body class="with-background">
 
-    <header class="with-background ">
-        <div class="logo"><img src="workshops/logo.png" alt="logo" height="80" width="80"></div>
-        
-   
-<!-- زر الهامبرغر المحسن -->
-<div class="hamburger" onclick="toggleMenu(this)">
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-</div>
-
-<!-- القائمة المتنقلة المحسنة -->
-<div class="mobile-nav-container">
-    <nav class="mobile-nav">
-         <a href="homePage.php">Home</a>
-        <div class="mobile-language-switch" onclick="toggleLanguage()">
-            🌐 Language
-        </div>
-    </nav>
-</div>
-
-<!-- القائمة الأصلية للكمبيوتر -->
-<nav class="desktop-nav">
-     <a href="homePage.php">Home</a>
-    <div class="language-switch" onclick="toggleLanguage()">
-        🌐 Language
+    <header>
+    <!-- اللوقو في الوسط -->
+    <div class="logo">
+        <img src="workshops/logo.png" alt="logo">
     </div>
-</nav>
-    </header>
+
+    <!-- زر الهامبرغر -->
+    <div class="hamburger" onclick="toggleMenu(this)">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+    </div>
+
+    <!-- قائمة الجوال -->
+    <div class="mobile-nav-container">
+        <nav class="mobile-nav">
+            <a href="homepage.php">Home</a>
+            <div class="mobile-language-switch" onclick="toggleLanguage()">
+                🌐 Language
+            </div>
+        </nav>
+    </div>
+
+    <!-- قائمة سطح المكتب -->
+    <nav class="desktop-nav">
+        <a href="homepage.php">Home</a>
+       <a href="#" class="language-switch" onclick="toggleLanguage()">🌐 Language</a>
+
+    </nav>
+</header>
+
 
 <?php if (!empty($errorMessage)): ?>
     <div id="alert-box" class="alert"><?php echo $errorMessage; ?></div>
