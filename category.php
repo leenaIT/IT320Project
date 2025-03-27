@@ -67,6 +67,33 @@ if (!empty($params)) {
 }
 $stmt->execute();
 $result = $stmt->get_result();
+
+
+// تنفيذ الاستعلام
+$stmt = $connection->prepare($query);
+if (!empty($params)) {
+    $stmt->bind_param($types, ...$params);
+}
+$stmt->execute();
+$result = $stmt->get_result();
+
+// تحديد صورة الهيدر والنص حسب الفئة
+$headerImage = 'workshops/stained-brushes-inside-pocket.jpg';
+$headerTitle = 'DISCOVER THE';
+$headerCategory = 'Art';
+$headerQuote = '“Express your personality through artful experiences.”';
+
+if ($filterCategory === 'Adventure') {
+    $headerImage = 'workshops/adventurepage.jpg';
+    $headerTitle = 'EXPLORE THE';
+    $headerCategory = 'Adventure';
+    $headerQuote = '“Step beyond the ordinary and discover who you are through bold, adventurous moments.”';
+} elseif ($filterCategory === 'Cooking') {
+    $headerImage = 'workshops/cookingpage.jpg';
+    $headerTitle = 'TRY THE';
+    $headerCategory = 'Recipe';
+    $headerQuote = '“Enjoy cooking experiences and improve your skills with every new recipe.”';
+}
 ?>
 
 <script>
@@ -262,7 +289,6 @@ footer {
             position: relative;
             width: 100%;
             height: 550px;
-            background: url('workshops/stained-brushes-inside-pocket.jpg') no-repeat center center/cover;
             color: white;
             display: flex;
             align-items: center;
@@ -606,7 +632,7 @@ input[type="date"] {
     </style>
 </head>
 <body>
-    <div class="header">
+<div class="header" style="background: url('<?php echo $headerImage; ?>') no-repeat center center/cover;">
      <header>
     <!-- اللوقو في الوسط -->
     <div class="logo">
@@ -641,12 +667,12 @@ input[type="date"] {
 
     </nav>
 </header>
-        <div class="header-content">
+         <div class="header-content">
             <h1>
-                <span>DISCOVER THE</span>
-                <span class="outline-text">Art</span>
+                <span><?php echo $headerTitle; ?></span>
+                <span class="outline-text"><?php echo $headerCategory; ?></span>
             </h1>
-            <p class="quote">“Express your personality through artful experiences.”</p>
+            <p class="quote"><?php echo $headerQuote; ?></p>
         </div>
     </div>
     <div class="container">
