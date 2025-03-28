@@ -19,6 +19,7 @@ if ($result->num_rows === 0) {
     exit;
 }
 
+
 $workshop = $result->fetch_assoc();
 
 $schedule_stmt = $connection->prepare("SELECT Day, Date, StartTime, EndTime FROM workshop_schedule WHERE WorkshopID = ?");
