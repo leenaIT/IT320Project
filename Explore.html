@@ -1,3 +1,7 @@
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +10,12 @@
     <title>Explore Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 
           /* Header */
 header.with-background {
@@ -100,6 +110,7 @@ html[dir="rtl"] .menu.active {
     left: 20px;
 }
         body {
+            overflow-x: hidden;
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
@@ -116,6 +127,10 @@ html[dir="rtl"] .menu.active {
             height: 600px;
             overflow: hidden;
             position: relative;
+            max-width: 100%;
+width: 100%;
+box-sizing: border-box;
+
         }
         .slider video {
             width: 100%;
@@ -126,6 +141,10 @@ html[dir="rtl"] .menu.active {
             left: 0;
             opacity: 0;
             transition: opacity 1s ease-in-out;
+            max-width: 100%;
+width: 100%;
+box-sizing: border-box;
+
         }
         .slider video.active {
             opacity: 1;
@@ -143,12 +162,21 @@ html[dir="rtl"] .menu.active {
             padding: 10px;
             border-radius: 8px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+width: 100%;
+box-sizing: border-box;
+
+            
         }
         .search-container span {
             color: #fcfcfc;
             font-size: 50px;
             margin-right: 10px;
             font-style: italic;
+            max-width: 100%;
+width: 100%;
+box-sizing: border-box;
+
         }
         .search-bar {
             width: 100%;
@@ -157,6 +185,10 @@ html[dir="rtl"] .menu.active {
             border: 1px solid #ccc;
             transition: box-shadow 0.3s ease;
             color: #333;
+            max-width: 100%;
+width: 100%;
+box-sizing: border-box;
+
         }
         .search-bar:focus {
             box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
@@ -170,6 +202,10 @@ html[dir="rtl"] .menu.active {
             border-radius: 10px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
+            max-width: 100%;
+width: 100%;
+box-sizing: border-box;
+
         }
         .posts {
             display: grid;
@@ -177,7 +213,38 @@ html[dir="rtl"] .menu.active {
             gap: 20px;
             margin-top: 20px;
             align-items: start;
+            max-width: 100%;
+width: 100%;
+box-sizing: border-box;
+
         }
+        @media (max-width: 500px) {
+    .search-container span {
+        font-size: 20px;
+        display: none;
+    }
+    .search-bar {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .create-post-box {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .expanded-box {
+        flex-direction: column;
+        width: 90%;
+    }
+
+    .expanded-box img,
+    .post-details {
+        width: 100%;
+        padding-left: 0;
+    }
+}
+
         .post-card {
             background: #fff;
             border-radius: 10px;
@@ -397,236 +464,232 @@ html[dir="rtl"] .menu.active {
         font-style: italic;
         margin-bottom: 20px;
     }
+
+    @media (max-width: 768px) {
+    .search-container {
+        top: 200px;
+        flex-direction: column;
+        padding: 8px;
+    }
+
+    .search-container span {
+        font-size: 24px;
+        margin-bottom: 10px;
+        display: block;
+        text-align: center;
+    }
+
+    .create-post-box {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .expanded-box {
+        flex-direction: column;
+        width: 95%;
+    }
+
+    .expanded-box img,
+    .post-details {
+        width: 100%;
+        padding-left: 0;
+    }
+
+    .post-card img {
+        height: 150px;
+    }
+
+    .post-card h3, .post-card p {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .nav-links li a {
+        font-size: 16px;
+    }
+
+    .slider {
+        height: 250px;
+    }
+}
+@media (max-width: 500px) {
+  .expanded-box {
+    flex-direction: column;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .expanded-box img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .post-details {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .comment {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .comment img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-bottom: 0;
+  }
+
+  .comment p {
+    flex: 1;
+  }
+}
+
+
+.like-btn.liked {
+    color: red; /* أو أي لون يعجبك */
+}
+
+
+
+    
     </style>
 </head>
 
-<header class="no-background ">
+
+<body>
+
+<header class="no-background">
     <div class="logo"><img src="logo.png" alt="logo" height="80" width="80"></div>
-    
     <div class="nav-container">
         <nav>
             <ul class="nav-links">
                 <li><a href="homePage.html">Home</a></li>
-                <li><a href="Explore.html">Explore </a></li>
+                <li><a href="Explore.html">Explore</a></li>
                 <li><a href="Category.html">Category</a></li>
-                <li><a href="logIn.html" class="login-signup" id="login-signup">Login/Signup</a></li> 
+                <li><a href="logIn.html" class="login-signup" id="login-signup">Login/Signup</a></li>
             </ul>
         </nav>
         <div class="language-switch" onclick="toggleLanguage()">🌐 Language</div>
     </div>
-
     <div class="menu-toggle" onclick="toggleMenu()">☰</div>
 </header>
 
-  
 <div class="menu">
     <ul>
         <li><a href="#">Contact Us</a></li>
         <li><a href="#">Explore page</a></li>
-        <li><a href="logIn.html" class="login-signup">Login/Signup</a></li> 
+        <li><a href="logIn.html" class="login-signup">Login/Signup</a></li>
     </ul>
 </div>
 
-<body>
+<div class="slider">
+    <video class="active" autoplay muted loop>
+        <source src="workshops/slider1.mp4" type="video/mp4">
+    </video>
+    <video autoplay muted loop>
+        <source src="workshops/slider2.mp4" type="video/mp4">
+    </video>
+    <video autoplay muted loop>
+        <source src="workshops/slider3.mp4" type="video/mp4">
+    </video>
+</div>
 
-    <div class="slider">
-        <video class="active" autoplay muted loop>
-            <source src="workshops/slider1.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <video autoplay muted loop>
-            <source src="workshops/slider2.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <video autoplay muted loop>
-            <source src="workshops/slider3.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+<div class="search-container">
+    <span>Discover Your Passion</span>
+    <input type="text" class="search-bar" placeholder="Search for workshops or experiences...">
+</div>
+
+<div class="container">
+    <div class="posts" id="posts">
+        <!-- البوستات تجي من JS -->
     </div>
 
-    <div class="search-container">
-        <span>Discover Your Passion</span>
-        <input type="text" class="search-bar" placeholder="Search for workshops or experiences...">
-    </div>
+    <div id="overlay" class="overlay" onclick="closePost()">
+        <div class="expanded-box" onclick="event.stopPropagation();">
+            <img id="expandedImage" src="" alt="Workshop Image">
+            <div class="post-details">
+                <span class="close-btn" onclick="closePost()">&times;</span>
+                <h3 id="expandedTitle"></h3>
 
-    <div class="container">
-        <div class="posts" id="posts">
-        </div>
+                <input type="hidden" id="postID">
 
-        <div id="overlay" class="overlay" onclick="closePost()">
-            <div class="expanded-box" onclick="event.stopPropagation();">
-                <img id="expandedImage" src="" alt="Workshop Image">
-                <div class="post-details">
-                    <span class="close-btn" onclick="closePost()">&times;</span>
-                    <h3 id="expandedTitle"></h3>
-                    <div class="actions">
-                        <button class="like-btn" onclick="toggleLike()"><i class="fa fa-heart"></i> <span id="likeCount">0</span></button>
-                    </div>
-                    <p>Comments:</p>
-                    <div id="comments">
-                        <div class="comment">
-                            <img src="workshops/comment1.jpeg" alt="User">
-                            <p>This workshop was amazing! Learned a lot.</p>
-                        </div>
-                        <div class="comment">
-                            <img src="workshops/comment2.jpeg" alt="User">
-                            <p>Highly recommend it!</p>
-                        </div>
-                    </div>
-                    <input type="text" class="comment-box" placeholder="Write a comment..." onkeypress="addComment(event)">
+                <div class="actions">
+                    <button class="like-btn" onclick="toggleLike()">
+                        <i class="fa fa-heart"></i> <span id="likeCount">0</span>
+                    </button>
                 </div>
+
+                <p>Comments:</p>
+                <div id="comments"></div>
+                <input type="text" class="comment-box" placeholder="Write a comment..." onkeypress="addComment(event)">
             </div>
         </div>
     </div>
+</div>
 
-    <div class="back-to-top" onclick="scrollToTop()">↑</div>
 
-    <div class="create-post-btn" onclick="openCreatePost()">
-        <i class="fa fa-plus"></i>
-    </div>
 
-    <div id="createPostOverlay" class="create-post-overlay" onclick="closeCreatePost()">
-        <div class="create-post-box" onclick="event.stopPropagation();">
-            <h3>Create New Post</h3>
-            <p class="motivation-text">Share your passion and inspire others with your workshop!</p>
-            <input type="text" id="postTitle" placeholder="Workshop Name">
-            <textarea id="postDescription" placeholder="Workshop Description"></textarea>
-            <div class="file-upload">
-                <label for="postImage">Choose an image</label>
-                <input type="file" id="postImage" accept="image/*">
-            </div>
-            <button onclick="createPost()">Create Post</button>
-        </div>
-    </div>
-    
-    <script>
-        const workshopImages = [
-            "workshops/workshop2.jpeg",
-            "workshops/workshop3.jpeg",
-            "workshops/workshop4.jpeg",
-            "workshops/workshop5.jpeg",
-            "workshops/workshop6.jpeg",
-            "workshops/workshop7.jpeg",
-            "workshops/workshop8.jpeg",
-            "workshops/workshop9.jpeg",
-            "workshops/workshop10.jpeg",
-            "workshops/workshop11.jpeg"
-        ];
-        
-        const users = ["Sarah", "Alex", "John", "Lina", "Ahmed", "Mia", "David", "Nora", "James", "Sophie"];
-        const postsContainer = document.getElementById("posts");
-        
-        workshopImages.forEach((image, index) => {
-            const post = document.createElement("div");
-            post.classList.add("post-card");
-            post.innerHTML = `
-                <img src="${image}" alt="Workshop Image">
-                <h3>Workshop ${index + 1}</h3>
-                <p>Shared by ${users[index]} | ${Math.floor(Math.random() * 7) + 1} days ago</p>
-            `;
-            post.onclick = () => openPost(image, `Workshop ${index + 1}`);
-            postsContainer.appendChild(post);
-        });
-        
-        function openPost(image, title) {
-            document.getElementById("expandedImage").src = image;
-            document.getElementById("expandedTitle").innerText = title;
-            document.getElementById("overlay").style.display = "flex";
+<script>
+
+function toggleLike() {
+    let postID = document.getElementById("postID").value;
+    let likeBtn = document.querySelector(".like-btn");
+    let likeCount = document.getElementById("likeCount");
+
+    fetch("toggle_like.php", {
+        method: "POST",
+        body: new URLSearchParams({ postID: postID })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "liked") {
+            likeBtn.classList.add("liked");
+        } else if (data.status === "unliked") {
+            likeBtn.classList.remove("liked");
         }
-        
-        function closePost() {
-            document.getElementById("overlay").style.display = "none";
-        }
-        
-        function toggleLike() {
-            const likeBtn = document.querySelector(".like-btn");
-            const likeCount = document.getElementById("likeCount");
-            let count = parseInt(likeCount.innerText);
-            if (likeBtn.classList.contains("liked")) {
-                likeBtn.classList.remove("liked");
-                count--;
-            } else {
-                likeBtn.classList.add("liked");
-                count++;
-            }
-            likeCount.innerText = count;
-        }
-        
-        function addComment(event) {
-            if (event.key === "Enter") {
-                const commentText = event.target.value;
-                if (commentText.trim() !== "") {
-                    const commentDiv = document.createElement("div");
-                    commentDiv.classList.add("comment");
-                    commentDiv.innerHTML = `
-                        <img src="https://via.placeholder.com/40" alt="User">
-                        <p>${commentText}</p>
-                    `;
-                    document.getElementById("comments").appendChild(commentDiv);
-                    event.target.value = "";
-                }
-            }
-        }
+        likeCount.innerText = data.likeCount;
+    });
+}
 
-        window.onscroll = function() {
-            const backToTopButton = document.querySelector(".back-to-top");
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                backToTopButton.style.display = "block";
-            } else {
-                backToTopButton.style.display = "none";
-            }
-        };
 
-        function scrollToTop() {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        }
 
-        // سلايدر الفيديوهات
-        const sliderVideos = document.querySelectorAll('.slider video');
-        let currentVideoIndex = 0;
+// بعدين نستخدم هذا الكود عشان نعرض البوستات من PHP
+// fetch('fetch_posts.php').then(response => response.json()).then(data => {
+//     // تسوي عرض للبوستات في div#posts
+// });
 
-        function changeSliderVideo() {
-            sliderVideos[currentVideoIndex].classList.remove('active');
-            currentVideoIndex = (currentVideoIndex + 1) % sliderVideos.length;
-            sliderVideos[currentVideoIndex].classList.add('active');
-        }
+document.addEventListener("DOMContentLoaded", function() {
+    fetch("Explore.php")
+        .then(res => res.json())
+        .then(data => {
+            const postsContainer = document.getElementById("posts");
 
-        setInterval(changeSliderVideo, 5000);
+            data.forEach(post => {
+                const postCard = document.createElement("div");
+                postCard.className = "post-card";
+                postCard.setAttribute("onclick", `openPost('uploads/${post.image}', '${post.title}', '${post.postID}')`);
 
-        // إنشاء منشور جديد
-        function openCreatePost() {
-            document.getElementById("createPostOverlay").style.display = "flex";
-        }
-
-        function closeCreatePost() {
-            document.getElementById("createPostOverlay").style.display = "none";
-        }
-
-        function createPost() {
-            const title = document.getElementById("postTitle").value;
-            const description = document.getElementById("postDescription").value;
-            const imageFile = document.getElementById("postImage").files[0];
-
-            if (!title || !description || !imageFile) {
-                alert("Please fill all fields and upload an image.");
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const post = document.createElement("div");
-                post.classList.add("post-card");
-                post.innerHTML = `
-                    <img src="${e.target.result}" alt="Workshop Image">
-                    <h3>${title}</h3>
-                    <p>${description}</p>
+                postCard.innerHTML = `
+                    <img src="uploads/${post.image}" alt="Workshop Image">
+                    <h3>${post.title}</h3>
+                    <p>Shared by ${post.Firstname} ${post.LastName}</p>
                 `;
-                postsContainer.prepend(post);
-                closeCreatePost();
-            };
-            reader.readAsDataURL(imageFile);
-        }
-    </script>
+
+                postsContainer.appendChild(postCard);
+            });
+        });
+});
+</script>
+
 </body>
 </html>

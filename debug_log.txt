@@ -1,0 +1,30 @@
+{"interests":["Programming and Technology"],"skillLevel":"Beginner","format":"Online"}Array
+(
+    [interests] => Array
+        (
+            [0] => Programming and Technology
+        )
+
+    [skillLevel] => Beginner
+    [format] => Online
+)
+{"interests":["Programming and Technology"],"skillLevel":"Beginner","format":"Online"}Array
+(
+    [interests] => Array
+        (
+            [0] => Programming and Technology
+        )
+
+    [skillLevel] => Beginner
+    [format] => Online
+)
+{"interests":["Arts and Design"],"skillLevel":"Beginner","format":"Online"}Array
+(
+    [interests] => Array
+        (
+            [0] => Arts and Design
+        )
+
+    [skillLevel] => Beginner
+    [format] => Online
+)

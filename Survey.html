@@ -294,6 +294,9 @@
         .image-slider img.active {
             opacity: 1;
         }
+
+        
+        
     </style>
 </head>
 <body>
@@ -322,8 +325,11 @@
         </ul>
     </div>
 
+
+   
     <div class="container">
-        <div class="survey-form" id="surveyForm">
+        <form id="surveyForm">
+        <div class="survey-form">
             <h1 id="main-title">Discover the Best Workshops for You!</h1>
             <p class="intro" id="intro-text">Fill out this short survey to receive personalized workshop recommendations based on your interests and skill level.</p>
             
@@ -331,23 +337,23 @@
                 <h3 id="interest-question">What types of workshops interest you? (You can choose more than one)</h3>
                 <div class="options">
                     <label class="option">
-                        <input type="checkbox" name="interest" value="Arts and Design">
+                        <input type="checkbox" name="interests[]" value="Arts and Design">
                         🎨 <span id="arts-design">Arts and Design</span>
                     </label>
                     <label class="option">
-                        <input type="checkbox" name="interest" value="Programming and Technology">
+                        <input type="checkbox" name="interests[]" value="Programming and Technology">
                         💻 <span id="programming-tech">Programming and Technology</span>
                     </label>
                     <label class="option">
-                        <input type="checkbox" name="interest" value="Theater and Performance">
+                        <input type="checkbox" name="interests[]" value="Theater and Performance">
                         🎭 <span id="theater-performance">Theater and Performance</span>
                     </label>
                     <label class="option">
-                        <input type="checkbox" name="interest" value="Sports and Fitness">
+                        <input type="checkbox" name="interests[]" value="Sports and Fitness">
                         🏋️ <span id="sports-fitness">Sports and Fitness</span>
                     </label>
                     <label class="option">
-                        <input type="checkbox" name="interest" value="Health and Wellness">
+                        <input type="checkbox" name="interests[]" value="Health and Wellness">
                         🧘 <span id="health-wellness">Health and Wellness</span>
                     </label>
                 </div>
@@ -389,16 +395,18 @@
                 </div>
             </div>
             
-            <button class="submit-btn" onclick="submitSurvey()" id="submit-btn">Get Recommendations</button>
+           
         </div>
 
-        <div class="results" id="resultsSection">
-            <h2 id="recommended-workshops">Recommended Workshops</h2>
-            <div class="workshops-grid" id="workshopsGrid">
-                <!-- Recommended workshops will be filled here -->
-            </div>
-            <button class="retake-btn" onclick="retakeSurvey()" id="retake-btn">Retake Survey</button>
-        </div>
+        <button type="submit" class="submit-btn" id="submit-btn">Get Recommendations</button>
+    </form>
+
+    <div class="results" id="resultsSection">
+        <h2>Recommended Workshops</h2>
+        <div class="workshops-grid" id="workshopsGrid"></div>
+        <button class="retake-btn" onclick="retakeSurvey()">Retake Survey</button>
+    </div>
+    </div>
         
         <div class="image-slider">
             <img class="active" src="workshops/workshop1.jpeg" alt="Workshop 1">
@@ -418,96 +426,7 @@
   
 
     <script>
-        // Language toggle
-        let currentLanguage = 'en';
-
-        const translations = {
-            en: {
-                contactUs: "Contact Us",
-                explorePage: "Explore page",
-                loginSignup: "Login/Signup",
-                mainTitle: "Discover the Best Workshops for You!",
-                introText: "Fill out this short survey to receive personalized workshop recommendations based on your interests and skill level.",
-                interestQuestion: "What types of workshops interest you? (You can choose more than one)",
-                artsDesign: "Arts and Design",
-                programmingTech: "Programming and Technology",
-                theaterPerformance: "Theater and Performance",
-                sportsFitness: "Sports and Fitness",
-                healthWellness: "Health and Wellness",
-                skillLevelQuestion: "Choose your skill level:",
-                beginner: "Beginner",
-                intermediate: "Intermediate",
-                advanced: "Advanced",
-                formatQuestion: "Preferred workshop format:",
-                online: "Online",
-                inPerson: "In-person",
-                both: "Both",
-                submitBtn: "Get Recommendations",
-                recommendedWorkshops: "Recommended Workshops",
-                retakeBtn: "Retake Survey"
-            },
-            ar: {
-                contactUs: "اتصل بنا",
-                explorePage: "صفحة الاستكشاف",
-                loginSignup: "تسجيل الدخول/التسجيل",
-                mainTitle: "اكتشف أفضل الورش المناسبة لك!",
-                introText: "املأ هذا الاستبيان القصير لتلقي توصيات مخصصة للورش بناءً على اهتماماتك ومستوى مهارتك.",
-                interestQuestion: "ما أنواع الورش التي تهمك؟ (يمكن اختيار أكثر من واحد)",
-                artsDesign: "الفنون والتصميم",
-                programmingTech: "البرمجة والتقنية",
-                theaterPerformance: "المسرح والأداء",
-                sportsFitness: "الرياضة واللياقة",
-                healthWellness: "الصحة والعافية",
-                skillLevelQuestion: "اختر مستوى مهارتك:",
-                beginner: "مبتدئ",
-                intermediate: "متوسط",
-                advanced: "متقدم",
-                formatQuestion: "طريقة حضور الورشة المفضلة:",
-                online: "أونلاين",
-                inPerson: "حضوري",
-                both: "كلاهما",
-                submitBtn: "احصل على التوصيات",
-                recommendedWorkshops: "الورش الموصى بها",
-                retakeBtn: "إعادة تعبئة الاستبيان"
-            }
-        };
-
-        function toggleLanguage() {
-            currentLanguage = currentLanguage === 'en' ? 'ar' : 'en';
-            document.documentElement.lang = currentLanguage;
-            document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
-            updateText();
-        }
-
-        function updateText() {
-            const lang = translations[currentLanguage];
-            document.getElementById('contact-us').textContent = lang.contactUs;
-            document.getElementById('explore-page').textContent = lang.explorePage;
-            document.getElementById('login-signup').textContent = lang.loginSignup;
-            document.getElementById('contact-us-mobile').textContent = lang.contactUs;
-            document.getElementById('explore-page-mobile').textContent = lang.explorePage;
-            document.getElementById('login-signup-mobile').textContent = lang.loginSignup;
-            document.getElementById('main-title').textContent = lang.mainTitle;
-            document.getElementById('intro-text').textContent = lang.introText;
-            document.getElementById('interest-question').textContent = lang.interestQuestion;
-            document.getElementById('arts-design').textContent = lang.artsDesign;
-            document.getElementById('programming-tech').textContent = lang.programmingTech;
-            document.getElementById('theater-performance').textContent = lang.theaterPerformance;
-            document.getElementById('sports-fitness').textContent = lang.sportsFitness;
-            document.getElementById('health-wellness').textContent = lang.healthWellness;
-            document.getElementById('skill-level-question').textContent = lang.skillLevelQuestion;
-            document.getElementById('beginner').textContent = lang.beginner;
-            document.getElementById('intermediate').textContent = lang.intermediate;
-            document.getElementById('advanced').textContent = lang.advanced;
-            document.getElementById('format-question').textContent = lang.formatQuestion;
-            document.getElementById('online').textContent = lang.online;
-            document.getElementById('in-person').textContent = lang.inPerson;
-            document.getElementById('both').textContent = lang.both;
-            document.getElementById('submit-btn').textContent = lang.submitBtn;
-            document.getElementById('recommended-workshops').textContent = lang.recommendedWorkshops;
-            document.getElementById('retake-btn').textContent = lang.retakeBtn;
-        }
-
+       
         // Image slider
         const sliderImages = document.querySelectorAll('.image-slider img');
         let currentImageIndex = 0;
@@ -520,58 +439,103 @@
 
         setInterval(changeSliderImage, 3000);
 
-        function submitSurvey() {
-    const interests = Array.from(document.querySelectorAll('input[name="interest"]:checked')).map(el => el.value);
-    const skillLevel = document.querySelector('input[name="skillLevel"]:checked')?.value;
-    const format = document.querySelector('input[name="format"]:checked')?.value;
+         // دالة إرسال الاستبيان
+         async function submitSurvey(event) {
+    event.preventDefault();
+    
+    // جمع البيانات بشكل صحيح
+    const formData = {
+        interests: Array.from(document.querySelectorAll('input[name="interests[]"]:checked')).map(el => el.value),
+        skillLevel: document.querySelector('input[name="skillLevel"]:checked')?.value,
+        format: document.querySelector('input[name="format"]:checked')?.value
+    };
+    console.log("Data being sent:", formData); // للتأكد من البيانات المرسلة
 
-    if (!interests.length || !skillLevel || !format) {
-        alert(currentLanguage === 'en' ? "Please fill out all fields!" : "الرجاء تعبئة جميع الحقول!");
+    if (!formData.interests || formData.interests.length === 0) {
+        alert("Please select at least one interest");
+        return;
+    }
+    if (!formData.skillLevel) {
+        alert("Please select your skill level");
+        return;
+    }
+    if (!formData.format) {
+        alert("Please select preferred format");
         return;
     }
 
-    // Show results section and hide form
+    try {
+        const response = await fetch('Survey.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+        console.log("Server response:", result); // للتdebug
+        
+        if (result.error) {
+            alert(result.error);
+            return;
+        }
+
+        displayResults(result);
+    } catch (error) {
+        console.error('Error:', error);
+        alert("An error occurred. Please check console for details.");
+    }
+}
+
+        // دالة عرض النتائج
+        function displayResults(workshops) {
     document.getElementById("surveyForm").style.display = "none";
+    document.querySelector(".image-slider").classList.add("hidden");
     document.getElementById("resultsSection").style.display = "flex";
 
-    // Hide image slider
-    document.querySelector(".image-slider").classList.add("hidden");
-
-    // Generate recommended workshops
     const workshopsGrid = document.getElementById("workshopsGrid");
     workshopsGrid.innerHTML = "";
 
-    const workshops = [
-        { title: currentLanguage === 'en' ? "Digital Arts Workshop" : "ورشة الفنون الرقمية", image: "workshops/workshop2.jpeg", description: currentLanguage === 'en' ? "Learn the basics of digital arts." : "تعلم أساسيات الفنون الرقمية." },
-        { title: currentLanguage === 'en' ? "Interactive Theater Workshop" : "ورشة المسرح التفاعلي", image: "workshops/workshop1.jpeg", description: currentLanguage === 'en' ? "Improve your theatrical skills." : "تحسين مهاراتك المسرحية." }
-    ];
+    if (!workshops || workshops.length === 0) {
+        workshopsGrid.innerHTML = "<p>No matching workshops found. Please try different selections.</p>";
+        return;
+    }
 
     workshops.forEach(workshop => {
         const card = document.createElement("div");
-        card.classList.add("workshop-card");
+        card.className = "workshop-card";
         card.innerHTML = `
-            <img src="${workshop.image}" alt="${workshop.title}">
-            <h4>${workshop.title}</h4>
-            <p>${workshop.description}</p>
-            <button>${currentLanguage === 'en' ? "Book Now" : "احجز الآن"}</button>
+            <img src="${workshop.ImageURL}" alt="${workshop.Title}" style="width:100%; height:200px; object-fit:cover; border-radius:8px;">
+            <h3>${workshop.Title}</h3>
+            <p><strong>Category:</strong> ${workshop.Category}</p>
+            <p><strong>Location:</strong> ${workshop.Location}</p>
+            <p><strong>Duration:</strong> ${workshop.Duration}</p>
+            <p><strong>Price:</strong> SAR ${workshop.Price}</p>
+            <p>${workshop.ShortDes || workshop.description}</p>
+            <button class="book-btn" onclick="bookWorkshop(${workshop.WorkshopID})">Book Now</button>
         `;
         workshopsGrid.appendChild(card);
     });
 }
 
-function retakeSurvey() {
-    document.getElementById("surveyForm").style.display = "block";
-    document.getElementById("resultsSection").style.display = "none";
-
-    // Show image slider again
-    document.querySelector(".image-slider").classList.remove("hidden");
-}
-
-        // Hamburger menu toggle
-        function toggleMenu() {
-            const menu = document.querySelector('.menu');
-            menu.classList.toggle('active');
+        // دالة إعادة الاستبيان
+        function retakeSurvey() {
+            document.getElementById("surveyForm").style.display = "block";
+            document.getElementById("resultsSection").style.display = "none";
+            document.querySelector(".image-slider").classList.remove("hidden");
+            document.getElementById("surveyForm").reset();
         }
+
+        // دالة الحجز (يمكن تطويرها لاحقاً)
+        function bookWorkshop(workshopId) {
+            alert(`Booking workshop with ID: ${workshopId}`);
+            // يمكن إضافة منطق الحجز هنا
+        }
+
+        // ربط دالة الإرسال بالنموذج
+        document.getElementById("surveyForm").addEventListener("submit", submitSurvey);
+
     </script>
 </body>
 </html>
