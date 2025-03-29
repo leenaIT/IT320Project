@@ -80,7 +80,7 @@ $result = $stmt->get_result();
 // تحديد صورة الهيدر والنص حسب الفئة
 $headerImage = 'workshops/stained-brushes-inside-pocket.jpg';
 $headerTitle = 'DISCOVER THE';
-$headerCategory = 'art';
+$headerCategory = 'Art';
 $headerQuote = '“Express your personality through artful experiences.”';
 
 if ($filterCategory === 'Adventure') {
