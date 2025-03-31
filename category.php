@@ -85,13 +85,15 @@ $headerQuote = '“Express your personality through artful experiences.”';
 
 if ($filterCategory === 'Adventure') {
     $headerImage = 'workshops/adventurepage.jpg';
-    $headerTitle = 'EXPLORE THE';
+    $headerTitle = 'LIVE THE';
     $headerCategory = 'Adventure';
     $headerQuote = '“Step beyond the ordinary and discover who you are through bold, adventurous moments.”';
 } elseif ($filterCategory === 'Cooking') {
     $headerImage = 'workshops/cookingpage.jpg';
-    $headerTitle = 'TRY THE';
-    $headerCategory = 'Recipe';
+   $headerTitle = 'EXPLORE THE';
+$headerCategory = 'Flavor';
+
+
     $headerQuote = '“Enjoy cooking experiences and improve your skills with every new recipe.”';
 }
 ?>
