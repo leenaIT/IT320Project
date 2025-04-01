@@ -28,3 +28,161 @@
     [skillLevel] => Beginner
     [format] => Online
 )
+{"interests":["Programming and Technology"],"skillLevel":"Beginner","format":"In-person"}Array
+(
+    [interests] => Array
+        (
+            [0] => Programming and Technology
+        )
+
+    [skillLevel] => Beginner
+    [format] => In-person
+)
+{"interests":["Art"],"skillLevel":"Beginner","format":"in-person"}Array
+(
+    [interests] => Array
+        (
+            [0] => Art
+        )
+
+    [skillLevel] => Beginner
+    [format] => in-person
+)
+{"interests":["Art"],"skillLevel":"Advanced","format":"in-person"}Array
+(
+    [interests] => Array
+        (
+            [0] => Art
+        )
+
+    [skillLevel] => Advanced
+    [format] => in-person
+)
+{"interests":["Art","Adventure"],"skillLevel":"Beginner","format":"in-person"}Array
+(
+    [interests] => Array
+        (
+            [0] => Art
+            [1] => Adventure
+        )
+
+    [skillLevel] => Beginner
+    [format] => in-person
+)
+{"interests":["Art","Adventure"],"skillLevel":"Beginner","format":"in-person"}Array
+(
+    [interests] => Array
+        (
+            [0] => Art
+            [1] => Adventure
+        )
+
+    [skillLevel] => Beginner
+    [format] => in-person
+)
+{"interests":["Art","Adventure"],"skillLevel":"Beginner","format":"in-person"}Array
+(
+    [interests] => Array
+        (
+            [0] => Art
+            [1] => Adventure
+        )
+
+    [skillLevel] => Beginner
+    [format] => in-person
+)
+{"interests":["Art","Adventure"],"skillLevel":"Beginner","format":"in-person"}Array
+(
+    [interests] => Array
+        (
+            [0] => Art
+            [1] => Adventure
+        )
+
+    [skillLevel] => Beginner
+    [format] => in-person
+)
+{"interests":["Art","Adventure","Cooking"],"skillLevel":"Intermediate","format":"in-person"}Array
+(
+    [interests] => Array
+        (
+            [0] => Art
+            [1] => Adventure
+            [2] => Cooking
+        )
+
+    [skillLevel] => Intermediate
+    [format] => in-person
+)
+{"interests":["Art","Adventure","Cooking"],"skillLevel":"Intermediate","format":"Both"}Array
+(
+    [interests] => Array
+        (
+            [0] => Art
+            [1] => Adventure
+            [2] => Cooking
+        )
+
+    [skillLevel] => Intermediate
+    [format] => Both
+)
+{"interests":["Art"],"skillLevel":"Intermediate","format":"Both"}Array
+(
+    [interests] => Array
+        (
+            [0] => Art
+        )
+
+    [skillLevel] => Intermediate
+    [format] => Both
+)
+{"interests":["Art"],"skillLevel":"Advanced","format":"Both"}Array
+(
+    [interests] => Array
+        (
+            [0] => Art
+        )
+
+    [skillLevel] => Advanced
+    [format] => Both
+)
+{"interests":["Art"],"skillLevel":"Advanced","format":"Both"}Array
+(
+    [interests] => Array
+        (
+            [0] => Art
+        )
+
+    [skillLevel] => Advanced
+    [format] => Both
+)
+{"interests":["Art"],"skillLevel":"Advanced","format":"Both"}Array
+(
+    [interests] => Array
+        (
+            [0] => Art
+        )
+
+    [skillLevel] => Advanced
+    [format] => Both
+)
+{"interests":["Art"],"skillLevel":"Advanced","format":"Both"}Array
+(
+    [interests] => Array
+        (
+            [0] => Art
+        )
+
+    [skillLevel] => Advanced
+    [format] => Both
+)
+{"interests":["Cooking"],"skillLevel":"Advanced","format":"Both"}Array
+(
+    [interests] => Array
+        (
+            [0] => Cooking
+        )
+
+    [skillLevel] => Advanced
+    [format] => Both
+)

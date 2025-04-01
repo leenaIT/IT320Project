@@ -3,10 +3,10 @@
 $host = 'localhost';
 $dbname = 'mehar'; 
 $username = 'root';             
-$password = 'root';             
+$password = '';             
 
 // Create a new MySQLi connection (procedural)
-$connection = mysqli_connect($host, $username, $password, $dbname,8889);
+$connection = mysqli_connect($host, $username, $password, $dbname);
 
 // Check the connection
 if (!$connection) {

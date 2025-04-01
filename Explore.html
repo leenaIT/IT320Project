@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Explore Page</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
 *,
@@ -554,10 +555,10 @@ box-sizing: border-box;
   }
 }
 
-
-.like-btn.liked {
-    color: red; /* أو أي لون يعجبك */
+.like-btn.liked i {
+    color: red !important;
 }
+
 
 
 
@@ -627,11 +628,10 @@ box-sizing: border-box;
                     <button class="like-btn" onclick="toggleLike()">
                         <i class="fa fa-heart"></i> <span id="likeCount">0</span>
                     </button>
+                    
                 </div>
 
-                <p>Comments:</p>
-                <div id="comments"></div>
-                <input type="text" class="comment-box" placeholder="Write a comment..." onkeypress="addComment(event)">
+
             </div>
         </div>
     </div>
@@ -640,28 +640,35 @@ box-sizing: border-box;
 
 
 <script>
-
 function toggleLike() {
-    let postID = document.getElementById("postID").value;
-    let likeBtn = document.querySelector(".like-btn");
-    let likeCount = document.getElementById("likeCount");
+    const postID = document.getElementById("postID").value;
+    console.log("Toggling like for post:", postID);
 
     fetch("toggle_like.php", {
         method: "POST",
-        body: new URLSearchParams({ postID: postID })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ postID: postID })
     })
-    .then(response => response.json())
+    .then(res => res.json())
     .then(data => {
+        console.log("Like response:", data);
+        const likeBtn = document.querySelector(".like-btn");
+        const likeIcon = likeBtn.querySelector("i");
+        
+        // تحديث حالة الزر
         if (data.status === "liked") {
-            likeBtn.classList.add("liked");
-        } else if (data.status === "unliked") {
-            likeBtn.classList.remove("liked");
+            likeIcon.style.color = "red";
+        } else {
+            likeIcon.style.color = "#ccc";
         }
-        likeCount.innerText = data.likeCount;
+        
+        // تحديث العداد
+        document.getElementById("likeCount").textContent = data.likeCount;
+    })
+    .catch(error => {
+        console.error("Error toggling like:", error);
     });
 }
-
-
 
 // بعدين نستخدم هذا الكود عشان نعرض البوستات من PHP
 // fetch('fetch_posts.php').then(response => response.json()).then(data => {
@@ -673,22 +680,68 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(res => res.json())
         .then(data => {
             const postsContainer = document.getElementById("posts");
-
+            
             data.forEach(post => {
                 const postCard = document.createElement("div");
                 postCard.className = "post-card";
-                postCard.setAttribute("onclick", `openPost('uploads/${post.image}', '${post.title}', '${post.postID}')`);
-
+                
+                // استخدم دالة openPost الصحيحة
+                postCard.onclick = () => openPost(
+                    'uploads/' + post.images, 
+                    post.comment, 
+                    post.PostID
+                );
+                
                 postCard.innerHTML = `
-                    <img src="uploads/${post.image}" alt="Workshop Image">
-                    <h3>${post.title}</h3>
-                    <p>Shared by ${post.Firstname} ${post.LastName}</p>
+                    <img src="uploads/${post.images}" alt="Workshop Image">
+                    <h3>${post.comment}</h3>
+                    <p>Shared by ${post.FirstName} ${post.LastName}</p>
                 `;
-
+                
                 postsContainer.appendChild(postCard);
             });
+        })
+        .catch(error => {
+            console.error("Error loading posts:", error);
         });
 });
+
+ 
+
+
+if (data.status === "liked") {
+    likeBtn.classList.add("liked");
+} else if (data.status === "unliked") {
+    likeBtn.classList.remove("liked");
+}
+
+
+function openPost(image, comment, postID) {
+    document.getElementById("expandedImage").src = image;
+    document.getElementById("expandedTitle").innerText = comment;
+    document.getElementById("postID").value = postID;
+
+    // جلب حالة الإعجاب والعدد
+    fetch(`get_likes.php?postID=${postID}`)
+        .then(res => res.json())
+        .then(data => {
+            const likeBtn = document.querySelector(".like-btn");
+            const likeIcon = likeBtn.querySelector("i");
+            
+            document.getElementById("likeCount").textContent = data.likeCount;
+            
+            if (data.liked) {
+                likeIcon.style.color = "red";
+            } else {
+                likeIcon.style.color = "#ccc";
+            }
+        });
+
+    document.getElementById("overlay").style.display = "flex";
+}
+
+
+
 </script>
 
 </body>

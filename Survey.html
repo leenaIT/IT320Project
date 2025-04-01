@@ -325,89 +325,127 @@
         </ul>
     </div>
 
-
-   
     <div class="container">
         <form id="surveyForm">
-        <div class="survey-form">
-            <h1 id="main-title">Discover the Best Workshops for You!</h1>
-            <p class="intro" id="intro-text">Fill out this short survey to receive personalized workshop recommendations based on your interests and skill level.</p>
-            
-            <div class="question">
-                <h3 id="interest-question">What types of workshops interest you? (You can choose more than one)</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="checkbox" name="interests[]" value="Arts and Design">
-                        🎨 <span id="arts-design">Arts and Design</span>
-                    </label>
-                    <label class="option">
-                        <input type="checkbox" name="interests[]" value="Programming and Technology">
-                        💻 <span id="programming-tech">Programming and Technology</span>
-                    </label>
-                    <label class="option">
-                        <input type="checkbox" name="interests[]" value="Theater and Performance">
-                        🎭 <span id="theater-performance">Theater and Performance</span>
-                    </label>
-                    <label class="option">
-                        <input type="checkbox" name="interests[]" value="Sports and Fitness">
-                        🏋️ <span id="sports-fitness">Sports and Fitness</span>
-                    </label>
-                    <label class="option">
-                        <input type="checkbox" name="interests[]" value="Health and Wellness">
-                        🧘 <span id="health-wellness">Health and Wellness</span>
-                    </label>
+            <div class="survey-form">
+                <h1 id="main-title">اكتشف أفضل الورش المناسبة لك!</h1>
+                <p class="intro" id="intro-text">أجب على هذا الاستبيان القصير للحصول على توصيات مخصصة بناءً على اهتماماتك ومهاراتك.</p>
+                
+                <!-- السؤال 1: نوع الورش المفضلة -->
+                <div class="question">
+                    <h3>ما نوع الورش التي تفضلها؟ (يمكن اختيار أكثر من واحد)</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="checkbox" name="categories[]" value="Art" checked>
+                            🎨 فنون وحرف يدوية
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" name="categories[]" value="Cooking">
+                            👩‍🍳 ورش طبخ
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" name="categories[]" value="Adventure">
+                            ⛰️ مغامرات وأنشطة خارجية
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- السؤال 2: مستوى الخبرة -->
+                <div class="question">
+                    <h3>مستوى خبرتك:</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="skillLevel" value="Beginner" checked>
+                            🔹 مبتدئ
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="skillLevel" value="Intermediate">
+                            🔸 متوسط
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="skillLevel" value="Advanced">
+                            🔺 متقدم
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- السؤال 3: مكان التنفيذ -->
+                <div class="question">
+                    <h3>تفضيلات المكان:</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="locationType" value="in-person" checked>
+                            🏫 حضور شخصي
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="locationType" value="Online">
+                            🏠 أونلاين
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="locationType" value="Both">
+                            🔄 كلا النوعين
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- السؤال 4: الموقع الجغرافي -->
+                <div class="question">
+                    <h3>الموقع الجغرافي المفضل:</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="checkbox" name="locations[]" value="Riyadh">
+                            الرياض
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" name="locations[]" value="Jeddah">
+                            جدة
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" name="locations[]" value="Dammam">
+                            الدمام
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" name="locations[]" value="Taif">
+                            الطائف
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- السؤال 5: الميزانية -->
+                <div class="question">
+                    <h3>الميزانية المتوقعة:</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="budget" value="0-150">
+                            💵 حتى 150 ريال
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="budget" value="150-250" checked>
+                            💰 150 - 250 ريال
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="budget" value="250+">
+                            💎 أكثر من 250 ريال
+                        </label>
+                    </div>
                 </div>
             </div>
-            
-            <div class="question">
-                <h3 id="skill-level-question">Choose your skill level:</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="skillLevel" value="Beginner">
-                        🔹 <span id="beginner">Beginner</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="skillLevel" value="Intermediate">
-                        🔸 <span id="intermediate">Intermediate</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="skillLevel" value="Advanced">
-                        🔺 <span id="advanced">Advanced</span>
-                    </label>
-                </div>
-            </div>
-            
-            <div class="question">
-                <h3 id="format-question">Preferred workshop format:</h3>
-                <div class="options">
-                    <label class="option">
-                        <input type="radio" name="format" value="Online">
-                        🏠 <span id="online">Online</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="format" value="In-person">
-                        🏫 <span id="in-person">In-person</span>
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="format" value="Both">
-                        🔄 <span id="both">Both</span>
-                    </label>
-                </div>
-            </div>
-            
-           
+    
+
+    
+            <div id="errorContainer" class="error-message" style="display:none;"></div>
+            <button type="submit" class="submit-btn" id="submit-btn">Get Recommendations</button>
+        </form>
+ 
+
+        <div class="results" id="resultsSection" style="display:none;">
+            <h2>Recommended Workshops</h2>
+            <div class="workshops-grid" id="workshopsGrid"></div>
+            <button class="retake-btn" onclick="retakeSurvey()">Retake Survey</button>
         </div>
 
-        <button type="submit" class="submit-btn" id="submit-btn">Get Recommendations</button>
-    </form>
 
-    <div class="results" id="resultsSection">
-        <h2>Recommended Workshops</h2>
-        <div class="workshops-grid" id="workshopsGrid"></div>
-        <button class="retake-btn" onclick="retakeSurvey()">Retake Survey</button>
-    </div>
-    </div>
-        
+            
         <div class="image-slider">
             <img class="active" src="workshops/workshop1.jpeg" alt="Workshop 1">
             <img src="workshops/workshop2.jpeg" alt="Workshop 2">
@@ -423,44 +461,52 @@
         </div>
     </div>
 
-  
-
+</div>
+    
     <script>
-       
         // Image slider
         const sliderImages = document.querySelectorAll('.image-slider img');
         let currentImageIndex = 0;
-
+    
         function changeSliderImage() {
             sliderImages[currentImageIndex].classList.remove('active');
             currentImageIndex = (currentImageIndex + 1) % sliderImages.length;
             sliderImages[currentImageIndex].classList.add('active');
         }
-
+    
         setInterval(changeSliderImage, 3000);
-
-         // دالة إرسال الاستبيان
-         async function submitSurvey(event) {
+    
+        // دالة عرض الأخطاء
+        function showError(message) {
+            const errorContainer = document.getElementById("errorContainer");
+            errorContainer.textContent = message;
+            errorContainer.style.display = 'block';
+            setTimeout(() => {
+                errorContainer.style.display = 'none';
+            }, 5000);
+        }
+    
+        // دالة إرسال الاستبيان
+async function submitSurvey(event) {
     event.preventDefault();
     
-    // جمع البيانات بشكل صحيح
     const formData = {
-        interests: Array.from(document.querySelectorAll('input[name="interests[]"]:checked')).map(el => el.value),
-        skillLevel: document.querySelector('input[name="skillLevel"]:checked')?.value,
-        format: document.querySelector('input[name="format"]:checked')?.value
+        categories: Array.from(document.querySelectorAll('input[name="categories[]"]:checked')).map(el => el.value),
+        skillLevel: document.querySelector('input[name="skillLevel"]:checked').value,
+        locationType: document.querySelector('input[name="locationType"]:checked').value,
+        locations: Array.from(document.querySelectorAll('input[name="locations[]"]:checked')).map(el => el.value),
+        budget: document.querySelector('input[name="budget"]:checked').value
     };
-    console.log("Data being sent:", formData); // للتأكد من البيانات المرسلة
 
-    if (!formData.interests || formData.interests.length === 0) {
-        alert("Please select at least one interest");
+    console.log("Form Data:", formData);
+
+    // التحقق من البيانات المطلوبة
+    if (formData.categories.length === 0) {
+        showError("الرجاء اختيار نوع الورش المفضلة");
         return;
     }
-    if (!formData.skillLevel) {
-        alert("Please select your skill level");
-        return;
-    }
-    if (!formData.format) {
-        alert("Please select preferred format");
+    if (formData.locations.length === 0) {
+        showError("الرجاء اختيار موقع جغرافي واحد على الأقل");
         return;
     }
 
@@ -473,69 +519,76 @@
             body: JSON.stringify(formData)
         });
 
-        const result = await response.json();
-        console.log("Server response:", result); // للتdebug
-        
-        if (result.error) {
-            alert(result.error);
-            return;
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        displayResults(result);
+        const result = await response.json();
+        console.log("Server response:", result);
+        
+        if (result.error) {
+            showError(result.error);
+        } else {
+            displayResults(result);
+        }
     } catch (error) {
         console.error('Error:', error);
-        alert("An error occurred. Please check console for details.");
+        showError("حدث خطأ. الرجاء المحاولة لاحقاً");
     }
 }
-
+    
         // دالة عرض النتائج
         function displayResults(workshops) {
-    document.getElementById("surveyForm").style.display = "none";
-    document.querySelector(".image-slider").classList.add("hidden");
-    document.getElementById("resultsSection").style.display = "flex";
-
-    const workshopsGrid = document.getElementById("workshopsGrid");
-    workshopsGrid.innerHTML = "";
-
-    if (!workshops || workshops.length === 0) {
-        workshopsGrid.innerHTML = "<p>No matching workshops found. Please try different selections.</p>";
-        return;
-    }
-
-    workshops.forEach(workshop => {
-        const card = document.createElement("div");
-        card.className = "workshop-card";
-        card.innerHTML = `
-            <img src="${workshop.ImageURL}" alt="${workshop.Title}" style="width:100%; height:200px; object-fit:cover; border-radius:8px;">
-            <h3>${workshop.Title}</h3>
-            <p><strong>Category:</strong> ${workshop.Category}</p>
-            <p><strong>Location:</strong> ${workshop.Location}</p>
-            <p><strong>Duration:</strong> ${workshop.Duration}</p>
-            <p><strong>Price:</strong> SAR ${workshop.Price}</p>
-            <p>${workshop.ShortDes || workshop.description}</p>
-            <button class="book-btn" onclick="bookWorkshop(${workshop.WorkshopID})">Book Now</button>
-        `;
-        workshopsGrid.appendChild(card);
-    });
-}
-
+            document.getElementById("surveyForm").style.display = "none";
+            document.querySelector(".image-slider").classList.add("hidden");
+            document.getElementById("resultsSection").style.display = "flex";
+    
+            const workshopsGrid = document.getElementById("workshopsGrid");
+            workshopsGrid.innerHTML = "";
+    
+            if (!workshops || workshops.length === 0) {
+                workshopsGrid.innerHTML = "<p>No matching workshops found. Please try different selections.</p>";
+                return;
+            }
+    
+            workshops.forEach(workshop => {
+                const card = document.createElement("div");
+                card.className = "workshop-card";
+                card.innerHTML = `
+                    <img src="${workshop.ImageURL}" alt="${workshop.Title}" style="width:100%; height:200px; object-fit:cover; border-radius:8px;">
+                    <h3>${workshop.Title}</h3>
+                    <p><strong>Category:</strong> ${workshop.Category}</p>
+                    <p><strong>Location:</strong> ${workshop.Location}</p>
+                    <p><strong>Price:</strong> SAR ${workshop.Price}</p>
+                    <p>${workshop.ShortDes || workshop.description || ''}</p>
+                    <button class="book-btn" onclick="bookWorkshop(${workshop.WorkshopID})">Book Now</button>
+                `;
+                workshopsGrid.appendChild(card);
+            });
+        }
+    
         // دالة إعادة الاستبيان
         function retakeSurvey() {
             document.getElementById("surveyForm").style.display = "block";
             document.getElementById("resultsSection").style.display = "none";
             document.querySelector(".image-slider").classList.remove("hidden");
-            document.getElementById("surveyForm").reset();
         }
-
-        // دالة الحجز (يمكن تطويرها لاحقاً)
+    
+        // دالة الحجز
         function bookWorkshop(workshopId) {
             alert(`Booking workshop with ID: ${workshopId}`);
             // يمكن إضافة منطق الحجز هنا
         }
-
-        // ربط دالة الإرسال بالنموذج
-        document.getElementById("surveyForm").addEventListener("submit", submitSurvey);
-
+    
+        // ربط دالة الإرسال بالنموذج عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById("surveyForm");
+    if (form) {
+        form.addEventListener("submit", submitSurvey);
+    } else {
+        console.error("Form not found!");
+    }
+});
     </script>
 </body>
 </html>

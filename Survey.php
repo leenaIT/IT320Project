@@ -1,89 +1,83 @@
 <?php
 header('Content-Type: application/json');
 
-// تسجيل البيانات الواردة للتحقق منها
-file_put_contents('debug_log.txt', print_r(file_get_contents('php://input'), true), FILE_APPEND);
-
 require_once __DIR__ . '/database.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-// تسجيل البيانات بعد التحويل
-file_put_contents('debug_log.txt', print_r($data, true), FILE_APPEND);
-
-if (!$data || empty($data['interests']) || empty($data['skillLevel']) || empty($data['format'])) {
-    $missing = [];
-    if (empty($data['interests'])) $missing[] = 'interests';
-    if (empty($data['skillLevel'])) $missing[] = 'skillLevel';
-    if (empty($data['format'])) $missing[] = 'format';
-    
-    error_log("Missing fields: " . implode(', ', $missing));
-    echo json_encode(['error' => 'Missing required fields: ' . implode(', ', $missing)]);
+if (!$data) {
+    echo json_encode(['error' => 'Invalid JSON data']);
     exit;
 }
 
+// التحقق من الحقول المطلوبة
+$required = ['categories', 'skillLevel', 'locationType', 'locations', 'budget'];
+$missing = array_diff($required, array_keys($data));
 
-// تنقية المدخلات
-$interests = array_map(function($item) use ($connection) {
-    return mysqli_real_escape_string($connection, $item);
-}, $interests);
+if (!empty($missing)) {
+    echo json_encode(['error' => 'Missing fields: ' . implode(', ', $missing)]);
+    exit;
+}
 
-$skillLevel = mysqli_real_escape_string($connection, $skillLevel);
-$format = mysqli_real_escape_string($connection, $format);
+// بناء الاستعلام
+$query = "SELECT * FROM workshop WHERE 1=1";
 
-// تحويل التنسيق إلى ما هو موجود في قاعدة البيانات
-$formatMap = [
-    'Online' => 'Online',
-    'In-person' => 'in-person',
-    'Both' => 'Both'
-];
-$dbFormat = $formatMap[$format] ?? $format;
+// فلترة حسب التصنيف
+if (!empty($data['categories'])) {
+    $categories = array_map(function($cat) use ($connection) {
+        return mysqli_real_escape_string($connection, $cat);
+    }, $data['categories']);
+    $query .= " AND Category IN ('" . implode("','", $categories) . "')";
+}
 
-// تحويل الاهتمامات إلى ما هو موجود في قاعدة البيانات
-$categoryMap = [
-    'Arts and Design' => 'Art',
-    'Programming and Technology' => 'Technology',
-    'Sports and Fitness' => 'Adventure',
-    'Health and Wellness' => 'Wellness'
-];
+// فلترة حسب نوع المكان
+if (!empty($data['locationType'])) {
+    $locationType = mysqli_real_escape_string($connection, $data['locationType']);
+    $query .= " AND Type = '$locationType'";
+}
 
-$dbInterests = [];
-foreach ($interests as $interest) {
-    if (isset($categoryMap[$interest])) {
-        $dbInterests[] = $categoryMap[$interest];
-    } else {
-        $dbInterests[] = $interest;
+// فلترة حسب الموقع الجغرافي
+if (!empty($data['locations'])) {
+    $locations = array_map(function($loc) use ($connection) {
+        return mysqli_real_escape_string($connection, $loc);
+    }, $data['locations']);
+    $query .= " AND Location IN ('" . implode("','", $locations) . "')";
+}
+
+// فلترة حسب الميزانية
+if (!empty($data['budget'])) {
+    switch ($data['budget']) {
+        case '0-150':
+            $query .= " AND Price <= 150";
+            break;
+        case '150-250':
+            $query .= " AND Price > 150 AND Price <= 250";
+            break;
+        case '250+':
+            $query .= " AND Price > 250";
+            break;
     }
 }
 
-$interestsList = "'" . implode("','", $dbInterests) . "'";
-
-// بناء الاستعلام مع الأعمدة الصحيحة
-$query = "SELECT 
-            WorkshopID,
-            Title,
-            ShortDes AS description,
-            Category,
-            Location,
-            Duration,
-            Price,
-            ImageURL,
-            Type AS format
-          FROM workshop 
-          WHERE Category IN ($interestsList)
-          AND Type = '$dbFormat'";
-
-// إضافة فلترة مستوى المهارة إذا كانت موجودة في قاعدة البيانات
-if (!empty($skillLevel)) {
-    $query .= " AND (Age <= 0 OR Age >= 15)"; // مثال على فلترة العمر حسب مستوى المهارة
+// فلترة حسب مستوى الخبرة (العمر)
+switch ($data['skillLevel']) {
+    case 'Beginner':
+        $query .= " AND (Age <= 15 OR Age = 0)";
+        break;
+    case 'Intermediate':
+        $query .= " AND (Age > 15 AND Age < 18 OR Age = 0)";
+        break;
+    case 'Advanced':
+        $query .= " AND (Age >= 18 OR Age = 0)";
+        break;
 }
 
-$query .= " ORDER BY Price ASC LIMIT 9";
+$query .= " ORDER BY Price ASC LIMIT 12";
 
 $result = mysqli_query($connection, $query);
 
 if (!$result) {
-    echo json_encode(['error' => 'خطأ في استعلام قاعدة البيانات: ' . mysqli_error($connection)]);
+    echo json_encode(['error' => 'Database error: ' . mysqli_error($connection)]);
     exit;
 }
 
@@ -92,17 +86,24 @@ while ($row = mysqli_fetch_assoc($result)) {
     $workshops[] = [
         'WorkshopID' => $row['WorkshopID'],
         'Title' => $row['Title'],
-        'ShortDes' => $row['description'],
+        'ShortDes' => $row['ShortDes'],
         'Category' => $row['Category'],
         'Location' => $row['Location'],
+        'Type' => $row['Type'],
         'Duration' => $row['Duration'],
         'Price' => $row['Price'],
-        'ImageURL' => $row['ImageURL'],
-        'Type' => $row['format']
+        'ImageURL' => $row['ImageURL']
     ];
 }
 
-echo json_encode($workshops);
+
+
+// إذا لم توجد ورش، نرسل رسالة مناسبة
+if (empty($workshops)) {
+    echo json_encode(['message' => 'No workshops found matching your criteria. Please try different selections.']);
+} else {
+    echo json_encode($workshops);
+}
 
 mysqli_close($connection);
 ?>
