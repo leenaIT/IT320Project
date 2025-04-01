@@ -797,6 +797,12 @@ function toggleFilterBox() {
         filterBox.style.display = 'none';
     }
 }
+
+        function toggleMenu(button) {
+            button.classList.toggle('active');
+            document.querySelector('.mobile-nav-container').classList.toggle('show');
+            document.body.style.overflow = button.classList.contains('active') ? 'hidden' : '';
+        }
     </script>
 </body>
 </html>

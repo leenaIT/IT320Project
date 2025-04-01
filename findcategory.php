@@ -20,145 +20,153 @@
             line-height: 1.6;
         }
 
-   footer {
-            margin-top: 2em;
-            padding: 1em 2em;
-            background-color: #fffefc;
-            border-top: 2px solid #f9b013ec;
-            color: #333;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            align-items: flex-start;
-        }
+     /* ====== الفوتر ====== */
+footer {
+    margin-top: 2em;
+    padding: 1em 2em;
+    background-color: #fffefc;
+    border-top: 2px solid #f9b013ec;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
 
-        .footer-left-1,
-        .footer-center-1,
-        .footer-right-1 {
-            flex: 1;
-            min-width: 250px;
-            padding: 0.5em;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+.footer-left-1,
+.footer-center-1,
+.footer-right-1 {
+    flex: 1;
+    min-width: 250px;
+    padding: 0.5em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        .footer-center-1 {
-            justify-content: center;
-        }
+/* وسط الفوتر */
+.footer-center-1 {
+    justify-content: center;
+}
 
-        .footer-logo-1 {
-            width: 100px;
-        }
+.footer-logo-1 {
+    width: 100px;
+}
 
-        .contact-info-1 {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-evenly;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: nowrap;
-            margin-top: 10px;
-            width: 100%; 
-        }
+/* ✅ كل أيقونة + النص جنب بعض، والكل في نفس السطر */
+.contact-info-1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+    margin-top: 10px;
+    width: 100%; 
+}
 
-        .contact-item-1 {
-            display: flex;
-            align-items: center; 
-            gap: 8px; 
-            white-space: nowrap; 
-        }
 
-        .single-line-1 {
-            white-space: nowrap;
-        }
 
-        .social-icons-1 {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 10px;
-        }
+.contact-item-1 {
+    display: flex;
+    align-items: center; 
+    gap: 8px; 
+    white-space: nowrap;
+}
 
-        .footer-bottom-1 {
-            width: 100%;
-            text-align: center;
-            margin-top: 0.5em;
-        }
 
-        .footer-bottom-1 p {
-            padding: 0.5em;
-            background-color: #ffffff;
-            font-size: 0.75em;
-            color: #f9b013ec;
-            border-top: 1px solid #ccc;
-        }
+.single-line-1 {
+    white-space: nowrap;
+}
 
-        .icon-phone {
-            display: inline-block !important;  
-            width: 30px !important;
-            height: 30px !important;
-        }
+.social-icons-1 {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
 
-        .icon-phone {
-            position: relative !important;
-            left: 0 !important;
-            right: auto !important;
-        }
+.footer-bottom-1 {
+    width: 100%;
+    text-align: center;
+    margin-top: 0.5em;
+}
 
-        .icon-email {
-            width: 42px !important;
-            height: 42px !important;
-        }
+.footer-bottom-1 p {
+    padding: 0.5em;
+    background-color: #ffffff;
+    font-size: 0.75em;
+    color: #f9b013ec;
+    border-top: 1px solid #ccc;
+}
 
-        .icon-location {
-            width: 42px !important;
-            height: 42px !important;
-            margin-top: 6px !important;
-        }
+.icon-phone {
+    display: inline-block !important; 
+    width: 30px !important;
+    height: 30px !important;
+}
 
-        .icon-facebook {
-            width: 35px !important;
-            height: 35px !important;
-            margin-top: 6px !important;
-        }
+.icon-phone {
+    position: relative !important;
+    left: 0 !important;
+    right: auto !important;
+}
 
-        .icon-twitter {
-            width: 35px !important;
-            height: 35px !important;
-            margin-top: 6px !important;
-        }
+.icon-email {
+    width: 42px !important;
+    height: 42px !important;
+    
+}
 
-        .icon-instagram {
-            width: 35px !important;
-            height: 35px !important;
-            margin-top: 6px !important;
-        }
+.icon-location {
+    width: 42px !important;
+    height: 42px !important;
+    margin-top: 6px !important;
+}
 
-        /* Responsive للجوال */
-        @media (max-width: 768px) {
-            .footer-left-1,
-            .footer-center-1,
-            .footer-right-1 {
-                flex: 100%;
-                margin-bottom: 1em;
-            }
+.icon-facebook {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
 
-            .contact-info-1 {
-                flex-direction: column;
-                gap: 15px;
-            }
+.icon-twitter {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
 
-            .icon-phone,
-            .icon-email,
-            .icon-location,
-            .icon-facebook,
-            .icon-twitter,
-            .icon-instagram {
-                transform: scale(0.9);
-            }
-        }
+.icon-instagram {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+/* ✅ Responsive للجوال */
+@media (max-width: 768px) {
+    .footer-left-1,
+    .footer-center-1,
+    .footer-right-1 {
+        flex: 100%;
+        margin-bottom: 1em;
+    }
+
+    .contact-info-1 {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .icon-phone,
+    .icon-email,
+    .icon-location,
+    .icon-facebook,
+    .icon-twitter,
+    .icon-instagram {
+        transform: scale(0.9);
+    }
+}
+    
 
         /* Main Content Styles */
         .main-content {
@@ -177,7 +185,8 @@
 
         .header-text {
             text-align: left;
-            max-width: 50%;
+            max-width: 70%;
+            margin-top: 30px;
         }
 
         .header-text h1 {
@@ -197,6 +206,7 @@
             font-size: 1.1rem;
             color: #555;
             max-width: 80%;
+
         }
 
         /* Category Section */
@@ -512,44 +522,44 @@
         </section>
     </div>
 
-    <footer>
-        <div class="footer-left-1">
-            <h4>Get In Touch</h4>
-            <div class="contact-info-1" id="contact-us">
-                <div class="contact-item-1">
-                    <img src="workshops/phone.png" alt="Phone Icon" class="icon-phone">
-                    <span class="single-line-1">+996 58765 43210</span>
-                </div>
-                <div class="contact-item-1">
-                    <img src="workshops/mail.png" alt="Email Icon" class="icon-email">
-                    <span class="single-line-1">mehar@gmail.com</span>
-                </div>
-                <div class="contact-item-1">
-                    <img src="workshops/location.png" alt="Location Icon" class="icon-location">
-                    <span class="single-line-1">Saudi Arabia</span>
-                </div>
+<footer>
+    <div class="footer-left-1">
+        <h4>Get In Touch</h4>
+        <div class="contact-info-1" id="contact-us">
+            <div class="contact-item-1">
+                <img src="workshops/phone.png" alt="Phone Icon" class="icon-phone">
+                <span class="single-line-1">+996 58765 43210</span>
+            </div>
+            <div class="contact-item-1">
+                <img src="workshops/mail.png" alt="Email Icon" class="icon-email">
+                <span class="single-line-1">mehar@gmail.com</span>
+            </div>
+            <div class="contact-item-1">
+                <img src="workshops/location.png" alt="Location Icon" class="icon-location">
+                <span class="single-line-1">Saudi Arabia</span>
             </div>
         </div>
-        
-        <div class="footer-center-1">
-            <a href="index.html">
-                <img src="workshops/logo.png" alt="Logo" class="footer-logo-1 logo-toggle">
-            </a>
+    </div>
+    
+    <div class="footer-center-1">
+        <a href="index.html">
+            <img src="workshops/logo.png" alt="Logo" class="footer-logo-1 logo-toggle">
+        </a>
+    </div>
+    
+    <div class="footer-right-1" id="contact">
+        <h4>Social media</h4>
+        <div class="social-icons-1">
+            <img src="workshops/Facebook_icon_(black).svg" alt="Facebook" class="icon-facebook">
+            <img src="workshops/X1.png" alt="Twitter" class="icon-twitter">
+            <img src="workshops/CIS-A2K_Instagram_Icon_(Black).svg" alt="Instagram" class="icon-instagram">
         </div>
-        
-        <div class="footer-right-1" id="contact">
-            <h4>Social media</h4>
-            <div class="social-icons-1">
-                <img src="workshops/Facebook_icon_(black).svg" alt="Facebook" class="icon-facebook">
-                <img src="workshops/X1.png" alt="Twitter" class="icon-twitter">
-                <img src="workshops/CIS-A2K_Instagram_Icon_(Black).svg" alt="Instagram" class="icon-instagram">
-            </div>
-        </div>
-        
-        <div class="footer-bottom-1">
-            <p>© 2024 Website. All rights reserved.</p>
-        </div>
-    </footer>
+    </div>
+    
+    <div class="footer-bottom-1">
+        <p>© 2024 Website. All rights reserved.</p>
+    </div>
+</footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
