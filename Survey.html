@@ -328,114 +328,95 @@
     <div class="container">
         <form id="surveyForm">
             <div class="survey-form">
-                <h1 id="main-title">اكتشف أفضل الورش المناسبة لك!</h1>
-                <p class="intro" id="intro-text">أجب على هذا الاستبيان القصير للحصول على توصيات مخصصة بناءً على اهتماماتك ومهاراتك.</p>
+                <h1 id="main-title">Discover the Best Workshops for You!</h1>
+                <p class="intro" id="intro-text">Complete this short survey to get personalized workshop recommendations based on your interests.</p>
                 
-                <!-- السؤال 1: نوع الورش المفضلة -->
+                <!-- Question 1: Preferred Workshop Categories -->
                 <div class="question">
-                    <h3>ما نوع الورش التي تفضلها؟ (يمكن اختيار أكثر من واحد)</h3>
+                    <h3>Choose your preferred categories:</h3>
                     <div class="options">
                         <label class="option">
                             <input type="checkbox" name="categories[]" value="Art" checked>
-                            🎨 فنون وحرف يدوية
+                            🎨 Arts & Crafts
                         </label>
                         <label class="option">
                             <input type="checkbox" name="categories[]" value="Cooking">
-                            👩‍🍳 ورش طبخ
+                            👩‍🍳 Cooking Workshops
                         </label>
                         <label class="option">
                             <input type="checkbox" name="categories[]" value="Adventure">
-                            ⛰️ مغامرات وأنشطة خارجية
+                            ⛰️ Adventure Activities
                         </label>
                     </div>
                 </div>
                 
-                <!-- السؤال 2: مستوى الخبرة -->
+                <!-- Question 2: Participation Method -->
                 <div class="question">
-                    <h3>مستوى خبرتك:</h3>
+                    <h3>Preferred participation method:</h3>
                     <div class="options">
                         <label class="option">
-                            <input type="radio" name="skillLevel" value="Beginner" checked>
-                            🔹 مبتدئ
+                            <input type="radio" name="workshopType" value="in-person" checked>
+                            🏫 In-person
                         </label>
                         <label class="option">
-                            <input type="radio" name="skillLevel" value="Intermediate">
-                            🔸 متوسط
+                            <input type="radio" name="workshopType" value="Online">
+                            🏠 Online
                         </label>
                         <label class="option">
-                            <input type="radio" name="skillLevel" value="Advanced">
-                            🔺 متقدم
+                            <input type="radio" name="workshopType" value="Both">
+                            🔄 Both
                         </label>
                     </div>
                 </div>
                 
-                <!-- السؤال 3: مكان التنفيذ -->
+                <!-- Question 3: Location -->
                 <div class="question">
-                    <h3>تفضيلات المكان:</h3>
+                    <h3>Select your city:</h3>
                     <div class="options">
                         <label class="option">
-                            <input type="radio" name="locationType" value="in-person" checked>
-                            🏫 حضور شخصي
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="locationType" value="Online">
-                            🏠 أونلاين
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="locationType" value="Both">
-                            🔄 كلا النوعين
-                        </label>
-                    </div>
-                </div>
-                
-                <!-- السؤال 4: الموقع الجغرافي -->
-                <div class="question">
-                    <h3>الموقع الجغرافي المفضل:</h3>
-                    <div class="options">
-                        <label class="option">
-                            <input type="checkbox" name="locations[]" value="Riyadh">
-                            الرياض
+                            <input type="checkbox" name="locations[]" value="Riyadh" checked>
+                            Riyadh
                         </label>
                         <label class="option">
                             <input type="checkbox" name="locations[]" value="Jeddah">
-                            جدة
+                            Jeddah
                         </label>
                         <label class="option">
                             <input type="checkbox" name="locations[]" value="Dammam">
-                            الدمام
+                            Dammam
                         </label>
                         <label class="option">
                             <input type="checkbox" name="locations[]" value="Taif">
-                            الطائف
+                            Taif
                         </label>
                     </div>
                 </div>
                 
-                <!-- السؤال 5: الميزانية -->
+                <!-- Question 4: Price Range -->
                 <div class="question">
-                    <h3>الميزانية المتوقعة:</h3>
+                    <h3>Price range:</h3>
                     <div class="options">
                         <label class="option">
-                            <input type="radio" name="budget" value="0-150">
-                            💵 حتى 150 ريال
+                            <input type="radio" name="priceRange" value="0-200" checked>
+                            💵 Up to 200 SAR
                         </label>
                         <label class="option">
-                            <input type="radio" name="budget" value="150-250" checked>
-                            💰 150 - 250 ريال
+                            <input type="radio" name="priceRange" value="200-300">
+                            💰 200 - 300 SAR
                         </label>
                         <label class="option">
-                            <input type="radio" name="budget" value="250+">
-                            💎 أكثر من 250 ريال
+                            <input type="radio" name="priceRange" value="300+">
+                            💎 Above 300 SAR
                         </label>
                     </div>
                 </div>
             </div>
     
-
-    
-            <div id="errorContainer" class="error-message" style="display:none;"></div>
-            <button type="submit" class="submit-btn" id="submit-btn">Get Recommendations</button>
+            <div id="errorContainer" class="error-message"></div>
+            <button type="submit" class="submit-btn">Find Recommended Workshops</button>
         </form>
+    
+   
  
 
         <div class="results" id="resultsSection" style="display:none;">
@@ -461,7 +442,7 @@
         </div>
     </div>
 
-</div>
+
     
     <script>
         // Image slider
@@ -486,29 +467,18 @@
             }, 5000);
         }
     
+
+
         // دالة إرسال الاستبيان
-async function submitSurvey(event) {
+        async function submitSurvey(event) {
     event.preventDefault();
     
     const formData = {
         categories: Array.from(document.querySelectorAll('input[name="categories[]"]:checked')).map(el => el.value),
-        skillLevel: document.querySelector('input[name="skillLevel"]:checked').value,
-        locationType: document.querySelector('input[name="locationType"]:checked').value,
+        workshopType: document.querySelector('input[name="workshopType"]:checked').value,
         locations: Array.from(document.querySelectorAll('input[name="locations[]"]:checked')).map(el => el.value),
-        budget: document.querySelector('input[name="budget"]:checked').value
+        priceRange: document.querySelector('input[name="priceRange"]:checked').value
     };
-
-    console.log("Form Data:", formData);
-
-    // التحقق من البيانات المطلوبة
-    if (formData.categories.length === 0) {
-        showError("الرجاء اختيار نوع الورش المفضلة");
-        return;
-    }
-    if (formData.locations.length === 0) {
-        showError("الرجاء اختيار موقع جغرافي واحد على الأقل");
-        return;
-    }
 
     try {
         const response = await fetch('Survey.php', {
@@ -519,12 +489,7 @@ async function submitSurvey(event) {
             body: JSON.stringify(formData)
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
         const result = await response.json();
-        console.log("Server response:", result);
         
         if (result.error) {
             showError(result.error);
@@ -533,7 +498,7 @@ async function submitSurvey(event) {
         }
     } catch (error) {
         console.error('Error:', error);
-        showError("حدث خطأ. الرجاء المحاولة لاحقاً");
+        showError("حدث خطأ أثناء جلب البيانات");
     }
 }
     

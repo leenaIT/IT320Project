@@ -1,75 +1,61 @@
 <?php
 header('Content-Type: application/json');
-
 require_once __DIR__ . '/database.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
 
 if (!$data) {
-    echo json_encode(['error' => 'Invalid JSON data']);
+    echo json_encode(['error' => 'Invalid data format']);
     exit;
 }
 
-// التحقق من الحقول المطلوبة
-$required = ['categories', 'skillLevel', 'locationType', 'locations', 'budget'];
-$missing = array_diff($required, array_keys($data));
-
-if (!empty($missing)) {
-    echo json_encode(['error' => 'Missing fields: ' . implode(', ', $missing)]);
+// التحقق من البيانات الأساسية
+if (empty($data['categories'])) {
+    echo json_encode(['error' => 'Please select at least one category']);
     exit;
 }
 
-// بناء الاستعلام
-$query = "SELECT * FROM workshop WHERE 1=1";
-
-// فلترة حسب التصنيف
-if (!empty($data['categories'])) {
-    $categories = array_map(function($cat) use ($connection) {
-        return mysqli_real_escape_string($connection, $cat);
-    }, $data['categories']);
-    $query .= " AND Category IN ('" . implode("','", $categories) . "')";
+if (empty($data['locations'])) {
+    echo json_encode(['error' => 'Please select at least one location']);
+    exit;
 }
 
-// فلترة حسب نوع المكان
-if (!empty($data['locationType'])) {
-    $locationType = mysqli_real_escape_string($connection, $data['locationType']);
-    $query .= " AND Type = '$locationType'";
-}
+// تنظيف المدخلات
+$categories = array_map(function($cat) use ($connection) {
+    return mysqli_real_escape_string($connection, $cat);
+}, $data['categories']);
 
-// فلترة حسب الموقع الجغرافي
-if (!empty($data['locations'])) {
-    $locations = array_map(function($loc) use ($connection) {
-        return mysqli_real_escape_string($connection, $loc);
-    }, $data['locations']);
-    $query .= " AND Location IN ('" . implode("','", $locations) . "')";
-}
+$locations = array_map(function($loc) use ($connection) {
+    return mysqli_real_escape_string($connection, $loc);
+}, $data['locations']);
 
-// فلترة حسب الميزانية
-if (!empty($data['budget'])) {
-    switch ($data['budget']) {
-        case '0-150':
-            $query .= " AND Price <= 150";
-            break;
-        case '150-250':
-            $query .= " AND Price > 150 AND Price <= 250";
-            break;
-        case '250+':
-            $query .= " AND Price > 250";
-            break;
+// بناء الاستعلام الأساسي
+$query = "SELECT * FROM workshop WHERE Category IN ('" . implode("','", $categories) . "')";
+
+// فلترة حسب نوع الورشة
+if (!empty($data['workshopType'])) {
+    $workshopType = mysqli_real_escape_string($connection, $data['workshopType']);
+    if ($workshopType !== 'Both') {
+        $query .= " AND Type = '$workshopType'";
     }
 }
 
-// فلترة حسب مستوى الخبرة (العمر)
-switch ($data['skillLevel']) {
-    case 'Beginner':
-        $query .= " AND (Age <= 15 OR Age = 0)";
-        break;
-    case 'Intermediate':
-        $query .= " AND (Age > 15 AND Age < 18 OR Age = 0)";
-        break;
-    case 'Advanced':
-        $query .= " AND (Age >= 18 OR Age = 0)";
-        break;
+// فلترة حسب الموقع
+$query .= " AND Location IN ('" . implode("','", $locations) . "')";
+
+// فلترة حسب السعر
+if (!empty($data['priceRange'])) {
+    switch ($data['priceRange']) {
+        case '0-200':
+            $query .= " AND Price <= 200";
+            break;
+        case '200-300':
+            $query .= " AND Price > 200 AND Price <= 300";
+            break;
+        case '300+':
+            $query .= " AND Price > 300";
+            break;
+    }
 }
 
 $query .= " ORDER BY Price ASC LIMIT 12";
@@ -90,20 +76,10 @@ while ($row = mysqli_fetch_assoc($result)) {
         'Category' => $row['Category'],
         'Location' => $row['Location'],
         'Type' => $row['Type'],
-        'Duration' => $row['Duration'],
         'Price' => $row['Price'],
         'ImageURL' => $row['ImageURL']
     ];
 }
 
-
-
-// إذا لم توجد ورش، نرسل رسالة مناسبة
-if (empty($workshops)) {
-    echo json_encode(['message' => 'No workshops found matching your criteria. Please try different selections.']);
-} else {
-    echo json_encode($workshops);
-}
-
-mysqli_close($connection);
+echo json_encode($workshops);
 ?>
