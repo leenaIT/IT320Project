@@ -10,7 +10,6 @@ if (!$postID) {
 
 $userIP = $_SERVER['REMOTE_ADDR'];
 
-// جلب عدد الإعجابات
 $countQuery = "SELECT COUNT(*) AS likeCount FROM likes WHERE postID = ?";
 $stmt = mysqli_prepare($connection, $countQuery);
 mysqli_stmt_bind_param($stmt, "i", $postID);
@@ -18,7 +17,6 @@ mysqli_stmt_execute($stmt);
 $countResult = mysqli_stmt_get_result($stmt);
 $countRow = mysqli_fetch_assoc($countResult);
 
-// التحقق إذا كان المستخدم قد أعجب بالمنشور
 $checkQuery = "SELECT 1 FROM likes WHERE postID = ? AND userIP = ?";
 $stmt = mysqli_prepare($connection, $checkQuery);
 mysqli_stmt_bind_param($stmt, "is", $postID, $userIP);
