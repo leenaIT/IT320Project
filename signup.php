@@ -207,7 +207,7 @@ $connection->close();
             alertBox.style.display = "block";
             setTimeout(function() {
                 alertBox.style.display = "none";
-            }, 3000); // Hide after 3 seconds
+            }, 3000); 
         }
     });
 
