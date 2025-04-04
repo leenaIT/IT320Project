@@ -286,31 +286,35 @@ $result_thumbnails = $conn->query($sql_thumbnails);
             </div>
         </div>
     </section>
-    <?php
+   <?php
 
-$sql = "SELECT r.Rating, r.Comment, u.FirstName, u.LastName 
+$sql = "SELECT r.Rating, r.Comment, u.FirstName, u.LastName, u.profilePhoto
         FROM review r
         JOIN users u ON r.UserID = u.UserID";
 
 $result = $conn->query($sql);
 ?>
 
-    <section class="cont-reviws">
-    <h2 id="cli">Client Testimonials</h2>
+<section class="cont-reviws">
+    <h2 id="client">Client Testimonials</h2>
     <div class="reviews">
         <?php
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $fullName = htmlspecialchars($row['FirstName'] . " " . $row['LastName']);
                 $comment = htmlspecialchars($row['Comment']);
-                $rating = intval($row['Rating']); 
+                $rating = intval($row['Rating']);
+                $profilePhoto = $row['profilePhoto'];
 
-                // Generating stars using FontAwesome
+                
                 $stars = str_repeat('<i class="fas fa-star" style="color:#FFFF00;"></i>', $rating) . 
                          str_repeat('<i class="far fa-star" style="color:#FFFF00;"></i>', 5 - $rating);
+
+                
+                $profilePhoto = ($profilePhoto) ? 'uploads/' . $profilePhoto : 'workshops/profile-picture.jpg';
         ?>
         <div class="carousel-item">
-            <img src="workshops/profile-picture.jpg" alt="Client">
+            <img src="<?php echo htmlspecialchars($profilePhoto); ?>" alt="Client">
             <h3><?php echo $fullName; ?></h3>
             <p class="review-text"><?php echo $comment; ?></p> <br>
             <p class="stars"><?php echo $stars; ?></p>
@@ -323,6 +327,7 @@ $result = $conn->query($sql);
         ?>
     </div>    
 </section>
+
 
 
     
@@ -456,58 +461,85 @@ function toggleMenu(button) {
 }
 
 
-
-
-
-
 (function reviewsCarousel() {
-  const carouselItems = document.querySelectorAll(".carousel-item");
-  let activeIndex = 1; 
+    const carouselItems = document.querySelectorAll(".carousel-item");
+    let activeIndex = 0;
+    let startX = 0;
 
-  function updateReviewsCarousel() {
-    carouselItems.forEach((item, index) => {
-      item.classList.remove("active", "left", "right", "hidden");
+    function updateReviewsCarousel() {
+        carouselItems.forEach((item, index) => {
+            item.classList.remove("active", "left", "right", "hidden");
 
-      if (index === activeIndex) {
-        item.classList.add("active");
-      } else if (index === (activeIndex - 1 + carouselItems.length) % carouselItems.length) {
-        item.classList.add("left");
-      } else if (index === (activeIndex + 1) % carouselItems.length) {
-        item.classList.add("right");
-      } else {
-        item.classList.add("hidden");
-      }
-    });
-  }
-
-  function nextReview() {
-    activeIndex = (activeIndex + 1) % carouselItems.length;
-    updateReviewsCarousel();
-  }
-
-  function prevReview() {
-    activeIndex = (activeIndex - 1 + carouselItems.length) % carouselItems.length;
-    updateReviewsCarousel();
-  }
-
-  function handleClick(event) {
-    const clickedIndex = [...carouselItems].indexOf(event.currentTarget);
-    if (clickedIndex !== activeIndex) {
-      activeIndex = clickedIndex;
-      updateReviewsCarousel();
+            if (index === activeIndex) {
+                item.classList.add("active");
+            } else if (index === (activeIndex - 1 + carouselItems.length) % carouselItems.length) {
+                item.classList.add("left");
+            } else if (index === (activeIndex + 1) % carouselItems.length) {
+                item.classList.add("right");
+            } else {
+                item.classList.add("hidden");
+            }
+        });
     }
-  }
 
-  let autoScroll = setInterval(nextReview, 2000);
+    function nextReview() {
+        activeIndex = (activeIndex + 1) % carouselItems.length;
+        updateReviewsCarousel();
+    }
 
-  carouselItems.forEach((item) => {
-    item.addEventListener("click", handleClick);
-    item.addEventListener("mouseover", () => clearInterval(autoScroll));
-    item.addEventListener("mouseleave", () => autoScroll = setInterval(nextReview, 5000));
-  });
+    function prevReview() {
+        activeIndex = (activeIndex - 1 + carouselItems.length) % carouselItems.length;
+        updateReviewsCarousel();
+    }
 
-  updateReviewsCarousel();
+    carouselItems.forEach((item) => {
+        item.addEventListener("click", (e) => {
+            const clickPosition = e.clientX;
+            const itemWidth = item.clientWidth;
+
+            if (clickPosition < itemWidth / 2) {
+                prevReview();
+            } else {
+                nextReview();
+            }
+        });
+
+        item.addEventListener("mousedown", (e) => {
+            startX = e.clientX;
+            item.style.transition = "none";
+        });
+
+        item.addEventListener("mousemove", (e) => {
+            if (startX === 0) return;
+
+            const diffX = e.clientX - startX;
+            if (Math.abs(diffX) > 50) {
+                if (diffX > 0) {
+                    prevReview();
+                } else {
+                    nextReview();
+                }
+                startX = 0;
+            }
+        });
+
+        item.addEventListener("mouseup", () => {
+            startX = 0;
+            item.style.transition = "";
+        });
+
+        item.addEventListener("mouseleave", () => {
+            startX = 0;
+            item.style.transition = "";
+        });
+    });
+
+    updateReviewsCarousel();
 })();
+
+
+
+
 
 
 </script>
