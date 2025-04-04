@@ -559,6 +559,37 @@ box-sizing: border-box;
     color: red !important;
 }
 
+.post-actions {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.like-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #ccc; /* اللون الأساسي (غير معجب) */
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.like-btn.liked, 
+.like-btn.liked i {
+    color: red !important; /* اللون عند الإعجاب */
+}
+
+.like-btn:hover {
+    color: #ff6b6b;
+}
+
+.like-count {
+    font-size: 16px;
+    color: #333;
+}
 
 
 
@@ -607,7 +638,6 @@ box-sizing: border-box;
 
 <div class="search-container">
     <span>Discover Your Passion</span>
-    <input type="text" class="search-bar" placeholder="Search for workshops or experiences...">
 </div>
 
 <div class="container">
@@ -640,9 +670,69 @@ box-sizing: border-box;
 
 
 <script>
+
+// دالة لتحميل وعرض المنشورات
+function loadPosts() {
+    fetch("Explore.php")
+        .then(res => res.json())
+        .then(data => {
+            const postsContainer = document.getElementById("posts");
+            postsContainer.innerHTML = ''; // مسح المحتوى القديم أولاً
+            
+            // إزالة التكرارات باستخدام PostID
+            const uniquePosts = [];
+            const postIds = new Set();
+            
+            data.forEach(post => {
+                if (!postIds.has(post.PostID)) {
+                    postIds.add(post.PostID);
+                    uniquePosts.push(post);
+                }
+            });
+            
+            // عرض المنشورات الفريدة
+            uniquePosts.forEach(post => {
+                const postCard = document.createElement("div");
+                postCard.className = "post-card";
+                
+                postCard.innerHTML = `
+                    <img src="uploads/${post.images}" alt="Workshop Image">
+                    <h3>${post.comment}</h3>
+                    <p>Shared by ${post.FirstName} ${post.LastName}</p>
+                    <div class="post-actions">
+                        <button class="like-btn" data-postid="${post.PostID}">
+                            <i class="fa fa-heart ${post.liked ? 'liked' : ''}"></i> 
+                            <span class="like-count">${post.likeCount || 0}</span>
+                        </button>
+                    </div>
+                `;
+                
+                postsContainer.appendChild(postCard);
+                
+                // إضافة حدث النقر لزر الإعجاب
+                const likeBtn = postCard.querySelector('.like-btn');
+                likeBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleLikeCard(this);
+                });
+                
+                // إضافة حدث النقر لفتح البوست
+                postCard.addEventListener('click', () => {
+                    openPost('uploads/' + post.images, post.comment, post.PostID);
+                });
+            });
+        })
+        .catch(error => {
+            console.error("Error loading posts:", error);
+        });
+}
+
+// دالة للتعامل مع الإعجاب من صفحة Explore
 function toggleLike() {
     const postID = document.getElementById("postID").value;
-    console.log("Toggling like for post:", postID);
+    const likeBtn = document.querySelector(".like-btn");
+    const likeIcon = likeBtn.querySelector("i");
+    const likeCountSpan = document.getElementById("likeCount");
 
     fetch("toggle_like.php", {
         method: "POST",
@@ -651,71 +741,32 @@ function toggleLike() {
     })
     .then(res => res.json())
     .then(data => {
-        console.log("Like response:", data);
-        const likeBtn = document.querySelector(".like-btn");
-        const likeIcon = likeBtn.querySelector("i");
+        if (data.error) {
+            alert(data.error);
+            return;
+        }
         
         // تحديث حالة الزر
-        if (data.status === "liked") {
+        if (data.liked) {
             likeIcon.style.color = "red";
+            likeBtn.classList.add("liked");
         } else {
             likeIcon.style.color = "#ccc";
+            likeBtn.classList.remove("liked");
         }
         
         // تحديث العداد
-        document.getElementById("likeCount").textContent = data.likeCount;
+        likeCountSpan.textContent = data.likeCount;
+        
+        // إعادة تحميل المنشورات لتحديث حالة الإعجاب في العرض الرئيسي
+        loadPosts();
     })
     .catch(error => {
         console.error("Error toggling like:", error);
     });
 }
 
-// بعدين نستخدم هذا الكود عشان نعرض البوستات من PHP
-// fetch('fetch_posts.php').then(response => response.json()).then(data => {
-//     // تسوي عرض للبوستات في div#posts
-// });
-
-document.addEventListener("DOMContentLoaded", function() {
-    fetch("Explore.php")
-        .then(res => res.json())
-        .then(data => {
-            const postsContainer = document.getElementById("posts");
-            
-            data.forEach(post => {
-                const postCard = document.createElement("div");
-                postCard.className = "post-card";
-                
-                // استخدم دالة openPost الصحيحة
-                postCard.onclick = () => openPost(
-                    'uploads/' + post.images, 
-                    post.comment, 
-                    post.PostID
-                );
-                
-                postCard.innerHTML = `
-                    <img src="uploads/${post.images}" alt="Workshop Image">
-                    <h3>${post.comment}</h3>
-                    <p>Shared by ${post.FirstName} ${post.LastName}</p>
-                `;
-                
-                postsContainer.appendChild(postCard);
-            });
-        })
-        .catch(error => {
-            console.error("Error loading posts:", error);
-        });
-});
-
- 
-
-
-if (data.status === "liked") {
-    likeBtn.classList.add("liked");
-} else if (data.status === "unliked") {
-    likeBtn.classList.remove("liked");
-}
-
-
+// دالة لفتح البوست الموسع
 function openPost(image, comment, postID) {
     document.getElementById("expandedImage").src = image;
     document.getElementById("expandedTitle").innerText = comment;
@@ -727,19 +778,39 @@ function openPost(image, comment, postID) {
         .then(data => {
             const likeBtn = document.querySelector(".like-btn");
             const likeIcon = likeBtn.querySelector("i");
+            const likeCountSpan = document.getElementById("likeCount");
             
-            document.getElementById("likeCount").textContent = data.likeCount;
+            likeCountSpan.textContent = data.likeCount;
             
             if (data.liked) {
                 likeIcon.style.color = "red";
+                likeBtn.classList.add("liked");
             } else {
                 likeIcon.style.color = "#ccc";
+                likeBtn.classList.remove("liked");
             }
+            
+            // إزالة أي أحداث نقر سابقة وإضافة حدث جديد
+            likeBtn.onclick = null; // إزالة المعالجات القديمة
+            likeBtn.onclick = function(e) {
+                e.stopPropagation();
+                toggleLike();
+            };
+        })
+        .catch(error => {
+            console.error("Error fetching likes:", error);
         });
 
     document.getElementById("overlay").style.display = "flex";
 }
 
+// دالة لإغلاق البوست الموسع
+function closePost() {
+    document.getElementById("overlay").style.display = "none";
+}
+
+// تحميل المنشورات عند فتح الصفحة
+document.addEventListener("DOMContentLoaded", loadPosts);
 
 
 </script>
