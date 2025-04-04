@@ -135,96 +135,89 @@ document.addEventListener("DOMContentLoaded", function () {
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     <style>
         
-               
-   /* ====== الفوتر ====== */
-footer {
-    margin-top: 2em;
-    padding: 1em 2em;
-    background-color: #fffefc;
-    border-top: 2px solid #f9b013ec;
-    color: #333;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: flex-start;
-}
+    
+ /*footer*/
+    footer {
+            margin-top: 2em;
+            padding: 1em 2em;
+            background-color: #fffefc;
+            border-top: 2px solid #f9b013ec;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
 
-.footer-left-1,
-.footer-center-1,
-.footer-right-1 {
-    flex: 1;
-    min-width: 250px;
-    padding: 0.5em;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        .footer-left-1,
+        .footer-center-1,
+        .footer-right-1 {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.5em;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-/* وسط الفوتر */
-.footer-center-1 {
-    justify-content: center;
-}
+        /* وسط الفوتر */
+        .footer-center-1 {
+            justify-content: center;
+        }
 
-.footer-logo-1 {
-    width: 100px;
-}
+        .footer-logo-1 {
+            width: 100px;
+        }
 
-/* ✅ كل أيقونة + النص جنب بعض، والكل في نفس السطر */
-.contact-info-1 {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: nowrap;
-    margin-top: 10px;
-    width: 100%; 
-}
+        .contact-info-1 {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: nowrap;
+            margin-top: 10px;
+            width: 100%;
+        }
 
+        .contact-item-1 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
 
+        .single-line-1 {
+            white-space: nowrap;
+        }
 
-.contact-item-1 {
-    display: flex;
-    align-items: center; 
-    gap: 8px; 
-    white-space: nowrap;
-}
+        /* أيقونات السوشال ميديا */
+        .social-icons-1 {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
 
+        .footer-bottom-1 {
+            width: 100%;
+            text-align: center;
+            margin-top: 0.5em;
+        }
 
-.single-line-1 {
-    white-space: nowrap;
-}
-
-.social-icons-1 {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 10px;
-}
-
-.footer-bottom-1 {
-    width: 100%;
-    text-align: center;
-    margin-top: 0.5em;
-}
-
-.footer-bottom-1 p {
-    padding: 0.5em;
-    background-color: #ffffff;
-    font-size: 0.75em;
-    color: #f9b013ec;
-    border-top: 1px solid #ccc;
-}
-
-.icon-phone {
+        .footer-bottom-1 p {
+            padding: 0.5em;
+            background-color: #ffffff;
+            font-size: 0.75em;
+            color: #f9b013ec;
+            border-top: 1px solid #ccc;
+        }
+        .icon-phone {
     display: inline-block !important; 
     width: 30px !important;
     height: 30px !important;
-}
-
-.icon-phone {
-    position: relative !important;
+     position: relative !important;
     left: 0 !important;
     right: auto !important;
 }
@@ -259,29 +252,6 @@ footer {
     margin-top: 6px !important;
 }
 
-/* ✅ Responsive للجوال */
-@media (max-width: 768px) {
-    .footer-left-1,
-    .footer-center-1,
-    .footer-right-1 {
-        flex: 100%;
-        margin-bottom: 1em;
-    }
-
-    .contact-info-1 {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .icon-phone,
-    .icon-email,
-    .icon-location,
-    .icon-facebook,
-    .icon-twitter,
-    .icon-instagram {
-        transform: scale(0.9);
-    }
-}
         body {
             margin: 0;
             background: #FFFDF0;
@@ -373,11 +343,12 @@ footer {
         }
 
         .grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            padding: 20px;
-        }
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Auto-adjust */
+    gap: 20px;
+    padding: 20px;
+}
+
 
         .grid-item {
             position: relative;
@@ -631,6 +602,107 @@ input[type="date"] {
             justify-content: center;
             border-radius: 8px;
         }
+        @media (max-width: 768px) {
+    .header {
+        height: 400px; /* Reduce header height */
+    }
+
+    .header-content {
+        margin-left: 20px;
+    }
+
+    .header-content h1 {
+        font-size: 30px; /* Adjust heading size */
+    }
+
+    .outline-text {
+        font-size: 80px;
+    }
+    .quote{
+    font-size: 40px;
+    }
+}
+@media (max-width: 600px) {
+   .search-container {
+        flex-direction: row; /* جعل العناصر جنبًا إلى جنب */
+        align-items: center; /* توسيط العناصر */
+        justify-content: center;
+    }
+
+    .search-input-container {
+        flex: 1;
+    }
+
+    .filter-btn {
+        margin-left: 10px;
+    }
+    .search-input {
+        width: 100%;
+    }
+
+    .filter-box {
+        width: 90%;
+        right: 5%;
+    }
+      .more-btn {
+    
+    padding: 8px 8px;
+   }
+}
+
+@media (max-width: 768px) {
+    .desktop-nav {
+        display: none; /* Hide desktop menu */
+    }
+
+    .mobile-nav-container {
+        display: block; /* Show mobile menu */
+    }
+}
+   @media (max-width: 600px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr); /* بدلًا من أن تكون عنصرًا واحدًا في كل صف */
+        gap: 15px;
+    }
+}
+    
+/* ✅ Responsive للجوال */
+@media (max-width: 768px) {
+     footer {
+                flex-direction: column;
+                align-items: center;
+                padding: 1em;
+            }
+            
+            .footer-left-1,
+            .footer-center-1,
+            .footer-right-1 {
+                width: 100%;
+                margin-bottom: 1em;
+                padding: 0.5em 0;
+            }
+
+            .contact-info-1 {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .contact-item-1 {
+                flex: 0 0 auto;
+                margin: 0 5px;
+            }
+
+            .footer-logo-1 {
+                width: 80px;
+                margin: 10px 0;
+            }
+
+            .social-icons-1 {
+                margin: 15px 0;
+            }
+} 
     </style>
 </head>
 <body>
