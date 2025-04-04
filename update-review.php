@@ -1,42 +1,31 @@
 <?php
-// Include database connection
-require_once 'db_connection.php'; // Adjust to your database connection file
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+require 'database.php';
+session_start();
 
-// Get JSON data from the client
 $data = json_decode(file_get_contents('php://input'), true);
 
-// Extract data from the request
-$bookingID = $data['bookingID'];
-$rating = $data['rating'];
-$comment = !empty($data['comment']) ? $data['comment'] : '';  // Handle empty comment
+$reviewID = $data['reviewID'];
+$updatedRating = $data['rating'];
+$updatedComment = !empty($data['comment']) ? $data['comment'] : NULL; // Allow NULL if no comment is provided
 
-// Assuming you already have the logged-in user ID from session
-session_start();
-$userID = $_SESSION['user_id']; // Assuming user ID is stored in session
-
-// Validate inputs
-if (empty($bookingID) || empty($rating)) {
-    echo json_encode(['success' => false, 'message' => 'Booking ID and rating are required.']);
+if (empty($reviewID) || empty($updatedRating)) {
+    echo json_encode(['success' => false, 'message' => 'Review ID and rating are required.']);
     exit();
 }
 
-// Update the review in the database
-$query = "UPDATE reviews SET Rating = ?, Comment = ? WHERE BookingID = ? AND UserID = ?";
-$stmt = $conn->prepare($query);
-$stmt->bind_param("isii", $rating, $comment, $bookingID, $userID);
+$query = "UPDATE review SET Rating = ?, Comment = ? WHERE ReviewID = ?";
+$stmt = $connection->prepare($query);
+$stmt->bind_param("isi", $updatedRating, $updatedComment, $reviewID);
 
 if ($stmt->execute()) {
-    echo json_encode([
-        'success' => true,
-        'message' => 'Your review has been updated successfully!',
-        'bookingID' => $bookingID,
-        'rating' => $rating,
-        'comment' => $comment
-    ]);
+    echo json_encode(['success' => true, 'message' => 'Your review has been updated successfully!']);
 } else {
-    echo json_encode(['success' => false, 'message' => 'Failed to update your review. Please try again.']);
+    error_log("MySQL Error: " . $stmt->error);  // Log MySQL error for debugging
+    echo json_encode(['success' => false, 'message' => 'Failed to update review.']);
 }
 
 $stmt->close();
-$conn->close();
+$connection->close();
 ?>

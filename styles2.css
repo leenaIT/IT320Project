@@ -334,7 +334,7 @@ left: 790px;
 }
 
 
-.experience-cards {
+#posts-conatiner {
     display: flex;
     flex-wrap: nowrap;
     justify-content: left;
@@ -348,152 +348,18 @@ left: 790px;
     scroll-snap-type: x mandatory;
     margin-left: 55px;  /* Optional: space from the left side */
     padding-bottom: 2em; 
-padding-top: 2em;}
+padding-top: 2em;
+  overflow-y: hidden; /* Prevent vertical scrolling */
+    overflow-x: auto;  /* Enable horizontal scrolling */
+    scroll-snap-type: x mandatory;}
 
-.experience-cards::-webkit-scrollbar {
+#posts-conatiner::-webkit-scrollbar {
     display: none; /* Hide scrollbar  */
 }  
-.user-circle1{
-    border-radius: 50%;
-    background: grey;
-    width: 27px;
-    height: 27px;
-    position:absolute;
-  margin-left:-2px;  
-  background-image: url("workshops/profile-pic.png"); /* Set the image */
-  background-size: cover; /* Ensure it covers the circle */
-  background-position: center; /* Center the image */
-  background-size: 99%; 
-}
-
-.user-circle2{
-    border-radius: 50%;
-    background: grey;
-    width: 27px;
-    height: 27px;
-    position:absolute;
-  margin-left:-2px; 
-  background-image: url("workshops/profile-pic.png"); /* Set the image */
-  background-size: cover; /* Ensure it covers the circle */
-  background-position: center; /* Center the image */
-  background-size: 99%;   
-}
-.user-circle3{
-    border-radius: 50%;
-    background: grey;
-    width: 27px;
-    height: 27px;
-    position:absolute;
-  margin-left:-2px; 
-  background-image: url("workshops/profile-pic.png"); /* Set the image */
-  background-size: cover; /* Ensure it covers the circle */
-  background-position: center; /* Center the image */
-  background-size: 99%;   
-}
-.user-circle4{
-    border-radius: 50%;
-    background: grey;
-    width: 27px;
-    height: 27px;
-    position:absolute;
-  margin-left:-2px;
-  background-image: url("workshops/profile-pic.png"); /* Set the image */
-  background-size: cover; /* Ensure it covers the circle */
-  background-position: center; /* Center the image */
-  background-size: 99%;    
-}
-
-
-
-
 .card p strong{
     margin-left:35px;
     color: black;
 }
-
-.card {
-    flex-shrink: 0;
-    flex-grow: 1;
-    width: 25%; /* Adjust for responsiveness */
-    background: white;
-    border-radius: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    text-align: center;
-    transition: transform 0.2s ease-in-out;
-    margin: 0;
-    height: auto;
-    scroll-snap-align: start;
-    box-sizing: border-box;
-}
-
-.card .content {
-    flex-grow: 1;
-    overflow: hidden;
-    text-overflow: ellipsis; /* For long text truncation if necessary */
-    word-wrap: break-word; /* Ensure long words don't overflow */
-}
-
-.image-placeholder1{
-    background-image: url("workshops/post1.jpeg"); /* Set the image */
-    background-position: -60%;
-    background-position:  center; 
-    background-size: 100%; 
-    width: 100%;
-    height: 150px;
-    border-radius: 20px;
-}
-
-.image-placeholder2{
-    background-image: url("workshops/post2.jpeg"); /* Set the image */
-    background-position: -60%;
-    background-position:  center; 
-    background-size: 100%; 
-    width: 100%;
-    height: 150px;
-    border-radius: 20px;
-}
-
-.image-placeholder3{
-    background-image: url("workshops/post3.jpeg"); /* Set the image */
-    background-position: -60%;
-    background-position:  center; 
-    background-size: 100%; 
-    width: 100%;
-    height: 150px;
-    border-radius: 20px;
-}
-
-
-.image-placeholder4{
-    background-image: url("workshops/post4.jpeg"); /* Set the image */
-    background-position: -60%;
-    background-position: bottom center; 
-    background-size: 100%; 
-    width: 100%;
-    height: 150px;
-    border-radius: 20px;
-}
-.image-placeholder5{
-    background-image: url("workshops/post4.jpeg");
-    background-position: -60%;
-    background-position:  center; 
-    background-size: 100%; 
-    width: 100%;
-    height: 150px;
-    border-radius: 20px;
-}
-.image-placeholder6{
-    background-image:url("workshops/Madriguera Workshop-Face Collection.jpeg");
-    background-position: -60%;
-    background-position:   bottom center; 
-    background-size: 100%; 
-    width: 100%;
-    height: 150px;
-    border-radius: 20px;
-}
-
-
 .card-content {
     margin-top: 15px;
     background: #f5f5f5;
@@ -520,11 +386,6 @@ font-size:13px;
     color: #555;
 }
 
-.experience-text {
-    font-size: 14px;
-    color: #333;
-    margin-top: 10px;
-}
 
 .post-btn {
     display: flex;
@@ -557,199 +418,6 @@ button img {
 }
 
 
-.view-all-btn {
-    background-color: rgba(0,0,0, 0.8); /* Transparent gray */
-    color: white;
-    border: 2px solid transparent;
-    border: none;
-    padding: 10px 20px;
-    font-size: 14px;
-    font-weight: bold;
-    text-transform: uppercase;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    width: 130px; 
-    height: 40px;
-    position: relative;
-    bottom: 440px;
-     left:45%;
-}
-
-.view-all-btn:hover .tooltip {
-    opacity: 1;
-}
-.view-all-btn:hover {
-    color: #ff9800; /* Orange text */
-    background-color: rgba(23, 22, 22, 0.815); 
-    transform: scale(1.02);
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
-}
-
-.view-all-btn:active {
-    transform: scale(1);
-    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* wihslist*/
-
-.wishlist {
-    width: 95%; /* Take 80% of the width */
-    background: #fde5b7;
-    color: #d48d00;
-    padding: 10px;
-    border-radius: 25px;
-    margin: 40px auto; /* Center horizontally and add margin */
-    display: flex;
-    align-items: center; /* Align items at the center */
-    justify-content: flex-start; /* Align items from the left */
-    flex-direction: row; /* Arrange children horizontally */
-    flex-wrap: nowrap; /* Prevent wrapping */
-    height: 60%; /* Fixed height */
-    box-sizing: border-box;
-    margin-bottom: 40px;
-  
-}
-
-
-.wishlist-items {
-    display: flex;
-    flex-direction: row; /* Make items horizontal */
-    gap: 10px; /* Space between items */
-    height: 100%; /* Prevent exceeding the container */
-    width: 100%; /* Ensure it takes full width */
-    overflow-y: hidden; /* Prevent vertical scrolling */
-    overflow-x: auto;  /* Enable horizontal scrolling */
-    scroll-snap-type: x mandatory;
-}
-
-
-/* Scrollbar appearance for wishlist items container */
-.wishlist-items::-webkit-scrollbar {
-    display: none; 
-}
-
-
-
-.wishlist-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 10px;
-    border-radius: 10px;
-    width: 100%; /* Width for each wishlist item */
-    height: 90%;
-    color: black;
-    background: #FFFDF0;
-    margin-left: 10px;
-}
-
-
-.wishlist-img img {
-    width: 65px;
-    height: 65px;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-.workshop-name {
-    font-size: 13px;
-    font-weight: bold;
-    margin-left: 10px;
-}
-
-.price-section {
-    display: flex;
-    align-items: center;
-    margin-left: 10px;
-    gap: 0.2em;
-}
-
-.price {
-    font-size: 14px;
-    font-weight: bold;
-    margin-right: 5px;
-}
-
-.currency-icon {
-    width: 16px;
-    height: 16px;
-}
-
-.wishlist-actions {
-    display: flex;
-    justify-content: space-between; /* Book Now to left, star to right */
-    margin-top: 5px;
-    margin-left: 13px;
-    gap: 43px;
-}
-
-.book-now {
-    background-color: rgba(0, 0, 0, 0.8); /* Transparent gray */
-    color: white;
-    border: 2px solid transparent;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 8px;
-    height: 20px;
-    width: 80px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    letter-spacing: 1px;
-}
-
-.book-now:hover {
-    color: #ff9800; /* Orange text */
-    background-color: rgba(23, 22, 22, 0.815); 
-    transform: scale(1.02);
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
-}
-
-.book-now:active, .wishlist-star:active {
-    transform: scale(1);
-    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
-}
-
-.wishlist-star {
-    width: 20px; /* Button width */
-    height: 20px; /* Button height */
-    cursor: pointer;
-    display: flex;
-    align-items: center; /* Center vertically */
-    justify-content: center; 
-    background-color: transparent; /* Transparent background */
-    border: none;
-    transition: all 0.3s ease-in-out; /* Smooth transition */
-}
-
-.wishlist-star img {
-    width: 25px; /* Set the size of the image */
-    height: 25px; /* Set the size of the image */
-}
-
-.wishlist-star:hover .tooltip {
-    opacity: 1;
-    left: 10px;
-}
-
-
-.wishlist-divider {
-    border: 1.5px solid orange;
-    margin: 5px 0;
-    width: 100px;
-    margin-right: 20px;
-}
-
-.wishlist-divider1 {
-    width: 1px; /* Change width to make it vertical */
-    height: 100%; /* Take the full height of the parent container */
-    border: 1.5px solid orange;
-    margin: 0 auto; /* Center the divider vertically */
-}
 
 .card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -760,15 +428,7 @@ button img {
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-    .wishlist-img {
-        opacity: 0;
-        transition: opacity 0.6s ease;
-    }
     
-    .wishlist-img.loaded {
-        opacity: 1;
-    }
-   
    /* Modal Style (initially hidden) */
    
  #editProfileModal {
@@ -1156,30 +816,18 @@ padding:6px;
     transform: scale(1.1);
 }
 
-.star-rating {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-.star {
-    font-size: 30px;
-    color: #d3d3d3;  /* Light gray color */
-    cursor: pointer;
-    margin: 0 5px;
-}
-
-.star.selected {
-    color: #ffcc00;  /* Gold color for selected stars */
-}
-
-textarea {
-    margin-top: 10px;
-    padding: 10px;
-    font-size: 14px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
+        .submit-btn {
+            padding: 10px 20px;
+            background-color: #ffcc00;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .submit-btn:hover {
+            background-color: #ff9900;
+        }
 
 .review-form {
     margin-top: 10px;
@@ -1214,4 +862,532 @@ textarea {
     padding: 10px;
     border: none;
     cursor: pointer;
+}
+textarea {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.br-theme-fontawesome-stars .br-widget a {
+    font-size: 30px !important; /* Adjust the size as needed */
+    margin-top:20px !important;
+}
+
+/* Styling for the SweetAlert Form */
+/* Overall SweetAlert Form Styling */
+.swal2-popup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align content to the left */
+    border-radius: 12px;
+    padding: 20px;
+    background: #fefefe;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+.swal2-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.swal2-input {
+    width: 100%;
+    height: 120px;
+    padding: 15px;
+    font-size: 16px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    background-color: #fafafa;
+    color: #333;
+    transition: border-color 0.3s ease;
+}
+
+.swal2-input:focus {
+    outline: none;
+    border-color: #00aaff;
+}
+
+/* Image Squares (with Hover and Animated Effects) */
+.image-squares {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.image-square {
+    width: 100%;
+    height: 180px;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    background-color: #f1f1f1;
+    background-position: center;
+    background-size: cover;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.image-square:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.image-square::after {
+    content: "Choose Image";
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 600;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+.image-square:hover::after {
+    opacity: 1;
+}
+
+/* Textarea Styling */
+textarea {
+    overflow-y: auto;  /* Enable vertical scrolling */
+}
+
+/* Buttons */
+button.swal2-confirm, button.swal2-cancel {
+    padding: 12px 25px;
+    font-size: 18px;
+    border-radius: 25px;
+    border: none;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+button.swal2-confirm {
+    background-color: #00aaff;
+    color: #fff;
+}
+
+button.swal2-confirm:hover {
+    background-color: #0088cc;
+}
+
+button.swal2-cancel {
+    background-color: #ff4444;
+    color: #fff;
+}
+
+button.swal2-cancel:hover {
+    background-color: #cc3333;
+}
+
+
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+    overflow: hidden;
+        max-height: 350px; 
+}
+
+.card-content .profile {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.card-content .profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    
+}
+
+
+
+.post-btn {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-btn button {
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.post-btn button:hover {
+    background-color: #d9d9d9;
+}
+.post-btn button img {
+    width: 20px;
+    height: 20px;
+}
+
+
+.user-profile-pic {
+    width: 30px;  /* Adjust size as needed */
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+      text-align: left
+}
+
+.user-info p {
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Card styling */
+.card {
+    flex-shrink: 0;
+    flex-grow: 0;
+    width: 28%; /* Adjust for responsiveness */
+    background: white;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+    margin: 0;
+    height: auto;
+    scroll-snap-align: start;
+    box-sizing: border-box;
+    margin-left:10px;
+    
+}
+
+
+.post-image {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* Profile info */
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.experience-text {
+    margin-top: 10px;
+    font-size: 16px;
+     max-height: 150px;  /* Adjust this to your desired height */
+    overflow-y: auto;   /* Enables vertical scrolling if content exceeds the height */
+    word-wrap: break-word; /* Ensures long words don't break the layout */
+    margin-top: 10px; 
+    max-height: 150px; 
+     overflow-x: hidden;
+     -webkit-overflow-scrolling: touch;
+}
+
+
+.experience-cards {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: left;
+    align-items: center;;
+    margin-bottom:100px;
+    width:90%;
+    height: 100%;
+    gap: 3em;
+    scroll-behavior: smooth;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    margin-left: 55px;  /* Optional: space from the left side */
+    padding-bottom: 2em; 
+padding-top: 2em;}
+
+.experience-cards::-webkit-scrollbar {
+    display: none; /* Hide scrollbar  */
+}  
+.post-image {
+    display: none;
+}
+.post-image.active {
+    display: block;
+}
+
+/* Style for the carousel container */
+.image-carousel {
+    position: relative;
+}
+
+/* Style for the arrow buttons */
+.prev-btn, .next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 14px;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Left and Right arrows */
+.prev-btn {
+    left: 10px;
+}
+
+.next-btn {
+    right: 10px;
+}
+
+/* Hover effect */
+.prev-btn:hover, .next-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    transform: scale(1.1);
+}
+
+/* Optional: Styling the arrows with custom icons (use font-awesome or similar) */
+.prev-btn:before {
+    content: '\2190'; /* Unicode for left arrow */
+}
+
+.next-btn:before {
+    content: '\2192'; /* Unicode for right arrow */
+}
+
+/* Adding some spacing to the images so that arrows don't overlap */
+.carousel-inner {
+    padding: 10px;
+}
+
+
+.comment-section {
+    max-height: 150px; /* Set a max height for the comment section */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    padding-right: 5px; /* Optional: small padding to avoid scroll bar overlap */
+    width:100%;
+}
+
+
+
+.no-posts-icon {
+   width:390px;
+   height:250px;
+ margin-left:10px;
+ margin-top:-70px;
+}
+
+/* wihslist*/
+
+
+.wishlist-img img {
+    width: 105px;
+    height: 105px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.workshop-name {
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.price-section {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    gap: 0.2em;
+}
+
+.price {
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.currency-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.wishlist-actions {
+    display: flex;
+    justify-content: space-between; /* Book Now to left, star to right */
+    margin-top: 5px;
+    margin-left: 13px;
+    gap: 43px;
+}
+
+.book-now {
+    background-color: rgba(0, 0, 0, 0.8); /* Transparent gray */
+    color: white;
+    border: 2px solid transparent;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 9px;
+    height: 20px;
+    width: 80px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    letter-spacing: 1px;
+}
+
+.book-now:hover {
+    color: #ff9800; /* Orange text */
+    background-color: rgba(23, 22, 22, 0.815); 
+    transform: scale(1.02);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.book-now:active, .wishlist-star:active {
+    transform: scale(1);
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.wishlist-star {
+    width: 20px; /* Button width */
+    height: 20px; /* Button height */
+    cursor: pointer;
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center; 
+    background-color: transparent; /* Transparent background */
+    border: none;
+    transition: all 0.3s ease-in-out; /* Smooth transition */
+}
+
+.wishlist-star img {
+    width: 25px; /* Set the size of the image */
+    height: 25px; /* Set the size of the image */
+}
+
+.wishlist-star:hover .tooltip {
+    opacity: 1;
+    left: 10px;
+}
+
+/* Wishlist Container */
+#workshops-container {
+    width: 95%;
+    background: #fde5b7;
+    color: #d48d00;
+    padding: 10px;
+    border-radius: 25px;
+    margin: 40px auto;
+    display: flex;
+    justify-content: flex-start; /* Align items to the left */
+    align-items: center;
+    height: 60%;
+    box-sizing: border-box;
+    margin-bottom: 40px;
+    overflow-x: auto;  /* Enable horizontal scrolling */
+    overflow-y: hidden; /* Prevent vertical scrolling */
+}
+
+/* Wishlist Title */
+.wishlist {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+/* Wishlist Items Container */
+.wishlist-items {
+    display: flex;
+    flex-direction: row;
+    gap: 10px; /* Reduce gap between items */
+    height: 100%;
+    scroll-behavior: smooth;
+    overflow-y: hidden; /* Prevent vertical scrolling */
+    scroll-snap-type: x mandatory;
+    flex-wrap: nowrap; /* Ensure items stay on one line */
+}
+
+/* Hide scrollbar */
+#workshops-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Individual Wishlist Item */
+.wishlist-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 10px;
+    width: 190px;
+    height: 100%; /* Ensure it takes up the full height of the container */
+    color: black;
+    background: #FFFDF0;
+    text-align: left;
+    scroll-snap-align: start; /* Ensures items snap to the left */
+    flex-shrink: 0; /* Prevents shrinking of items */
+}
+
+/* Vertical Dividers */
+.wishlist-divider {
+    width: 1px;
+    height: 220px;
+    border: 1.5px solid orange;
+    margin-left: 10px; /* Reduce space between item & divider */
+}
+
+.empty-wishlist-message {
+    text-align: left;
+    padding: 20px;
+}
+
+.empty-wishlist-message h3 {
+    font-size: 24px;
+    color: #333;
+}
+
+.empty-wishlist-message p {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+
+.browse-now-btn {
+    background-color: #ff6600;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.browse-now-btn:hover {
+    background-color: #ff4500;
 }

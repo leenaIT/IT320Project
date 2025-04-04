@@ -287,204 +287,639 @@ console.log("Sending data:", { BookingID: bookingID, BookingDateTime: newDateTim
 
 
 //***************************************review *************************************
-
 document.querySelectorAll('.review-btn').forEach(button => {
+    const bookingID = button.getAttribute('data-bookingid');
+    const workshopID = button.getAttribute('data-workshopid');  // Get the workshopID
+
+    // Fetch the review data from the backend
+    fetch(`get-review.php?bookingID=${bookingID}&workshopID=${workshopID}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                button.textContent = "My Review";
+                button.setAttribute("data-reviewid", data.reviewID);
+            } else {
+                button.textContent = "Submit Review"; // Default state
+            }
+        });
+
     button.addEventListener('click', function() {
-        const bookingID = this.getAttribute('data-bookingid');
-        const workshopID = this.getAttribute('data-workshopid');
+        const reviewID = this.getAttribute('data-reviewid') || null;
 
         Swal.fire({
-            title: 'Submit Your Review',
+            title: reviewID ? "Edit Your Review" : "Submit Your Review",
             html: `
-                <div class="star-rating" id="star-rating-${bookingID}">
-                    <span class="star" data-rating="1">&#9733;</span>
-                    <span class="star" data-rating="2">&#9733;</span>
-                    <span class="star" data-rating="3">&#9733;</span>
-                    <span class="star" data-rating="4">&#9733;</span>
-                    <span class="star" data-rating="5">&#9733;</span>
-                </div>
-                <textarea id="review-comment-${bookingID}" rows="4" placeholder="Write your review here..." style="width: 100%;"></textarea>
+                <label>Rating:</label>
+                <select id="rating-${bookingID}" class="star-rating">
+                    <option value="1">⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
+                </select>
+                <textarea id="review-comment-${bookingID}" rows="4" style="width: 100%; margin-top: 10px; padding: 10px;" placeholder="Write your Review..."></textarea>
             `,
             showCancelButton: true,
-            confirmButtonText: 'Submit Review',
-            cancelButtonText: 'Cancel',
+            showDenyButton: reviewID !== null, // Show delete button if review exists
+            denyButtonText: "Delete ",
+            denyButtonColor: "#d35400",
+            confirmButtonText: reviewID ? "Update Review" : "Submit Review",
             confirmButtonColor:'#f4b42b',
             cancelButtonColor:'#b0b0b0',
-            
+            cancelButtonText: "Cancel",
             didOpen: () => {
-                // Attach event listeners inside the pop-up
-                document.querySelectorAll(`#star-rating-${bookingID} .star`).forEach(star => {
-                    star.addEventListener('click', function() {
-                        const rating = this.getAttribute('data-rating');
-                        document.querySelectorAll(`#star-rating-${bookingID} .star`).forEach(s => {
-                            s.classList.toggle('selected', s.getAttribute('data-rating') <= rating);
-                        });
-                    });
+                $(`#rating-${bookingID}`).barrating({
+                    theme: 'fontawesome-stars',
                 });
+
+                if (reviewID) {
+                    fetch(`get-review.php?bookingID=${bookingID}&workshopID=${workshopID}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                $(`#rating-${bookingID}`).barrating('set', data.rating);
+                                document.getElementById(`review-comment-${bookingID}`).value = data.comment;
+                            }
+                        });
+                }
             },
-            preConfirm: async () => {
-                const selectedStar = document.querySelector(`#star-rating-${bookingID} .star.selected`);
-                const rating = selectedStar ? selectedStar.getAttribute('data-rating') : null;
+            preConfirm: () => {
+                const rating = $(`#rating-${bookingID}`).val();
                 const comment = document.getElementById(`review-comment-${bookingID}`).value;
 
                 if (!rating) {
-                    Swal.showValidationMessage('Please provide a rating.');
+                    Swal.showValidationMessage("Please select a rating.");
                     return false;
                 }
 
-                const reviewData = { workshopID: workshopID, rating: rating, comment: comment || '', bookingID: bookingID };
-console.log('Sending data:', JSON.stringify(reviewData)); // Add this line to see what data is being sent
-
-                // Ensure the fetch request completes before closing the alert
-                try {
-                    const response = await fetch('submit-review.php', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(reviewData)
-                    });
-
-                    const data = await response.json();
-
-                    console.log('Response from server:', data); // Log response for debugging
-
-                    if (!data.success) {
-                        throw new Error(data.message);
-                    }
-
-                    return data; // Returning data allows it to be used in `.then()`
-                } catch (error) {
-                    Swal.showValidationMessage(`Error: ${error.message}`);
-                    return false;
-                }
+                return { bookingID, reviewID, rating, comment, workshopID }; // Send workshopID here
             }
         }).then((result) => {
-            if (result.isConfirmed && result.value) {
+            if (result.isConfirmed) {
                 const data = result.value;
-                Swal.fire({
-                    icon: "success",
-                    title: "Success!",
-                    text: "Your review has been submitted successfully.",
-                    confirmButtonColor: "#28a745"
-                });
+                const endpoint = data.reviewID ? 'update-review.php' : 'submit-review.php';
 
-                // Update UI after successful submission
-                document.getElementById(`review-btn-${data.bookingID}`).style.display = 'none';
-                document.getElementById(`review-section-${data.bookingID}`).innerHTML = `
-                    <div class="review-content">
-                        <p>Rating: ${data.rating}</p>
-                        <p>Comment: ${data.comment || 'No comment provided'}</p>
-                        <button class="edit-review-btn" data-bookingid="${data.bookingID}">Edit Review</button>
-                        <button class="delete-review-btn" data-bookingid="${data.bookingID}">Delete Review</button>
-                    </div>
-                `;
+                fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(responseData => {
+                    if (responseData.success) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Review Saved!",
+                            text: "Your review has been successfully saved.",
+                            confirmButtonColor: "#28a745"
+                        });
+
+                        // If it's a new review, update button and UI
+                        if (data.reviewID === null) {  // New review
+                            button.textContent = "My Review";
+                            button.setAttribute("data-reviewid", responseData.reviewID);  // Set the reviewID from the response
+
+                            // Update the review UI
+                            const reviewElement = document.getElementById(`review-${bookingID}`);
+                            const reviewRatingElement = reviewElement.querySelector('.review-rating');
+                            const reviewCommentElement = reviewElement.querySelector('.review-comment');
+
+                            reviewRatingElement.innerHTML = "⭐".repeat(responseData.rating);  // Update stars
+                            reviewCommentElement.textContent = responseData.comment;  // Update comment
+                        } else {  // Updating an existing review
+                            // Update the UI directly with new data
+                            const reviewElement = document.getElementById(`review-${bookingID}`);
+                            const reviewRatingElement = reviewElement.querySelector('.review-rating');
+                            const reviewCommentElement = reviewElement.querySelector('.review-comment');
+
+                            reviewRatingElement.innerHTML = "⭐".repeat(responseData.rating);  // Update stars
+                            reviewCommentElement.textContent = responseData.comment;  // Update comment
+                        }
+                    } else {
+                        Swal.fire("Error!", responseData.message, "error");
+                    }
+                });
+            } else if (result.isDenied) {
+                // Handle delete review
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "This action cannot be undone.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d35400",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "Cancel"
+                }).then((confirmResult) => {
+                    if (confirmResult.isConfirmed) {
+                        fetch("delete-review.php", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ reviewID })
+                        })
+                        .then(response => response.json())
+                        .then(responseData => {
+                            if (responseData.success) {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Review Deleted!",
+                                    text: "Your review has been removed.",
+                                    confirmButtonColor: "#28a745"
+                                });
+
+                                button.textContent = "Submit Review";
+                                button.removeAttribute("data-reviewid");
+                            } else {
+                                Swal.fire("Error!", responseData.message, "error");
+                            }
+                        });
+                    }
+                });
             }
         });
     });
 });
 
+//***************************ADD POST******************************************************
+$(".add-post-btn2").click(function() {
+    // Fetch user info (name and profile picture)
+    $.ajax({
+        url: 'get_user_info.php', // Your PHP file to fetch user info
+        method: 'GET',
+        success: function(response) {
+            const data = JSON.parse(response); // Parse the response
+            if (data.success) {
+                const profilePic = data.ProfilePhoto.replace(/\\\//g, '/');
+                const userName = data.name;
 
-
-
-// Handle edit review
-document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('edit-review-btn')) {
-        const bookingID = e.target.getAttribute('data-bookingid');
-
-        Swal.fire({
-            title: 'Edit Your Review',
-            html: `
-                <div class="star-rating" id="star-rating-edit-${bookingID}">
-                    <span class="star" data-rating="1">&#9733;</span>
-                    <span class="star" data-rating="2">&#9733;</span>
-                    <span class="star" data-rating="3">&#9733;</span>
-                    <span class="star" data-rating="4">&#9733;</span>
-                    <span class="star" data-rating="5">&#9733;</span>
-                </div>
-                <textarea id="review-comment-edit-${bookingID}" rows="4" placeholder="Edit your review here..." style="width: 100%;"></textarea>
-            `,
-            showCancelButton: true,
-            confirmButtonText: 'Update Review',
-            cancelButtonText: 'Cancel',
-            preConfirm: () => {
-                const rating = document.querySelector(`#star-rating-edit-${bookingID} .star.selected`)?.getAttribute('data-rating');
-                const comment = document.getElementById(`review-comment-edit-${bookingID}`).value;
-
-                if (!rating) {
-                    Swal.showValidationMessage('Please provide a rating.');
-                    return false;
-                }
-
-                return { bookingID: bookingID, rating: rating, comment: comment || '' };
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                fetch('update-review.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(result.value)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        Swal.fire({
-                            icon: "success",
-                            title: "Updated!",
-                            text: "Your review has been updated successfully.",
-                            confirmButtonColor: "#28a745"
-                        });
-
-                        document.getElementById(`review-section-${data.bookingID}`).innerHTML = `
-                            <div class="review-content">
-                                <p>Rating: ${data.rating}</p>
-                                <p>Comment: ${data.comment || 'No comment provided'}</p>
-                                <button class="edit-review-btn" data-bookingid="${data.bookingID}">Edit Review</button>
-                                <button class="delete-review-btn" data-bookingid="${data.bookingID}">Delete Review</button>
+                Swal.fire({
+                    title: 'Add New Post',
+                    html: `
+                        <div class="form-group">
+                            <label for="images">Upload Photos:</label>
+                            <div id="image-squares" class="image-squares">
+                                <div class="image-square" data-index="1" id="square-1"></div>
+                                <div class="image-square" data-index="2" id="square-2"></div>
+                                <div class="image-square" data-index="3" id="square-3"></div>
+                                <div class="image-square" data-index="4" id="square-4"></div>
                             </div>
-                        `;
-                    } else {
-                        Swal.fire('Error!', data.message, 'error');
+                        </div>
+
+                        <div class="user-info" style="margin-left:-10px; margin-top: 10px; text-align: left;">
+                            <img src="${profilePic}" alt="Profile Picture" class="user-profile-pic" onError="this.onerror=null;this.src='uploads/default.png';">
+                            <p style="margin-left: -20px; font-weight: bold; font-size: 17px;">${userName}</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="comment">Comment:</label>
+                            <textarea id="comment" class="swal2-input" placeholder="Write your comment..."></textarea>
+                        </div>
+                    `,
+                    showCancelButton: true,
+                    confirmButtonText: 'Post',
+                    confirmButtonColor:"#f4b42b",
+                    cancelButtonText: 'Cancel',
+                    cancelButtonColor:"#b0b0b0",
+                    preConfirm: () => {
+                        const comment = document.getElementById('comment').value;
+                        const images = [];
+                        for (let i = 1; i <= 4; i++) {
+                            const image = document.getElementById(`square-${i}`).style.backgroundImage;
+                            if (image) {
+                                images.push(image);
+                            }
+                        }
+                        if (comment.trim() === '') {
+                            Swal.showValidationMessage('Please write a comment');
+                            return false;
+                        }
+                        return {
+                            comment: comment,
+                            images: images
+                        };
+                    },
+                    willClose: () => {
+                        $(".image-square").css('background-image', 'none');
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const { comment, images } = result.value;
+                        handlePost(comment, images);
                     }
                 });
+
+                // Handle image selection and preview
+              $(".image-square").click(function() {
+    const index = $(this).data('index');
+    const fileInput = $('<input type="file" accept="image/*" style="display: none;">');
+    
+    // Append to body so it works
+    $('body').append(fileInput);
+    fileInput.trigger('click');
+
+    fileInput.change(function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                $(`#square-${index}`).css('background-image', `url(${e.target.result})`);
+                $(`#square-${index}`).data('file', file); // Store the file for later upload
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+});
+
+
+            } else {
+                Swal.fire('Error', 'Failed to load user info', 'error');
             }
+        }
+    });
+});
+
+function handlePost(comment) {
+    const formData = new FormData();
+    formData.append('comment', comment);
+
+    $(".image-square").each(function(index) {
+        const file = $(this).data('file'); // Retrieve the stored file
+        if (file) {
+            formData.append(`image${index}`, file);
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "create_post.php", // PHP script to handle post creation
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+    if (response.status === "success") {
+Swal.fire({
+    title: 'Post Created!',
+    text: 'Your post has been added.',
+    icon: 'success',
+    confirmButtonText: 'Okay',
+    confirmButtonColor: '#f4b42b'  // Change this color to whatever you want
+});
+        
+         // Check if "no posts" message exists and remove it
+                if ($('#posts-container').find('.post-msg').length > 0) {
+                    $('#posts-container').find('.post-msg').remove(); // Remove the "no posts" message
+                }
+        // Dynamically add the post to the page without reloading
+        const postHTML = `
+            <div class="card" data-post-id="${response.postId}">
+                <div class="image-carousel">
+                    <div class="carousel-inner">
+                        ${response.images.map((img, index) => `
+                            <img src="${img}" class="post-image ${index === 0 ? 'active' : 'hidden'}" data-index="${index}">
+                        `).join('')}
+                    </div>
+                    ${response.images.length > 1 ? `
+                        <button class="prev-btn"></button>
+                        <button class="next-btn"></button>
+                    ` : ''}
+                </div>
+                <div class="card-content">
+                    <div class="profile">
+                        <img src="${response.userProfilePic}" class="user-circle1">
+                        <p><strong>${response.userName}</strong></p>
+                    </div>
+                    <div class="comment-section">
+                        <p class="experience-text">${comment}</p>
+                    </div>
+                    <div class="post-btn">
+                        <button class="edit-btn2"><img src="workshops/edit-btn.png" alt="edit"></button>
+                        <button class="trash-btn2"><img src="workshops/trash-btn.png" alt="delete"></button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        $('#posts-container').prepend(postHTML);
+
+        // Re-initialize the carousel buttons after adding the post dynamically
+        if (response.images.length > 1) {
+            $(postHTML).find(".prev-btn, .next-btn").show();  // Show the navigation buttons
+        } else {
+            $(postHTML).find(".prev-btn, .next-btn").hide();  // Hide the navigation buttons
+        }
+
+        // Add carousel navigation functionality
+        $(postHTML).find('.next-btn, .prev-btn').on('click', function () {
+            const carousel = $(this).closest(".image-carousel");
+            const images = carousel.find(".post-image");
+            let activeIndex = images.index(carousel.find(".post-image.active"));
+
+            if ($(this).hasClass("next-btn")) {
+                activeIndex = (activeIndex + 1) % images.length;
+            } else {
+                activeIndex = (activeIndex - 1 + images.length) % images.length;
+            }
+
+            images.removeClass("active").addClass("hidden");
+            images.eq(activeIndex).removeClass("hidden").addClass("active");
         });
+
+    } else {
+        Swal.fire('Oops!', 'Something went wrong. Please try again later.', 'error');
+    }
+}
+
+    });
+}
+
+
+// Fetch and display posts when the page loads
+function loadPosts() {
+    $.ajax({
+        type: "GET",
+        url: "get_posts.php", // Adjust this path as necessary
+        success: function(response) {
+            if (response.status === "success") {
+                const postsContainer = $('#posts-container');
+                postsContainer.empty();  // Clear any existing posts
+
+                if (response.posts.length === 0) {
+                   postsContainer.append(`
+    <p class="post-msg">
+        <img src="workshops/no_posts.png" alt="no post" class="no-posts-icon">
+    </p>
+`);
+  // Display no posts message
+                } else {
+                    response.posts.forEach(post => {
+                        const postHTML = `
+  <div class="card" data-post-id="${post.postId}">                       
+    <div class="image-carousel">
+        <div class="carousel-inner">
+            ${post.images.map((img, index) => `
+                <img src="${img}" class="post-image ${index === 0 ? 'active' : 'hidden'}" data-index="${index}">
+            `).join('')}
+        </div>
+        ${post.images.length > 1 ? `
+            <button class="prev-btn"></button>
+            <button class="next-btn"></button>
+        ` : ''}
+    </div>
+    <div class="card-content">
+        <div class="profile">
+            <img src="${post.userProfilePic}" class="user-circle">
+            <p><strong>${post.userName}</strong></p>
+        </div>
+     <div class="comment-section">
+        <p class="experience-text">${post.comment}</p>
+                        </div>
+    </div>
+                   <div class="post-btn">
+   <button class="edit-btn2"><img src="workshops/edit-btn.png" alt="edit"> </button>
+    <button class="trash-btn2"><img src="workshops/trash-btn.png" alt="delete"> </button>
+                            </div>
+</div>
+
+                        `;
+                        postsContainer.append(postHTML);
+                        // This ensures the buttons are only shown when there are more than one image
+    if (post.images.length > 1) {
+        $(postHTML).find(".prev-btn, .next-btn").show(); // Show the navigation buttons
+    } else {
+        $(postHTML).find(".prev-btn, .next-btn").hide(); // Hide the navigation buttons
+    }
+                    });
+                }
+            } else {
+                console.error('Failed to load posts. Response:', response);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching posts. Status:', status, 'Error:', error);
+            console.error('Response:', xhr.responseText);  // Check the actual response from the server
+        }
+    });
+}
+
+// Call the loadPosts function to load posts when the page loads
+$(document).ready(function() {
+    loadPosts();
+});
+;
+
+$(document).on("click", ".next-btn, .prev-btn", function () {
+    const carousel = $(this).closest(".image-carousel");
+    const images = carousel.find(".post-image");
+    let activeIndex = images.index(carousel.find(".post-image.active"));
+
+    if ($(this).hasClass("next-btn")) {
+        activeIndex = (activeIndex + 1) % images.length;
+    } else {
+        activeIndex = (activeIndex - 1 + images.length) % images.length;
     }
 
-    // Handle delete review
-    if (e.target.classList.contains('delete-review-btn')) {
-        const bookingID = e.target.getAttribute('data-bookingid');
+    images.removeClass("active").addClass("hidden");
+    images.eq(activeIndex).removeClass("hidden").addClass("active");
+});
 
+
+    
+
+
+
+
+    // Handle editing and deleting the post
+    $(document).on('click', '.edit-btn2', function () {
+        const postCard = $(this).closest('.card');
+        const currentComment = postCard.find('.experience-text').text();
+
+        // Open SweetAlert2 for editing the post
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to recover this review!",
-            icon: 'warning',
+            title: 'Edit Post',
+            html: `
+                <textarea id="editComment" class="swal2-textarea" placeholder="Edit your comment">${currentComment}</textarea>
+            `,
+            focusConfirm: false,
+            preConfirm: () => {
+                const updatedComment = document.getElementById('editComment').value;
+                return { updatedComment };
+            },
             showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!',
             cancelButtonText: 'Cancel',
-            confirmButtonColor: '#d33'
+            confirmButtonText: 'Save Changes',
+            confirmButtonColor: '#F2B42F',
+            cancelButtonColor:'#b0b0b0',
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch('delete-review.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ bookingID: bookingID })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        Swal.fire({
-                            icon: "success",
-                            title: "Deleted!",
-                            text: "Your review has been deleted successfully.",
-                            confirmButtonColor: "#d33"
-                        });
+                const { updatedComment } = result.value;
+                postCard.find('.experience-text').text(updatedComment || 'No comment provided');
 
-                        document.getElementById(`review-section-${bookingID}`).innerHTML = '';
-                        document.getElementById(`review-btn-${bookingID}`).style.display = 'inline-block';
-                    } else {
-                        Swal.fire('Error!', data.message, 'error');
+const postId = postCard.data('post-id'); 
+                    $.ajax({
+                    url: 'edit-post.php',
+                    method: 'POST',
+                    data: { postId, comment: updatedComment },
+                    success: function (response) {
+                        if (response === 'success') {
+                          Swal.fire({
+    title: 'Sucess!',
+    text: 'Your post has been Updated.',
+    icon: 'success',
+    confirmButtonColor: '#F2B42F' // Change the "OK" button color to #F242F
+});
+} else {
+    Swal.fire('Error', 'There was an issue deleting your post', 'error');
+}
                     }
                 });
             }
         });
+    });
+
+  $(document).on('click', '.trash-btn2', function () {
+    const postCard = $(this).closest('.card');
+    const postId = postCard.data('post-id');  // This will now correctly access postId
+
+    console.log("postId being sent:", postId);  // Debugging line to check postId
+
+ Swal.fire({
+        title: 'Are you sure?',
+        text: "Once deleted, you won't be able to recover this post!",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Yes',
+        confirmButtonColor: '#F2B42F',  // Change the "OK" button color
+        cancelButtonColor:'#b0b0b0',
+    }).then((result) => {
+        if (result.isConfirmed) {
+    $.ajax({
+        url: 'delete-post.php',
+        method: 'POST',
+        data: { postId: postId },
+        success: function(response) {
+            if (response === 'success') {
+                 loadPosts();
+                // Immediately remove the post from the UI without refreshing
+                postCard.remove(); 
+              Swal.fire({
+    title: 'Deleted!',
+    text: 'Your post has been deleted.',
+    icon: 'success',
+    confirmButtonColor: '#F2B42F' // Change the "OK" button color to #F242F
+});
+} else {
+    Swal.fire('Error', 'There was an issue deleting your post', 'error');
+}
+
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+            Swal.fire('Error', 'There was a network error.', 'error');
+        }
+    });
+        }
+});
+});
+
+
+//************************ FAVORITE LIST ******************************
+
+$(document).ready(function() {
+    // Fetch and display workshops with favorite status
+    function loadWishlist() {
+        $.ajax({
+            url: 'fetch_workshops.php',
+            method: 'GET',
+            success: function(response) {
+                console.log("Response:", response); // Log the response to the console
+
+                const data = JSON.parse(response);
+                const workshopsContainer = $('#workshops-container');
+                workshopsContainer.empty();  // Clear existing workshops
+
+                if (data.status === 'success' && data.workshops.length > 0) {
+                    console.log("Workshop data:", data.workshops); // Log the workshop data
+
+                    const wishlistHeader = `
+                        <h3 id="wishlist-title" style="font-size:20px;">WISHLIST</h3>
+                        <hr class="wishlist-divider"> <!-- Divider after the title -->
+                    `; 
+                    workshopsContainer.append(wishlistHeader);
+
+                    data.workshops.forEach(function(workshop) {
+                        console.log("Title: ", workshop.Title); // Ensure the title is there
+                        const correctedURL = workshop.imageURL.replace(/\\/g, '/');
+                        const heartIcon = `<img src="workshops/filled-star.png" alt="Favorite" class="wishlist-star-img">`;
+
+                        const workshopCard = `
+                            <div class="wishlist-item" data-workshop-id="${workshop.WorkshopID}">
+                                <div class="wishlist-img">
+                                    <img src="${correctedURL}" alt="${workshop.Title}" />
+                                </div>
+                                <div class="wishlist-info">
+                                    <p class="workshop-name">${workshop.Title}</p>
+                                    <div class="price-section">
+                                        <img src="workshops/riyal.png" alt="SR" class="currency-icon">
+                                        <p class="price">${workshop.Price}</p>
+                                    </div>
+                                    <div class="wishlist-actions">
+                                        <button class="book-now">Book Now</button>
+                                        <button class="wishlist-star filled">
+                                            ${heartIcon}
+                                            <span class="tooltip">Remove Favorite</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="wishlist-divider"> <!-- Divider between items -->
+                        `;
+                        workshopsContainer.append(workshopCard);
+                    });
+                } else {
+                    // Show empty message if there are no workshops
+                   workshopsContainer.html(`
+                        <div class="empty-wishlist-message">
+                            <h3>Your Wishlist is Empty</h3>
+                            <p>It looks like you haven't added any workshops or Activites to your wishlist yet.</p>
+                            <button class="browse-now-btn">Browse </button>
+                        </div>
+                    `);
+                }
+            }
+        });
     }
+
+    // Handle favorite button click
+    $(document).on('click', '.wishlist-star', function() {
+        const button = $(this); // Store reference to clicked button
+        const workshopID = button.closest('.wishlist-item').data('workshop-id');
+
+        $.ajax({
+            url: 'toggle_favorite.php',
+            method: 'POST',
+            data: { workshopID: workshopID },
+            success: function(response) {
+                response = response.trim(); // Remove whitespace
+                console.log("Server Response:", response); // Debugging
+
+                if (response === 'removed') {
+                    button.closest('.wishlist-item').fadeOut(300, function() { 
+                        $(this).remove(); // Smooth removal
+                        // Reload wishlist to check if it's empty
+                        if ($('.wishlist-item').length === 0) {
+                            loadWishlist();
+                        }
+                    });
+                } else if (response !== 'added') {
+                    console.error("Unexpected response:", response);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error:", status, error);
+            }
+        });
+    });
+
+    // Load wishlist when page loads
+    loadWishlist();
 });
