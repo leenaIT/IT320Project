@@ -10,6 +10,8 @@ $conn = new mysqli($host, $user, $pass, $dbname, 8889);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+$loggedIn = isset($_SESSION['user_id']);
+
 ?>
 
 <!DOCTYPE html>
@@ -204,8 +206,10 @@ if ($conn->connect_error) {
     <!-- قائمة الجوال -->
     <div class="mobile-nav-container">
         <nav class="mobile-nav">
+            <a href="homepage.php">Home</a>
+            <a href="ProfilePage.php"><?php echo $loggedIn ? 'Profile' : 'Login'; ?></a>
             <a href="Explore.php">Explore</a>
-            <a href="login.php">Login/Signup</a>
+            <a href="Survey.php">Survey</a>
             <a href="findcategory.php">Category</a>
             <div class="mobile-language-switch" onclick="toggleLanguage()">
                 🌐 Language
@@ -215,11 +219,14 @@ if ($conn->connect_error) {
 
     <!-- قائمة سطح المكتب -->
     <nav class="desktop-nav">
+        <a href="homepage.php">Home</a>
+        <a href="<?php echo $loggedIn ? 'ProfilePage.php' : 'login.php'; ?>">
+            <?php echo $loggedIn ? 'Profile' : 'Login'; ?>
+        </a>
         <a href="Explore.php">Explore</a>
-        <a href="login.php">Login/Signup</a>
+        <a href="Survey.php">Survey</a>
         <a href="findcategory.php">Category</a>
         <a href="#" class="language-switch" onclick="toggleLanguage()">🌐 Language</a>
-
     </nav>
 </header>
 

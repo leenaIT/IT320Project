@@ -97,28 +97,36 @@ window.addEventListener('load', () => {
     
     // *******booking modal******
     
-    // Get modal and button elements
+// Get modal and button elements
 const modal1 = document.getElementById("bookingModal");
 const modalContent1 = document.querySelector(".modal-content1");
 const openModalButton = document.getElementById("openBookingModal");
 const closeModalButton = document.querySelector(".close1");
 
-// Open modal
-openModalButton.onclick = function () {
+// Function to open the modal
+const openModal = () => {
   modal1.style.display = "flex";
 };
 
-// Close modal when clicking the close button
-closeModalButton.onclick = function () {
+// Function to close the modal
+const closeModal = () => {
   modal1.style.display = "none";
 };
 
+// Open modal on click or touch
+openModalButton.addEventListener("click", openModal);
+openModalButton.addEventListener("touchstart", openModal);
+
+// Close modal when clicking the close button
+closeModalButton.addEventListener("click", closeModal);
+
 // Close modal when clicking outside of modal-content1
-modal1.onclick = function (event) {
+modal1.addEventListener("click", (event) => {
   if (!modalContent1.contains(event.target)) {
-    modal1.style.display = "none";
+    closeModal();
   }
-};
+});
+
 
 
 // Function to open a specific tab
@@ -841,7 +849,7 @@ $(document).ready(function() {
                     console.log("Workshop data:", data.workshops); // Log the workshop data
 
                     const wishlistHeader = `
-                        <h3 id="wishlist-title" style="font-size:20px;">WISHLIST</h3>
+                        <h3 id="wishlist-title" style="font-size:18px;">WISHLIST</h3>
                         <hr class="wishlist-divider"> <!-- Divider after the title -->
                     `; 
                     workshopsContainer.append(wishlistHeader);
@@ -871,7 +879,7 @@ $(document).ready(function() {
                                     </div>
                                 </div>
                             </div>
-                            <hr class="wishlist-divider"> <!-- Divider between items -->
+                            <hr class="empty-divider"> <!-- Divider between items -->
                         `;
                         workshopsContainer.append(workshopCard);
                     });
@@ -881,7 +889,8 @@ $(document).ready(function() {
                         <div class="empty-wishlist-message">
                             <h3>Your Wishlist is Empty</h3>
                             <p>It looks like you haven't added any workshops or Activites to your wishlist yet.</p>
-                            <button class="browse-now-btn">Browse </button>
+<button class="browse-now-btn" onclick="window.location.href='findcategory.php';">Browse</button>
+
                         </div>
                     `);
                 }

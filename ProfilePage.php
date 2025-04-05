@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
-
+$loggedIn = isset($_SESSION['user_id']);
 // Get user ID from session
 $user_id = $_SESSION['user_id'];
 
@@ -74,10 +74,9 @@ while ($booking = $result3->fetch_assoc()) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Page </title>
     <link rel="stylesheet" href="styles2.css">
-    <link rel="stylesheet" href="header-footer2.css">
     <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style> 
@@ -89,15 +88,266 @@ while ($booking = $result3->fetch_assoc()) {
 
 button{ background: none;
 border:none;}
-
- header{
-    margin-bottom: 60px;
-  
- }
-
-.footer{
-    background-color: #FFFDF0;
+  /*header*/
+     /* الهيدر */
+header {
+    position:relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
 }
+
+.logo {
+    flex: 0;
+    margin-right: auto;
+}
+
+.logo img {
+    height: 80px;
+    width: 80px;
+}
+
+/* روابط سطح المكتب */
+.desktop-nav {
+    position: absolute;
+    top: 25px;
+    right: 40px;
+    display: flex;
+    gap: 20px;
+    font-weight: bold;
+}
+
+/* روابط سطح المكتب */
+.desktop-nav a,
+.language-switch {
+    text-decoration: none;
+    color: #FF9D23;
+    font-size: 20px;
+    padding: 8px 15px;
+    transition: 0.3s;
+    border-radius: 4px;
+    background: transparent;
+    border: none;
+}
+
+.language-switch:hover {
+    background-color: rgba(255, 157, 35, 0.1);
+}
+/* زر الهامبرغر */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 45px;
+    height: 45px;
+    background: white;
+    border: 2px solid #FF9D23;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.hamburger-line {
+    width: 22px;
+    height: 2.5px;
+    background: #FF9D23;
+    margin: 3px 0;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+.hamburger.active {
+    background: #FF9D23;
+}
+
+.hamburger.active .hamburger-line {
+    background: white;
+}
+
+.hamburger.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* قائمة الجوال */
+.mobile-nav-container {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: #fffefc;
+    z-index: 999;
+    transition: 0.5s;
+    padding: 80px 30px;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-nav-container.show {
+    right: 0;
+}
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* زر اللغة في الجوال فقط */
+.mobile-nav a,
+.mobile-language-switch {
+    color: #333;
+    background-color: transparent !important;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 12px 15px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    border-bottom: 1px solid #FF9D23;
+}
+
+.mobile-nav a:hover,
+.mobile-language-switch:hover {
+    transform: translateX(8px);
+    color: #FF9D23;
+}
+
+  /*footer*/
+footer {
+            margin-top: 2em;
+            padding: 1em 2em;
+            background-color: #fffefc;
+            border-top: 2px solid #f9b013ec;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+
+        .footer-left-1,
+        .footer-center-1,
+        .footer-right-1 {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.5em;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* وسط الفوتر */
+        .footer-center-1 {
+            justify-content: center;
+        }
+
+        .footer-logo-1 {
+            width: 100px;
+        }
+
+        .contact-info-1 {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: nowrap;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .contact-item-1 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .single-line-1 {
+            white-space: nowrap;
+        }
+
+        /* أيقونات السوشال ميديا */
+        .social-icons-1 {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .footer-bottom-1 {
+            width: 100%;
+            text-align: center;
+            margin-top: 0.5em;
+        }
+
+        .footer-bottom-1 p {
+            padding: 0.5em;
+            background-color: #ffffff;
+            font-size: 0.75em;
+            color: #f9b013ec;
+            border-top: 1px solid #ccc;
+        }
+        .icon-phone {
+    display: inline-block !important; 
+    width: 30px !important;
+    height: 30px !important;
+     position: relative !important;
+    left: 0 !important;
+    right: auto !important;
+}
+
+.icon-email {
+    width: 42px !important;
+    height: 42px !important;
+    
+}
+
+.icon-location {
+    width: 42px !important;
+    height: 42px !important;
+    margin-top: 6px !important;
+}
+.icon-facebook {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+.icon-twitter {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+.icon-instagram {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
 
 .profile-picture {
             width: 117px;
@@ -112,32 +362,391 @@ border:none;}
             background-repeat: no-repeat;
             background-image: url(<?php echo $photo ?>);
        }
+       
+      /***********************************************************************************************************************/ 
+       @media (max-width: 768px) {
+  /* 🔶 Booking History */
+  .modal1{
+
+  z-index:1000;
+  }
+  .empty-message{
+      margin-left:80px;
+  }
+  .booking-item {
+    flex-direction: column;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+  }
+.booking-info strong, .workshop-info strong {
+  display: flex;               /* Make the parent container a flex container */
+  flex-direction: column;      /* Arrange child elements in a column */
+  align-items: flex-start; 
+text-align:left;
+}
+.workshop-info {
+    margin-left:-60px;
+}
+.swal2-popup {
+    width: 330px; /* Set a specific width */
+    height: auto; /* Let the height adjust to the content */
+    padding: 20px;
+}
+  .orange-box {
+    margin-top: 30px;
+  }
+
+  /* 🔶 Profile Header */
+  .content {
+    display: flex;
+    flex-direction:column
+}
+  .profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .profile-picture {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    position: absolute;
+    top:50px;
+    left: 17%;
+    transform: translateX(-50%);
+    border: 2px solid black;
+    background-color: white;
+  
+  }
+.detail-title1, .detail-title2{
+    font-size:20px;
+    margin-left:-225px;
+margin-right:60px;
+
+}
+::-webkit-scrollbar {
+    width: 2px; /* Set the width of the scrollbar */
+    height: 2px; /* Set the height of the scrollbar (for horizontal scrolling) */
+}
+::-webkit-scrollbar-thumb {
+    background-color: #f4b42b; /* Yellowish color for the thumb */
+    border-radius: 10px;
+    border: 1px solid #ccc; /* Add a light border to the thumb */
+}
+.details{
+    margin-left:-210px;
+    gap:1px;
+    width:220px;
+    overflow-x:auto;
+}
+/* For labels */
+.detail-label {
+    font-weight: bold;
+    font-size: 12px;
+    margin-top: 100px;
+    margin-left:40px;
+}
+
+/* For answers */
+.detail-answer {
+    font-size:10px ;
+    font-weight: normal;
+    color: rgba(151, 150, 150, 0.696);
+    margin-top: 10px;
+    display: block;
+      margin-left:40px;
+}
+  .edit-btn1 {
+      width:15px;
+      height:15px;
+    margin-top: -45px;
+    margin-right:-15px;
+  }
+  .bio {
+    position: relative;
+    margin-top: -30px;
+    width: 40%;
+    max-width: 400px;
+      z-index:-1;
+      margin-left:7px;
+      height:230px;
+        overflow-y: auto;
+        overflow-x:auto;
+    max-height: 250px;
+  }
+  .bio h3{
+      margin-top:30px;
+      margin-left:-15px;
+      font-size:16px;
+  }
+.modal-content {
+    min-width:300px;
+    left:20%;
+}
+.current-picture{
+  border: 1px solid #ccc; 
+}
+/* 🔶 booking timeline */
+.bookings {
+    width:100%;
+    height:100px;
+}
+#openBookingModal{
+    font-size:10px; 
+    margin-top:-40px;
+     pointer-events: auto !important;
+     z-index: 99;
+     position:relative;
+}
+.booking-image{
+margin-top:-60px;
+margin-left:-30px;
+width:400px;
+position: absolute;
+
+}
+.event-photo1, .event-photo2, .event-photo3, .event-photo4, .event-photo5 {
+    width: 50px;
+    height: 50px;  
+}
+
+.event-photo1 {
+    top: 56px; 
+    left: 43px; 
+}
+.event-photo2 {
+    top: 135px; 
+    left: 110px; 
+}
+.event-photo3 {
+    top: 56px;
+    left:182px; 
+}
+.event-photo4 {
+    top: 135px; 
+    left: 255px;
+}
+.event-photo5 {
+    top: 56px;
+    left: 323px;
+}
+.event1,.event2,.event3,.event4,.event5{
+    font-size:9px;
+}
+.event1 p , .event2 p , .event3 p , .event4 p, .event5 p{
+    font-size:6px;
+}
+.event1{
+top: 56px; 
+left: 100px;
+}
+.event2{
+bottom: 25px;
+left: 165px;
+}
+
+.event3{
+top: 56px; 
+left: 240px;
+} 
+
+.event4{
+bottom: 25px;
+left: 310px;
+}
+
+.event5{
+top: 56px; 
+left: 380px;
+} 
+
+  /* 🔶 Experience Section */
+  .experiences {
+    padding: 5px;
+    margin: 0 10px;
+  }
+
+  .experiences h3 {
+    font-size: 16px;
+  }
+
+  .add-post-btn2 {
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+  }
+
+  .add-post-btn2 img {
+    width: 20px;
+    height: 20px;
+  }
+
+  #posts-container {
+    margin-left: 10px;
+    gap: 1em;
+    width: 100%;
+    padding: 1em 0;
+  }
+
+  .card {
+    width: 50% !important;
+    min-width: unset !important;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .card-content {
+    font-size: 20px;
+    padding: 10px;
+
+  }
+
+  .card p strong {
+    margin-left: 10px;
+    font-size: 14px;
+  }
+
+  .post-name {
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  .post-btn {
+    gap: 15px;
+  }
+
+  .edit-btn img,
+  .delete-btn img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .tooltip {
+    font-size: 9px;
+    padding: 4px 8px;
+    bottom: -25px;
+  }
+
+
+  /* 🔶 Footer */
+  footer {
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+  }
+
+  .footer-left-1,
+  .footer-center-1,
+  .footer-right-1 {
+    width: 100%;
+    margin-bottom: 1em;
+    padding: 0.5em 0;
+  }
+
+  .contact-info-1 {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .contact-item-1 {
+    flex: 0 0 auto;
+    margin: 0 5px;
+  }
+
+  .footer-logo-1 {
+    width: 80px;
+    margin: 10px 0;
+  }
+
+  .social-icons-1 {
+    margin: 15px 0;
+  }
+
+  /* 🔶 Navigation */
+  .desktop-nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+.logo img{
+    width:50px;
+    height:50px;
+}
+/**singout****/
+.signout {
+    position:absolute;
+    margin-left:-135px;
+    margin-top:0px;
+    
+}
+
+       
+
     </style>
 </head>
 
 <body>
-    <div class="header-container1">
-    <!-- navbar html -->
-     <header>
-<div class="nav">
-    <span><a href="homePage.php">Home</a></span>
-    <span><a href="Explore.php">Explore</a></span>
-    <span><a href="ProfilePage.php">Profile</a></span>
-    <span><a href="findcategory.php">Category</a></span>
-    
+    <header>
+    <!-- اللوقو في الوسط -->
+    <div class="logo">
+        <img src="workshops/logo.png" alt="logo">
+    </div>
 
-    <div> <span class="language-switch" onclick="toggleLanguage()">🌐 Language</span></div>
+    <!-- زر الهامبرغر -->
+    <div class="hamburger" onclick="toggleMenu(this)">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+    </div>
+
+    <!-- قائمة الجوال -->
+    <div class="mobile-nav-container">
+        <nav class="mobile-nav">
+            <a href="homepage.php">Home</a>
+            <a href="ProfilePage.php"><?php echo $loggedIn ? 'Profile' : 'Login'; ?></a>
+            <a href="Explore.php">Explore</a>
+            <a href="Survey.php">Survey</a>
+            <a href="findcategory.php">Category</a>
+            <div class="mobile-language-switch" onclick="toggleLanguage()">
+                🌐 Language
+            </div>
+        </nav>
+    </div>
+
+    <!-- قائمة سطح المكتب -->
+    <nav class="desktop-nav">
+        <a href="homepage.php">Home</a>
+        <a href="<?php echo $loggedIn ? 'ProfilePage.php' : 'login.php'; ?>">
+            <?php echo $loggedIn ? 'Profile' : 'Login'; ?>
+        </a>
+        <a href="Explore.php">Explore</a>
+        <a href="Survey.php">Survey</a>
+        <a href="findcategory.php">Category</a>
+        <a href="#" class="language-switch" onclick="toggleLanguage()">🌐 Language</a>
+    </nav>
+</header>
+    <section class="profile-header">
+<!-- Sign Out Button -->
+<div class="signout">
+<a href="signout.php"><button class="signout">Sign Out</button></a>
 </div>
-     </header> 
-        </div>
-   <section class="profile-header">
     <div class="user-info">
+        
         <div class="profile-picture"> </div>
-        <div class="details">
+       
             <p>
                 <span class="detail-title1">User <br></span>
                 <span class="detail-title2">Profile</span>
             </p>
+             <div class="details">
             <p>
                 <span class="detail-label">First Name</span><br>
                 <span class="detail-answer"><?php echo htmlspecialchars(ucwords($user['FirstName'])); ?></span>
@@ -173,7 +782,7 @@ border:none;}
     <?php if (!empty($user['bio'])): ?>
         <p><?php echo htmlspecialchars($user['bio']); ?></p>
     <?php else: ?>
-        <p>No bio available.</p> <!-- Optional message if bio is empty -->
+        <p style="font-size:12px;">No bio available.</p> <!-- Optional message if bio is empty -->
     <?php endif; ?>
 </div>
 
@@ -218,7 +827,6 @@ border:none;}
       <button class="tablinks" onclick="openTab(event, 'Upcoming')">Upcoming</button>
       <button class="tablinks" onclick="openTab(event, 'Completed')">Completed</button>
     </div>
-
     <!-- Modal Content for All bookings -->
 <div id="All" class="tabcontent">
   <?php if (!empty($upcomingBookings) || !empty($completedBookings)): ?>
@@ -288,7 +896,6 @@ border:none;}
     <p class="empty-message">No upcoming bookings.</p>
   <?php endif; ?>
 </div>
-
 <!-- Completed bookings section -->
 <div id="Completed" class="tabcontent">
     <?php if (!empty($completedBookings)): ?>
@@ -377,8 +984,7 @@ border:none;}
             <img id="currentProfilePic" src="<?php echo !empty($user['ProfilePhoto']) ? 'uploads/' . $user['ProfilePhoto'] : 'uploads/default.jpg'; ?>" alt="Profile Picture" class="current-picture">
             <input  style="margin-top:20px;" type="file" name="profile_photo" id="profilePhotoInput">
         </div>
-
-        <!-- Form inputs for user information -->
+            <!-- Form inputs for user information -->
         <div class="form-input">
             
                 <label for="firstName">First Name</label>
@@ -402,7 +1008,47 @@ border:none;}
     </div>
 </div>
 
-  
+  <footer>
+    <div class="footer-left-1">
+        <h4>Get In Touch</h4>
+        <div class="contact-info-1" id="contact-us">
+    <div class="contact-item-1">
+        <img src="workshops/phone.png" class="icon-phone">
+        <span class="single-line-1">+996 58765 43210</span>
+    </div>
+    <div class="contact-item-1">
+        <img src="workshops/mail.png" class="icon-email">
+        <span class="single-line-1">mehar@gmail.com</span>
+    </div>
+    <div class="contact-item-1">
+        <img src="workshops/location.png" class="icon-location">
+        <span class="single-line-1">Saudi Arabia</span>
+    </div>
+</div>
+
+    </div>
+
+    <div class="footer-center-1">
+        <a href="index.html">
+            <img src="workshops/logo.png" alt="Logo" class="footer-logo-1 logo-toggle">
+        </a>
+    </div>
+
+    <div class="footer-right-1" id="contact">
+        <h4>Social Media</h4>
+        <div class="social-icons-1">
+            <img src="workshops/Facebook_icon_(black).svg" alt="Facebook" class="icon-facebook">
+            <img src="workshops/X1.png" alt="Twitter" class="icon-twitter">
+            <img src="workshops/CIS-A2K_Instagram_Icon_(Black).svg" alt="Instagram" class="icon-instagram">
+        </div>
+    </div>
+
+    <!-- الخط السفلي -->
+    <div class="footer-bottom-1">
+        <p>© 2024 Website. All rights reserved.</p>
+    </div>
+</footer>
+
 <!-- First, load jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -426,7 +1072,16 @@ border:none;}
 <!-- Your custom JavaScript file -->
 <script src='profile-page.js'></script>
 
+<script>
 
+function toggleMenu(button) {
+    button.classList.toggle('active');
+    document.querySelector('.mobile-nav-container').classList.toggle('show');
+    
+    document.body.style.overflow = button.classList.contains('active') ? 'hidden' : '';
+}
+
+</script>
 
 </body>
 </html>

@@ -114,7 +114,7 @@ margin-top: 10px;
 
 
 .bio h3{
-    margin-top:70px;
+    margin-top:50px;
     margin-bottom: 20px;
    color:#d48d00;
 }
@@ -137,6 +137,7 @@ margin-top: 10px;
     color:white;
     margin-left:10px;
     margin-bottom: 30px;
+        margin-top: 10px;
 font-family: 'sans-serif';
  background-color: rgba(0, 0, 0, 0.5); /* Transparent gray */
   cursor: pointer;
@@ -160,7 +161,7 @@ letter-spacing: 1px;
 }
 
 .booking-image{
-margin-top:-130px;
+margin-top:-140px;
 margin-left:70px;
 width:730px;
 position: absolute;
@@ -224,8 +225,7 @@ position: absolute;
     position: absolute;
 top: 46px; 
 left: 270px;
-} 
-
+}
 .event2{
     color:black;
     position: absolute;
@@ -276,7 +276,7 @@ left: 790px;
     border-radius: 10px;
     margin-left:23px;
     margin-right: 20px;
-    gap:-10px;
+    gap:10px;
     box-sizing: border-box;
 }
 
@@ -421,6 +421,7 @@ button img {
 
 .card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
 }
 
 .card:hover {
@@ -440,7 +441,7 @@ button img {
 .modal {
   display: none; /* Hide modal by default */
   position: fixed;
-  z-index: 999;
+  z-index: 9999;
   left: 0;
   top: 0;
   width: 100%;
@@ -449,8 +450,8 @@ button img {
   display: flex;
   justify-content: center;
   align-items: center;
-}
 
+}
 /* Modal Content */
 .modal-content {
   background-color: #222;
@@ -492,7 +493,6 @@ button img {
 .profile-picture-container {
   display: flex;
   flex-direction: row;
-  align-items: left;
   margin-bottom: 20px;
   margin-top: 20px; /* Space above the profile picture */
   gap:10px;
@@ -593,6 +593,7 @@ background-color:  #FFFDF0;
   display: flex;
   justify-content: center;
   align-items: center;
+      z-index: 1005;
 }
 
 /* Modal Content */
@@ -609,7 +610,6 @@ background-color:  #FFFDF0;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-    z-index: 10;
 }
 
 /* Tabs Container */
@@ -637,7 +637,6 @@ margin-top:10px;
    color: #d48d00;
    font-weight: bold;
 }
-
 .tablinks:hover {
   background-color: #ddd;
 }
@@ -770,16 +769,7 @@ padding:6px;
     transform: scale(1.02);
     box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
 }
-/* Make sure the modal is centered */
-@media screen and (max-width: 600px) {
-  .modal-content1 {
-    width: 95%;
-  }
 
-  .tablinks {
-    font-size: 14px;
-  }
-}
 
 .empty-message {
   text-align: center;
@@ -828,8 +818,7 @@ padding:6px;
         .submit-btn:hover {
             background-color: #ff9900;
         }
-
-.review-form {
+        .review-form {
     margin-top: 10px;
 }
 
@@ -1040,8 +1029,6 @@ button.swal2-cancel:hover {
     width: 20px;
     height: 20px;
 }
-
-
 .user-profile-pic {
     width: 30px;  /* Adjust size as needed */
     height: 30px;
@@ -1066,7 +1053,7 @@ button.swal2-cancel:hover {
 .card {
     flex-shrink: 0;
     flex-grow: 0;
-    width: 28%; /* Adjust for responsiveness */
+    width: 26%; /* Adjust for responsiveness */
     background: white;
     border-radius: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -1078,15 +1065,17 @@ button.swal2-cancel:hover {
     scroll-snap-align: start;
     box-sizing: border-box;
     margin-left:10px;
-    
 }
 
 
 .post-image {
+    width:100%;
     max-width: 100%;
     max-height: 300px;
     border-radius: 8px;
     object-fit: cover;
+    justify-content: center; /* Center the image horizontally */
+    align-items: center;
 }
 
 /* Profile info */
@@ -1243,7 +1232,6 @@ padding-top: 2em;}
     margin-left: 13px;
     gap: 43px;
 }
-
 .book-now {
     background-color: rgba(0, 0, 0, 0.8); /* Transparent gray */
     color: white;
@@ -1311,6 +1299,7 @@ padding-top: 2em;}
     margin-bottom: 40px;
     overflow-x: auto;  /* Enable horizontal scrolling */
     overflow-y: hidden; /* Prevent vertical scrolling */
+    gap: 20px;
 }
 
 /* Wishlist Title */
@@ -1324,12 +1313,14 @@ padding-top: 2em;}
 .wishlist-items {
     display: flex;
     flex-direction: row;
-    gap: 10px; /* Reduce gap between items */
+    gap: 20px; /* Reduce gap between items */
     height: 100%;
     scroll-behavior: smooth;
     overflow-y: hidden; /* Prevent vertical scrolling */
     scroll-snap-type: x mandatory;
     flex-wrap: nowrap; /* Ensure items stay on one line */
+     justify-content: flex-start;
+     margin-right:20px;
 }
 
 /* Hide scrollbar */
@@ -1352,13 +1343,18 @@ padding-top: 2em;}
     scroll-snap-align: start; /* Ensures items snap to the left */
     flex-shrink: 0; /* Prevents shrinking of items */
 }
-
 /* Vertical Dividers */
 .wishlist-divider {
     width: 1px;
     height: 220px;
     border: 1.5px solid orange;
     margin-left: 10px; /* Reduce space between item & divider */
+}
+.empty-divider{
+     width: 1px;
+    height: 220px;
+    border: 1.5px solid orange;
+    display:none;
 }
 
 .empty-wishlist-message {
@@ -1390,4 +1386,31 @@ padding-top: 2em;}
 
 .browse-now-btn:hover {
     background-color: #ff4500;
+}
+.signout {
+margin-left:-5px;
+margin-top:-80px;
+}
+.signout button{
+      background-color: #f4b42b; /* A vibrant color that could stand out */
+    color: white;              /* White text for contrast */
+    padding: 3px 8px;        /* Add some padding for a larger clickable area */
+    font-size: 12px;           /* Set font size for better readability */
+    border: none;              /* Remove default border */
+    border-radius: 25px;       /* Rounded corners for a modern look */
+    cursor: pointer;          /* Change cursor to pointer to indicate it is clickable */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effects */
+}
+.signout button:hover {
+    background-color: #e0951f ;  /* Darker shade on hover */
+}
+
+.signout button:active {
+    background-color: #c9861a;  /* Even darker on active press */
+    transform: translateY(0);    /* Reset the lift when clicked */
+}
+
+.signout button:focus {
+    outline: none;               /* Remove outline on focus */
+    box-shadow: 0 0 10px rgba(255, 87, 51, 0.7); /* Add a glowing effect when focused */
 }
