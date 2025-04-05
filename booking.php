@@ -2,14 +2,14 @@
 session_start();
 require 'database.php';
 
-if (!isset($_GET['workshopID'])) {
-    echo "Workshop ID is missing.";
+if (!isset($_GET['WorkshopID'])) {
+    header("Location: findcategory.php");
     exit;
 }
 
-$workshopID = $_GET['workshopID'];
+$workshopID = $_GET['WorkshopID'];
 
-$stmt = $connection->prepare("SELECT Title, LongDes, Location, Duration, Age, Price, ImageURL FROM workshop WHERE WorkshopID = ?");
+$stmt = $connection->prepare("SELECT Title, LongDes, Location, Duration, Age, Price, ImageURL, Category FROM workshop WHERE WorkshopID = ?");
 $stmt->bind_param("i", $workshopID);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -19,79 +19,117 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-
 $workshop = $result->fetch_assoc();
 
-$schedule_stmt = $connection->prepare("SELECT Day, Date, StartTime, EndTime FROM workshop_schedule WHERE WorkshopID = ?");
+$schedule_stmt = $connection->prepare("SELECT ScheduleID, Day, Date, StartTime, EndTime FROM workshop_schedule WHERE WorkshopID = ?");
 $schedule_stmt->bind_param("i", $workshopID);
 $schedule_stmt->execute();
 $schedule_result = $schedule_stmt->get_result();
-
-
 
 $works_stmt = $connection->prepare("SELECT ImageURL, ClientName, CreatedAt FROM previous_works WHERE WorkshopID = ?");
 $works_stmt->bind_param("i", $workshopID);
 $works_stmt->execute();
 $works_result = $works_stmt->get_result();
 
-
-
 $review_stmt = $connection->prepare("
-    SELECT r.Rating, r.Comment, u.FirstName, u.LastName
+    SELECT r.Rating, r.Comment, u.FirstName, u.LastName, u.ProfilePhoto
     FROM review r
     JOIN users u ON r.UserID = u.UserID
     WHERE r.WorkshopID = ?
 ");
+
 $review_stmt->bind_param("i", $workshopID);
 $review_stmt->execute();
 $review_result = $review_stmt->get_result();
 
+$isFavorited = false;
+if (isset($_SESSION['user_id'])) {
+    $userID = $_SESSION['user_id'];
+    $fav_check = $connection->prepare("SELECT id FROM favorites WHERE UserID = ? AND WorkshopID = ?");
+    $fav_check->bind_param("ii", $userID, $workshopID);
+    $fav_check->execute();
+    $fav_check_result = $fav_check->get_result();
+    $isFavorited = $fav_check_result->num_rows > 0;
+}
 
+
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['add_favorite'])) {
+        // إضافة
+        if (!isset($_SESSION['user_id'])) {
+            http_response_code(403);
+            exit("Login required");
+        }
+
+        $userID = $_SESSION['user_id'];
+        $check_stmt = $connection->prepare("SELECT * FROM favorites WHERE UserID = ? AND WorkshopID = ?");
+        $check_stmt->bind_param("ii", $userID, $workshopID);
+        $check_stmt->execute();
+        $check_result = $check_stmt->get_result();
+
+        if ($check_result->num_rows === 0) {
+            $insert_stmt = $connection->prepare("INSERT INTO favorites (UserID, WorkshopID) VALUES (?, ?)");
+            $insert_stmt->bind_param("ii", $userID, $workshopID);
+            $insert_stmt->execute();
+        }
+
+        exit;
+    }
+
+    if (isset($_POST['remove_favorite'])) {
+        // إزالة
+        if (!isset($_SESSION['user_id'])) {
+            http_response_code(403);
+            exit("Login required");
+        }
+
+        $userID = $_SESSION['user_id'];
+        $delete_stmt = $connection->prepare("DELETE FROM favorites WHERE UserID = ? AND WorkshopID = ?");
+        $delete_stmt->bind_param("ii", $userID, $workshopID);
+        $delete_stmt->execute();
+
+        exit;
+    }
+}
+
+    
+    
+    
+    
 
 function timeAgo($datetime) {
     $now = new DateTime();
     $created = new DateTime($datetime);
     $interval = $now->diff($created);
-
-    if ($interval->y > 0) {
-        return $interval->y . ' year' . ($interval->y > 1 ? 's' : '') . ' ago';
-    } elseif ($interval->m > 0) {
-        return $interval->m . ' month' . ($interval->m > 1 ? 's' : '') . ' ago';
-    } elseif ($interval->d >= 7) {
-        $weeks = floor($interval->d / 7);
-        return $weeks . ' week' . ($weeks > 1 ? 's' : '') . ' ago';
-    } elseif ($interval->d > 0) {
-        return $interval->d . ' day' . ($interval->d > 1 ? 's' : '') . ' ago';
-    } elseif ($interval->h > 0) {
-        return $interval->h . ' hour' . ($interval->h > 1 ? 's' : '') . ' ago';
-    } elseif ($interval->i > 0) {
-        return $interval->i . ' minute' . ($interval->i > 1 ? 's' : '') . ' ago';
-    } else {
-        return 'Just now';
-    }
+    if ($interval->y > 0) return $interval->y . ' year' . ($interval->y > 1 ? 's' : '') . ' ago';
+    if ($interval->m > 0) return $interval->m . ' month' . ($interval->m > 1 ? 's' : '') . ' ago';
+    if ($interval->d >= 7) return floor($interval->d / 7) . ' week' . ($interval->d > 7 ? 's' : '') . ' ago';
+    if ($interval->d > 0) return $interval->d . ' day' . ($interval->d > 1 ? 's' : '') . ' ago';
+    if ($interval->h > 0) return $interval->h . ' hour' . ($interval->h > 1 ? 's' : '') . ' ago';
+    if ($interval->i > 0) return $interval->i . ' minute' . ($interval->i > 1 ? 's' : '') . ' ago';
+    return 'Just now';
 }
-
-
 
 function renderStars($rating) {
-    $full = str_repeat('★', $rating);
-    $empty = str_repeat('☆', 5 - $rating);
-    return $full . $empty;
+    return str_repeat('★', $rating) . str_repeat('☆', 5 - $rating);
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>booking</title>
-    <link rel="stylesheet" href="header-footer2.css">
+    <link rel="stylesheet" href="header.css">
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
-<style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
 body {
             margin: 0;
-            font-family: 'Montserrat', sans-serif;
             background: #FFFDF0;
             justify-content: center;
             align-items: center;
@@ -101,32 +139,14 @@ body {
 
         }
     
-.header {
-            position: relative;
-            width: 100%;
-            height: 655px;
-            background: url('workshops/candle.jpeg') no-repeat center center/cover;
-            color: white;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-        }
 
-        .header::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-        }
 
         .header-content {
     z-index: 1;
     margin: 0 auto;
     text-align: center;
     width: 100%;
+    padding: 10%;
 }
 
 
@@ -188,6 +208,9 @@ body {
         }
 
 
+button {
+    font-family: 'swap', serif;
+}
 
 
 
@@ -319,7 +342,7 @@ body {
             cursor: pointer;
             border-radius: 15px;
             width: 100px;
-            margin-left: 68.3%;
+            margin-left: 65.3%;
         }
 
 
@@ -385,55 +408,7 @@ body {
     word-wrap: break-word; 
 }
 
-.image-placeholder1{
-    background-image: url("workshops/candle2.jpg");
-    background-position: -60%;
-    background-position:  center; 
-    background-size: 100%; 
-    width: 100%;
-    height: 200px;
-    border-radius: 20px;
-}
 
-.image-placeholder2{
-    background-image: url("workshops/candle3.jpg"); 
-    background-position: -60%;
-    background-position:  center; 
-    background-size: 100%; 
-    width: 100%;
-    height: 200px;
-    border-radius: 20px;
-}
-
-.image-placeholder3{
-    background-image: url("workshops/candle4.jpg");
-    background-position: -60%;
-    background-position:  center; 
-    background-size: 100%; 
-    width: 100%;
-    height: 200px;
-    border-radius: 20px;
-}
-
-
-.image-placeholder4{
-    background-image: url("workshops/candle5.jpg");
-    background-position: -60%;
-    background-position: bottom center; 
-    background-size: 100%; 
-    width: 100%;
-    height: 200px;
-    border-radius: 20px;
-}
-.image-placeholder5{
-    background-image: url("workshops/candle6.jpg");
-    background-position: -60%;
-    background-position:  center; 
-    background-size: 100%; 
-    width: 100%;
-    height: 200px;
-    border-radius: 20px;
-}
 .image-placeholder6{
     background-image:url("workshops/candle7.jpg");
     background-position: -60%;
@@ -448,7 +423,7 @@ body {
 .card-content {
     margin-top: 15px;
     background: #f5f5f5;
-    border-radius: 5px;
+    border-radius: 8px;
     
 }
 
@@ -464,6 +439,7 @@ text-align: center;
     align-items: center;
     gap: 10px;
     text-align: center;
+    height:33px;
 }
 
 
@@ -491,7 +467,6 @@ text-align: center;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 87, 125, 0.2);
       padding: 20px;
-
       word-wrap: break-word; 
     box-sizing: border-box; 
   }
@@ -566,21 +541,260 @@ text-align: center;
 .stars{
     color:darkred;
 }
+.wishlist-star {
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    cursor: pointer;
+    z-index: 1000;
+    width: 48px;
+    height: 48px;
+}
+
+.wishlist-star svg {
+    width: 100%;
+    height: 100%;
+}
+
+.wishlist-star svg:hover {
+    transform: scale(1.13);
+    filter: drop-shadow(0 0 6px gold);
+}
+
+
+#sub:hover {
+    transform: scale(1.1);
+}
+
+.time-button:hover{
+    transform: scale(1.1);
+}
+
+.card:hover{
+    transform: scale(1.1);
+}
+
+
+footer {
+    margin-top: 2em;
+    padding: 1em 2em;
+    background-color: #fffefc;
+    border-top: 2px solid #f9b013ec;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.footer-left-1,
+.footer-center-1,
+.footer-right-1 {
+    flex: 1;
+    min-width: 250px;
+    padding: 0.5em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.footer-center-1 {
+    justify-content: center;
+}
+
+.footer-logo-1 {
+    width: 100px;
+}
+
+
+.contact-info-1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+    margin-top: 10px;
+    width: 100%; 
+}
+
+
+
+.contact-item-1 {
+    display: flex;
+    align-items: center; 
+    gap: 8px; 
+    white-space: nowrap;
+}
+
+
+.single-line-1 {
+    white-space: nowrap;
+}
+
+.social-icons-1 {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.footer-bottom-1 {
+    width: 100%;
+    text-align: center;
+    margin-top: 0.5em;
+}
+
+.footer-bottom-1 p {
+    padding: 0.5em;
+    background-color: #ffffff;
+    font-size: 0.75em;
+    color: #f9b013ec;
+    border-top: 1px solid #ccc;
+}
+
+.icon-phone {
+    display: inline-block !important; 
+    width: 30px !important;
+    height: 30px !important;
+}
+
+.icon-phone {
+    position: relative !important;
+    left: 0 !important;
+    right: auto !important;
+}
+
+.icon-email {
+    width: 42px !important;
+    height: 42px !important;
+    
+}
+
+.icon-location {
+    width: 42px !important;
+    height: 42px !important;
+    margin-top: 6px !important;
+}
+
+.icon-facebook {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+.icon-twitter {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+.icon-instagram {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+
+@media (max-width: 768px) {
+    .footer-left-1,
+    .footer-center-1,
+    .footer-right-1 {
+        flex: 100%;
+        margin-bottom: 1em;
+    }
+
+    .contact-info-1 {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .icon-phone,
+    .icon-email,
+    .icon-location,
+    .icon-facebook,
+    .icon-twitter,
+    .icon-instagram {
+        transform: scale(0.9);
+    }
+}
+        body {
+            margin: 0;
+            background: #FFFDF0;
+        }
+
+.header {
+            position: relative;
+            width: 100%;
+            height: 655px;
+            background: url('workshops/candle.jpeg') no-repeat center center/cover;
+            color: white;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+
+
 
 </style>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <!-- navbar.html -->
-<div class="header" style="background: url('<?php echo $workshop['ImageURL']; ?>') no-repeat center center/cover;">
-    <header>
-        <div class="nav">
-            <span><a href="homePage.html">Home</a></span>
-            <span><a href="Explore.html">Explore</a></span>
-            <span><a href="ProfilePage.html">Profile</a></span>
-            <span><a href="findcategory.html">Category</a></span>
-            <span><div class="language-switch" onclick="toggleLanguage()">🌐 Language</div></span>
-        </div>
-    </header>  
+
+<?php
+$imagePath = str_replace('\\', '/', $workshop['ImageURL']);
+?>
+
+<div class="header" style="background: url('<?php echo $imagePath; ?>') no-repeat center center/cover;">
+   
+
+     <header>
+    <div class="logo">
+        <img src="workshops/logo.png" alt="logo">
+    </div>
+
+    <!-- زر الهامبرغر -->
+    <div class="hamburger" onclick="toggleMenu(this)">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+    </div>
+
+    <div class="mobile-nav-container">
+        <nav class="mobile-nav">
+            <a href="Explore.php">Explore</a>
+            <a href="login.php">Login/Signup</a>
+            <a href="findcategory.php">Category</a>
+            <div class="mobile-language-switch" onclick="toggleLanguage()">
+                🌐 Language
+            </div>
+        </nav>
+    </div>
+    
+    <nav class="desktop-nav">
+        <a href="Explore.php">Explore</a>
+        <a href="login.php">Login/Signup</a>
+        <a href="findcategory.php">Category</a>
+        <a href="#" class="language-switch" onclick="toggleLanguage()">🌐 Language</a>
+
+    </nav>
+</header>
+     
+     
     <div class="header-content">
         <h1>
             <br><span class="outline-text"><?php echo htmlspecialchars($workshop['Title']); ?></span><br>
@@ -592,6 +806,12 @@ text-align: center;
 
 
 <div class="box-container">
+    <div class="wishlist-star" id="wishlistStar" onclick="handleFavorite()">
+    <svg id="starIcon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="<?php echo $isFavorited ? '#facc15' : '#ccc'; ?>" viewBox="0 0 24 24">
+        <path d="M12 2.25l2.96 6.1 6.72.98-4.84 4.72 1.14 6.65L12 17.77l-5.98 3.15 1.14-6.65-4.84-4.72 6.72-.98L12 2.25z" stroke="<?php echo $isFavorited ? '#facc15' : '#ccc'; ?>" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+</div>
+
     <br><br><img src="workshops/line2.png" alt="Timeline" class="timeline-img">
     <div class="timeline-text">
     <div><?php echo htmlspecialchars($workshop['Location']); ?></div>
@@ -602,7 +822,7 @@ text-align: center;
     
     <br><br><br>
     
-    <div>Available Time</div><br><br>
+    <div>Available Times</div><br><br>
 <div id="workshop-times">
     <?php
     $timeIndex = 1;
@@ -612,13 +832,17 @@ text-align: center;
         $startTime = date("g:i A", strtotime($row['StartTime']));
         $endTime = date("g:i A", strtotime($row['EndTime']));
         $buttonId = "time" . $timeIndex;
+        $scheduleID = $row['ScheduleID'];
     ?>
-        <button class="time-button" id="<?php echo $buttonId; ?>" onclick="selectTime('<?php echo $buttonId; ?>')">
-            <span><?php echo "$day<br> $date <br> $startTime - $endTime"; ?></span>
-        </button>
-    <?php
-        $timeIndex++;
-    endwhile;
+<button class="time-button" 
+            id="<?php echo $buttonId; ?>" 
+            data-scheduleid="<?php echo $scheduleID; ?>"
+            onclick="selectTime('<?php echo $buttonId; ?>')">
+        <span><?php echo "$day<br> $date <br> $startTime - $endTime"; ?></span>
+    </button>
+<?php
+    $timeIndex++;
+endwhile;
     ?>
 </div>
 
@@ -630,7 +854,12 @@ text-align: center;
     <div class="price-section">
         <img src="workshops/riyal.png" alt="SR" class="currency-icon">
         <p class="price"><?php echo htmlspecialchars($workshop['Price']); ?></p>
-        <button id="sub" onclick="confirmBooking()">Confirm Booking</button>
+        
+<button id="sub" onclick="confirmBooking()">Confirm Booking</button>
+
+
+
+
     </div>
 
     
@@ -667,9 +896,13 @@ while ($row = $review_result->fetch_assoc()):
     $stars = renderStars((int)$row['Rating']);
 ?>
     <div class="carousel-item <?php echo $positionClass; ?>">
-        <img class="i" src="مهار.jpg" alt="">
-        <h3><?php echo $name; ?></h3>
-        <p><?php echo $comment; ?></p>
+        <?php
+$profileImage = !empty($row['ProfilePhoto']) ? 'uploads/' . $row['ProfilePhoto'] : 'uploads/default.jpg';
+?>
+<img class="i" src="<?php echo $profileImage; ?>" alt="">
+
+<h3><?php echo $name; ?></h3><br>
+<p><?php echo $comment; ?></p><br>
         <p class="stars"><?php echo $stars; ?></p>
     </div>
 <?php
@@ -681,38 +914,44 @@ endwhile;
 <br><br>
     
           
- <!-- footer.html -->
- <hr style="color:black; border-width:2px;">
- <footer class="footer" id="footer">
-     <div class="footer-content">
-         <div class="footer-left">
-             <h4>Get In Touch</h4>
-             <div class="contact-info">
-                 <div class="contact-item">
-                     <img src="workshops/360_F_553663238_v4Tva6Ie5Z5MhwCw0TknszcWuQ1ZAwQx.png" alt="Phone">
-                 </div>
-                 <div class="contact-item">
-                     <img id="email" src="workshops/360_F_181003490_CxW4fQ0H3VypIIsPkFGpMDviO8ysWjOZ.png" alt="Email">
-                 </div>
-                 <div class="contact-item">
-                     <img id="location" src="workshops/360_F_254622588_6OClHyYpak64rVI8y9QVjUvDlStsDEu9.png" alt="Location">
-                 </div>
-             </div>
-         </div>
-         <div class="footer-right">
-             <h4>Follow Us</h4>
-             <div class="social-icons">
-                 <img id="facebook" src="workshops/black-square-outline-facebook-icon-7017516951347228u34mgnk68.png" alt="Facebook">
-                 <img src="workshops/twitter-icon-256x227-kf6zqma5.png" alt="Twitter">
-                 <img src="workshops/121.png" alt="Instagram">
-             </div>
-         </div>
-     </div>
-     <div class="footer-center">
-         
-         <p>© 2024 Website. All rights reserved.</p>
-     </div>
- </footer>
+<footer>
+    <div class="footer-left-1">
+        <h4>Get In Touch</h4>
+        <div class="contact-info-1" id="contact-us">
+            <div class="contact-item-1">
+                <img src="workshops/phone.png" alt="Phone Icon" class="icon-phone">
+                <span class="single-line-1">+996 58765 43210</span>
+            </div>
+            <div class="contact-item-1">
+                <img src="workshops/mail.png" alt="Email Icon" class="icon-email">
+                <span class="single-line-1">mehar@gmail.com</span>
+            </div>
+            <div class="contact-item-1">
+                <img src="workshops/location.png" alt="Location Icon" class="icon-location">
+                <span class="single-line-1">Saudi Arabia</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer-center-1">
+        <a href="index.html">
+            <img src="workshops/logo.png" alt="Logo" class="footer-logo-1 logo-toggle">
+        </a>
+    </div>
+    
+    <div class="footer-right-1" id="contact">
+        <h4>Social media</h4>
+        <div class="social-icons-1">
+            <img src="workshops/Facebook_icon_(black).svg" alt="Facebook" class="icon-facebook">
+            <img src="workshops/X1.png" alt="Twitter" class="icon-twitter">
+            <img src="workshops/CIS-A2K_Instagram_Icon_(Black).svg" alt="Instagram" class="icon-instagram">
+        </div>
+    </div>
+    
+    <div class="footer-bottom-1">
+        <p>© 2024 Website. All rights reserved.</p>
+    </div>
+</footer>
 
 <script>
     let selectedTime = null;
@@ -727,13 +966,110 @@ endwhile;
         selectedTime = timeId; 
     }
 
-    function confirmBooking() {
-        if (!selectedTime) {
-            alert("يرجى اختيار وقت الحجز قبل التأكيد.");
-            return;
-        }
-        alert("تم تأكيد الحجز للوقت: " + document.getElementById(selectedTime).innerText);
+
+
+</script>
+
+<script>
+function confirmBooking() {
+    if (!selectedTime) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Select Time',
+            text: 'Please choose a time before confirming booking!',
+            confirmButtonColor: '#E6B740'
+        });
+        return;
     }
+
+    // استخراج البيانات من الزر المحدد
+    const selectedButton = document.getElementById(selectedTime);
+    const scheduleID = selectedButton.dataset.scheduleid; 
+    const timeText = selectedButton.innerText.trim().split('\n');
+    
+    const date = timeText[1].trim(); // مثال: March 27, 2025
+    const startEnd = timeText[2].split(' - ');
+    const startTime = convertTo24Hour(startEnd[0].trim()); // مثال: 15:00:00
+    const endTime = convertTo24Hour(startEnd[1].trim());   // مثال: 17:00:00
+
+    Swal.fire({
+        title: 'Confirm Booking?',
+        text: 'Are you sure you want to book this workshop?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#E6B740',
+        cancelButtonColor: '#aaa'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch('confirm_booking.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    workshopID: <?php echo $workshopID; ?>,
+                    date: formatDate(date), 
+                    startTime: startTime,
+                    endTime: endTime,
+                    scheduleID: scheduleID
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Booking Confirmed!',
+                        text: 'Your booking number is: ' + data.BID,
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#E6B740'
+                    }).then(() => {
+                        window.location.href = 'findcategory.php';
+                    });
+                } else if (data.status === 'already_booked') {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Already Booked!',
+                        text: data.message,
+                        confirmButtonColor: '#E6B740'
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed!',
+                        text: data.message || 'Something went wrong.',
+                        confirmButtonColor: '#E6B740'
+                    });
+                }
+            });
+        }
+    });
+}
+
+
+function convertTo24Hour(timeStr) {
+    const [time, modifier] = timeStr.split(" ");
+    let [hours, minutes] = time.split(":");
+
+    if (modifier === "PM" && hours !== "12") {
+        hours = parseInt(hours, 10) + 12;
+    }
+    if (modifier === "AM" && hours === "12") {
+        hours = "00";
+    }
+
+    return `${hours}:${minutes}:00`;
+}
+
+// تحويل التاريخ من "March 27, 2025" إلى "2025-03-27"
+function formatDate(dateStr) {
+    const dateObj = new Date(dateStr);
+    return dateObj.toISOString().split('T')[0];
+}
+
+
 </script>
 
 <script>
@@ -843,7 +1179,83 @@ window.addEventListener('load', () => {
 
 
         </script>
+        
+        
+        <script>
+let isFavorited = <?php echo $isFavorited ? 'true' : 'false'; ?>;
+
+function handleFavorite() {
+    const starIcon = document.getElementById('starIcon');
+
+    if (!isFavorited) {
+        // إضافة إلى المفضلة
+        Swal.fire({
+            title: 'Add to Wishlist?',
+            text: 'Do you want to add this workshop to your wishlist?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#E6B740',
+            cancelButtonColor: '#aaa'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(window.location.href, {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    body: "add_favorite=1"
+                })
+                .then(() => {
+                    starIcon.setAttribute("fill", "#facc15");
+                    starIcon.setAttribute("stroke", "#facc15");
+                    isFavorited = true;
+
+                    Swal.fire({
+                        title: 'Added!',
+                        text: 'This workshop has been added to your wishlist.',
+                        icon: 'success',
+                        confirmButtonColor: '#E6B740'
+                    });
+                });
+            }
+        });
+
+    } else {
+        // إزالة من المفضلة
+        Swal.fire({
+            title: 'Remove from Wishlist?',
+            text: 'Do you want to remove this workshop from your wishlist?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#E6B740',
+            cancelButtonColor: '#aaa'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(window.location.href, {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    body: "remove_favorite=1"
+                })
+                .then(() => {
+                    starIcon.setAttribute("fill", "#ccc");
+                    starIcon.setAttribute("stroke", "#ccc");
+                    isFavorited = false;
+
+                    Swal.fire({
+                        title: 'Removed!',
+                        text: 'This workshop has been removed from your wishlist.',
+                        icon: 'info',
+                        confirmButtonColor: '#E6B740'
+                    });
+                });
+            }
+        });
+    }
+}
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
-
-
