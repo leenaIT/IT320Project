@@ -2,12 +2,12 @@
 session_start();
 require 'database.php';
 
-if (!isset($_GET['WorkshopID'])) {
+if (!isset($_GET['workshopID'])) {
     header("Location: findcategory.php");
     exit;
 }
 
-$workshopID = $_GET['WorkshopID'];
+$workshopID = $_GET['workshopID'];
 
 $stmt = $connection->prepare("SELECT Title, LongDes, Location, Duration, Age, Price, ImageURL, Category FROM workshop WHERE WorkshopID = ?");
 $stmt->bind_param("i", $workshopID);
@@ -140,6 +140,11 @@ body {
         }
     
 
+html, body {
+    overflow-x: hidden;
+}
+
+
 
         .header-content {
     z-index: 1;
@@ -200,6 +205,9 @@ body {
             opacity: 0;
             animation: fadeIn 2s ease-out 1.5s forwards;
         }
+
+        
+        
 
         @keyframes fadeIn {
             to {
@@ -746,6 +754,172 @@ footer {
             background-color: rgba(0, 0, 0, 0.6);
         }
 
+
+        @media (max-width: 768px) {
+
+
+    .outline-text {
+        font-size: 90px; 
+    }
+
+    .header-content .quote {
+        font-size: 16px; 
+    }
+    
+
+    .wishlist-star {
+        width: 30px !important;
+        height: 30px !important;
+        top: 20px !important;
+        right: 25px !important;
+    }
+
+    .wishlist-star svg {
+        width: 100% !important;
+        height: 100% !important;
+    }
+    
+        .timeline-text {
+        font-size: 12px;
+        margin:  0px -68px ;
+         justify-content: space-between;
+    }
+
+    .timeline-text div {
+        font-size: 12px;
+        
+    }
+    
+        #workshop-times {
+        flex-direction: column !important;
+        align-items: center !important;  
+        padding: 0 0 !important;      
+    }
+
+    .time-button {
+        width: 55% !important;      
+        height: 2% !important;
+        margin-bottom: 0px !important;
+        
+    }
+
+    .time-button span {
+        font-size: 11px !important;
+        line-height: 1.2 !important;
+    }
+    
+      .price-section {
+        flex-direction: row !important;
+        align-items: center !important;
+        margin: 0 50px !important;
+    }
+
+    .price {
+        font-size: 16px !important;
+        margin: 0 !important;
+    }
+
+    .currency-icon {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    #sub {
+        width: 80px !important;
+        padding: 8px !important;
+        margin-left: 140px !important;
+        font-size: 13px !important;
+    }
+    
+    .experience-cards {
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 15px;
+    }
+
+    .card {
+        flex: 0 0 75%;
+        margin-right: 10px; 
+        scroll-snap-align: start;
+    }
+    
+        .reviews {
+        padding: 0 10px;
+    }
+
+    .carousel-item {
+        width: 300px !important;
+        height: 240px;
+        transform: scale(0.9);
+        margin-right: 10px;
+    }
+
+    .carousel-item.active {
+        transform: translateX(-40%) scale(1);
+    }
+
+    .carousel-item.left,
+    .carousel-item.right {
+        transform: scale(1);
+    }
+    
+      /* 🔶 Footer */
+  footer {
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+  }
+
+  .footer-left-1,
+  .footer-center-1,
+  .footer-right-1 {
+    width: 100%;
+    margin-bottom: 1em;
+    padding: 0.5em 0;
+  }
+
+  .contact-info-1 {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .contact-item-1 {
+    flex: 0 0 auto;
+    margin: 0 5px;
+  }
+
+  .footer-logo-1 {
+    width: 80px;
+    margin: 10px 0;
+  }
+
+  .social-icons-1 {
+    margin: 15px 0;
+  }
+
+  /* 🔶 Navigation */
+  .desktop-nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+.logo img{
+    width:50px;
+    height:50px;
+}
+/**singout****/
+.signout {
+    position:absolute;
+    margin-left:-135px;
+    margin-top:0px;
+    
+}
+}
 
 
 
