@@ -376,7 +376,7 @@ button {
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     margin-left: 55px;  
-    margin-top: -150px;
+    margin-top: -180px;
     margin-bottom: -150px;
 }
 
@@ -586,173 +586,8 @@ text-align: center;
 
 
      /* الهيدر */
-header {
-    position: absolute; /* بدلاً من relative */
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 10;
-    background: transparent; /* شفّاف */
-    padding: 15px 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-
-
-.header {
-            position: relative;
-            width: 100%;
-            height: 655px;
-            color: white;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-        }
-.logo {
-    flex: 0;
-    margin-right: auto;
-}
-
-.logo img {
-    height: 80px;
-    width: 80px;
-}
-
-/* روابط سطح المكتب */
-.desktop-nav {
-    position: absolute;
-    top: 25px;
-    right: 40px;
-    display: flex;
-    gap: 20px;
-    font-weight: bold;
-}
-
-/* روابط سطح المكتب */
-.desktop-nav a,
-.language-switch {
-    text-decoration: none;
-    color: #FF9D23;
-    font-size: 20px;
-    padding: 8px 15px;
-    transition: 0.3s;
-    border-radius: 4px;
-    background: transparent;
-    border: none;
-}
-
-.language-switch:hover {
-    background-color: rgba(255, 157, 35, 0.1);
-}
-/* زر الهامبرغر */
-.hamburger {
-    display: none;
-    cursor: pointer;
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-    width: 45px;
-    height: 45px;
-    background: white;
-    border: 2px solid #FF9D23;
-    border-radius: 50%;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    padding: 8px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transition: 0.3s;
-}
-
-.hamburger-line {
-    width: 22px;
-    height: 2.5px;
-    background: #FF9D23;
-    margin: 3px 0;
-    border-radius: 2px;
-    transition: 0.3s;
-}
-
-.hamburger.active {
-    background: #FF9D23;
-}
-
-.hamburger.active .hamburger-line {
-    background: white;
-}
-
-.hamburger.active .hamburger-line:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-}
-
-.hamburger.active .hamburger-line:nth-child(2) {
-    opacity: 0;
-}
-
-.hamburger.active .hamburger-line:nth-child(3) {
-    transform: rotate(-45deg) translate(7px, -6px);
-}
-
-/* قائمة الجوال */
-.mobile-nav-container {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 280px;
-    height: 100vh;
-    background: #fffefc;
-    z-index: 999;
-    transition: 0.5s;
-    padding: 80px 30px;
-    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
-}
-
-.mobile-nav-container.show {
-    right: 0;
-}
-
-.mobile-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-/* زر اللغة في الجوال فقط */
-.mobile-nav a,
-.mobile-language-switch {
-    color: #333;
-    background-color: transparent !important;
-    text-decoration: none;
-    font-size: 18px;
-    padding: 12px 15px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    font-weight: 500;
-    border-bottom: 1px solid #FF9D23;
-}
-
-.mobile-nav a:hover,
-.mobile-language-switch:hover {
-    transform: translateX(8px);
-    color: #FF9D23;
-}
-
-
-footer {
+/*footer*/
+    footer {
             margin-top: 2em;
             padding: 1em 2em;
             background-color: #fffefc;
@@ -848,6 +683,7 @@ footer {
     height: 42px !important;
     margin-top: 6px !important;
 }
+
 .icon-facebook {
     width: 35px !important;
     height: 35px !important;
@@ -865,6 +701,31 @@ footer {
     height: 35px !important;
     margin-top: 6px !important;
 }
+
+        body {
+            margin: 0;
+            background: #FFFDF0;
+        }
+
+        .header {
+            position: relative;
+            width: 100%;
+            height: 650px;
+            color: white;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
 
 
         @media (max-width: 768px) {
@@ -1024,14 +885,11 @@ footer {
     width:50px;
     height:50px;
 }
-/**singout****/
-.signout {
-    position:absolute;
-    margin-left:-135px;
-    margin-top:0px;
-    
+.experience-cards {
+    margin-top: -250px;
 }
-}
+
+        }
 
 
 
@@ -1047,6 +905,7 @@ $imagePath = str_replace('\\', '/', $workshop['ImageURL']);
 
 
    
+     <div class="header" style="background: url('<?php echo $imagePath; ?>') no-repeat center center/cover;">
 
          <header>
     <!-- اللوقو في الوسط -->
@@ -1087,7 +946,6 @@ $imagePath = str_replace('\\', '/', $workshop['ImageURL']);
         <a href="#" class="language-switch" onclick="toggleLanguage()">🌐 Language</a>
     </nav>
 </header>
-     <div class="header" style="background: url('<?php echo $imagePath; ?>') no-repeat center center/cover;">
     <div class="header-content">
         <h1>
             <br><span class="outline-text"><?php echo htmlspecialchars($workshop['Title']); ?></span><br>
@@ -1160,8 +1018,9 @@ endwhile;
 
 
 
-    
+<br><h2 id="cli">Made with Mehar</h2>
 <div class="experience-cards">
+        
     <?php while ($row = $works_result->fetch_assoc()): ?>
         <div class="card">
             <div style="background-image: url('<?php echo $row['ImageURL']; ?>'); background-size: cover; background-position: center; height: 200px; border-radius: 20px;"></div>
@@ -1177,7 +1036,7 @@ endwhile;
 
 
    
-    <h2 id="cli">Client Testimonials</h2><br>
+    <br><br><h2 id="cli">Client Testimonials</h2><br><br><br>
 <div class="reviews">
 <?php
 $index = 0;
