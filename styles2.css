@@ -1360,8 +1360,8 @@ padding-top: 2em;}
 }
 
 .empty-wishlist-message {
-    text-align: left;
     padding: 20px;
+     margin-left:250px;
 }
 
 .empty-wishlist-message h3 {
@@ -1369,12 +1369,27 @@ padding-top: 2em;}
     color: #333;
 }
 
+.empty-booking-message {
+margin-left: 250px;
+position: absolute;
+}
+
+.empty-booking-message p{
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 20px;
+}
+.empty-booking-message h3 {
+font-size: 24px;
+    color: #333;
+
+}
+
 .empty-wishlist-message p {
     font-size: 16px;
     color: #777;
     margin-bottom: 20px;
 }
-
 
 .browse-now-btn {
     background-color: #ff6600;

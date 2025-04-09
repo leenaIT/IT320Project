@@ -57,7 +57,7 @@ $stmt3->execute();
 $result3 = $stmt3->get_result();
 
 
-// Separate bookings into upcoming and completed
+//Separate bookings into upcoming and completed
 $upcomingBookings = [];
 $completedBookings = [];
 
