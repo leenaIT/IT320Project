@@ -24,10 +24,15 @@ $user = $result1->fetch_assoc();
 $photo = !empty($user['ProfilePhoto']) ? 'uploads/' . $user['ProfilePhoto'] : 'uploads/default.jpg';
 
 // Fetch last 4 bookings for the user with workshop title
-$sql2 = "SELECT w.Title, w.imageURL, b.BookingDate FROM booking b
-        JOIN workshop w ON b.WorkshopID = w.WorkshopID
-        WHERE b.UserID = ? 
-        ORDER BY b.BookingDate DESC LIMIT 5"; // Limiting to last 4 bookings
+$sql2 = "
+    SELECT w.Title, w.imageURL, s.Date AS BookingDate
+    FROM booking b
+    JOIN workshop w ON b.WorkshopID = w.WorkshopID
+    JOIN workshop_schedule s ON b.ScheduleID = s.ScheduleID
+    WHERE b.UserID = ?
+    ORDER BY s.Date DESC
+    LIMIT 5
+"; // Limiting to last 4 bookings
 $stmt2 = $connection->prepare($sql2);
 $stmt2->bind_param("i", $user_id);
 $stmt2->execute();
@@ -37,12 +42,15 @@ $bookings = $result2->fetch_all(MYSQLI_ASSOC);
 
 // Query to get bookings for the specific user, including workshop details
 $query = "
-    SELECT b.BookingID,b.BID, b.BookingDate, b.UserID, b.WorkshopID, 
-           w.ImageURL, w.Category, w.Location, w.Type, w.Price,w.Title 
+    SELECT b.BookingID, b.BID, b.UserID, b.WorkshopID, 
+           w.imageURL, w.Category, w.Location, w.Type, w.Price, w.Title,
+           s.Date, s.StartTime, s.EndTime
     FROM booking b
     JOIN workshop w ON b.WorkshopID = w.WorkshopID
+    JOIN workshop_schedule s ON b.ScheduleID = s.ScheduleID
     WHERE b.UserID = ?
-    ORDER BY b.BookingDate DESC";
+    ORDER BY s.Date DESC";
+
 $stmt3 = $connection->prepare($query);
 $stmt3->bind_param('i', $user_id);  // Bind the userId to the query
 $stmt3->execute();
@@ -56,15 +64,14 @@ $completedBookings = [];
 $currentDateTime = date('Y-m-d H:i:s');
 
 while ($booking = $result3->fetch_assoc()) {
-    // Compare the current date with the booking's date
-    if ($booking['BookingDate'] < $currentDateTime) {
-        // If the booking date is in the past, mark it as completed
+    $bookingDateTime = $booking['Date'] . ' ' . $booking['StartTime'];
+    if ($bookingDateTime < $currentDateTime) {
         $completedBookings[] = $booking;
     } else {
-        // Otherwise, mark it as upcoming
         $upcomingBookings[] = $booking;
     }
 }
+
 
 
 
@@ -695,6 +702,7 @@ left: 380px;
 </head>
 
 <body>
+    
     <header>
     <!-- اللوقو في الوسط -->
     <div class="logo">
@@ -797,20 +805,27 @@ left: 380px;
         
   
 
-        <?php
-        $eventCount = 1;
-        foreach ($bookings as $booking) {
-            $workshopImage = 'url(' . htmlspecialchars($booking['imageURL']) . ')';
+       <?php
+$eventCount = 1;
 
-            echo '<div class="event' . $eventCount . '">';
-            echo '<span>' . htmlspecialchars($booking['Title']) . '</span>';
-            echo '<p>' . date('d F Y', strtotime($booking['BookingDate'])) . '</p>';
-            echo '</div>';
+foreach ($bookings as $booking) {
+    // Fix slashes for web
+    $correctedPath = str_replace("\\", "/", $booking['imageURL']);
+    $imageUrl = htmlspecialchars($correctedPath); // Safe for HTML
 
-            echo '<div class="event-photo' . $eventCount . '" style="background-image: ' . $workshopImage . ';"></div>';
-            $eventCount++;
-        }
-        ?>
+    echo '<div class="event' . $eventCount . '">';
+    echo     '<span>' . htmlspecialchars($booking['Title']) . '</span>';
+echo '<p>' . date('d M Y', strtotime($booking['BookingDate'])) . '</p>';
+    echo '</div>';
+
+       echo '<div class="event-photo' . $eventCount . '" style="background-image: url(\'' . $imageUrl . '\');"></div>';
+
+
+    $eventCount++;
+}
+?>
+
+
     </div>
 </div>
       </section>
@@ -839,11 +854,13 @@ left: 380px;
         <img src="workshops/trash-btn.png" class="delete-booking" alt='delete' onclick="deleteBooking(<?php echo $booking['BookingID']; ?>)">
     </div>
           
-        <img src="<?php echo $booking['ImageURL']; ?>" alt="Workshop Image" style="width:100px; height:100px;">
+        <img src="<?php echo $booking['imageURL']; ?>" alt="Workshop Image" style="width:100px; height:100px;">
         <div class='booking-info'>
           <p><strong>Booking ID:</strong> <?php echo $booking['BID']; ?></p>
           <p><strong> Workshop Title:</strong> <?php echo $booking['Title']; ?></p>
-        <p><strong>Booking Date:</strong></p> <p class='booking-date'> <?php echo $booking['BookingDate']; ?> </p>
+          <p><strong>Date:</strong><p class='booking-date'> <?php echo date('d M Y', strtotime($booking['Date'])); ?> </p></p>
+        <p><strong>Time:</strong> <p class='booking-time'><?php echo date('H:i', strtotime($booking['StartTime'])) . ' - ' . date('H:i', strtotime($booking['EndTime'])); ?> </p></p>
+
         </div>
         <div class="workshop-info">
           <p><strong>Category:</strong> <?php echo $booking['Category']; ?></p>
@@ -854,7 +871,7 @@ left: 380px;
           <p class="totalPrice"><strong> Total Price: </strong> 
             <img src='workshops/riyal.png' alt='currency pic'><?php echo $booking['Price']; ?>
           </p>
-          <button class='rebook-btn'>Book Now </button>
+          <a href="booking.php?workshopID=<?php echo $booking['WorkshopID']; ?>" class='rebook-btn'>Re-Book </a>
         </div>
       </div>
     <?php endforeach; ?>
@@ -874,11 +891,12 @@ left: 380px;
         <img src="workshops/trash-btn.png" class="delete-booking" alt='delete' onclick="deleteBooking(<?php echo $booking['BookingID']; ?>)">
     </div>
           
-        <img src="<?php echo $booking['ImageURL']; ?>" alt="Workshop Image" style="width:100px; height:100px;">
+        <img src="<?php echo $booking['imageURL']; ?>" alt="Workshop Image" style="width:100px; height:100px;">
         <div class='booking-info'>
           <p><strong>Booking ID:</strong> <?php echo $booking['BID']; ?></p>
           <p><strong> Workshop Title:</strong> <?php echo $booking['Title']; ?></p>
-          <p><strong>Booking Date:</strong></p> <p class='booking-date'> <?php echo $booking['BookingDate']; ?> </p>
+<p><strong>Date:</strong> <?php echo date('d M Y', strtotime($booking['Date'])); ?></p>
+<p><strong>Time:</strong> <?php echo date('H:i', strtotime($booking['StartTime'])) . ' - ' . date('H:i', strtotime($booking['EndTime'])); ?></p>
         </div>
         <div class="workshop-info">
           <p><strong>Category:</strong> <?php echo $booking['Category']; ?></p>
@@ -889,7 +907,7 @@ left: 380px;
           <p class="totalPrice"><strong> Total Price: </strong> 
             <img src='workshops/riyal.png' alt='currency pic'><?php echo $booking['Price']; ?>
           </p>
-          <button class='rebook-btn'>Book Now </button>
+          <a href="booking.php?workshopID=<?php echo $booking['WorkshopID']; ?>" class='rebook-btn'>Re-Book </a>
         </div>
       </div>
     <?php endforeach; ?>
@@ -902,17 +920,15 @@ left: 380px;
     <?php if (!empty($completedBookings)): ?>
         <?php foreach ($completedBookings as $booking): ?>
             <div class="booking-item" id="booking-<?php echo $booking['BookingID']; ?>">
-                <div class="booking-actions">
-                    <img src="workshops/edit-btn.png" class="edit-booking" data-id="<?php echo $booking['BookingID']; ?>">
-                    <img src="workshops/trash-btn.png" class="delete-booking" alt="delete" onclick="deleteBooking(<?php echo $booking['BookingID']; ?>)">
-                </div>
+                
 
-                <img src="<?php echo $booking['ImageURL']; ?>" alt="Workshop Image" style="width:100px; height:100px;">
+                <img src="<?php echo $booking['imageURL']; ?>" alt="Workshop Image" style="width:100px; height:100px;">
                 <div class="booking-info">
                     <p><strong>Booking ID:</strong> <?php echo $booking['BID']; ?></p>
                     <p><strong>Workshop Title:</strong> <?php echo $booking['Title']; ?></p>
-                    <p><strong>Booking Date:</strong></p>
-                    <p class="booking-date"><?php echo $booking['BookingDate']; ?></p>
+                   <p><strong>Date:</strong> <?php echo date('d M Y', strtotime($booking['Date'])); ?></p>
+<p><strong>Time:</strong> <?php echo date('H:i', strtotime($booking['StartTime'])) . ' - ' . date('H:i', strtotime($booking['EndTime'])); ?></p>
+
                 </div>
                 <div class="workshop-info">
                     <p><strong>Category:</strong> <?php echo $booking['Category']; ?></p>
@@ -925,7 +941,7 @@ left: 380px;
                     </p>
                     <!-- Submit Review Button -->
                     <button id="review-btn-<?php echo $booking['BookingID']; ?>" class="review-btn" data-workshopid="<?php echo $booking['WorkshopID']; ?>" data-bookingid="<?php echo $booking['BookingID']; ?>">Submit Review</button>
-                    <button class="rebook-btn">Book Now</button>
+          <a href="booking.php?workshopID=<?php echo $booking['WorkshopID']; ?>" class='rebook-btn'>Re-Book </a>
                 </div>
             </div>
         <?php endforeach; ?>

@@ -205,93 +205,131 @@ function deleteBooking(bookingID) {
         }
     });
 }
-
-//edit *********
+/**** edit b0ooking *******/
 document.querySelectorAll(".edit-booking").forEach(button => {
     button.addEventListener("click", function () {
-        let bookingID = this.dataset.id; // Get the booking ID
+        let bookingID = this.dataset.id;
 
-        Swal.fire({
-            title: '<img src="workshops/avaT.png" style="width: 100px; transform: scale(4.5); display: block; margin: 0 auto;"> <br> <span style="font-size: 20px; font-weight: bold; font-family: Roboto,serif;">️Edit Booking Date & Time</span>',
-            html: '<input type="text" id="dateTimePicker" class="swal2-input" style="font-size:15px;" placeholder="Select Date & Time">',
-            didOpen: () => {
-                flatpickr("#dateTimePicker", {
-                    enableTime: true,
-                    dateFormat: "Y-m-d H:i",
-                    minDate: "today",
-                    time_24hr: true
-                });
-            },
-            showCancelButton: true,
-            confirmButtonColor: "#f4b42b",
-            cancelButtonColor: "#b0b0b0",
-            confirmButtonText: "Update",
-            cancelButtonText: "Cancel",
-            
-            preConfirm: () => {
-                let selectedDateTime = document.getElementById("dateTimePicker").value;
-                let selectedDate = new Date(selectedDateTime);
-                let now = new Date();
+        fetch("edit-booking.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ BookingID: bookingID, fetchSchedules: true })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.schedules.length > 0) {
+                let optionsHTML = data.schedules.map(schedule => {
+                    return `<option value="${schedule.ScheduleID}" data-start="${schedule.StartTime}" data-end="${schedule.EndTime}" data-date="${schedule.Date}">
+                        ${schedule.Day} (${schedule.Date}) - ${schedule.StartTime} to ${schedule.EndTime}
+                    </option>`;
+                }).join("");
 
-                if (!selectedDateTime) {
-                    Swal.showValidationMessage("⚠ Please select a date & time.");
-                    return false;
-                }
+                Swal.fire({
+                    customClass: { popup: 'swal2-popup' },
+                    title: `
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <img src="workshops/avaT.png" style="width: 130px; transform: scale(4.5); display: block; margin: 0 auto;">
+                            <div style="font-size: 18px; font-weight: bold; font-family: Roboto, sans-serif;">
+                                Edit Booking Date & Time
+                            </div>
+                        </div>
+                    `,
+                    html: `
+                        <div style="margin-top: -30px;">
+                            <select id="scheduleSelect" class="swal2-select" style="width: 100%; padding: 8px; font-size: 14px; border-radius: 5px; border: 1px solid #ccc;">
+                                <option value="">Select Available Schedule</option>
+                                ${optionsHTML}
+                            </select>
+                        </div>
+                    `,
+                    showCancelButton: true,
+                    confirmButtonColor: "#f4b42b",
+                    cancelButtonColor: "#b0b0b0",
+                    confirmButtonText: "Update",
+                    cancelButtonText: "Cancel",
+                    preConfirm: () => {
+                        const selected = document.getElementById("scheduleSelect").selectedOptions[0];
+                        if (!selected || selected.value === "") {
+                            Swal.showValidationMessage("⚠ Please select a schedule.");
+                            return false;
+                        }
+                        return {
+                            ScheduleID: selected.value,
+                            StartTime: selected.getAttribute("data-start"),
+                            EndTime: selected.getAttribute("data-end"),
+                            Date: selected.getAttribute("data-date")
+                        };
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed && result.value) {
+                        const payload = {
+                            BookingID: bookingID,
+                            ScheduleID: result.value.ScheduleID,
+                            StartTime: result.value.StartTime,
+                            EndTime: result.value.EndTime
+                        };
 
-                if (selectedDate < now) {
-                    Swal.showValidationMessage("⚠ Cannot select a past date & time.");
-                    return false;
-                }
+                        fetch("edit-booking.php", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(payload)
+                        })
+                        .then(response => response.json())
+                        .then(res => {
+                            if (res.success) {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Updated!",
+                                    text: "Your booking time has been updated.",
+                                    confirmButtonColor: "#28a745"
+                                });
 
-                return selectedDateTime;
-            }
-        }).then((result) => {
-            if (result.isConfirmed && result.value) {
-                let newDateTime = result.value;
+                                // Dynamically update the booking date and time in the UI
+                                const bookingElement = document.getElementById(bookingID);
+                                const bookingDateElement = bookingElement.querySelector(".booking-date");
+                                const bookingTimeElement = bookingElement.querySelector(".booking-time");
 
-console.log("Sending data:", { BookingID: bookingID, BookingDateTime: newDateTime });
+                                if (bookingDateElement && bookingTimeElement) {
+                                    const formattedTime = `${result.value.StartTime} - ${result.value.EndTime}`;
 
-                // Send updated date & time to backend
-                fetch("edit-booking.php", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ BookingID: bookingID, BookingDateTime: newDateTime }) // Fixed key name
-                })
-                .then(response => response.json())
-                .then(data => {
-                     console.log("Server response:", data); // Log server response
-                    if (data.success) {
-                        Swal.fire({
-                            icon: "success",
-                            title: "Updated!",
-                            text: "Your booking date & time has been updated.",
-                            confirmButtonColor: "#28a745" // Green for success
-                        });
-
-                        // Update the booking date in the UI dynamically
-                        document.getElementById(bookingID).querySelector(".booking-date").innerText = newDateTime;
-                    } else {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Error!",
-                            text: data.message, 
-                            confirmButtonColor: "#d33" // Red for error
+                                    bookingDateElement.innerText = result.value.Date;
+                                    bookingTimeElement.innerText = formattedTime; // Just the plain time range
+                                }
+                            } else {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Error!",
+                                    text: res.message,
+                                    confirmButtonColor: "#d33"
+                                });
+                            }
                         });
                     }
-                })
-                .catch(() => {
-                    console.error("Fetch error:", error);
-                    Swal.fire({
-                        icon: "error",
-                        title: "Error!",
-                        text: "Something went wrong. Try again later.",
-                        confirmButtonColor: "#d33"
-                    });
+                });
+
+            } else {
+                Swal.fire({
+                    icon: "info",
+                    title: "No Schedules",
+                    text: "There are no available schedules for this booking.",
+                    confirmButtonColor: "#3085d6"
                 });
             }
+        })
+        .catch(error => {
+            console.error("Error fetching schedules:", error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops!",
+                text: "Could not fetch schedules. Try again later.",
+                confirmButtonColor: "#d33"
+            });
         });
     });
 });
+
+
+
 
 
 //***************************************review *************************************
@@ -871,7 +909,7 @@ $(document).ready(function() {
                                         <p class="price">${workshop.Price}</p>
                                     </div>
                                     <div class="wishlist-actions">
-                                        <button class="book-now">Book Now</button>
+                                        <a href="booking.php?workshopID=${workshop.WorkshopID}" class="book-now">Book Now</a>
                                         <button class="wishlist-star filled">
                                             ${heartIcon}
                                             <span class="tooltip">Remove Favorite</span>
