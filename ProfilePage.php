@@ -120,6 +120,7 @@ header {
     display: flex;
     gap: 20px;
     font-weight: bold;
+    
 }
 
 /* روابط سطح المكتب */

@@ -52,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_SERVER['HTTP_ACCEPT']) && st
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
 
-                /*header*/
      /* الهيدر */
 header {
     position:relative;
@@ -84,6 +83,7 @@ header {
     display: flex;
     gap: 20px;
     font-weight: bold;
+    
 }
 
 /* روابط سطح المكتب */
@@ -935,7 +935,46 @@ box-sizing: border-box;
     </div>
 </div>
 
+<footer>
+    <div class="footer-left-1">
+        <h4>Get In Touch</h4>
+        <div class="contact-info-1" id="contact-us">
+    <div class="contact-item-1">
+        <img src="workshops/phone.png" class="icon-phone">
+        <span class="single-line-1">+996 58765 43210</span>
+    </div>
+    <div class="contact-item-1">
+        <img src="workshops/mail.png" class="icon-email">
+        <span class="single-line-1">mehar@gmail.com</span>
+    </div>
+    <div class="contact-item-1">
+        <img src="workshops/location.png" class="icon-location">
+        <span class="single-line-1">Saudi Arabia</span>
+    </div>
+</div>
 
+    </div>
+
+    <div class="footer-center-1">
+        <a href="index.html">
+            <img src="workshops/logo.png" alt="Logo" class="footer-logo-1 logo-toggle">
+        </a>
+    </div>
+
+    <div class="footer-right-1" id="contact">
+        <h4>Social Media</h4>
+        <div class="social-icons-1">
+            <img src="workshops/Facebook_icon_(black).svg" alt="Facebook" class="icon-facebook">
+            <img src="workshops/X1.png" alt="Twitter" class="icon-twitter">
+            <img src="workshops/CIS-A2K_Instagram_Icon_(Black).svg" alt="Instagram" class="icon-instagram">
+        </div>
+    </div>
+
+    <!-- الخط السفلي -->
+    <div class="footer-bottom-1">
+        <p>© 2024 Website. All rights reserved.</p>
+    </div>
+</footer>
 
 <script>
 
@@ -1095,47 +1134,6 @@ function toggleMenu(button) {
 
 </script>
 
-
-<footer>
-    <div class="footer-left-1">
-        <h4>Get In Touch</h4>
-        <div class="contact-info-1" id="contact-us">
-    <div class="contact-item-1">
-        <img src="workshops/phone.png" class="icon-phone">
-        <span class="single-line-1">+996 58765 43210</span>
-    </div>
-    <div class="contact-item-1">
-        <img src="workshops/mail.png" class="icon-email">
-        <span class="single-line-1">mehar@gmail.com</span>
-    </div>
-    <div class="contact-item-1">
-        <img src="workshops/location.png" class="icon-location">
-        <span class="single-line-1">Saudi Arabia</span>
-    </div>
-</div>
-
-    </div>
-
-    <div class="footer-center-1">
-        <a href="index.html">
-            <img src="workshops/logo.png" alt="Logo" class="footer-logo-1 logo-toggle">
-        </a>
-    </div>
-
-    <div class="footer-right-1" id="contact">
-        <h4>Social Media</h4>
-        <div class="social-icons-1">
-            <img src="workshops/Facebook_icon_(black).svg" alt="Facebook" class="icon-facebook">
-            <img src="workshops/X1.png" alt="Twitter" class="icon-twitter">
-            <img src="workshops/CIS-A2K_Instagram_Icon_(Black).svg" alt="Instagram" class="icon-instagram">
-        </div>
-    </div>
-
-    <!-- الخط السفلي -->
-    <div class="footer-bottom-1">
-        <p>© 2024 Website. All rights reserved.</p>
-    </div>
-</footer>
 
 
 </body>

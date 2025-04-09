@@ -1,5 +1,7 @@
 <?php
 session_start();
+$loggedIn = isset($_SESSION['user_id']);
+
 require 'database.php';
 
 $category = $_GET['category'] ?? 'Art';
@@ -723,8 +725,10 @@ input[type="date"] {
     <!-- قائمة الجوال -->
     <div class="mobile-nav-container">
         <nav class="mobile-nav">
+            <a href="homepage.php">Home</a>
+            <a href="ProfilePage.php"><?php echo $loggedIn ? 'Profile' : 'Login'; ?></a>
             <a href="Explore.php">Explore</a>
-            <a href="login.php">Login/Signup</a>
+            <a href="Survey.php">Survey</a>
             <a href="findcategory.php">Category</a>
             <div class="mobile-language-switch" onclick="toggleLanguage()">
                 🌐 Language
@@ -734,11 +738,14 @@ input[type="date"] {
 
     <!-- قائمة سطح المكتب -->
     <nav class="desktop-nav">
+        <a href="homepage.php">Home</a>
+        <a href="<?php echo $loggedIn ? 'ProfilePage.php' : 'login.php'; ?>">
+            <?php echo $loggedIn ? 'Profile' : 'Login'; ?>
+        </a>
         <a href="Explore.php">Explore</a>
-        <a href="login.php">Login/Signup</a>
+        <a href="Survey.php">Survey</a>
         <a href="findcategory.php">Category</a>
         <a href="#" class="language-switch" onclick="toggleLanguage()">🌐 Language</a>
-
     </nav>
 </header>
          <div class="header-content">
