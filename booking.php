@@ -1309,7 +1309,27 @@ function confirmBooking() {
                     scheduleID: scheduleID
                 })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (response.status === 403) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Login Required',
+                        text: 'You need to login to book this workshop.',
+                        showCancelButton: true,
+                        confirmButtonText: 'Login',
+                        cancelButtonText: 'Cancel',
+                        confirmButtonColor: '#E6B740',
+                        cancelButtonColor: '#aaa'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = 'login.php';
+                        }
+                    });
+                    return null; // أوقف الاستمرار
+                }
+                return response.json();
+            })
+
             .then(data => {
                 if (data.status === 'success') {
                     Swal.fire({
@@ -1477,7 +1497,7 @@ window.addEventListener('load', () => {
         <script>
 let isFavorited = <?php echo $isFavorited ? 'true' : 'false'; ?>;
 
-function handleFavorite() {
+    function handleFavorite() {
     const starIcon = document.getElementById('starIcon');
 
     if (!isFavorited) {
@@ -1498,7 +1518,26 @@ function handleFavorite() {
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                     body: "add_favorite=1"
                 })
-                .then(() => {
+                .then(response => {
+                    if (response.status === 403) {
+                        Swal.fire({
+                        title: 'Login Required',
+                        text: 'You need to login to add this to your wishlist.',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Login',
+                        cancelButtonText: 'Cancel',
+                        confirmButtonColor: '#E6B740',
+                        cancelButtonColor: '#aaa'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = 'login.php';
+                        }
+                    });
+                    return;
+                }
+
+
                     starIcon.setAttribute("fill", "#facc15");
                     starIcon.setAttribute("stroke", "#facc15");
                     isFavorited = true;
@@ -1514,7 +1553,7 @@ function handleFavorite() {
         });
 
     } else {
-        // إزالة من المفضلة
+        
         Swal.fire({
             title: 'Remove from Wishlist?',
             text: 'Do you want to remove this workshop from your wishlist?',
@@ -1548,6 +1587,8 @@ function handleFavorite() {
     }
 }
 
+
+
 </script>
 
 <script>
@@ -1556,7 +1597,7 @@ function toggleMenu(button) {
     document.querySelector('.mobile-nav-container').classList.toggle('show');
     
     document.body.style.overflow = button.classList.contains('active') ? 'hidden' : '';
-}
+    }
     </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
