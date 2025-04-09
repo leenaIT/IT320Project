@@ -4,12 +4,8 @@ session_start();
 
 $loggedIn = isset($_SESSION['user_id']);
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
+
 ob_start();
-session_start();
 $loggedIn = isset($_SESSION['userID']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_SERVER['HTTP_ACCEPT']) && str_contains($_SERVER['HTTP_ACCEPT'], 'application/json')) {

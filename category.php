@@ -143,8 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
 .language-switch,
 .mobile-nav a,
 .mobile-language-switch {
-    font-family: 'Poppins', sans-serif !important;
-    font-weight: bold;
+font-family: 'Poppins', sans-serif !important;
 }
  /*footer*/
     footer {
