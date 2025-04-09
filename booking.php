@@ -6,6 +6,7 @@ if (!isset($_GET['workshopID'])) {
     header("Location: findcategory.php");
     exit;
 }
+$loggedIn = isset($_SESSION['user_id']);
 
 $workshopID = $_GET['workshopID'];
 
@@ -583,94 +584,255 @@ text-align: center;
 }
 
 
-footer {
-    margin-top: 2em;
-    padding: 1em 2em;
-    background-color: #fffefc;
-    border-top: 2px solid #f9b013ec;
-    color: #333;
+
+     /* الهيدر */
+header {
+    position: absolute; /* بدلاً من relative */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    background: transparent; /* شفّاف */
+    padding: 15px 30px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: flex-start;
 }
 
-.footer-left-1,
-.footer-center-1,
-.footer-right-1 {
-    flex: 1;
-    min-width: 250px;
-    padding: 0.5em;
-    text-align: center;
+
+
+.header {
+            position: relative;
+            width: 100%;
+            height: 655px;
+            color: white;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+.logo {
+    flex: 0;
+    margin-right: auto;
+}
+
+.logo img {
+    height: 80px;
+    width: 80px;
+}
+
+/* روابط سطح المكتب */
+.desktop-nav {
+    position: absolute;
+    top: 25px;
+    right: 40px;
+    display: flex;
+    gap: 20px;
+    font-weight: bold;
+}
+
+/* روابط سطح المكتب */
+.desktop-nav a,
+.language-switch {
+    text-decoration: none;
+    color: #FF9D23;
+    font-size: 20px;
+    padding: 8px 15px;
+    transition: 0.3s;
+    border-radius: 4px;
+    background: transparent;
+    border: none;
+}
+
+.language-switch:hover {
+    background-color: rgba(255, 157, 35, 0.1);
+}
+/* زر الهامبرغر */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 45px;
+    height: 45px;
+    background: white;
+    border: 2px solid #FF9D23;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.hamburger-line {
+    width: 22px;
+    height: 2.5px;
+    background: #FF9D23;
+    margin: 3px 0;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+.hamburger.active {
+    background: #FF9D23;
+}
+
+.hamburger.active .hamburger-line {
+    background: white;
+}
+
+.hamburger.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* قائمة الجوال */
+.mobile-nav-container {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: #fffefc;
+    z-index: 999;
+    transition: 0.5s;
+    padding: 80px 30px;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-nav-container.show {
+    right: 0;
+}
+
+.mobile-nav {
     display: flex;
     flex-direction: column;
-    align-items: center;
-}
-
-
-.footer-center-1 {
-    justify-content: center;
-}
-
-.footer-logo-1 {
-    width: 100px;
-}
-
-
-.contact-info-1 {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
     gap: 20px;
-    flex-wrap: nowrap;
-    margin-top: 10px;
-    width: 100%; 
 }
 
-
-
-.contact-item-1 {
+/* زر اللغة في الجوال فقط */
+.mobile-nav a,
+.mobile-language-switch {
+    color: #333;
+    background-color: transparent !important;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 12px 15px;
+    border-radius: 6px;
     display: flex;
-    align-items: center; 
-    gap: 8px; 
-    white-space: nowrap;
+    align-items: center;
+    font-weight: 500;
+    border-bottom: 1px solid #FF9D23;
+}
+
+.mobile-nav a:hover,
+.mobile-language-switch:hover {
+    transform: translateX(8px);
+    color: #FF9D23;
 }
 
 
-.single-line-1 {
-    white-space: nowrap;
-}
+footer {
+            margin-top: 2em;
+            padding: 1em 2em;
+            background-color: #fffefc;
+            border-top: 2px solid #f9b013ec;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
 
-.social-icons-1 {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 10px;
-}
+        .footer-left-1,
+        .footer-center-1,
+        .footer-right-1 {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.5em;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-.footer-bottom-1 {
-    width: 100%;
-    text-align: center;
-    margin-top: 0.5em;
-}
+        /* وسط الفوتر */
+        .footer-center-1 {
+            justify-content: center;
+        }
 
-.footer-bottom-1 p {
-    padding: 0.5em;
-    background-color: #ffffff;
-    font-size: 0.75em;
-    color: #f9b013ec;
-    border-top: 1px solid #ccc;
-}
+        .footer-logo-1 {
+            width: 100px;
+        }
 
-.icon-phone {
+        .contact-info-1 {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: nowrap;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .contact-item-1 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .single-line-1 {
+            white-space: nowrap;
+        }
+
+        /* أيقونات السوشال ميديا */
+        .social-icons-1 {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .footer-bottom-1 {
+            width: 100%;
+            text-align: center;
+            margin-top: 0.5em;
+        }
+
+        .footer-bottom-1 p {
+            padding: 0.5em;
+            background-color: #ffffff;
+            font-size: 0.75em;
+            color: #f9b013ec;
+            border-top: 1px solid #ccc;
+        }
+        .icon-phone {
     display: inline-block !important; 
     width: 30px !important;
     height: 30px !important;
-}
-
-.icon-phone {
-    position: relative !important;
+     position: relative !important;
     left: 0 !important;
     right: auto !important;
 }
@@ -686,7 +848,6 @@ footer {
     height: 42px !important;
     margin-top: 6px !important;
 }
-
 .icon-facebook {
     width: 35px !important;
     height: 35px !important;
@@ -704,55 +865,6 @@ footer {
     height: 35px !important;
     margin-top: 6px !important;
 }
-
-
-@media (max-width: 768px) {
-    .footer-left-1,
-    .footer-center-1,
-    .footer-right-1 {
-        flex: 100%;
-        margin-bottom: 1em;
-    }
-
-    .contact-info-1 {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .icon-phone,
-    .icon-email,
-    .icon-location,
-    .icon-facebook,
-    .icon-twitter,
-    .icon-instagram {
-        transform: scale(0.9);
-    }
-}
-        body {
-            margin: 0;
-            background: #FFFDF0;
-        }
-
-.header {
-            position: relative;
-            width: 100%;
-            height: 655px;
-            background: url('workshops/candle.jpeg') no-repeat center center/cover;
-            color: white;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-        }
 
 
         @media (max-width: 768px) {
@@ -933,10 +1045,11 @@ footer {
 $imagePath = str_replace('\\', '/', $workshop['ImageURL']);
 ?>
 
-<div class="header" style="background: url('<?php echo $imagePath; ?>') no-repeat center center/cover;">
+
    
 
-     <header>
+         <header>
+    <!-- اللوقو في الوسط -->
     <div class="logo">
         <img src="workshops/logo.png" alt="logo">
     </div>
@@ -948,27 +1061,33 @@ $imagePath = str_replace('\\', '/', $workshop['ImageURL']);
         <span class="hamburger-line"></span>
     </div>
 
+    <!-- قائمة الجوال -->
     <div class="mobile-nav-container">
         <nav class="mobile-nav">
+            <a href="homepage.php">Home</a>
+            <a href="ProfilePage.php"><?php echo $loggedIn ? 'Profile' : 'Login'; ?></a>
             <a href="Explore.php">Explore</a>
-            <a href="login.php">Login/Signup</a>
+            <a href="Survey.php">Survey</a>
             <a href="findcategory.php">Category</a>
             <div class="mobile-language-switch" onclick="toggleLanguage()">
                 🌐 Language
             </div>
         </nav>
     </div>
-    
+
+    <!-- قائمة سطح المكتب -->
     <nav class="desktop-nav">
+        <a href="homepage.php">Home</a>
+        <a href="<?php echo $loggedIn ? 'ProfilePage.php' : 'login.php'; ?>">
+            <?php echo $loggedIn ? 'Profile' : 'Login'; ?>
+        </a>
         <a href="Explore.php">Explore</a>
-        <a href="login.php">Login/Signup</a>
+        <a href="Survey.php">Survey</a>
         <a href="findcategory.php">Category</a>
         <a href="#" class="language-switch" onclick="toggleLanguage()">🌐 Language</a>
-
     </nav>
 </header>
-     
-     
+     <div class="header" style="background: url('<?php echo $imagePath; ?>') no-repeat center center/cover;">
     <div class="header-content">
         <h1>
             <br><span class="outline-text"><?php echo htmlspecialchars($workshop['Title']); ?></span><br>
@@ -1430,6 +1549,15 @@ function handleFavorite() {
 }
 
 </script>
+
+<script>
+function toggleMenu(button) {
+    button.classList.toggle('active');
+    document.querySelector('.mobile-nav-container').classList.toggle('show');
+    
+    document.body.style.overflow = button.classList.contains('active') ? 'hidden' : '';
+}
+    </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
