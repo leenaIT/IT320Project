@@ -452,104 +452,111 @@ text-align: center;
 }
 
 
+.reviews {
+    position: relative;
+    width: 100%;
+    height: 400px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible; 
+}
 
-
-
-
-
-
-
-
-
-
-
-   
 .carousel-item {
     position: absolute;
-      width: 400px;
-      height: 250px;
-      opacity: 0.5;
-      transform: scale(0.8);
-      transition: all 0.5s ease;
-      text-align: center;
-      background: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 87, 125, 0.2);
-      padding: 20px;
-      word-wrap: break-word; 
-    box-sizing: border-box; 
-  }
+    width: 600px;  
+    height: 350px;  
+    opacity: 0.5;
+    transform: scale(0.8);
+    transition: all 0.5s ease;
+    text-align: center;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;  
+    overflow: visible;}
 
-  .carousel-item img {
+.carousel-item p {
+    font-size: 0.9em;
+    color: #333333;
+    margin-top: 20px;
+    word-wrap: break-word; 
+    white-space: normal; 
+    text-align: center; 
+    padding: 10px;
+    max-width: 90%; 
+    margin: auto;
+}
+
+.stars {
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+
+
+    #cli{
+    font-size: 36px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color:  #d48d00;
+    text-align: center;
+    }
+    
+    
+   .carousel-item img {
     width: 70px;
     height: 70px;
     border-radius: 50%;
     position: absolute;
-    top: -30px;
-    left: 30px;
-    border: 4px solid #ffffff; 
-  }
+    top: -35px; 
+    left: 10%;
+    transform: translateX(-50%); 
+    border: 4px solid #ffffff;
+    background-color: #fff;
+}
 
-  .carousel-item h3 {
+    
+    .carousel-item h3 {
     margin: 10px 0 5px;
-    font-size: 1.2em;
+    font-size: 1.5em;
     margin-top: 30px;
     color: #f4d47c;
-  }
-
-
-
-  .carousel-item.active {
+    }
+    
+    
+    .carousel-item.active {
     opacity: 1;
     transform: scale(1);
     z-index: 3;
     left: 50%;
     transform: translateX(-50%) scale(1);
-  }
-
-  .carousel-item.left {
+    }
+    
+    .carousel-item.left {
     left: 1%;
     transform: translateX(0) scale(0.8);
     z-index: 2;
-  }
-
-  .carousel-item.right {
-    left: 67.5%;
+    }
+    
+    .carousel-item.right {
+    right: 1%;
     transform: translateX(0) scale(0.8);
     z-index: 2;
-  }
-
-  .carousel-item.hidden {
+    }
+    
+    .carousel-item.hidden {
     opacity: 0;
     z-index: 1;
     transform: scale(0.6);
-  }
+    }
 
-  .reviews {
-    position: relative;
-      width: 100%;
-      height: 300px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      overflow: visible;
-}
-
-.reviews p{
-    font-size: 14px;
-}
-#cli {
-    font-size: 36px;
-    font-weight: bold;
-    color: #444;
-    text-align: center;
-    
-}
-
-.stars{
-    color:darkred;
-}
 .wishlist-star {
     position: absolute;
     top: 25px;
@@ -817,26 +824,48 @@ text-align: center;
         scroll-snap-align: start;
     }
     
-        .reviews {
-        padding: 0 10px;
+    .reviews {
+        justify-content: center;
     }
 
     .carousel-item {
-        width: 300px !important;
-        height: 240px;
-        transform: scale(0.9);
-        margin-right: 10px;
+        max-width: 300px;
+        padding: 15px;
     }
 
-    .carousel-item.active {
-        transform: translateX(-40%) scale(1);
+    .carousel-item img {
+        width: 70px;
+        height: 70px;
     }
 
+    .carousel-item h3 {
+        font-size: 18px;
+    }
+
+    .review-text {
+        font-size: 14px;
+    }
+
+    #cli {
+        font-size: 28px;
+    }
     .carousel-item.left,
     .carousel-item.right {
-        transform: scale(1);
+        display: block; 
+    }
+    .carousel-item.left {
+    left: 0%;
+    transform: translateX(0) scale(0.8);
+    z-index: 2;
     }
     
+    .carousel-item.right {
+    right: 0%;
+    transform: translateX(0) scale(0.8);
+    z-index: 2;
+    }
+    
+
       /* 🔶 Footer */
   footer {
     flex-direction: column;
@@ -1036,32 +1065,48 @@ endwhile;
 
 
    
-    <br><br><h2 id="cli">Client Testimonials</h2><br><br><br>
-<div class="reviews">
-<?php
-$index = 0;
-$positions = ['left', 'active', 'right'];
-while ($row = $review_result->fetch_assoc()):
-    $positionClass = $index < 3 ? $positions[$index] : ''; // فقط أول 3 يحصلون position
-    $name = htmlspecialchars($row['FirstName'] . ' ' . $row['LastName']);
-    $comment = htmlspecialchars($row['Comment']);
-    $stars = renderStars((int)$row['Rating']);
-?>
-    <div class="carousel-item <?php echo $positionClass; ?>">
+    <br><br>
+    <section class="cont-reviws">
+    <h2 id="cli">Client Testimonials</h2>
+    <div class="reviews">
         <?php
-$profileImage = !empty($row['ProfilePhoto']) ? 'uploads/' . $row['ProfilePhoto'] : 'uploads/default.jpg';
-?>
-<img class="i" src="<?php echo $profileImage; ?>" alt="">
+        // Assuming $workshopID is already set (e.g., from GET or session)
 
-<h3><?php echo $name; ?></h3><br>
-<p><?php echo $comment; ?></p><br>
-        <p class="stars"><?php echo $stars; ?></p>
-    </div>
-<?php
-$index++;
-endwhile;
-?>
-</div>
+        $stmt = $connection->prepare("SELECT r.*, u.FirstName, u.LastName, u.ProfilePhoto 
+                                FROM review r
+                                JOIN users u ON r.UserID = u.UserID
+                                WHERE r.WorkshopID = ?");
+        $stmt->bind_param("i", $workshopID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $fullName = htmlspecialchars($row['FirstName'] . " " . $row['LastName']);
+                $comment = htmlspecialchars($row['Comment']);
+                $rating = intval($row['Rating']);
+                $profilePhoto = !empty($row['ProfilePhoto']) ? 'uploads/' . $row['ProfilePhoto'] : 'workshops/profile-picture.jpg';
+
+                // Generate stars based on the rating
+                $stars = str_repeat('<i class="fas fa-star" style="color:#630404af;"></i>', $rating) . 
+                         str_repeat('<i class="far fa-star" style="color:#630404af;"></i>', 5 - $rating);
+
+        ?>
+        <div class="carousel-item">
+            <img class="i" src="<?php echo htmlspecialchars($profilePhoto); ?>" alt="Client">
+            <h3><?php echo $fullName; ?></h3>
+            <p class="review-text"><?php echo $comment; ?></p> <br>
+            <p class="stars"><?php echo $stars; ?></p>
+        </div>
+        <?php
+            }
+        } else {
+            echo "<p>No reviews available.</p>";
+        }
+        ?>
+    </div>    
+</section>
+
 
 <br><br>
     
@@ -1448,6 +1493,85 @@ let isFavorited = <?php echo $isFavorited ? 'true' : 'false'; ?>;
 
 
 
+</script>
+
+<script><!-- comment -->
+
+(function reviewsCarousel() {
+    const carouselItems = document.querySelectorAll(".carousel-item");
+    let activeIndex = 0;
+    let startX = 0;
+
+    function updateReviewsCarousel() {
+        carouselItems.forEach((item, index) => {
+            item.classList.remove("active", "left", "right", "hidden");
+
+            if (index === activeIndex) {
+                item.classList.add("active");
+            } else if (index === (activeIndex - 1 + carouselItems.length) % carouselItems.length) {
+                item.classList.add("left");
+            } else if (index === (activeIndex + 1) % carouselItems.length) {
+                item.classList.add("right");
+            } else {
+                item.classList.add("hidden");
+            }
+        });
+    }
+
+    function nextReview() {
+        activeIndex = (activeIndex + 1) % carouselItems.length;
+        updateReviewsCarousel();
+    }
+
+    function prevReview() {
+        activeIndex = (activeIndex - 1 + carouselItems.length) % carouselItems.length;
+        updateReviewsCarousel();
+    }
+
+    carouselItems.forEach((item) => {
+        item.addEventListener("click", (e) => {
+            const clickPosition = e.clientX;
+            const itemWidth = item.clientWidth;
+
+            if (clickPosition < itemWidth / 2) {
+                prevReview();
+            } else {
+                nextReview();
+            }
+        });
+
+        item.addEventListener("mousedown", (e) => {
+            startX = e.clientX;
+            item.style.transition = "none";
+        });
+
+        item.addEventListener("mousemove", (e) => {
+            if (startX === 0) return;
+
+            const diffX = e.clientX - startX;
+            if (Math.abs(diffX) > 50) {
+                if (diffX > 0) {
+                    prevReview();
+                } else {
+                    nextReview();
+                }
+                startX = 0;
+            }
+        });
+
+        item.addEventListener("mouseup", () => {
+            startX = 0;
+            item.style.transition = "";
+        });
+
+        item.addEventListener("mouseleave", () => {
+            startX = 0;
+            item.style.transition = "";
+        });
+    });
+
+    updateReviewsCarousel();
+})();
 </script>
 
 <script>
