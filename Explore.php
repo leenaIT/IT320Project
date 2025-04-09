@@ -28,13 +28,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_SERVER['HTTP_ACCEPT']) && st
 
     $userIP = $_SERVER['REMOTE_ADDR'];
 
-    $query = "SELECT posts.*, users.FirstName, users.LastName, 
-              (SELECT COUNT(*) FROM likes WHERE likes.postID = posts.PostID) AS likeCount,
-              EXISTS(SELECT 1 FROM likes WHERE likes.postID = posts.PostID AND likes.userIP = ?) AS liked
-              FROM posts 
-              JOIN users ON posts.UserID = users.UserID
-              ORDER BY posts.post_date DESC";
-
+ $query = "SELECT posts.*, users.FirstName, users.LastName, 
+          (SELECT COUNT(*) FROM likes WHERE likes.postID = posts.PostID) AS likeCount,
+          EXISTS(SELECT 1 FROM likes WHERE likes.postID = posts.PostID AND likes.userIP = ?) AS liked
+          FROM posts 
+          LEFT JOIN users ON posts.UserID = users.UserID
+          ORDER BY posts.post_date DESC";
+    
     $stmt = mysqli_prepare($connection, $query);
     if (!$stmt) {
         echo json_encode(['error' => 'Prepare failed: ' . mysqli_error($connection)]);
