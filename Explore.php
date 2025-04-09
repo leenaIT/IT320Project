@@ -1,16 +1,30 @@
-
 <?php
+ob_start();
 session_start();
 
 $loggedIn = isset($_SESSION['user_id']);
 
-
-ob_start();
-$loggedIn = isset($_SESSION['userID']);
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_SERVER['HTTP_ACCEPT']) && str_contains($_SERVER['HTTP_ACCEPT'], 'application/json')) {
     header('Content-Type: application/json');
+    
+    // تأكد من وجود ملف الاتصال بقاعدة البيانات
+    if (!file_exists('database.php')) {
+        echo json_encode(['error' => 'Database configuration file missing']);
+        exit;
+    }
+    
     include 'database.php';
+    
+    // تحقق من نجاح الاتصال
+    if (!$connection) {
+        echo json_encode(['error' => 'Database connection failed: ' . mysqli_connect_error()]);
+        exit;
+    }
 
     $userIP = $_SERVER['REMOTE_ADDR'];
 
@@ -22,9 +36,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_SERVER['HTTP_ACCEPT']) && st
               ORDER BY posts.post_date DESC";
 
     $stmt = mysqli_prepare($connection, $query);
+    if (!$stmt) {
+        echo json_encode(['error' => 'Prepare failed: ' . mysqli_error($connection)]);
+        exit;
+    }
+    
     mysqli_stmt_bind_param($stmt, "s", $userIP);
-    mysqli_stmt_execute($stmt);
+    if (!mysqli_stmt_execute($stmt)) {
+        echo json_encode(['error' => 'Execute failed: ' . mysqli_stmt_error($stmt)]);
+        exit;
+    }
+    
     $result = mysqli_stmt_get_result($stmt);
+    if (!$result) {
+        echo json_encode(['error' => 'Get result failed: ' . mysqli_error($connection)]);
+        exit;
+    }
 
     $posts = [];
     while ($row = mysqli_fetch_assoc($result)) {
@@ -44,7 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_SERVER['HTTP_ACCEPT']) && st
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Explore Page</title>
-
+    <link rel="stylesheet" href="styles2.css">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
 
@@ -837,7 +866,238 @@ box-sizing: border-box;
 }
 
 
+/* الهيدر المعدل */
+header {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    box-sizing: border-box;
+    z-index: 100;
+}
 
+.logo {
+    flex: 0;
+    margin-right: auto;
+}
+
+.logo img {
+    height: 60px;
+    width: 60px;
+    transition: all 0.3s ease;
+}
+
+/* روابط سطح المكتب */
+.desktop-nav {
+    position: static;
+    display: flex;
+    gap: 15px;
+    font-weight: bold;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+/* روابط سطح المكتب */
+.desktop-nav a,
+.language-switch {
+    text-decoration: none;
+    color: #FF9D23;
+    font-size: 18px;
+    padding: 8px 12px;
+    transition: 0.3s;
+    border-radius: 4px;
+    background: transparent;
+    border: none;
+}
+
+/* زر الهامبرغر */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 45px;
+    height: 45px;
+    background: white;
+    border: 2px solid #FF9D23;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+}
+
+/* قائمة الجوال */
+.mobile-nav-container {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: #fffefc;
+    z-index: 999;
+    transition: 0.5s;
+    padding: 80px 30px;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+}
+
+/* تحسينات للشاشات الصغيرة */
+@media (max-width: 768px) {
+    .desktop-nav {
+        display: none;
+    }
+    
+    .hamburger {
+        display: flex;
+    }
+    
+    .logo img {
+        height: 50px;
+        width: 50px;
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-nav-container {
+        display: none !important;
+    }
+}
+
+/* الفوتر المعدل */
+footer {
+    margin-top: 2em;
+    padding: 1em 5%;
+    background-color: #fffefc;
+    border-top: 2px solid #f9b013ec;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.footer-left-1,
+.footer-center-1,
+.footer-right-1 {
+    width: 100%;
+    padding: 1em 0;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+.footer-logo-1 {
+    width: 80px;
+    margin: 0 auto;
+}
+
+.contact-info-1 {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.contact-item-1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.social-icons-1 {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.footer-bottom-1 {
+    width: 100%;
+    text-align: center;
+    margin-top: 1em;
+    padding-top: 1em;
+}
+
+/* تحسينات للشاشات المتوسطة والكبيرة */
+@media (min-width: 768px) {
+    footer {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+    
+    .footer-left-1,
+    .footer-center-1,
+    .footer-right-1 {
+        flex: 1;
+        min-width: auto;
+        padding: 0.5em;
+        border-bottom: none;
+    }
+    
+    .contact-info-1 {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .footer-center-1 {
+        order: -1;
+        flex: 0 0 100%;
+    }
+}
+
+@media (min-width: 992px) {
+    .footer-center-1 {
+        order: 0;
+        flex: 0 0 auto;
+    }
+    
+    .contact-info-1 {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    
+    .footer-left-1,
+    .footer-center-1,
+    .footer-right-1 {
+        padding: 1em;
+    }
+}
+
+/* تحسينات للأيقونات */
+.icon-phone,
+.icon-email,
+.icon-location,
+.icon-facebook,
+.icon-twitter,
+.icon-instagram {
+    width: 30px !important;
+    height: 30px !important;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.icon-email,
+.icon-location {
+    margin-top: 0 !important;
+}
+
+.icon-facebook:hover,
+.icon-twitter:hover,
+.icon-instagram:hover {
+    transform: scale(1.1);
+}
     
     </style>
 </head>
@@ -1123,9 +1383,30 @@ document.addEventListener("DOMContentLoaded", loadPosts);
 
 function toggleMenu(button) {
     button.classList.toggle('active');
-    document.querySelector('.mobile-nav-container').classList.toggle('show');
+    const mobileNav = document.querySelector('.mobile-nav-container');
+    mobileNav.classList.toggle('show');
     
+    // منع التمرير عند فتح القائمة الجانبية
     document.body.style.overflow = button.classList.contains('active') ? 'hidden' : '';
+    
+    // إغلاق القائمة عند النقر خارجها
+    if (button.classList.contains('active')) {
+        document.addEventListener('click', closeMenuOnClickOutside);
+    } else {
+        document.removeEventListener('click', closeMenuOnClickOutside);
+    }
+}
+
+function closeMenuOnClickOutside(e) {
+    const hamburger = document.querySelector('.hamburger');
+    const mobileNav = document.querySelector('.mobile-nav-container');
+    
+    if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+        hamburger.classList.remove('active');
+        mobileNav.classList.remove('show');
+        document.body.style.overflow = '';
+        document.removeEventListener('click', closeMenuOnClickOutside);
+    }
 }
 
 </script>
@@ -1134,3 +1415,4 @@ function toggleMenu(button) {
 
 </body>
 </html>
+
