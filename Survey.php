@@ -1,6 +1,11 @@
 <?php
-ob_start(); // <--- ابدأ التخزين المؤقت (احتياطي عشان ما يطبع HTML بالغلط)
+ob_start();
 session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
     header('Content-Type: application/json');
@@ -13,50 +18,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && strpos($_SERVER['CONTENT_TYPE'], 'a
         exit;
     }
 
-    if (empty($data['categories'])) {
-        echo json_encode(['error' => 'Please select at least one category']);
-        exit;
+    // Analyze personality traits from the survey
+    $personality = isset($data['personality']) ? mysqli_real_escape_string($connection, $data['personality']) : 'expressive';
+    $learning = isset($data['learning']) ? mysqli_real_escape_string($connection, $data['learning']) : 'structured';
+    $goal = isset($data['goal']) ? mysqli_real_escape_string($connection, $data['goal']) : 'relaxation';
+    $energy = isset($data['energy']) ? mysqli_real_escape_string($connection, $data['energy']) : 'calm';
+    $atmosphere = isset($data['atmosphere']) ? mysqli_real_escape_string($connection, $data['atmosphere']) : 'cozy';
+
+    // Determine category based on personality and atmosphere
+    $category = 'Art'; // Default category
+    if ($personality == 'crafty' || $atmosphere == 'studio') {
+        $category = 'Cooking';
+    } elseif ($personality == 'adventurous' || $atmosphere == 'adventure') {
+        $category = 'Adventure';
     }
 
-    if (empty($data['locations'])) {
-        echo json_encode(['error' => 'Please select at least one location']);
-        exit;
+    // Build base query with category filter
+    $query = "SELECT * FROM workshop WHERE Category = '" . mysqli_real_escape_string($connection, $category) . "'";
+
+    // Add characteristics filters based on user preferences
+    $characteristicsFilters = [];
+    
+    if ($goal == 'relaxation') {
+        $characteristicsFilters[] = "(ShortDes LIKE '%relax%' OR ShortDes LIKE '%calm%')";
+    } elseif ($goal == 'skill') {
+        $characteristicsFilters[] = "(ShortDes LIKE '%learn%' OR ShortDes LIKE '%skill%')";
+    } elseif ($goal == 'connection') {
+        $characteristicsFilters[] = "(ShortDes LIKE '%social%' OR ShortDes LIKE '%group%')";
     }
 
-    $categories = array_map(function($cat) use ($connection) {
-        return mysqli_real_escape_string($connection, $cat);
-    }, $data['categories']);
-
-    $locations = array_map(function($loc) use ($connection) {
-        return mysqli_real_escape_string($connection, $loc);
-    }, $data['locations']);
-
-    $query = "SELECT * FROM workshop WHERE Category IN ('" . implode("','", $categories) . "')";
-
-    if (!empty($data['workshopType'])) {
-        $workshopType = mysqli_real_escape_string($connection, $data['workshopType']);
-        if ($workshopType !== 'Both') {
-            $query .= " AND Type = '$workshopType'";
-        }
+    if ($energy == 'energetic') {
+        $characteristicsFilters[] = "(ShortDes LIKE '%active%' OR ShortDes LIKE '%energetic%')";
+    } elseif ($energy == 'calm') {
+        $characteristicsFilters[] = "(ShortDes LIKE '%peaceful%' OR ShortDes LIKE '%relax%')";
     }
 
-    $query .= " AND Location IN ('" . implode("','", $locations) . "')";
-
-    if (!empty($data['priceRange'])) {
-        switch ($data['priceRange']) {
-            case '0-200':
-                $query .= " AND Price <= 200";
-                break;
-            case '200-300':
-                $query .= " AND Price > 200 AND Price <= 300";
-                break;
-            case '300+':
-                $query .= " AND Price > 300";
-                break;
-        }
+    if (!empty($characteristicsFilters)) {
+        $query .= " AND (" . implode(" OR ", $characteristicsFilters) . ")";
     }
 
-    $query .= " ORDER BY Price ASC LIMIT 12";
+    // Add learning style preference
+    if ($learning == 'structured') {
+        $query .= " AND (ShortDes LIKE '%beginner%' OR ShortDes LIKE '%step-by-step%')";
+    } elseif ($learning == 'experimental') {
+        $query .= " AND (ShortDes LIKE '%explore%' OR ShortDes LIKE '%discover%')";
+    }
+
+    // Order by relevance to personality
+    $query .= " ORDER BY 
+        CASE
+            WHEN (ShortDes LIKE '%" . mysqli_real_escape_string($connection, $personality) . "%') THEN 1
+            WHEN (ShortDes LIKE '%" . mysqli_real_escape_string($connection, $learning) . "%') THEN 2
+            WHEN (ShortDes LIKE '%" . mysqli_real_escape_string($connection, $goal) . "%') THEN 3
+            ELSE 4
+        END,
+        RAND()
+        LIMIT 6";
 
     $result = mysqli_query($connection, $query);
 
@@ -79,28 +96,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && strpos($_SERVER['CONTENT_TYPE'], 'a
         ];
     }
 
+    // Fallback to random workshops if no matches found
+    if (empty($workshops)) {
+        $fallbackQuery = "SELECT * FROM workshop ORDER BY RAND() LIMIT 6";
+        $fallbackResult = mysqli_query($connection, $fallbackQuery);
+        
+        while ($row = mysqli_fetch_assoc($fallbackResult)) {
+            $workshops[] = [
+                'WorkshopID' => $row['WorkshopID'],
+                'Title' => $row['Title'],
+                'ShortDes' => $row['ShortDes'],
+                'Category' => $row['Category'],
+                'Location' => $row['Location'],
+                'Type' => $row['Type'],
+                'Price' => $row['Price'],
+                'ImageURL' => $row['ImageURL']
+            ];
+        }
+    }
+
     echo json_encode($workshops);
     exit;
 }
-
-// باقي الصفحة (HTML) يبدأ هنا فقط إذا ما كان JSON
-$loggedIn = isset($_SESSION['userID']);
 ?>
 
-<!-- هنا تبدأ واجهة HTML بالكامل -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Survey Page</title>
-    <!-- بقية العناصر مثل CSS و JavaScript تُدرج هنا -->
-</head>
-<body>
-    <!-- محتوى الصفحة مثل نموذج الاستبيان، الصور، النتيجة، إلخ -->
-    <!-- انسخي محتوى Survey.html هنا من داخل <body> -->
-</body>
-</html>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -108,267 +128,13 @@ $loggedIn = isset($_SESSION['userID']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Survey Form</title>
+    <link rel="stylesheet" href="styles2.css">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /*header*/
-     /* الهيدر */
-header {
-    position:relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 15px 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: transparent;
-}
 
-.logo {
-    flex: 0;
-    margin-right: auto;
-}
 
-.logo img {
-    height: 80px;
-    width: 80px;
-}
-
-/* روابط سطح المكتب */
-.desktop-nav {
-    position: absolute;
-    top: 25px;
-    right: 40px;
-    display: flex;
-    gap: 20px;
-    font-weight: bold;
-}
-
-/* روابط سطح المكتب */
-.desktop-nav a,
-.language-switch {
-    text-decoration: none;
-    color: #FF9D23;
-    font-size: 20px;
-    padding: 8px 15px;
-    transition: 0.3s;
-    border-radius: 4px;
-    background: transparent;
-    border: none;
-}
-
-.language-switch:hover {
-    background-color: rgba(255, 157, 35, 0.1);
-}
-/* زر الهامبرغر */
-.hamburger {
-    display: none;
-    cursor: pointer;
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-    width: 45px;
-    height: 45px;
-    background: white;
-    border: 2px solid #FF9D23;
-    border-radius: 50%;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    padding: 8px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transition: 0.3s;
-}
-
-.hamburger-line {
-    width: 22px;
-    height: 2.5px;
-    background: #FF9D23;
-    margin: 3px 0;
-    border-radius: 2px;
-    transition: 0.3s;
-}
-
-.hamburger.active {
-    background: #FF9D23;
-}
-
-.hamburger.active .hamburger-line {
-    background: white;
-}
-
-.hamburger.active .hamburger-line:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-}
-
-.hamburger.active .hamburger-line:nth-child(2) {
-    opacity: 0;
-}
-
-.hamburger.active .hamburger-line:nth-child(3) {
-    transform: rotate(-45deg) translate(7px, -6px);
-}
-
-/* قائمة الجوال */
-.mobile-nav-container {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 280px;
-    height: 100vh;
-    background: #fffefc;
-    z-index: 999;
-    transition: 0.5s;
-    padding: 80px 30px;
-    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
-}
-
-.mobile-nav-container.show {
-    right: 0;
-}
-
-.mobile-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-/* زر اللغة في الجوال فقط */
-.mobile-nav a,
-.mobile-language-switch {
-    color: #333;
-    background-color: transparent !important;
-    text-decoration: none;
-    font-size: 18px;
-    padding: 12px 15px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    font-weight: 500;
-    border-bottom: 1px solid #FF9D23;
-}
-
-.mobile-nav a:hover,
-.mobile-language-switch:hover {
-    transform: translateX(8px);
-    color: #FF9D23;
-}
-
-  /*footer*/
-footer {
-            margin-top: 2em;
-            padding: 1em 2em;
-            background-color: #fffefc;
-            border-top: 2px solid #f9b013ec;
-            color: #333;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            align-items: flex-start;
-        }
-
-        .footer-left-1,
-        .footer-center-1,
-        .footer-right-1 {
-            flex: 1;
-            min-width: 250px;
-            padding: 0.5em;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* وسط الفوتر */
-        .footer-center-1 {
-            justify-content: center;
-        }
-
-        .footer-logo-1 {
-            width: 100px;
-        }
-
-        .contact-info-1 {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-evenly;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: nowrap;
-            margin-top: 10px;
-            width: 100%;
-        }
-
-        .contact-item-1 {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            white-space: nowrap;
-        }
-
-        .single-line-1 {
-            white-space: nowrap;
-        }
-
-        /* أيقونات السوشال ميديا */
-        .social-icons-1 {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-        .footer-bottom-1 {
-            width: 100%;
-            text-align: center;
-            margin-top: 0.5em;
-        }
-
-        .footer-bottom-1 p {
-            padding: 0.5em;
-            background-color: #ffffff;
-            font-size: 0.75em;
-            color: #f9b013ec;
-            border-top: 1px solid #ccc;
-        }
-        .icon-phone {
-    display: inline-block !important; 
-    width: 30px !important;
-    height: 30px !important;
-     position: relative !important;
-    left: 0 !important;
-    right: auto !important;
-}
-
-.icon-email {
-    width: 42px !important;
-    height: 42px !important;
-    
-}
-
-.icon-location {
-    width: 42px !important;
-    height: 42px !important;
-    margin-top: 6px !important;
-}
-.icon-facebook {
-    width: 35px !important;
-    height: 35px !important;
-    margin-top: 6px !important;
-}
-
-.icon-twitter {
-    width: 35px !important;
-    height: 35px !important;
-    margin-top: 6px !important;
-}
-
-.icon-instagram {
-    width: 35px !important;
-    height: 35px !important;
-    margin-top: 6px !important;
-}
 
 
         html, body {
@@ -377,103 +143,8 @@ footer {
             margin: 0;
             padding: 0;
         }
-
-        header {
-            background-color: #333;
-            color: white;
-            padding: 15px 20px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-        header.with-background {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background: rgba(0, 0, 0, 0.7);
-     
-        }
-        header.no-background {
-
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 4;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .nav-container {
-            display: flex;
-            align-items: center;
-        }
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 20px;
-            margin: 0;
-            padding: 0;
-        }
-        .nav-links li a {
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-        }
-        .language-switch {
-            cursor: pointer;
-            font-size: 18px;
-            margin-left: 20px;
-            color: white;
-        }
-        .login-signup {
-            font-size: 18px;
-            color: white;
-            text-decoration: none;
-        }
-        /* Hamburger Menu */
-        .menu-toggle {
-            display: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: white;
-        }
-        .menu {
-            display: none;
-            position: absolute;
-            top: 60px;
-            right: 20px;
-            background: #353129b0;
-            border-radius: 8px;
-            padding: 10px;
-            z-index: 5;
-        }
-        .menu.active {
-            display: block;
-        }
-        .menu ul {
-            list-style: none;
-            padding: 0;
-        }
-        .menu ul li {
-            padding: 10px;
-        }
-        .menu ul li a {
-            color: white;
-            text-decoration: none;
-        }
-        html[dir="rtl"] .menu ul li {
-            text-align: right;
-        }
-        html[dir="rtl"] .menu.active {
-            right: auto;
-            left: 20px;
-        }
-        body {
+        
+   body {
             padding-top: 200px;
             font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
@@ -780,48 +451,317 @@ h1 {
 
 h3 {
     font-size: calc(1rem + 0.5vw);
-}      
+}  
+
+       /* الهيدر المعدل */
+       header {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    box-sizing: border-box;
+    z-index: 100;
+    flex-wrap: wrap;
+}
+
+.logo {
+    flex: 0 0 auto;
+    margin-right: auto;
+}
+
+.logo img {
+    height: 60px;
+    width: 60px;
+    transition: all 0.3s ease;
+}
+
+/* روابط سطح المكتب */
+.desktop-nav {
+    position: static;
+    display: flex;
+    gap: 15px;
+    font-weight: bold;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.desktop-nav a,
+.language-switch {
+    text-decoration: none;
+    color: #FF9D23;
+    font-size: 16px;
+    padding: 8px 12px;
+    transition: 0.3s;
+    border-radius: 4px;
+    background: transparent;
+    border: none;
+}
+
+/* زر الهامبرغر */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 45px;
+    height: 45px;
+    background: white;
+    border: 2px solid #FF9D23;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+}
+
+/* قائمة الجوال */
+.mobile-nav-container {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: #fffefc;
+    z-index: 999;
+    transition: 0.5s;
+    padding: 80px 30px;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+}
+
+.mobile-nav-container.show {
+    right: 0;
+}
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.mobile-nav a,
+.mobile-language-switch {
+    color: #333;
+    background-color: transparent !important;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 12px 15px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    border-bottom: 1px solid #FF9D23;
+}
+
+.mobile-nav a:hover,
+.mobile-language-switch:hover {
+    transform: translateX(8px);
+    color: #FF9D23;
+}
+
+/* تحسينات للشاشات الصغيرة */
+@media (max-width: 768px) {
+    .desktop-nav {
+        display: none;
+    }
+    
+    .hamburger {
+        display: flex;
+    }
+    
+    .logo img {
+        height: 50px;
+        width: 50px;
+    }
+    
+    header {
+        padding: 15px 20px;
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-nav-container {
+        display: none !important;
+    }
+    
+    .desktop-nav {
+        position: absolute;
+        top: 25px;
+        right: 40px;
+        display: flex;
+        gap: 20px;
+        width: auto;
+        margin-top: 0;
+    }
+    
+    header {
+        flex-wrap: nowrap;
+    }
+    
+    .logo img {
+        height: 80px;
+        width: 80px;
+    }
+}
+
+/* الفوتر المعدل */
+footer {
+    margin-top: 2em;
+    padding: 1em 5%;
+    background-color: #fffefc;
+    border-top: 2px solid #f9b013ec;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.footer-left-1,
+.footer-center-1,
+.footer-right-1 {
+    width: 100%;
+    padding: 1em 0;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+.footer-logo-1 {
+    width: 80px;
+    margin: 0 auto;
+}
+
+.contact-info-1 {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.contact-item-1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.social-icons-1 {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.footer-bottom-1 {
+    width: 100%;
+    text-align: center;
+    margin-top: 1em;
+    padding-top: 1em;
+}
+
+/* تحسينات للأيقونات */
+.icon-phone,
+.icon-email,
+.icon-location,
+.icon-facebook,
+.icon-twitter,
+.icon-instagram {
+    width: 30px !important;
+    height: 30px !important;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.icon-email,
+.icon-location {
+    margin-top: 0 !important;
+}
+
+.icon-facebook:hover,
+.icon-twitter:hover,
+.icon-instagram:hover {
+    transform: scale(1.1);
+}
+
+/* تحسينات للشاشات المتوسطة والكبيرة */
+@media (min-width: 768px) {
+    footer {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+    
+    .footer-left-1,
+    .footer-center-1,
+    .footer-right-1 {
+        flex: 1;
+        min-width: auto;
+        padding: 0.5em;
+        border-bottom: none;
+    }
+    
+    .contact-info-1 {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .footer-center-1 {
+        order: -1;
+        flex: 0 0 100%;
+    }
+}
+
+@media (min-width: 992px) {
+    .footer-center-1 {
+        order: 0;
+        flex: 0 0 auto;
+    }
+    
+    .contact-info-1 {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    
+    .footer-left-1,
+    .footer-center-1,
+    .footer-right-1 {
+        padding: 1em;
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    padding-top: 0; /* إزالة padding-top الزائد */
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    margin-top: 80px; /* تأكد من أن الهيدر لا يغطي المحتوى */
+}
+
     </style>
 </head>
-<header>
-    <!-- اللوقو في الوسط -->
-    <div class="logo">
-        <img src="workshops/logo.png" alt="logo">
-    </div>
-
-    <!-- زر الهامبرغر -->
-    <div class="hamburger" onclick="toggleMenu(this)">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-    </div>
-
-    <!-- قائمة الجوال -->
-    <div class="mobile-nav-container">
-        <nav class="mobile-nav">
-            <a href="homepage.php">Home</a>
-            <a href="ProfilePage.php"><?php echo $loggedIn ? 'Profile' : 'Login'; ?></a>
-            <a href="Explore.php">Explore</a>
-            <a href="Survey.php">Survey</a>
-            <a href="findcategory.php">Category</a>
-            <div class="mobile-language-switch" onclick="toggleLanguage()">
-                🌐 Language
-            </div>
-        </nav>
-    </div>
-
-    <!-- قائمة سطح المكتب -->
-    <nav class="desktop-nav">
-        <a href="homepage.php">Home</a>
-        <a href="<?php echo $loggedIn ? 'ProfilePage.php' : 'login.php'; ?>">
-            <?php echo $loggedIn ? 'Profile' : 'Login'; ?>
-        </a>
-        <a href="Explore.php">Explore</a>
-        <a href="Survey.php">Survey</a>
-        <a href="findcategory.php">Category</a>
-        <a href="#" class="language-switch" onclick="toggleLanguage()">🌐 Language</a>
-    </nav>
-</header>
 
 <body>
 
@@ -842,7 +782,9 @@ h3 {
     <div class="mobile-nav-container">
         <nav class="mobile-nav">
             <a href="homepage.php">Home</a>
-            <a href="ProfilePage.php"><?php echo $loggedIn ? 'Profile' : 'Login'; ?></a>
+            <a href="<?php echo isset($_SESSION['user_id']) ? 'ProfilePage.php' : 'login.php'; ?>">
+                <?php echo isset($_SESSION['user_id']) ? 'Profile' : 'Login'; ?>
+            </a>
             <a href="Explore.php">Explore</a>
             <a href="Survey.php">Survey</a>
             <a href="findcategory.php">Category</a>
@@ -855,8 +797,8 @@ h3 {
     <!-- قائمة سطح المكتب -->
     <nav class="desktop-nav">
         <a href="homepage.php">Home</a>
-        <a href="<?php echo $loggedIn ? 'ProfilePage.php' : 'login.php'; ?>">
-            <?php echo $loggedIn ? 'Profile' : 'Login'; ?>
+        <a href="<?php echo isset($_SESSION['user_id']) ? 'ProfilePage.php' : 'login.php'; ?>">
+            <?php echo isset($_SESSION['user_id']) ? 'Profile' : 'Login'; ?>
         </a>
         <a href="Explore.php">Explore</a>
         <a href="Survey.php">Survey</a>
@@ -864,101 +806,112 @@ h3 {
         <a href="#" class="language-switch" onclick="toggleLanguage()">🌐 Language</a>
     </nav>
 </header>
-
-
-
-    <div class="container">
-        <form id="surveyForm">
-            <div class="survey-form">
-                <h1 id="main-title">Discover the Best Workshops for You!</h1>
-                <p class="intro" id="intro-text">Complete this short survey to get personalized workshop recommendations based on your interests.</p>
-                
-                <!-- Question 1: Preferred Workshop Categories -->
-                <div class="question">
-                    <h3>Choose your preferred categories:</h3>
-                    <div class="options">
-                        <label class="option">
-                            <input type="checkbox" name="categories[]" value="Art" checked>
-                            🎨 Arts & Crafts
-                        </label>
-                        <label class="option">
-                            <input type="checkbox" name="categories[]" value="Cooking">
-                            👩‍🍳 Cooking Workshops
-                        </label>
-                        <label class="option">
-                            <input type="checkbox" name="categories[]" value="Adventure">
-                            ⛰️ Adventure Activities
-                        </label>
-                    </div>
-                </div>
-                
-                <!-- Question 2: Participation Method -->
-                <div class="question">
-                    <h3>Preferred participation method:</h3>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="workshopType" value="in-person" checked>
-                            🏫 In-person
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="workshopType" value="Online">
-                            🏠 Online
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="workshopType" value="Both">
-                            🔄 Both
-                        </label>
-                    </div>
-                </div>
-                
-                <!-- Question 3: Location -->
-                <div class="question">
-                    <h3>Select your city:</h3>
-                    <div class="options">
-                        <label class="option">
-                            <input type="checkbox" name="locations[]" value="Riyadh" checked>
-                            Riyadh
-                        </label>
-                        <label class="option">
-                            <input type="checkbox" name="locations[]" value="Jeddah">
-                            Jeddah
-                        </label>
-                        <label class="option">
-                            <input type="checkbox" name="locations[]" value="Dammam">
-                            Dammam
-                        </label>
-                        <label class="option">
-                            <input type="checkbox" name="locations[]" value="Taif">
-                            Taif
-                        </label>
-                    </div>
-                </div>
-                
-                <!-- Question 4: Price Range -->
-                <div class="question">
-                    <h3>Price range:</h3>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="priceRange" value="0-200" checked>
-                            💵 Up to 200 SAR
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="priceRange" value="200-300">
-                            💰 200 - 300 SAR
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="priceRange" value="300+">
-                            💎 Above 300 SAR
-                        </label>
-                    </div>
+<div class="container">
+    <form id="surveyForm">
+        <div class="survey-form">
+            <h1>Discover Your Perfect Workshop Match!</h1>
+            <p class="intro">Answer these questions to help us understand your unique interests</p>
+            
+            <!-- Question 1: Creative Personality -->
+            <div class="question">
+                <h3>Which description best fits your creative style?</h3>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="personality" value="expressive" required>
+                         Expressive Artist - I love painting, drawing, and visual arts
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="personality" value="crafty">
+                         Hands-On Creator - I enjoy crafts, DIY projects, and making things
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="personality" value="adventurous">
+                         Nature Explorer - I prefer outdoor activities and nature experiences
+                    </label>
                 </div>
             </div>
+            
+            <!-- Question 2: Learning Preference -->
+            <div class="question">
+                <h3>How do you prefer to learn new skills?</h3>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="learning" value="structured" required>
+                         Step-by-Step - I like clear instructions and guidance
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="learning" value="experimental">
+                         Exploratory - I learn by trying things out myself
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="learning" value="social">
+                         Collaborative - I learn best with others in a group
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Question 3: Workshop Goals -->
+            <div class="question">
+                <h3>What's your main goal for attending a workshop?</h3>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="goal" value="relaxation" required>
+                         Relaxation - To unwind and enjoy a creative break
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="goal" value="skill">
+                         Skill Development - To learn something practical
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="goal" value="connection">
+                         Social Connection - To meet people with similar interests
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Question 4: Energy Level -->
+            <div class="question">
+                <h3>What energy level do you prefer in activities?</h3>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="energy" value="calm" required>
+                         Calm - Peaceful, low-key activities
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="energy" value="balanced">
+                         Balanced - Mix of activity and relaxation
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="energy" value="energetic">
+                         Energetic - High-engagement, active participation
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Question 5: Workshop Atmosphere -->
+            <div class="question">
+                <h3>What workshop atmosphere appeals to you most?</h3>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="atmosphere" value="cozy" required>
+                         Cozy - Intimate, comfortable spaces
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="atmosphere" value="studio">
+                         Studio - Creative, artistic environment
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="atmosphere" value="adventure">
+                        Adventure - Outdoor or unconventional settings
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Find My Perfect Workshops</button>
+    </form>
     
-            <div id="errorContainer" class="error-message"></div>
-            <button type="submit" class="submit-btn">Find Recommended Workshops</button>
-        </form>
-    
-   
+
  
 
         <div class="results" id="resultsSection" style="display:none;">
@@ -1013,10 +966,11 @@ h3 {
     event.preventDefault();
     
     const formData = {
-        categories: Array.from(document.querySelectorAll('input[name="categories[]"]:checked')).map(el => el.value),
-        workshopType: document.querySelector('input[name="workshopType"]:checked').value,
-        locations: Array.from(document.querySelectorAll('input[name="locations[]"]:checked')).map(el => el.value),
-        priceRange: document.querySelector('input[name="priceRange"]:checked').value
+        personality: document.querySelector('input[name="personality"]:checked').value,
+        learning: document.querySelector('input[name="learning"]:checked').value,
+        goal: document.querySelector('input[name="goal"]:checked').value,
+        energy: document.querySelector('input[name="energy"]:checked').value,
+        atmosphere: document.querySelector('input[name="atmosphere"]:checked').value
     };
 
     try {
@@ -1037,7 +991,7 @@ h3 {
         }
     } catch (error) {
         console.error('Error:', error);
-        showError("حدث خطأ أثناء جلب البيانات");
+        showError("An error occurred while finding your matches");
     }
 }
     
@@ -1096,9 +1050,30 @@ h3 {
 
 function toggleMenu(button) {
     button.classList.toggle('active');
-    document.querySelector('.mobile-nav-container').classList.toggle('show');
+    const mobileNav = document.querySelector('.mobile-nav-container');
+    mobileNav.classList.toggle('show');
     
+    // منع التمرير عند فتح القائمة الجانبية
     document.body.style.overflow = button.classList.contains('active') ? 'hidden' : '';
+    
+    // إغلاق القائمة عند النقر خارجها
+    if (button.classList.contains('active')) {
+        document.addEventListener('click', closeMenuOnClickOutside);
+    } else {
+        document.removeEventListener('click', closeMenuOnClickOutside);
+    }
+}
+
+function closeMenuOnClickOutside(e) {
+    const hamburger = document.querySelector('.hamburger');
+    const mobileNav = document.querySelector('.mobile-nav-container');
+    
+    if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+        hamburger.classList.remove('active');
+        mobileNav.classList.remove('show');
+        document.body.style.overflow = '';
+        document.removeEventListener('click', closeMenuOnClickOutside);
+    }
 }
     </script>
 
@@ -1146,3 +1121,4 @@ function toggleMenu(button) {
 
 </body>
 </html>
+
