@@ -15,10 +15,132 @@ $loggedIn = isset($_SESSION['user_id']);
     <link rel="stylesheet" href="header.css">
 
 <style>
+    
+        .desktop-nav a,
+.language-switch,
+.mobile-nav a,
+.mobile-language-switch {
+font-family: 'Poppins', sans-serif !important;
+}
+    /*footer*/
+    footer {
+            margin-top: 2em;
+            padding: 1em 2em;
+            background-color: #fffefc;
+            border-top: 2px solid #f9b013ec;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+
+        .footer-left-1,
+        .footer-center-1,
+        .footer-right-1 {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.5em;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* وسط الفوتر */
+        .footer-center-1 {
+            justify-content: center;
+        }
+
+        .footer-logo-1 {
+            width: 100px;
+        }
+
+        .contact-info-1 {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: nowrap;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .contact-item-1 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .single-line-1 {
+            white-space: nowrap;
+        }
+
+        /* أيقونات السوشال ميديا */
+        .social-icons-1 {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .footer-bottom-1 {
+            width: 100%;
+            text-align: center;
+            margin-top: 0.5em;
+        }
+
+        .footer-bottom-1 p {
+            padding: 0.5em;
+            background-color: #ffffff;
+            font-size: 0.75em;
+            color: #f9b013ec;
+            border-top: 1px solid #ccc;
+        }
+        .icon-phone {
+    display: inline-block !important; 
+    width: 30px !important;
+    height: 30px !important;
+     position: relative !important;
+    left: 0 !important;
+    right: auto !important;
+}
+
+.icon-email {
+    width: 42px !important;
+    height: 42px !important;
+    
+}
+
+.icon-location {
+    width: 42px !important;
+    height: 42px !important;
+    margin-top: 6px !important;
+}
+
+.icon-facebook {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+.icon-twitter {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+.icon-instagram {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
     /* Base Styles */
     body {
         margin: 0;
-        font-family: 'Montserrat', sans-serif;
         background-color: #FFFDF0;
         color: #333;
         line-height: 1.6;
@@ -238,121 +360,7 @@ $loggedIn = isset($_SESSION['user_id']);
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
- /*footer*/
-    footer {
-            margin-top: 2em;
-            padding: 1em 2em;
-            background-color: #fffefc;
-            border-top: 2px solid #f9b013ec;
-            color: #333;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            align-items: flex-start;
-        }
-
-        .footer-left-1,
-        .footer-center-1,
-        .footer-right-1 {
-            flex: 1;
-            min-width: 250px;
-            padding: 0.5em;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* وسط الفوتر */
-        .footer-center-1 {
-            justify-content: center;
-        }
-
-        .footer-logo-1 {
-            width: 100px;
-        }
-
-        .contact-info-1 {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-evenly;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: nowrap;
-            margin-top: 10px;
-            width: 100%;
-        }
-
-        .contact-item-1 {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            white-space: nowrap;
-        }
-
-        .single-line-1 {
-            white-space: nowrap;
-        }
-
-        /* أيقونات السوشال ميديا */
-        .social-icons-1 {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-        .footer-bottom-1 {
-            width: 100%;
-            text-align: center;
-            margin-top: 0.5em;
-        }
-
-        .footer-bottom-1 p {
-            padding: 0.5em;
-            background-color: #ffffff;
-            font-size: 0.75em;
-            color: #f9b013ec;
-            border-top: 1px solid #ccc;
-        }
-        .icon-phone {
-    display: inline-block !important; 
-    width: 30px !important;
-    height: 30px !important;
-     position: relative !important;
-    left: 0 !important;
-    right: auto !important;
-}
-
-.icon-email {
-    width: 42px !important;
-    height: 42px !important;
-    
-}
-
-.icon-location {
-    width: 42px !important;
-    height: 42px !important;
-    margin-top: 6px !important;
-}
-
-.icon-facebook {
-    width: 35px !important;
-    height: 35px !important;
-    margin-top: 6px !important;
-}
-
-.icon-twitter {
-    width: 35px !important;
-    height: 35px !important;
-    margin-top: 6px !important;
-}
-
-.icon-instagram {
-    width: 35px !important;
-    height: 35px !important;
-    margin-top: 6px !important;
-}
+ 
 
     /* Responsive Breakpoints */
     @media (max-width: 1024px) {
@@ -406,27 +414,7 @@ $loggedIn = isset($_SESSION['user_id']);
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         }
         
-        .footer-left-1,
-        .footer-center-1,
-        .footer-right-1 {
-            flex: 100%;
-            margin-bottom: 1.5em;
-        }
-
-        .contact-info-1 {
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .icon-phone,
-        .icon-email,
-        .icon-location,
-        .icon-facebook,
-        .icon-twitter,
-        .icon-instagram {
-            transform: scale(0.9);
-        }
-    }
+      
 
     @media (max-width: 480px) {
         .header-container {
@@ -475,14 +463,48 @@ $loggedIn = isset($_SESSION['user_id']);
         body {
             font-size: 14px;
         }
-        
-        .footer-left-1,
-        .footer-center-1,
-        .footer-right-1 {
-            min-width: 100%;
-            padding: 0.5em 0;
-        }
     }
+    
+       
+/* ✅ Responsive للجوال */
+@media (max-width: 768px) {
+     footer {
+                flex-direction: column;
+                align-items: center;
+                padding: 1em;
+            }
+            
+            .footer-left-1,
+            .footer-center-1,
+            .footer-right-1 {
+                width: 100%;
+                margin-bottom: 1em;
+                padding: 0.5em 0;
+            }
+
+            .contact-info-1 {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .contact-item-1 {
+                flex: 0 0 auto;
+                margin: 0 5px;
+            }
+
+            .footer-logo-1 {
+                width: 80px;
+                margin: 10px 0;
+            }
+
+            .social-icons-1 {
+                margin: 15px 0;
+            }
+} 
+    
+        
 </style>
 </head>
 <body class="no-background">
@@ -602,7 +624,6 @@ $loggedIn = isset($_SESSION['user_id']);
             </div>
         </section>
     </div>
-
 <footer>
     <div class="footer-left-1">
         <h4>Get In Touch</h4>
@@ -641,6 +662,7 @@ $loggedIn = isset($_SESSION['user_id']);
         <p>© 2024 Website. All rights reserved.</p>
     </div>
 </footer>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
