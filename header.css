@@ -4,9 +4,6 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'serif';
-}
 
 /* الهيدر */
 header {
@@ -164,3 +161,5 @@ header {
         display: flex;
     }
 }
+
+

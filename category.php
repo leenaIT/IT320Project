@@ -134,10 +134,18 @@ document.addEventListener("DOMContentLoaded", function () {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?php echo htmlspecialchars($filterCategory); ?></title>
     <link rel="stylesheet" href="header.css">
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     <style>
         
-    
+    .desktop-nav a,
+.language-switch,
+.mobile-nav a,
+.mobile-language-switch {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: bold;
+}
  /*footer*/
     footer {
             margin-top: 2em;
@@ -709,7 +717,7 @@ input[type="date"] {
 </head>
 <body>
 <div class="header" style="background: url('<?php echo $headerImage; ?>') no-repeat center center/cover;">
-     <header>
+        <header>
     <!-- اللوقو في الوسط -->
     <div class="logo">
         <img src="workshops/logo.png" alt="logo">
