@@ -262,6 +262,7 @@ font-family: 'Poppins', sans-serif !important;
         max-width: 1200px;
         margin: 0 auto;
     }
+    
 
     .workshop-card {
         position: relative;
@@ -413,7 +414,7 @@ font-family: 'Poppins', sans-serif !important;
         .workshops-grid {
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         }
-        
+    }
       
 
     @media (max-width: 480px) {
