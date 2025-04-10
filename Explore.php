@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors',1);
 ob_start();
 session_start();
 
@@ -1338,67 +1339,87 @@ footer {
 </footer>
 
 <script>
-
-// دالة لتحميل وعرض المنشورات
 function loadPosts() {
     fetch("Explore.php", {
-  headers: {
-    "Accept": "application/json"
-  }
-})
+        headers: {
+            "Accept": "application/json"
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        // Log the data to inspect the format
+        console.log(data); // This should be an array of posts
 
-        .then(res => res.json())
-        .then(data => {
-            const postsContainer = document.getElementById("posts");
-            postsContainer.innerHTML = ''; // مسح المحتوى القديم أولاً
-            
-            // إزالة التكرارات باستخدام PostID
-            const uniquePosts = [];
-            const postIds = new Set();
-            
-            data.forEach(post => {
-                if (!postIds.has(post.PostID)) {
-                    postIds.add(post.PostID);
-                    uniquePosts.push(post);
+        if (!Array.isArray(data)) {
+            console.error("Expected an array of posts but received:", data);
+            return; // Exit early if the data is not in the expected format
+        }
+
+        const postsContainer = document.getElementById("posts");
+        postsContainer.innerHTML = ''; // Clear any existing posts
+
+        const uniquePosts = [];
+        const postIds = new Set();
+
+        // Process each post in the array
+        data.forEach(post => {
+            if (!postIds.has(post.PostID)) {
+                postIds.add(post.PostID);
+                uniquePosts.push(post);
+            }
+        });
+
+        uniquePosts.forEach(post => {
+            const postCard = document.createElement("div");
+            postCard.className = "post-card";
+
+            // Decode the images string into an array (if it's a string)
+            let images = [];
+            try {
+                images = JSON.parse(post.images); // Decode the images string into an array
+            } catch (e) {
+                console.error("Error decoding images:", e);
+            }
+
+            // Use only the first image from the array
+            const firstImage = images.length > 0 ? images[0] : null;
+
+            postCard.innerHTML = `
+                <div class="post-images">
+                    ${firstImage ? `<img src="${firstImage}" alt="Post Image">` : ''}
+                </div>
+                <h3>${post.comment}</h3>
+                <p>Shared by ${post.FirstName || ''} ${post.LastName || ''}</p>
+                <div class="post-actions">
+                    <button class="like-btn" data-postid="${post.PostID}">
+                        <i class="fa fa-heart ${post.liked ? 'liked' : ''}"></i> 
+                        <span class="like-count">${post.likeCount || 0}</span>
+                    </button>
+                </div>
+            `;
+
+            postsContainer.appendChild(postCard);
+
+            const likeBtn = postCard.querySelector('.like-btn');
+            likeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleLikeCard(this);
+            });
+
+            postCard.addEventListener('click', () => {
+                // Just use the first image in the array for preview (optional)
+                if (firstImage) {
+                    openPost(firstImage, post.comment, post.PostID);
                 }
             });
-            
-            // عرض المنشورات الفريدة
-            uniquePosts.forEach(post => {
-                const postCard = document.createElement("div");
-                postCard.className = "post-card";
-                
-                postCard.innerHTML = `
-                    <img src="uploads/${post.images}" alt="Workshop Image">
-                    <h3>${post.comment}</h3>
-                    <p>Shared by ${post.FirstName} ${post.LastName}</p>
-                    <div class="post-actions">
-                        <button class="like-btn" data-postid="${post.PostID}">
-                            <i class="fa fa-heart ${post.liked ? 'liked' : ''}"></i> 
-                            <span class="like-count">${post.likeCount || 0}</span>
-                        </button>
-                    </div>
-                `;
-                
-                postsContainer.appendChild(postCard);
-                
-                // إضافة حدث النقر لزر الإعجاب
-                const likeBtn = postCard.querySelector('.like-btn');
-                likeBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    toggleLikeCard(this);
-                });
-                
-                // إضافة حدث النقر لفتح البوست
-                postCard.addEventListener('click', () => {
-                    openPost('uploads/' + post.images, post.comment, post.PostID);
-                });
-            });
-        })
-        .catch(error => {
-            console.error("Error loading posts:", error);
         });
+    })
+    .catch(error => {
+        console.error("Error loading posts:", error);
+    });
 }
+
+
 
 // دالة للتعامل مع الإعجاب من صفحة Explore
 function toggleLike() {
