@@ -133,30 +133,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && strpos($_SERVER['CONTENT_TYPE'], 'a
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+/* ========== General Styles ========== */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
 
+body {
+    padding-top: 120px;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+    animation: fadeIn 1s ease-in-out;
+}
 
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
-
-        html, body {
-            overflow-x: hidden;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
-        
-   body {
-            padding-top: 200px;
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
-            margin: 0;
-            padding: 0;
-            animation: fadeIn 1s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .container {
+.container {
     width: 80%;
     margin: auto;
     padding: 100px;
@@ -166,127 +163,133 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && strpos($_SERVER['CONTENT_TYPE'], 'a
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 400px; 
-    position: relative; 
+    min-height: 400px;
+    position: relative;
 }
-        @keyframes slideDown {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-top: 20px;
-        }
-        p.intro {
-            text-align: center;
-            color: #666;
-            font-size: 18px;
-        }
-        .survey-form {
-            margin-right: 40px;
-            margin-top: 20px;
-            max-width: 600px;
-            width: 60%;
-        }
-        .question {
-            margin-bottom: 20px;
-        }
-        .question h3 {
-            margin-bottom: 10px;
-            color: #444;
-        }
-        .options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .option {
-            display: flex;
-            align-items: center;
-            background: #f9f9f9;
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        .option:hover {
-            background: #e0e0e0;
-        }
-        .option input {
-            margin-left: 10px;
-        }
-        .submit-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background: #e39a42;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 18px;
-            transition: background 0.3s ease;
-        }
-        .submit-btn:hover {
-            background: #5c7fa4;
-        }
-        .results {
 
-    display: none; 
+/* ========== Survey Form Styles ========== */
+.survey-form {
+    margin-right: 40px;
+    margin-top: 20px;
+    max-width: 600px;
+    width: 60%;
+}
+
+.question {
+    margin-bottom: 20px;
+}
+
+.question h3 {
+    margin-bottom: 10px;
+    color: #444;
+}
+
+.options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.option:hover {
+    background: #e0e0e0;
+}
+
+.option input {
+    margin-left: 10px;
+}
+
+.submit-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background: #e39a42;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: #5c7fa4;
+}
+
+/* ========== Results Section ========== */
+.results {
+    display: none;
     flex-direction: column;
     align-items: center;
-    width: 60%; 
+    width: 60%;
 }
-        .results h2 {
-            text-align: center;
-            color: #333;
-        }
-        .workshops-grid {
-    
-    display: flex; 
-    gap: 20px; 
+
+.results h2 {
+    text-align: center;
+    color: #333;
+}
+
+.workshops-grid {
+    display: grid;
+    gap: 20px;
     margin-top: 20px;
-    justify-content: center; 
+    justify-content: center;
 }
-        .workshop-card {
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-        .workshop-card:hover {
-            transform: translateY(-5px);
-        }
-        .workshop-card img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-        .workshop-card h4 {
-            margin: 10px 0;
-            color: #444;
-        }
-        .workshop-card p {
-            color: #666;
-        }
-        .workshop-card button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background: #6e9bca;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        .workshop-card button:hover {
-            background: #5d7c9e;
-        }
-        .retake-btn {
+
+.workshop-card {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.workshop-card:hover {
+    transform: translateY(-5px);
+}
+
+.workshop-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.workshop-card h4 {
+    margin: 10px 0;
+    color: #444;
+}
+
+.workshop-card p {
+    color: #666;
+}
+
+.workshop-card button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: #6e9bca;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.workshop-card button:hover {
+    background: #5d7c9e;
+}
+
+.retake-btn {
     display: block;
     width: fit-content;
     padding: 12px 24px;
@@ -299,10 +302,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && strpos($_SERVER['CONTENT_TYPE'], 'a
     transition: background 0.3s ease;
     margin: 20px auto 0;
 }
+
 .retake-btn:hover {
     background: #bee9c7;
 }
 
+/* ========== Image Slider ========== */
 .image-slider {
     width: 35%;
     height: 600px;
@@ -310,201 +315,80 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && strpos($_SERVER['CONTENT_TYPE'], 'a
     position: relative;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    transition: opacity 0.3s ease; 
+    transition: opacity 0.3s ease;
 }
 
 .image-slider.hidden {
-    opacity: 0; 
-    pointer-events: none; 
-}
-        .image-slider img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
-        .image-slider img.active {
-            opacity: 1;
-        }
-
-        /* تعديلات للهواتف المحمولة */
-@media (max-width: 768px) {
-    body {
-        padding-top: 120px;
-    }
-    
-    .container {
-        width: 95%;
-        padding: 20px;
-        flex-direction: column;
-    }
-    
-    .survey-form, .results {
-        width: 100%;
-        margin-right: 0;
-    }
-    
-    .image-slider {
-        width: 100%;
-        height: 300px;
-        margin-top: 20px;
-        order: -1;
-    }
-    
-    .nav-links {
-        display: none;
-    }
-    
-    .menu-toggle {
-        display: block;
-    }
-    
-    .options {
-        flex-direction: column;
-    }
-    
-    .workshops-grid {
-        flex-direction: column;
-    }
-    
-    .workshop-card {
-        width: 100%;
-        margin-bottom: 15px;
-    }
+    opacity: 0;
+    pointer-events: none;
 }
 
-/* تعديلات للأجهزة اللوحية */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .container {
-        width: 90%;
-        padding: 30px;
-    }
-    
-    .survey-form, .results {
-        width: 55%;
-    }
-    
-    .image-slider {
-        width: 40%;
-        height: 500px;
-    }
-    
-    .options {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* تعديلات للشاشات الكبيرة */
-@media (min-width: 1025px) {
-    .container {
-        max-width: 1200px;
-    }
-}
-  /* تحسينات عامة للاستجابة */
-.container {
-    box-sizing: border-box;
-}
-
-.survey-form, .results {
-    box-sizing: border-box;
-    padding: 15px;
-}
-
-.options {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-}
-
-.option {
-    margin: 0;
+.image-slider img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
 }
 
-.workshops-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    width: 100%;
+.image-slider img.active {
+    opacity: 1;
 }
 
-.workshop-card {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* تحسينات للقوائم */
-.nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-/* تحسينات للعناوين */
-h1 {
-    font-size: calc(1.5rem + 1vw);
-    margin: 20px 0;
-}
-
-h3 {
-    font-size: calc(1rem + 0.5vw);
-}  
-
-       /* الهيدر المعدل */
-       header {
-    position: relative;
+/* ========== Header (مطابق لصفحة البروفايل) ========== */
+header {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 15px 5%;
+    padding: 15px 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: transparent;
-    box-sizing: border-box;
-    z-index: 100;
-    flex-wrap: wrap;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
 }
 
 .logo {
-    flex: 0 0 auto;
+    flex: 0;
     margin-right: auto;
 }
 
 .logo img {
-    height: 60px;
-    width: 60px;
-    transition: all 0.3s ease;
+    height: 80px;
+    width: 80px;
 }
 
-/* روابط سطح المكتب */
 .desktop-nav {
-    position: static;
+    position: absolute;
+    top: 25px;
+    right: 40px;
     display: flex;
-    gap: 15px;
+    gap: 20px;
     font-weight: bold;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    margin-top: 10px;
-    width: 100%;
 }
 
 .desktop-nav a,
 .language-switch {
     text-decoration: none;
     color: #FF9D23;
-    font-size: 16px;
-    padding: 8px 12px;
+    font-size: 20px;
+    padding: 8px 15px;
     transition: 0.3s;
     border-radius: 4px;
     background: transparent;
     border: none;
 }
 
-/* زر الهامبرغر */
+.desktop-nav a:hover,
+.language-switch:hover {
+    background-color: rgba(255, 157, 35, 0.1);
+}
+
 .hamburger {
     display: none;
     cursor: pointer;
@@ -525,7 +409,35 @@ h3 {
     transition: 0.3s;
 }
 
-/* قائمة الجوال */
+.hamburger-line {
+    width: 22px;
+    height: 2.5px;
+    background: #FF9D23;
+    margin: 3px 0;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+.hamburger.active {
+    background: #FF9D23;
+}
+
+.hamburger.active .hamburger-line {
+    background: white;
+}
+
+.hamburger.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
 .mobile-nav-container {
     position: fixed;
     top: 0;
@@ -537,7 +449,6 @@ h3 {
     transition: 0.5s;
     padding: 80px 30px;
     box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
-    overflow-y: auto;
 }
 
 .mobile-nav-container.show {
@@ -570,8 +481,158 @@ h3 {
     color: #FF9D23;
 }
 
-/* تحسينات للشاشات الصغيرة */
+/* ========== Footer (مطابق لصفحة البروفايل) ========== */
+footer {
+    margin-top: 2em;
+    padding: 1em 2em;
+    background-color: #fffefc;
+    border-top: 2px solid #f9b013ec;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.footer-left-1,
+.footer-center-1,
+.footer-right-1 {
+    flex: 1;
+    min-width: 250px;
+    padding: 0.5em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-center-1 {
+    justify-content: center;
+}
+
+.footer-logo-1 {
+    width: 100px;
+}
+
+.contact-info-1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.contact-item-1 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.single-line-1 {
+    white-space: nowrap;
+}
+
+.social-icons-1 {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.footer-bottom-1 {
+    width: 100%;
+    text-align: center;
+    margin-top: 0.5em;
+}
+
+.footer-bottom-1 p {
+    padding: 0.5em;
+    background-color: #ffffff;
+    font-size: 0.75em;
+    color: #f9b013ec;
+    border-top: 1px solid #ccc;
+}
+
+.icon-phone {
+    display: inline-block !important;
+    width: 30px !important;
+    height: 30px !important;
+    position: relative !important;
+    left: 0 !important;
+    right: auto !important;
+}
+
+.icon-email {
+    width: 42px !important;
+    height: 42px !important;
+}
+
+.icon-location {
+    width: 42px !important;
+    height: 42px !important;
+    margin-top: 6px !important;
+}
+
+.icon-facebook {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+.icon-twitter {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+.icon-instagram {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+/* ========== Responsive Styles ========== */
 @media (max-width: 768px) {
+    body {
+        padding-top: 100px;
+    }
+    
+    .container {
+        width: 95%;
+        padding: 20px;
+        flex-direction: column;
+    }
+    
+    .survey-form, .results {
+        width: 100%;
+        margin-right: 0;
+    }
+    
+    .image-slider {
+        width: 100%;
+        height: 300px;
+        margin-top: 20px;
+        order: -1;
+    }
+    
+    .options {
+        flex-direction: column;
+    }
+    
+    .workshops-grid {
+        flex-direction: column;
+    }
+    
+    .workshop-card {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    
+    /* Header Mobile Styles */
     .desktop-nav {
         display: none;
     }
@@ -581,186 +642,38 @@ h3 {
     }
     
     .logo img {
-        height: 50px;
         width: 50px;
+        height: 50px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        width: 90%;
+        padding: 30px;
     }
     
-    header {
-        padding: 15px 20px;
-    }
-}
-
-@media (min-width: 769px) {
-    .mobile-nav-container {
-        display: none !important;
+    .survey-form, .results {
+        width: 55%;
     }
     
-    .desktop-nav {
-        position: absolute;
-        top: 25px;
-        right: 40px;
-        display: flex;
-        gap: 20px;
-        width: auto;
-        margin-top: 0;
+    .image-slider {
+        width: 40%;
+        height: 500px;
     }
     
-    header {
-        flex-wrap: nowrap;
+    .options {
+        grid-template-columns: repeat(2, 1fr);
     }
+}
+
+@media (min-width: 1025px) {
+    .container {
+        max-width: 1200px;
+    }
+}
+</style>
     
-    .logo img {
-        height: 80px;
-        width: 80px;
-    }
-}
-
-/* الفوتر المعدل */
-footer {
-    margin-top: 2em;
-    padding: 1em 5%;
-    background-color: #fffefc;
-    border-top: 2px solid #f9b013ec;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-sizing: border-box;
-}
-
-.footer-left-1,
-.footer-center-1,
-.footer-right-1 {
-    width: 100%;
-    padding: 1em 0;
-    text-align: center;
-    border-bottom: 1px solid #eee;
-}
-
-.footer-logo-1 {
-    width: 80px;
-    margin: 0 auto;
-}
-
-.contact-info-1 {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 10px;
-}
-
-.contact-item-1 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.social-icons-1 {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 15px;
-}
-
-.footer-bottom-1 {
-    width: 100%;
-    text-align: center;
-    margin-top: 1em;
-    padding-top: 1em;
-}
-
-/* تحسينات للأيقونات */
-.icon-phone,
-.icon-email,
-.icon-location,
-.icon-facebook,
-.icon-twitter,
-.icon-instagram {
-    width: 30px !important;
-    height: 30px !important;
-    object-fit: contain;
-    transition: transform 0.3s ease;
-}
-
-.icon-email,
-.icon-location {
-    margin-top: 0 !important;
-}
-
-.icon-facebook:hover,
-.icon-twitter:hover,
-.icon-instagram:hover {
-    transform: scale(1.1);
-}
-
-/* تحسينات للشاشات المتوسطة والكبيرة */
-@media (min-width: 768px) {
-    footer {
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: flex-start;
-    }
-    
-    .footer-left-1,
-    .footer-center-1,
-    .footer-right-1 {
-        flex: 1;
-        min-width: auto;
-        padding: 0.5em;
-        border-bottom: none;
-    }
-    
-    .contact-info-1 {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .footer-center-1 {
-        order: -1;
-        flex: 0 0 100%;
-    }
-}
-
-@media (min-width: 992px) {
-    .footer-center-1 {
-        order: 0;
-        flex: 0 0 auto;
-    }
-    
-    .contact-info-1 {
-        flex-direction: row;
-        justify-content: space-around;
-    }
-    
-    .footer-left-1,
-    .footer-center-1,
-    .footer-right-1 {
-        padding: 1em;
-    }
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    padding-top: 0; /* إزالة padding-top الزائد */
-}
-
-header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.container {
-    margin-top: 80px; /* تأكد من أن الهيدر لا يغطي المحتوى */
-}
-
-    </style>
 </head>
 
 <body>
@@ -788,7 +701,9 @@ header {
             <a href="Explore.php">Explore</a>
             <a href="Survey.php">Survey</a>
             <a href="findcategory.php">Category</a>
-            
+            <div class="mobile-language-switch" onclick="toggleLanguage()">
+                🌐 Language
+            </div>
         </nav>
     </div>
 
@@ -801,6 +716,7 @@ header {
         <a href="Explore.php">Explore</a>
         <a href="Survey.php">Survey</a>
         <a href="findcategory.php">Category</a>
+        <a href="#" class="language-switch" onclick="toggleLanguage()">🌐 Language</a>
     </nav>
 </header>
 <div class="container">
@@ -1016,7 +932,7 @@ header {
                     <p><strong>Location:</strong> ${workshop.Location}</p>
                     <p><strong>Price:</strong> SAR ${workshop.Price}</p>
                     <p>${workshop.ShortDes || workshop.description || ''}</p>
-                    <button class="book-btn" onclick="bookWorkshop(${workshop.WorkshopID})">Book Now</button>
+                
                 `;
                 workshopsGrid.appendChild(card);
             });
@@ -1118,4 +1034,5 @@ function closeMenuOnClickOutside(e) {
 
 </body>
 </html>
+
 
