@@ -848,35 +848,53 @@ echo '<p>' . date('d M Y', strtotime($booking['BookingDate'])) . '</p>';
       <button class="tablinks" onclick="openTab(event, 'Upcoming')">Upcoming</button>
       <button class="tablinks" onclick="openTab(event, 'Completed')">Completed</button>
     </div>
-    <!-- Modal Content for All bookings -->
+ <!-- Modal Content for All bookings -->
 <div id="All" class="tabcontent">
   <?php if (!empty($upcomingBookings) || !empty($completedBookings)): ?>
     <?php foreach (array_merge($upcomingBookings, $completedBookings) as $booking): ?>
-<div class="booking-item" id="<?php echo $booking['BookingID']; ?>">
-          
-          <div class="booking-actions">
-   <img src="workshops/edit-btn.png" class="edit-booking" data-id="<?php echo $booking['BookingID']; ?>">
-        <img src="workshops/trash-btn.png" class="delete-booking" alt='delete' onclick="deleteBooking(<?php echo $booking['BookingID']; ?>)">
-    </div>
-          
+      <div class="booking-item" id="<?php echo $booking['BookingID']; ?>">
+
+        <div class="booking-actions">
+          <img src="workshops/edit-btn.png" class="edit-booking" data-id="<?php echo $booking['BookingID']; ?>">
+          <img src="workshops/trash-btn.png" class="delete-booking" alt='delete' onclick="deleteBooking(<?php echo $booking['BookingID']; ?>)">
+        </div>
+
         <img src="<?php echo $booking['imageURL']; ?>" alt="Workshop Image" style="width:100px; height:100px;">
+        
         <div class='booking-info'>
           <p><strong>Booking ID:</strong> <?php echo $booking['BID']; ?></p>
-          <p><strong> Workshop Title:</strong> <?php echo $booking['Title']; ?></p>
+          <p><strong>Workshop Title:</strong> <?php echo $booking['Title']; ?></p>
           <p><strong>Date:</strong><p class='booking-date'> <?php echo date('d M Y', strtotime($booking['Date'])); ?> </p></p>
-        <p><strong>Time:</strong> <p class='booking-time'><?php echo date('H:i', strtotime($booking['StartTime'])) . ' - ' . date('H:i', strtotime($booking['EndTime'])); ?> </p></p>
-
+          <p><strong>Time:</strong> <p class='booking-time'><?php echo date('H:i', strtotime($booking['StartTime'])) . ' - ' . date('H:i', strtotime($booking['EndTime'])); ?> </p></p>
         </div>
+
         <div class="workshop-info">
           <p><strong>Category:</strong> <?php echo $booking['Category']; ?></p>
           <p><strong>Location:</strong> <?php echo $booking['Location']; ?></p>
-          <p><strong> Type [in-person/online]:</strong> <?php echo $booking['Type']; ?></p>
+          <p><strong>Type [in-person/online]:</strong> <?php echo $booking['Type']; ?></p>
+
+
+        <!-- New Section: Maps or Link -->
+        <div class="access-info">
+            <p><strong>Access:</strong></p>
+          <?php
+            $type = strtolower($booking['Type']);
+            if ($type === 'online') {
+              echo "<p>Zoom Link: <a href='#'>https://zoom.us/meeting8889-link</a></p>";
+            } elseif ($type === 'in-person') {
+              echo "<img src='workshops/map-placeholder.png' alt='Workshop Location Map' style='width:70px; height:auto; margin-left:90px; margin-top:-10px;'>";
+            } elseif ($type === 'both') {
+              echo "<p>Zoom Link: <a href='#'>https://zoom.us/meeting8889-link</a></p>";
+              echo "<img src='workshops/map-placeholder.png' alt='Workshop Location Map' style='width:70px; height:auto; margin-left:90px; '>";
+            }
+          ?>
         </div>
+  </div>
         <div class='orange-box'>
-          <p class="totalPrice"><strong> Total Price: </strong> 
+          <p class="totalPrice"><strong>Total Price: </strong> 
             <img src='workshops/riyal.png' alt='currency pic'><?php echo $booking['Price']; ?>
           </p>
-          <a href="booking.php?workshopID=<?php echo $booking['WorkshopID']; ?>" class='rebook-btn'>Re-Book </a>
+          <a href="booking.php?workshopID=<?php echo $booking['WorkshopID']; ?>" class='rebook-btn'>Re-Book</a>
         </div>
       </div>
     <?php endforeach; ?>
@@ -884,6 +902,7 @@ echo '<p>' . date('d M Y', strtotime($booking['BookingDate'])) . '</p>';
     <p class="empty-message">No bookings found.</p>
   <?php endif; ?>
 </div>
+
 
 <!-- Modal Content for Upcoming bookings -->
 <div id="Upcoming" class="tabcontent">
@@ -906,8 +925,25 @@ echo '<p>' . date('d M Y', strtotime($booking['BookingDate'])) . '</p>';
         <div class="workshop-info">
           <p><strong>Category:</strong> <?php echo $booking['Category']; ?></p>
           <p><strong>Location:</strong> <?php echo $booking['Location']; ?></p>
-          <p><strong> Type [in-person/online]:</strong> <?php echo $booking['Type']; ?></p>
+          <p><strong>Type [in-person/online]:</strong> <?php echo $booking['Type']; ?></p>
+
+
+        <!-- New Section: Maps or Link -->
+        <div class="access-info">
+            <p><strong>Access:</strong></p>
+          <?php
+            $type = strtolower($booking['Type']);
+            if ($type === 'online') {
+              echo "<p>Zoom Link: <a href='#'>https://zoom.us/meeting8889-link</a></p>";
+            } elseif ($type === 'in-person') {
+              echo "<img src='workshops/map-placeholder.png' alt='Workshop Location Map' style='width:70px; height:auto; margin-left:90px; margin-top:-10px;'>";
+            } elseif ($type === 'both') {
+              echo "<p>Zoom Link: <a href='#'>https://zoom.us/meeting8889-link</a></p>";
+              echo "<img src='workshops/map-placeholder.png' alt='Workshop Location Map' style='width:70px; height:auto; margin-left:90px;'>";
+            }
+          ?>
         </div>
+  </div>
         <div class='orange-box'>
           <p class="totalPrice"><strong> Total Price: </strong> 
             <img src='workshops/riyal.png' alt='currency pic'><?php echo $booking['Price']; ?>
@@ -936,10 +972,27 @@ echo '<p>' . date('d M Y', strtotime($booking['BookingDate'])) . '</p>';
 
                 </div>
                 <div class="workshop-info">
-                    <p><strong>Category:</strong> <?php echo $booking['Category']; ?></p>
-                    <p><strong>Location:</strong> <?php echo $booking['Location']; ?></p>
-                    <p><strong>Type [in-person/online]:</strong> <?php echo $booking['Type']; ?></p>
-                </div>
+          <p><strong>Category:</strong> <?php echo $booking['Category']; ?></p>
+          <p><strong>Location:</strong> <?php echo $booking['Location']; ?></p>
+          <p><strong>Type [in-person/online]:</strong> <?php echo $booking['Type']; ?></p>
+
+
+        <!-- New Section: Maps or Link -->
+        <div class="access-info">
+            <p><strong>Access:</strong></p>
+          <?php
+            $type = strtolower($booking['Type']);
+            if ($type === 'online') {
+              echo "<p>Zoom Link: <a href='#'>https://zoom.us/meeting8889-link</a></p>";
+            } elseif ($type === 'in-person') {
+              echo "<img src='workshops/map-placeholder.png' alt='Workshop Location Map' style='width:70px; height:auto; margin-left:90px; margin-top:-10px;'>";
+            } elseif ($type === 'both') {
+              echo "<p>Zoom Link: <a href='#'>https://zoom.us/meeting8889-link</a></p>";
+              echo "<img src='workshops/map-placeholder.png' alt='Workshop Location Map' style='width:70px; height:auto; margin-left:90px;'>";
+            }
+          ?>
+        </div>
+  </div>
                 <div class="orange-box">
                     <p class="totalPrice"><strong>Total Price:</strong> 
                         <img src="workshops/riyal.png" alt="currency pic"><?php echo $booking['Price']; ?>

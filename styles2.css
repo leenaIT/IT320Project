@@ -713,7 +713,7 @@ font-family: roboto;}
 
 .orange-box{
      align-self: center;
-    margin-left: auto;
+    margin-left: 50px;
     margin-top:150px;
     background-color: #f6f3dd;
     height:130px;
@@ -729,7 +729,7 @@ font-family: roboto;}
      display: flex; 
      align-items: center;/* Aligns items in a row */
      margin-top:20px;
-    font-size: 18px;
+    font-size: 16px;
     box-shadow: 0 0.0625em 0.1875em rgba(0, 0, 0, 0.2); 
     background-color: #fdefb2; 
     width:100%;
