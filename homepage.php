@@ -20,7 +20,7 @@ $loggedIn = isset($_SESSION['user_id']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>homePage</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=2">
     <script defer src="script.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -303,7 +303,7 @@ $result = $conn->query($sql);
 ?>
 
 <section class="cont-reviws">
-    <h2 id="client">Client Testimonials</h2>
+    <h2 id="cli">Client Testimonials</h2>
     <div class="reviews">
         <?php
         if ($result->num_rows > 0) {

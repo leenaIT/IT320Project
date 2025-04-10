@@ -18,6 +18,7 @@ $Sconnection = mysqli_connect($Shost, $Suser, $Spass, $Sdatabase, 8889);
 if (!$Sconnection) {
     die("Connection failed: " . mysqli_connect_error());
 }
+$loggedIn = isset($_SESSION['user_id']);
 
 // Initialize error message variable
 $errorMessage = "";
@@ -83,7 +84,7 @@ mysqli_close($Sconnection);
 </head>
 <body class="with-background">
 
-    <header class="with-background ">
+     <header class="with-background ">
         <div class="logo"><img src="workshops/logo.png" alt="logo" height="80" width="80"></div>
         
    
@@ -97,21 +98,30 @@ mysqli_close($Sconnection);
 <!-- القائمة المتنقلة المحسنة -->
 <div class="mobile-nav-container">
     <nav class="mobile-nav">
-         <a href="homePage.php">Home</a>
-        <div class="mobile-language-switch" onclick="toggleLanguage()">
-            🌐 Language
-        </div>
-    </nav>
+            <a href="homepage.php">Home</a>
+            <a href="ProfilePage.php"><?php echo $loggedIn ? 'Profile' : 'Login'; ?></a>
+            <a href="Explore.php">Explore</a>
+            <a href="Survey.php">Survey</a>
+            <a href="findcategory.php">Category</a>
+            <div class="mobile-language-switch" onclick="toggleLanguage()">
+                🌐 Language
+            </div>
+        </nav>
 </div>
 
 <!-- القائمة الأصلية للكمبيوتر -->
 <nav class="desktop-nav">
-     <a href="homePage.php">Home</a>
-    <div class="language-switch" onclick="toggleLanguage()">
-        🌐 Language
-    </div>
-</nav>
+        <a href="homepage.php">Home</a>
+        <a href="<?php echo $loggedIn ? 'ProfilePage.php' : 'login.php'; ?>">
+            <?php echo $loggedIn ? 'Profile' : 'Login'; ?>
+        </a>
+        <a href="Explore.php">Explore</a>
+        <a href="Survey.php">Survey</a>
+        <a href="findcategory.php">Category</a>
+        <a href="#" class="language-switch" onclick="toggleLanguage()">🌐 Language</a>
+    </nav>
     </header>
+
 
 <?php if (!empty($errorMessage)): ?>
     <div id="alert-box" class="alert"><?php echo $errorMessage; ?></div>

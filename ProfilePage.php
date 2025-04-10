@@ -895,9 +895,9 @@ echo '<p>' . date('d M Y', strtotime($booking['BookingDate'])) . '</p>';
         <div class='booking-info'>
           <p><strong>Booking ID:</strong> <?php echo $booking['BID']; ?></p>
           <p><strong> Workshop Title:</strong> <?php echo $booking['Title']; ?></p>
-<p><strong>Date:</strong> <?php echo date('d M Y', strtotime($booking['Date'])); ?></p>
-<p><strong>Time:</strong> <?php echo date('H:i', strtotime($booking['StartTime'])) . ' - ' . date('H:i', strtotime($booking['EndTime'])); ?></p>
-        </div>
+<p><strong>Date:</strong><p class='booking-date'> <?php echo date('d M Y', strtotime($booking['Date'])); ?> </p></p>
+        <p><strong>Time:</strong> <p class='booking-time'><?php echo date('H:i', strtotime($booking['StartTime'])) . ' - ' . date('H:i', strtotime($booking['EndTime'])); ?> </p></p>
+    </div>
         <div class="workshop-info">
           <p><strong>Category:</strong> <?php echo $booking['Category']; ?></p>
           <p><strong>Location:</strong> <?php echo $booking['Location']; ?></p>
