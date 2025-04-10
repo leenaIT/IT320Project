@@ -4,4 +4,4 @@ Mehar supports multiple workshop attendance options, allowing users to choose be
 
 To enhance engagement and community interaction, Mehar offers users the ability to **rate and review workshops**, as well as access an **Explore page** where they can share their workshop experiences and post content reflecting their learning journey.  
 
-Mehar supports **both Arabic and English**, ensuring a seamless and inclusive experience for users from different backgrounds. The project aims to **promote learning and personal development** by providing an integrated environment that facilitates access to educational opportunities and fosters connections among individuals with shared interests.
+
