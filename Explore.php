@@ -866,19 +866,18 @@ box-sizing: border-box;
 }
 
 
-/* الهيدر المعدل */
+/* ========== Header Styles (مطابق لصفحة البروفايل) ========== */
 header {
-    position: relative;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 15px 5%;
+    padding: 15px 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: transparent;
-    box-sizing: border-box;
-    z-index: 100;
+    z-index: 1000;
 }
 
 .logo {
@@ -887,35 +886,38 @@ header {
 }
 
 .logo img {
-    height: 60px;
-    width: 60px;
-    transition: all 0.3s ease;
+    height: 80px;
+    width: 80px;
 }
 
-/* روابط سطح المكتب */
+/* Desktop Navigation */
 .desktop-nav {
-    position: static;
+    position: absolute;
+    top: 25px;
+    right: 40px;
     display: flex;
-    gap: 15px;
+    gap: 20px;
     font-weight: bold;
-    flex-wrap: wrap;
-    justify-content: flex-end;
 }
 
-/* روابط سطح المكتب */
 .desktop-nav a,
 .language-switch {
     text-decoration: none;
     color: #FF9D23;
-    font-size: 18px;
-    padding: 8px 12px;
+    font-size: 20px;
+    padding: 8px 15px;
     transition: 0.3s;
     border-radius: 4px;
     background: transparent;
     border: none;
 }
 
-/* زر الهامبرغر */
+.desktop-nav a:hover,
+.language-switch:hover {
+    background-color: rgba(255, 157, 35, 0.1);
+}
+
+/* Hamburger Menu */
 .hamburger {
     display: none;
     cursor: pointer;
@@ -936,7 +938,36 @@ header {
     transition: 0.3s;
 }
 
-/* قائمة الجوال */
+.hamburger-line {
+    width: 22px;
+    height: 2.5px;
+    background: #FF9D23;
+    margin: 3px 0;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+.hamburger.active {
+    background: #FF9D23;
+}
+
+.hamburger.active .hamburger-line {
+    background: white;
+}
+
+.hamburger.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Mobile Navigation */
 .mobile-nav-container {
     position: fixed;
     top: 0;
@@ -948,11 +979,191 @@ header {
     transition: 0.5s;
     padding: 80px 30px;
     box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
-    overflow-y: auto;
 }
 
-/* تحسينات للشاشات الصغيرة */
+.mobile-nav-container.show {
+    right: 0;
+}
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.mobile-nav a,
+.mobile-language-switch {
+    color: #333;
+    background-color: transparent !important;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 12px 15px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    border-bottom: 1px solid #FF9D23;
+}
+
+.mobile-nav a:hover,
+.mobile-language-switch:hover {
+    transform: translateX(8px);
+    color: #FF9D23;
+}
+
+
+/* ========== Footer (مطابق لصفحة البروفايل) ========== */
+footer {
+    margin-top: 2em;
+    padding: 1em 2em;
+    background-color: #fffefc;
+    border-top: 2px solid #f9b013ec;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.footer-left-1,
+.footer-center-1,
+.footer-right-1 {
+    flex: 1;
+    min-width: 250px;
+    padding: 0.5em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-center-1 {
+    justify-content: center;
+}
+
+.footer-logo-1 {
+    width: 100px;
+}
+
+.contact-info-1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.contact-item-1 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.single-line-1 {
+    white-space: nowrap;
+}
+
+.social-icons-1 {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.footer-bottom-1 {
+    width: 100%;
+    text-align: center;
+    margin-top: 0.5em;
+}
+
+.footer-bottom-1 p {
+    padding: 0.5em;
+    background-color: #ffffff;
+    font-size: 0.75em;
+    color: #f9b013ec;
+    border-top: 1px solid #ccc;
+}
+
+.icon-phone {
+    display: inline-block !important;
+    width: 30px !important;
+    height: 30px !important;
+    position: relative !important;
+    left: 0 !important;
+    right: auto !important;
+}
+
+.icon-email {
+    width: 42px !important;
+    height: 42px !important;
+}
+
+.icon-location {
+    width: 42px !important;
+    height: 42px !important;
+    margin-top: 6px !important;
+}
+
+.icon-facebook {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+.icon-twitter {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+.icon-instagram {
+    width: 35px !important;
+    height: 35px !important;
+    margin-top: 6px !important;
+}
+
+/* ========== Responsive Styles ========== */
 @media (max-width: 768px) {
+    body {
+        padding-top: 100px;
+    }
+    
+    .container {
+        width: 95%;
+        padding: 20px;
+        flex-direction: column;
+    }
+    
+    .survey-form, .results {
+        width: 100%;
+        margin-right: 0;
+    }
+    
+    .image-slider {
+        width: 100%;
+        height: 300px;
+        margin-top: 20px;
+        order: -1;
+    }
+    
+    .options {
+        flex-direction: column;
+    }
+    
+    .workshops-grid {
+        flex-direction: column;
+    }
+    
+    .workshop-card {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    
+    /* Header Mobile Styles */
     .desktop-nav {
         display: none;
     }
@@ -962,143 +1173,37 @@ header {
     }
     
     .logo img {
-        height: 50px;
         width: 50px;
+        height: 50px;
     }
 }
 
-@media (min-width: 769px) {
-    .mobile-nav-container {
-        display: none !important;
-    }
-}
-
-/* الفوتر المعدل */
-footer {
-    margin-top: 2em;
-    padding: 1em 5%;
-    background-color: #fffefc;
-    border-top: 2px solid #f9b013ec;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-sizing: border-box;
-}
-
-.footer-left-1,
-.footer-center-1,
-.footer-right-1 {
-    width: 100%;
-    padding: 1em 0;
-    text-align: center;
-    border-bottom: 1px solid #eee;
-}
-
-.footer-logo-1 {
-    width: 80px;
-    margin: 0 auto;
-}
-
-.contact-info-1 {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 10px;
-}
-
-.contact-item-1 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.social-icons-1 {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 15px;
-}
-
-.footer-bottom-1 {
-    width: 100%;
-    text-align: center;
-    margin-top: 1em;
-    padding-top: 1em;
-}
-
-/* تحسينات للشاشات المتوسطة والكبيرة */
-@media (min-width: 768px) {
-    footer {
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: flex-start;
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        width: 90%;
+        padding: 30px;
     }
     
-    .footer-left-1,
-    .footer-center-1,
-    .footer-right-1 {
-        flex: 1;
-        min-width: auto;
-        padding: 0.5em;
-        border-bottom: none;
+    .survey-form, .results {
+        width: 55%;
     }
     
-    .contact-info-1 {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
+    .image-slider {
+        width: 40%;
+        height: 500px;
     }
     
-    .footer-center-1 {
-        order: -1;
-        flex: 0 0 100%;
+    .options {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media (min-width: 992px) {
-    .footer-center-1 {
-        order: 0;
-        flex: 0 0 auto;
-    }
-    
-    .contact-info-1 {
-        flex-direction: row;
-        justify-content: space-around;
-    }
-    
-    .footer-left-1,
-    .footer-center-1,
-    .footer-right-1 {
-        padding: 1em;
+@media (min-width: 1025px) {
+    .container {
+        max-width: 1200px;
     }
 }
 
-/* تحسينات للأيقونات */
-.icon-phone,
-.icon-email,
-.icon-location,
-.icon-facebook,
-.icon-twitter,
-.icon-instagram {
-    width: 30px !important;
-    height: 30px !important;
-    object-fit: contain;
-    transition: transform 0.3s ease;
-}
-
-.icon-email,
-.icon-location {
-    margin-top: 0 !important;
-}
-
-.icon-facebook:hover,
-.icon-twitter:hover,
-.icon-instagram:hover {
-    transform: scale(1.1);
-}
-    
     </style>
 </head>
 
@@ -1126,7 +1231,9 @@ footer {
             <a href="Explore.php">Explore</a>
             <a href="Survey.php">Survey</a>
             <a href="findcategory.php">Category</a>
-            
+            <div class="mobile-language-switch" onclick="toggleLanguage()">
+                🌐 Language
+            </div>
         </nav>
     </div>
 
@@ -1139,6 +1246,7 @@ footer {
         <a href="Explore.php">Explore</a>
         <a href="Survey.php">Survey</a>
         <a href="findcategory.php">Category</a>
+        <a href="#" class="language-switch" onclick="toggleLanguage()">🌐 Language</a>
     </nav>
 </header>
 
