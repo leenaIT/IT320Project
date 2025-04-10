@@ -114,9 +114,7 @@ $connection->close();
             <a href="Explore.php">Explore</a>
             <a href="Survey.php">Survey</a>
             <a href="findcategory.php">Category</a>
-            <div class="mobile-language-switch" onclick="toggleLanguage()">
-                🌐 Language
-            </div>
+            
         </nav>
 </div>
 
@@ -129,7 +127,6 @@ $connection->close();
         <a href="Explore.php">Explore</a>
         <a href="Survey.php">Survey</a>
         <a href="findcategory.php">Category</a>
-        <a href="#" class="language-switch" onclick="toggleLanguage()">🌐 Language</a>
     </nav>
     </header>
 

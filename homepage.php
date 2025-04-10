@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors',1);
 session_start();
 
 $host = "localhost";
@@ -211,9 +212,7 @@ $loggedIn = isset($_SESSION['user_id']);
             <a href="Explore.php">Explore</a>
             <a href="Survey.php">Survey</a>
             <a href="findcategory.php">Category</a>
-            <div class="mobile-language-switch" onclick="toggleLanguage()">
-                🌐 Language
-            </div>
+           
         </nav>
     </div>
 
@@ -226,7 +225,6 @@ $loggedIn = isset($_SESSION['user_id']);
         <a href="Explore.php">Explore</a>
         <a href="Survey.php">Survey</a>
         <a href="findcategory.php">Category</a>
-        <a href="#" class="language-switch" onclick="toggleLanguage()">🌐 Language</a>
     </nav>
 </header>
 
@@ -293,11 +291,18 @@ $result_thumbnails = $conn->query($sql_thumbnails);
             </div>
         </div>
     </section>
-   <?php
-
-$sql = "SELECT r.Rating, r.Comment, u.FirstName, u.LastName, u.profilePhoto
+  <?php
+$sql = "SELECT 
+            r.Rating, 
+            r.Comment, 
+            u.FirstName, 
+            u.LastName, 
+            u.ProfilePhoto,
+            w.ImageURL, 
+            w.Title
         FROM review r
-        JOIN users u ON r.UserID = u.UserID";
+        JOIN users u ON r.UserID = u.UserID
+        JOIN workshop w ON r.WorkshopID = w.WorkshopID";
 
 $result = $conn->query($sql);
 ?>
@@ -311,20 +316,37 @@ $result = $conn->query($sql);
                 $fullName = htmlspecialchars($row['FirstName'] . " " . $row['LastName']);
                 $comment = htmlspecialchars($row['Comment']);
                 $rating = intval($row['Rating']);
-                $profilePhoto = $row['profilePhoto'];
+                $workshopTitle = htmlspecialchars($row['Title']);
 
-                
-                $stars = str_repeat('<i class="fas fa-star" style="color:#FFFF00;"></i>', $rating) . 
+                // Generate star icons
+                $stars = str_repeat('<i class="fas fa-star" style="color:#FFFF00;"></i>', $rating) .
                          str_repeat('<i class="far fa-star" style="color:#FFFF00;"></i>', 5 - $rating);
 
-                
-                $profilePhoto = ($profilePhoto) ? 'uploads/' . $profilePhoto : 'workshops/profile-picture.jpg';
+                // Profile photo
+                $profilePhoto = ($row['ProfilePhoto']) ? 'uploads/' . $row['ProfilePhoto'] : 'uploads/default.jpg';
+
+                // Workshop image
+                $correctedPath = str_replace("\\", "/", $row['ImageURL']);
+                $workshopImage = ($correctedPath) ? htmlspecialchars($correctedPath) : 'workshops/default-workshop.jpg';
         ?>
         <div class="carousel-item">
-            <img src="<?php echo htmlspecialchars($profilePhoto); ?>" alt="Client">
-            <h3><?php echo $fullName; ?></h3>
-            <p class="review-text"><?php echo $comment; ?></p> <br>
-            <p class="stars"><?php echo $stars; ?></p>
+            <div class='profile-pic'>
+            <!-- User photo -->
+            <img src="<?= $profilePhoto ?>" alt="Client" class="user-photo">
+            </div>
+            <!-- User name -->
+            <h3><?= $fullName ?></h3>
+
+            <!-- Workshop section -->
+            <div class="workshop-info">
+                <img src="<?= $workshopImage ?>" alt="Workshop" class="workshop-photo" >
+                <p class="workshop-title"><strong><?= $workshopTitle ?></strong></p>
+            </div>
+
+            <!-- Review comment -->
+            <p class="review-text"><?= $comment ?></p>
+            <!-- Rating stars -->
+            <p class="stars"><?= $stars ?></p>
         </div>
         <?php
             }
@@ -332,7 +354,10 @@ $result = $conn->query($sql);
             echo "<p>No reviews available.</p>";
         }
         ?>
-    </div>    
+    </div>
+
+
+   
 </section>
 
 

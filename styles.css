@@ -508,7 +508,7 @@ button {
 .reviews {
     position: relative;
     width: 100%;
-    height: 400px; 
+    height: 450px; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -518,7 +518,7 @@ button {
 .carousel-item {
     position: absolute;
     width: 600px;  
-    height: 350px;  
+    height: 390px;  
     opacity: 0.5;
     transform: scale(0.8);
     transition: all 0.5s ease;
@@ -535,7 +535,7 @@ button {
 .carousel-item p {
     font-size: 0.9em;
     color: #333333;
-    margin-top: 20px;
+    margin-top: 0px;
     word-wrap: break-word; 
     white-space: normal; 
     text-align: center; 
@@ -568,7 +568,7 @@ button {
     }
     
     
-   .carousel-item img {
+   .profile-pic img {
     width: 70px;
     height: 70px;
     border-radius: 50%;
@@ -715,6 +715,20 @@ button {
             width: 35px;
             height: 35px;
         }
+        .workshop-photo {
+    width: 150px;           /* Bigger size */
+    height: 130px;          /* Rectangular shape */
+    object-fit: cover;      /* Ensures the image fills the box without distortion */
+    border-radius: 10px;    /* Rounded corners (optional) */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    margin: 10px 0;
+    display: block;
+   margin-left:205px;
+}
+
+.workshop-title{
+    font-size:12px;
+}
 /* Responsive */
 
         @media (max-width: 768px) {
@@ -887,14 +901,16 @@ button {
     }
     .reviews {
         justify-content: center;
+  
     }
 
     .carousel-item {
         max-width: 300px;
         padding: 15px;
+        height:410px;
     }
 
-    .carousel-item img {
+    .profile-pic img{
         width: 70px;
         height: 70px;
     }
@@ -926,6 +942,8 @@ button {
     transform: translateX(0) scale(0.8);
     z-index: 2;
     }
+    
+    
 }
 
 @media (max-width: 500px) {
@@ -1010,5 +1028,12 @@ button {
     transform: translateX(0) scale(0.8);
     z-index: 2;
     }
-    
+    .workshop-photo{
+        width: 130px;           
+    height: 110px;
+    margin-left:65px;
+    }
+    .carousel-item  .workshop-title{
+    font-size:12px;
+}
 }
