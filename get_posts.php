@@ -43,7 +43,8 @@ if ($result && $result->num_rows > 0) {
             "postId" => $row['PostID'],
             "userID" => $row['UserID'],
             "userName" => $row['FirstName'],
-            "userProfilePic" => "uploads/" . basename($row['ProfilePhoto']), // Ensure profile pic has path
+            "userProfilePic" => !empty($row['ProfilePhoto']) ? "uploads/" . basename($row['ProfilePhoto']) : "uploads/default.jpg",
+ // Ensure profile pic has path
             "images" => $images,
             "comment" => $row['comment'],
             "postDate" => $row['post_date']
