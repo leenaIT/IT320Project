@@ -509,19 +509,16 @@ font-family: 'Poppins', sans-serif !important;
 </head>
 <body class="no-background">
     <header>
-    <!-- اللوقو في الوسط -->
     <div class="logo">
         <img src="workshops/logo.png" alt="logo">
     </div>
 
-    <!-- زر الهامبرغر -->
     <div class="hamburger" onclick="toggleMenu(this)">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
     </div>
 
-    <!-- قائمة الجوال -->
     <div class="mobile-nav-container">
         <nav class="mobile-nav">
             <a href="homepage.php">Home</a>
@@ -533,7 +530,6 @@ font-family: 'Poppins', sans-serif !important;
         </nav>
     </div>
 
-    <!-- قائمة سطح المكتب -->
     <nav class="desktop-nav">
         <a href="homepage.php">Home</a>
         <a href="<?php echo $loggedIn ? 'ProfilePage.php' : 'login.php'; ?>">

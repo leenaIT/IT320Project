@@ -71,7 +71,6 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 
-// تنفيذ الاستعلام
 $stmt = $connection->prepare($query);
 if (!empty($params)) {
     $stmt->bind_param($types, ...$params);
@@ -79,7 +78,6 @@ if (!empty($params)) {
 $stmt->execute();
 $result = $stmt->get_result();
 
-// تحديد صورة الهيدر والنص حسب الفئة
 $headerImage = 'workshops/stained-brushes-inside-pocket.jpg';
 $headerTitle = 'DISCOVER THE';
 $headerCategory = 'Art';
@@ -532,54 +530,54 @@ font-family: 'Poppins', sans-serif !important;
             margin-left: 20px;
         }
         .filter-box {
-    background-color: #FFFDF0; /* شفافية مع لون أبيض */
-    padding: 15px; /* تقليل الحشو */
+    background-color: #FFFDF0; 
+    padding: 15px;
     border-radius: 15px;
-    width: 250px; /* تصغير العرض */
-    position: absolute; /* تغيير من fixed إلى absolute */
-    top: 200px; /* التعديل حسب الموقع المطلوب */
-    right:300px; /* التعديل حسب الموقع المطلوب */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* إضافة ظل */
-    z-index: 1000; /* للتأكد من ظهوره فوق العناصر الأخرى */
-    display: none; /* يظل مخفيًا حتى يتم الضغط على الزر */
-    backdrop-filter: blur(10px); /* تأثير ضبابي خلف الصندوق */
-    border: 1px solid rgba(255, 157, 35, 0.3); /* حدود متناسقة مع لون الصفحة */
+    width: 250px; 
+    position: absolute;
+    top: 200px; 
+    right:300px; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+    z-index: 1000;
+    display: none; 
+    backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255, 157, 35, 0.3); 
 }
 
 
 .filter-box select,
 .filter-box input {
     width: 100%;
-    padding: 8px; /* تقليل الحشو */
-    margin-bottom: 10px; /* تقليل المسافة */
+    padding: 8px; 
+    margin-bottom: 10px;
     border-radius: 8px;
-    border: 1px solid #FF9D23; /* لون الحدود متناسق مع التصميم */
-    background-color: #FFFDF0; /* خلفية شفافة */
+    border: 1px solid #FF9D23; 
+    background-color: #FFFDF0; 
     font-family: 'Montserrat', sans-serif;
-    font-size: 12px; /* تصغير حجم الخط */
+    font-size: 12px; 
     color: #333;
 }
 
 input:focus, select:focus, button:focus {
-    outline: none; /* إزالة الحدود الرمادية */
+    outline: none; 
 }
 input[type="date"] {
-    width: 230px; /* ضبط العرض ليكون متناسقًا */
+    width: 230px; 
     padding: 8px;
     border-radius: 8px;
     border: 1px solid #FF9D23;
     background-color: #FFFDF0;
-    font-size: 14px; /* تحسين وضوح الخط */
+    font-size: 14px; 
     color: #333;
 }
 
 
 .filter-box label {
-    margin-bottom: 6px; /* تقليل المسافة */
+    margin-bottom: 6px; 
     display: block;
     font-family: 'Montserrat', sans-serif;
-    font-size: 12px; /* تصغير حجم الخط */
-    color: #FF9D23; /* لون النص متناسق مع التصميم */
+    font-size: 12px; 
+    color: #FF9D23;
 }
 
 .filter-action {
@@ -587,19 +585,19 @@ input[type="date"] {
 }
 
 .filter-action button {
-    background-color: #FF9D23; /* لون الزر متناسق مع التصميم */
+    background-color: #FF9D23; 
     color: white;
-    padding: 8px 16px; /* تصغير حجم الزر */
+    padding: 8px 16px; 
     border: none;
     border-radius: 20px;
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
-    font-size: 12px; /* تصغير حجم الخط */
+    font-size: 12px;
     transition: background-color 0.3s ease;
 }
 
 .filter-action button:hover {
-    background-color: #FF9D23; /* لون الزر عند التحويم */
+    background-color: #FF9D23; 
 }
 
         .filter-btn {
@@ -613,7 +611,7 @@ input[type="date"] {
         }
         @media (max-width: 768px) {
     .header {
-        height: 400px; /* Reduce header height */
+        height: 400px; 
     }
 
     .header-content {
@@ -621,7 +619,7 @@ input[type="date"] {
     }
 
     .header-content h1 {
-        font-size: 30px; /* Adjust heading size */
+        font-size: 30px; 
     }
 
     .outline-text {
@@ -633,8 +631,8 @@ input[type="date"] {
 }
 @media (max-width: 600px) {
    .search-container {
-        flex-direction: row; /* جعل العناصر جنبًا إلى جنب */
-        align-items: center; /* توسيط العناصر */
+        flex-direction: row; 
+        align-items: center; 
         justify-content: center;
     }
 
@@ -665,13 +663,12 @@ input[type="date"] {
     }
 
     .mobile-nav-container {
-        display: block; /* Show mobile menu */
+        display: block; 
     }
 }
    @media (max-width: 600px) {
     .grid {
-        grid-template-columns: repeat(2, 1fr); /* بدلًا من أن تكون عنصرًا واحدًا في كل صف */
-        gap: 15px;
+        grid-template-columns: repeat(2, 1fr); 
     }
 }
     
@@ -717,19 +714,16 @@ input[type="date"] {
 <body>
 <div class="header" style="background: url('<?php echo $headerImage; ?>') no-repeat center center/cover;">
         <header>
-    <!-- اللوقو في الوسط -->
     <div class="logo">
         <img src="workshops/logo.png" alt="logo">
     </div>
 
-    <!-- زر الهامبرغر -->
     <div class="hamburger" onclick="toggleMenu(this)">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
     </div>
 
-    <!-- قائمة الجوال -->
     <div class="mobile-nav-container">
         <nav class="mobile-nav">
             <a href="homepage.php">Home</a>
@@ -741,7 +735,6 @@ input[type="date"] {
         </nav>
     </div>
 
-    <!-- قائمة سطح المكتب -->
     <nav class="desktop-nav">
         <a href="homepage.php">Home</a>
         <a href="<?php echo $loggedIn ? 'ProfilePage.php' : 'login.php'; ?>">
