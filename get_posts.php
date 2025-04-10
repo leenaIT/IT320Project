@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors',1);
 session_start();
 require "database.php"; // Database connection
 
@@ -6,13 +7,26 @@ header('Content-Type: application/json');
 
 $response = ["status" => "error", "posts" => []];
 
+// Ensure the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    $response['message'] = 'User not logged in.';
+    echo json_encode($response);
+    exit;
+}
+
+$userID = $_SESSION['user_id']; // Get the logged-in user's ID
+
 $query = "SELECT posts.PostID, posts.UserID, posts.images, posts.comment, posts.post_date, 
                  users.FirstName, users.ProfilePhoto 
           FROM posts 
           JOIN users ON posts.UserID = users.UserID 
+          WHERE posts.UserID = ?  
           ORDER BY posts.post_date DESC";
 
-$result = $connection->query($query);
+$stmt = $connection->prepare($query);
+$stmt->bind_param("i", $userID); // Bind the logged-in user's ID to the query
+$stmt->execute();
+$result = $stmt->get_result();
 
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -23,9 +37,6 @@ if ($result && $result->num_rows > 0) {
         $images = array_map(function($img) {
             return "uploads/" . basename($img); // Prepend uploads path
         }, $images);
-        $images = json_decode($row['images'], true) ?: [];
-$images = array_map(fn($img) => "uploads/" . basename($img), $images);
-
 
         // Construct post data
         $response['posts'][] = [

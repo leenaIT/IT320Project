@@ -638,8 +638,15 @@ left: 380px;
     padding: 4px 8px;
     bottom: -25px;
   }
-
-
+/** wihslist item **/
+.empty-wishlist-message{
+    margin-left:10px;}
+.empty-wishlist-message p{
+    font-size:10px;
+}
+.empty-wishlist-message h3{
+    font-size:16px;
+}
   /* 🔶 Footer */
   footer {
     flex-direction: column;

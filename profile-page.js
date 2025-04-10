@@ -694,7 +694,7 @@ function loadPosts() {
         <img src="workshops/no_posts.png" alt="no post" class="no-posts-icon">
     </p>
 `);
-  // Display no posts message
+  //Display no posts message
                 } else {
                     response.posts.forEach(post => {
                         const postHTML = `
