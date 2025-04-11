@@ -86,6 +86,7 @@ header {
     align-items: center;
     justify-content: space-between;
     background: transparent;
+    z-index: 1;
 }
 
 .logo {
@@ -343,7 +344,6 @@ footer {
   box-sizing: border-box;
 }
 
-ProfilePage.php
 
 .menu {
     display: none;
@@ -395,63 +395,46 @@ html[dir="rtl"] .menu.active {
         }
 
         .slider {
-       
-            width: 100%;
-            height: 600px;
-            overflow: hidden;
-            position: relative;
-            max-width: 100%;
-width: 100%;
-box-sizing: border-box;
+    position: relative; /* Needed for absolute positioning inside */
+    width: 100%;
+    height: 600px;
+    box-sizing: border-box;
+}
 
-        }
-        .slider video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            max-width: 100%;
-width: 100%;
-box-sizing: border-box;
+.slider video {
+    position: absolute;
+    top: -119px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
 
-        }
-        .slider video.active {
-            opacity: 1;
-        }
+.slider video.active {
+    opacity: 1;
+}
 
-        .search-container {
-            position: absolute;
-            top: 300px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            max-width: 600px;
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 100%;
-width: 100%;
-box-sizing: border-box;
+.search-container {
+    position: absolute; /* <-- not fixed */
+    top: 25%;            /* Center vertically in slider */
+    left: 20px;          /* Center horizontally in slider */
+    padding: 10px;
+    max-width: 600px;
+    width: 100%;
+    z-index: 2; /* Above the video */
+    text-align: center;
+    box-sizing: border-box;
+}
 
-            
-        }
-        .search-container span {
-            color: #fcfcfc;
-            font-size: 50px;
-            margin-right: 10px;
-            font-style: italic;
-            max-width: 100%;
-width: 100%;
-box-sizing: border-box;
+.search-container span {
+    color: #fcfcfc;
+    font-size: 50px;
+    font-style: italic;
+    text-align: left;
+}
 
-
-        }
         .search-bar {
             width: 100%;
             padding: 10px;
@@ -460,8 +443,8 @@ box-sizing: border-box;
             transition: box-shadow 0.3s ease;
             color: #333;
             max-width: 100%;
-width: 100%;
-box-sizing: border-box;
+            width: 100%;
+            box-sizing: border-box;
 
         }
         .search-bar:focus {
@@ -475,7 +458,7 @@ box-sizing: border-box;
             background: #fff;
             border-radius: 10px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
+            margin-top: -50px;
             max-width: 100%;
 width: 100%;
 box-sizing: border-box;
@@ -495,7 +478,6 @@ box-sizing: border-box;
         @media (max-width: 500px) {
     .search-container span {
         font-size: 20px;
-        display: none;
     }
     .search-bar {
         font-size: 14px;
@@ -789,6 +771,7 @@ box-sizing: border-box;
 
     .slider {
         height: 250px;
+        top:-65px;
     }
 }
 @media (max-width: 500px) {
@@ -865,29 +848,13 @@ box-sizing: border-box;
 }
 
 
-/* ========== Header Styles (مطابق لصفحة البروفايل) ========== */
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 15px 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: transparent;
-    z-index: 1000;
-}
+
 
 .logo {
     flex: 0;
     margin-right: auto;
 }
 
-.logo img {
-    height: 80px;
-    width: 80px;
-}
 
 /* Desktop Navigation */
 .desktop-nav {
@@ -1135,6 +1102,7 @@ footer {
         width: 95%;
         padding: 20px;
         flex-direction: column;
+
     }
     
     .survey-form, .results {
@@ -1172,8 +1140,11 @@ footer {
     }
     
     .logo img {
+       
         width: 50px;
         height: 50px;
+        margin-top:-100px;
+        position: absolute;
     }
 }
 
@@ -1248,7 +1219,6 @@ footer {
 
 
 
-
 <div class="slider">
     <video class="active" autoplay muted loop>
         <source src="workshops/slider1.mp4" type="video/mp4">
@@ -1259,11 +1229,12 @@ footer {
     <video autoplay muted loop>
         <source src="workshops/slider3.mp4" type="video/mp4">
     </video>
+
+    <div class="search-container">
+        <span>Discover Your Passion</span>
+    </div>
 </div>
 
-<div class="search-container">
-    <span>Discover Your Passion</span>
-</div>
 
 <div class="container">
     <div class="posts" id="posts">
@@ -1387,8 +1358,6 @@ function loadPosts() {
                 <p>Shared by ${post.FirstName || ''} ${post.LastName || ''}</p>
                 <div class="post-actions">
                     <button class="like-btn" data-postid="${post.PostID}">
-                        <i class="fa fa-heart ${post.liked ? 'liked' : ''}"></i> 
-                        <span class="like-count">${post.likeCount || 0}</span>
                     </button>
                 </div>
             `;
