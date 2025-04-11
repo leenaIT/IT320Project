@@ -5,10 +5,7 @@ session_start();
 
 $loggedIn = isset($_SESSION['user_id']);
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_SERVER['HTTP_ACCEPT']) && str_contains($_SERVER['HTTP_ACCEPT'], 'application/json')) {
     header('Content-Type: application/json');
@@ -452,6 +449,7 @@ box-sizing: border-box;
             max-width: 100%;
 width: 100%;
 box-sizing: border-box;
+
 
         }
         .search-bar {
@@ -1232,9 +1230,7 @@ footer {
             <a href="Explore.php">Explore</a>
             <a href="Survey.php">Survey</a>
             <a href="findcategory.php">Category</a>
-            <div class="mobile-language-switch" onclick="toggleLanguage()">
-                🌐 Language
-            </div>
+           
         </nav>
     </div>
 
@@ -1247,7 +1243,6 @@ footer {
         <a href="Explore.php">Explore</a>
         <a href="Survey.php">Survey</a>
         <a href="findcategory.php">Category</a>
-        <a href="#" class="language-switch" onclick="toggleLanguage()">🌐 Language</a>
     </nav>
 </header>
 
