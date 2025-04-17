@@ -966,21 +966,21 @@ button.swal2-confirm, button.swal2-cancel {
 }
 
 button.swal2-confirm {
-    background-color: #00aaff;
+    background-color: #f4b42b;
     color: #fff;
 }
 
 button.swal2-confirm:hover {
-    background-color: #0088cc;
+    background-color: #d0931f;
 }
 
 button.swal2-cancel {
-    background-color: #ff4444;
+    background-color: #b0b0b0;
     color: #fff;
 }
 
 button.swal2-cancel:hover {
-    background-color: #cc3333;
+    background-color: #8e8e8e;
 }
 
 
