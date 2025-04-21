@@ -440,6 +440,8 @@ header{
 /* POSTS DISPLAY******/
 body{
     overflow-x: hidden ;
+            background-color: #FFFDF0;
+
 }
 
 .grid {
