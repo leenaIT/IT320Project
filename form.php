@@ -423,7 +423,7 @@ $loggedIn = isset($_SESSION['user_id']);
             <button onclick="scrollToSurvey()">Start the Journey</button>
         </div>
         <div class="hero-img">
-            <img src="workshops/character.png" alt="Welcome Character">
+            <img src="workshops/Untitled design.svg" alt="Welcome Character">
         </div>
     </section>
 
