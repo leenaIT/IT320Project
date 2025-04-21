@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Apr 10, 2025 at 07:11 PM
+-- Generation Time: Apr 17, 2025 at 05:24 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.3.1
 
@@ -67,6 +67,48 @@ INSERT INTO `booking` (`BookingID`, `BookingDate`, `UserID`, `WorkshopID`, `Sche
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `CommentID` int(11) NOT NULL,
+  `PostID` int(11) DEFAULT NULL,
+  `UserID` int(11) DEFAULT NULL,
+  `CommentText` text,
+  `CreatedAt` datetime DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`CommentID`, `PostID`, `UserID`, `CommentText`, `CreatedAt`) VALUES
+(6, 62, 6, 'wooww', '2025-04-17 18:05:10'),
+(7, 49, 10, 'soo proud of you', '2025-04-17 18:07:22'),
+(10, 60, 6, 'the weather is the best for hiking', '2025-04-17 19:34:29'),
+(11, 64, 6, 'i want to try them !!', '2025-04-17 19:34:58'),
+(12, 65, 6, 'they look so good', '2025-04-17 19:35:18'),
+(13, 70, 6, 'Mindblowing!!', '2025-04-17 19:35:35'),
+(14, 71, 6, 'we have to try this together someday', '2025-04-17 19:36:06'),
+(15, 74, 6, 'are you ready for a match?', '2025-04-17 19:36:27'),
+(16, 76, 6, 'drifting in kashtas is a must', '2025-04-17 19:37:11'),
+(17, 77, 6, 'i dont think they can see that well', '2025-04-17 19:37:35'),
+(18, 72, 6, 'breathtaking !!!', '2025-04-17 19:37:49'),
+(19, 83, 8, 'i need this right now', '2025-04-17 19:40:09'),
+(20, 82, 8, 'this looks so much fun', '2025-04-17 19:40:28'),
+(21, 81, 8, 'the best way to spend winter nights', '2025-04-17 19:40:45'),
+(22, 80, 8, 'the water is glowing !!!', '2025-04-17 19:41:00'),
+(23, 77, 8, 'that looks so scary', '2025-04-17 19:41:10'),
+(24, 76, 8, 'so luckky', '2025-04-17 19:41:23'),
+(25, 79, 8, 'woww', '2025-04-17 19:41:33'),
+(26, 78, 8, 'so relaxing', '2025-04-17 19:42:28'),
+(27, 73, 8, 'we gotta do this sometime', '2025-04-17 19:42:58'),
+(28, 69, 8, 'i love pottery', '2025-04-17 19:43:14'),
+(29, 79, 6, 'lucky', '2025-04-17 19:52:48');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `favorites`
 --
 
@@ -109,21 +151,23 @@ INSERT INTO `favorites` (`id`, `UserID`, `WorkshopID`) VALUES
 
 CREATE TABLE `likes` (
   `likeID` int(11) NOT NULL,
-  `userID` int(11) DEFAULT NULL,
+  `userID` int(11) NOT NULL,
   `postID` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `userIP` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `likes`
 --
 
-INSERT INTO `likes` (`likeID`, `userID`, `postID`, `created_at`, `userIP`) VALUES
-(1, NULL, 48, '2025-04-09 23:06:48', '::1'),
-(3, NULL, 47, '2025-04-10 04:39:58', '::1'),
-(4, NULL, 46, '2025-04-10 04:40:25', '::1'),
-(5, NULL, 49, '2025-04-10 04:40:49', '::1');
+INSERT INTO `likes` (`likeID`, `userID`, `postID`, `created_at`) VALUES
+(7, 6, 47, '2025-04-17 14:05:23'),
+(21, 6, 62, '2025-04-17 14:21:55'),
+(23, 6, 79, '2025-04-17 16:32:27'),
+(24, 6, 74, '2025-04-17 16:36:28'),
+(25, 8, 83, '2025-04-17 16:39:55'),
+(26, 8, 73, '2025-04-17 16:42:43'),
+(27, 6, 78, '2025-04-17 16:52:54');
 
 -- --------------------------------------------------------
 
@@ -144,14 +188,32 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`PostID`, `UserID`, `images`, `comment`, `post_date`) VALUES
-(46, 6, '[\"uploads\\/post_67f6c67a6d92e4.35894006.jpg\",\"uploads\\/post_67f6c67a6e14a5.78709464.jpg\"]', 'Had so much fun making these cookies never knew it would be so relaxing. I highly recommended it ', '2025-04-09 19:11:54'),
 (47, 6, '[\"uploads\\/post_67f6cc3f16bbf2.93262673.jpeg\",\"uploads\\/post_67f6cc3f172d17.93964462.jpeg\"]', 'Paddle nights are the best ', '2025-04-09 19:36:31'),
-(48, 6, '[\"uploads\\/post_67f6cd8cb507d3.62184046.jpeg\",\"uploads\\/post_67f6cd8cb675f7.49715138.jpeg\"]', 'The perfect escape with the night breeze under the stars ✨ ', '2025-04-09 19:42:04'),
 (49, 6, '[\"uploads\\/post_67f6d0b296c550.58780752.jpeg\",\"uploads\\/post_67f6d0b2970b40.27698349.jpeg\"]', 'Made my first jump today!  After failing for a month , Feeling accomplished', '2025-04-09 19:55:30'),
 (60, 10, '[\"uploads\\/post_67f773eb32b917.77528006.jpeg\",\"uploads\\/post_67f773eb330354.92729336.jpeg\"]', 'A completely new and exciting challenge. Everything was well organized!', '2025-04-10 07:31:55'),
 (61, 10, '[\"uploads\\/post_67f77441e921d0.06111426.jpeg\",\"uploads\\/post_67f77441e9f193.85140327.jpeg\"]', 'It was a calming and creative experience. I learned how to mix scents and pour wax into molds', '2025-04-10 07:33:21'),
 (62, 10, '[\"uploads\\/post_67f774736f98f0.65830380.jpeg\",\"uploads\\/post_67f774736fcad3.64794361.jpeg\"]', 'A light and useful experience.The final result was delicious!', '2025-04-10 07:34:11'),
-(63, 10, '[\"uploads\\/post_67f7749c7bd245.76364090.jpeg\",\"uploads\\/post_67f7749c7c3aa1.07258337.jpeg\"]', 'The workshop had a calm and inspiring atmosphere. I enjoyed expressing my thoughts through art', '2025-04-10 07:34:52');
+(63, 10, '[\"uploads\\/post_67f7749c7bd245.76364090.jpeg\",\"uploads\\/post_67f7749c7c3aa1.07258337.jpeg\"]', 'The workshop had a calm and inspiring atmosphere. I enjoyed expressing my thoughts through art', '2025-04-10 07:34:52'),
+(64, 8, '[\"uploads\\/post_68011ebddd17b0.89253863.jpeg\"]', 'Making yummy pasta with my friends ', '2025-04-17 15:31:09'),
+(65, 8, '[\"uploads\\/post_68011f55f31568.97395959.jpeg\",\"uploads\\/post_68011f55f39545.67787391.jpeg\"]', 'The best cookies everr', '2025-04-17 15:33:42'),
+(66, 8, '[\"uploads\\/post_68012072c2e166.84327997.jpeg\"]', 'Drawing on canvas this weeknd , How was your weeknd ?', '2025-04-17 15:38:26'),
+(67, 8, '[\"uploads\\/post_680120f9e357a8.17825247.jpeg\",\"uploads\\/post_680120f9e3cac5.66804040.jpeg\"]', 'Making my own coffe mug  , so excited to come back and do more ', '2025-04-17 15:40:41'),
+(68, 8, '[\"uploads\\/post_680121e0cbcec9.30441511.jpeg\"]', 'Went hiking this morning and saw this beautiful lake ', '2025-04-17 15:44:32'),
+(69, 9, '[\"uploads\\/post_680123fc69dcb1.83230108.jpeg\"]', 'Tried my hand at pottery today and totally fell in love with the mess and magic of clay', '2025-04-17 15:53:32'),
+(70, 9, '[\"uploads\\/post_680124459c8422.40849799.jpeg\"]', 'Taking the leap and feeling on top of the world! ', '2025-04-17 15:54:45'),
+(71, 9, '[\"uploads\\/post_6801267be0d4f6.53363721.jpeg\"]', 'Had a great time horse riding through the forest today. Such a fun experience! ', '2025-04-17 16:04:11'),
+(72, 9, '[\"uploads\\/post_6801269d0caa58.95101477.jpeg\"]', 'Such an amazing experience swimming with dolphins today! They’re so playful and friendly.', '2025-04-17 16:04:45'),
+(73, 9, '[\"uploads\\/post_680126da5068e4.74839419.jpeg\",\"uploads\\/post_680126da509fa4.40957350.jpeg\"]', 'Enjoyed a fun camping trip with some adventurous rides on the quad bikes! Great way to explore the desert!', '2025-04-17 16:05:46'),
+(74, 9, '[\"uploads\\/post_6801276944c6e5.11538844.jpeg\",\"uploads\\/post_68012769452850.67781256.jpeg\"]', 'Enjoying a fun match of paddle tennis on the field! Great way to stay active and competitive.', '2025-04-17 16:08:09'),
+(75, 12, '[\"uploads\\/post_680127da73c684.45086802.jpeg\",\"uploads\\/post_680127da743557.12738234.jpeg\"]', 'Trying out paddle tennis on the field today—super fun and a great workout', '2025-04-17 16:10:02'),
+(76, 12, '[\"uploads\\/post_68012813862281.98582834.jpeg\",\"uploads\\/post_6801281386d3a1.08581172.jpeg\"]', 'Went on a kashta, found quad bikes… ended up drifting like I was in Fast & Furious: Desert Edition ', '2025-04-17 16:10:59'),
+(77, 12, '[\"uploads\\/post_68012848ca2b90.17036035.jpeg\"]', 'Tried swimming with whales… pretty sure they thought I was a confused fish ', '2025-04-17 16:11:52'),
+(78, 12, '[\"uploads\\/post_68012883846de4.65782090.jpeg\"]', 'Went horse riding through the forest today — such a peaceful and refreshing experience.', '2025-04-17 16:12:51'),
+(79, 12, '[\"uploads\\/post_680128d733ac13.77099428.jpeg\"]', 'Took to the skies in a hot air balloon today — the view from up there is something else! ', '2025-04-17 16:14:15'),
+(80, 6, '[\"uploads\\/post_68012c21583151.33581151.jpeg\"]', 'Exploring the hidden beauty of underwater caves while swimming—such an unforgettable experience!', '2025-04-17 16:28:17'),
+(81, 6, '[\"uploads\\/post_68012c809b25d1.97103475.jpeg\"]', 'Riding buggies through the vast desert, with the perfect sweet treat to cool off after the adventure!', '2025-04-17 16:29:52'),
+(82, 6, '[\"uploads\\/post_68012cabc08147.03116135.jpeg\"]', 'Parachuting over breathtaking landscapes, feeling the rush as you soar through the sky!', '2025-04-17 16:30:35'),
+(83, 6, '[\"uploads\\/post_68012cfa42e1d8.99883072.jpeg\"]', 'Exploring the trails and reaching new heights on an unforgettable hiking adventure!', '2025-04-17 16:31:54');
 
 -- --------------------------------------------------------
 
@@ -407,12 +469,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`UserID`, `FirstName`, `LastName`, `Email`, `Password`, `Mobile`, `ProfilePhoto`, `Bio`) VALUES
-(6, 'Mashael  ', 'khalid', 'mashael@example.com', '$2y$10$TNXrVsxUd6pH9puoiW4LdOIZP2lN0XKOaDFwgXv6wrPLAP9.ZYL82', '+966507504050', '67f622bdb8fa5_profile-pic.png', 'Let\'s make some new Memories'),
-(8, 'Rahaf', 'AlFantoukh', 'Rahaf@example.com', '$2y$10$LuQbZoK4kWnZIU/PH9TgXO1JgA7NIoRrM.oxD301dfyrNG.J3zHza', '+966503018850', NULL, NULL),
-(9, 'Aljawharah', 'Alsubaie', 'Aljawharah@example.com', '$2y$10$SOihvJGF.GGUVC.kSz2I0ub0zZYPNkOc5g8Q.93PeFq0zIVo6jnBu', '+966501926876', NULL, NULL),
+(6, 'Mashael  ', 'khalid', 'mashael@example.com', '$2y$10$TNXrVsxUd6pH9puoiW4LdOIZP2lN0XKOaDFwgXv6wrPLAP9.ZYL82', '+966507504050', '6801292425b7e_download11.jpeg', 'Let\'s make some new Memories'),
+(8, 'Rahaf', 'AlFantoukh', 'Rahaf@example.com', '$2y$10$LuQbZoK4kWnZIU/PH9TgXO1JgA7NIoRrM.oxD301dfyrNG.J3zHza', '+966503018850', '68012ecc4b8a7_download21.jpeg', ''),
+(9, 'Aljawharah', 'Alsubaie', 'Aljawharah@example.com', '$2y$10$SOihvJGF.GGUVC.kSz2I0ub0zZYPNkOc5g8Q.93PeFq0zIVo6jnBu', '+966501926876', '680123a4f2ee0_profilepic1.jpeg', ''),
 (10, 'Leena', 'Alhaider', 'Leena@example.com', '$2y$10$SH9sipniFow/iuXO.kZXz.eb84ubRkE10wn3YOg4f28sWpgf6ZTWG', '+966538756710', '67f76c4760ad3_photo_2025-04-10_09-59-05.jpg', 'I love to live different experiences and enjoy every moment of it.'),
 (11, 'Hadeel', 'Almutairi', 'Hadeel@example.com', '$2y$10$VHDAQcsr2l1tGjJo4QfbgeU.EwLrue6EkDwo7F5SM4gltnGRoR1Uy', '+966503086034', NULL, NULL),
-(12, 'Ahmed', 'Khalid', 'ahmed@example.com', '$2y$10$OvArclovAOOOekU2a3k8pex9bdAEkfY70BLTRbapfDoyCTCam1wE6', '+966503086932', NULL, NULL),
+(12, 'Ahmed', 'Khalid', 'ahmed@example.com', '$2y$10$OvArclovAOOOekU2a3k8pex9bdAEkfY70BLTRbapfDoyCTCam1wE6', '+966503086932', '680127b2b113a_pp12.jpeg', ''),
 (13, 'Omer', 'Abdulaziz', 'Omer@example.com', '$2y$10$TopcdnZ0JPB2p4IA4FwZ0uZiu2ugJ1F6YD.Oea7lFBNnBsO5ZebGa', '+966518456719', NULL, NULL);
 
 -- --------------------------------------------------------
@@ -585,6 +647,14 @@ ALTER TABLE `booking`
   ADD KEY `ScheduleID` (`ScheduleID`);
 
 --
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`CommentID`),
+  ADD KEY `UserID` (`UserID`),
+  ADD KEY `comments_ibfk_1` (`PostID`);
+
+--
 -- Indexes for table `favorites`
 --
 ALTER TABLE `favorites`
@@ -596,8 +666,8 @@ ALTER TABLE `favorites`
 --
 ALTER TABLE `likes`
   ADD PRIMARY KEY (`likeID`),
-  ADD KEY `userID` (`userID`),
-  ADD KEY `fk_post` (`postID`);
+  ADD UNIQUE KEY `userID` (`userID`,`postID`),
+  ADD KEY `likes_ibfk_1` (`postID`);
 
 --
 -- Indexes for table `posts`
@@ -651,6 +721,12 @@ ALTER TABLE `booking`
   MODIFY `BookingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `CommentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
 -- AUTO_INCREMENT for table `favorites`
 --
 ALTER TABLE `favorites`
@@ -660,13 +736,13 @@ ALTER TABLE `favorites`
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `likeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `likeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `PostID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `PostID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `previous_works`
@@ -678,7 +754,7 @@ ALTER TABLE `previous_works`
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `ReviewID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200;
+  MODIFY `ReviewID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=190;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -705,10 +781,17 @@ ALTER TABLE `booking`
   ADD CONSTRAINT `booking_ibfk_3` FOREIGN KEY (`ScheduleID`) REFERENCES `workshop_schedule` (`ScheduleID`);
 
 --
+-- Constraints for table `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`PostID`) REFERENCES `posts` (`PostID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`);
+
+--
 -- Constraints for table `likes`
 --
 ALTER TABLE `likes`
-  ADD CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`UserID`),
+  ADD CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`postID`) REFERENCES `posts` (`PostID`) ON DELETE CASCADE,
   ADD CONSTRAINT `likes_ibfk_2` FOREIGN KEY (`postID`) REFERENCES `posts` (`PostID`);
 
 --
