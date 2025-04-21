@@ -524,7 +524,7 @@ font-family: 'Poppins', sans-serif !important;
         <nav class="mobile-nav">
             <a href="homepage.php">Home</a>
             <a href="ProfilePage.php"><?php echo $loggedIn ? 'Profile' : 'Login'; ?></a>
-            <a href="Explore.php">Explore</a>
+            <a href="exploree.php">Explore</a>
             <a href="Survey.php">Survey</a>
             <a href="findcategory.php">Category</a>
             
@@ -536,7 +536,7 @@ font-family: 'Poppins', sans-serif !important;
         <a href="<?php echo $loggedIn ? 'ProfilePage.php' : 'login.php'; ?>">
             <?php echo $loggedIn ? 'Profile' : 'Login'; ?>
         </a>
-        <a href="Explore.php">Explore</a>
+            <a href="exploree.php">Explore</a>
         <a href="Survey.php">Survey</a>
         <a href="findcategory.php">Category</a>
     </nav>
