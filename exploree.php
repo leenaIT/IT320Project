@@ -437,7 +437,7 @@ header{
     position: relative; width: 100%; height: 560px;  padding-top: 30px;
 }
 
-/* POSTS DISPLAY******/
+/* POSTS ISPLAY******/
 body{
     overflow-x: hidden ;
             background-color: #FFFDF0;
