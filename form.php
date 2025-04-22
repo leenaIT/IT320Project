@@ -13,10 +13,9 @@ $loggedIn = isset($_SESSION['user_id']);
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <link rel="stylesheet" href="header.css">
-    <!-- Add Google Fonts for Caveat (handwritten font) and existing fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Playfair+Display:wght@400;700&family=Poppins:wght@400;600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Google Fonts for Caveat, Playfair Display, Poppins, and Montserrat -->
     <style>
-        /* Ensure consistent font application */
+        /* Consistent font application */
         .desktop-nav a,
         .language-switch,
         .mobile-nav a,
@@ -163,9 +162,6 @@ $loggedIn = isset($_SESSION['user_id']);
             background: linear-gradient(to bottom, #FFFDF0, rgba(255, 157, 35, 0.2));
             overflow: hidden;
             text-align: center;
-            /* Subtle paper texture */
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23FFFDF0" /><path opacity="0.05" fill="none" stroke="%23FF9D23" stroke-width="2" d="M0,0 H100 V100 H0 Z" /><circle cx="50" cy="50" r="40" fill="none" stroke="%23FF9D23" stroke-width="1" opacity="0.1" /></svg>');
-            background-size: 200px;
         }
 
         .hero::before {
@@ -211,24 +207,11 @@ $loggedIn = isset($_SESSION['user_id']);
             align-items: center;
             position: relative;
             z-index: 1;
-            margin-bottom: 2em;
+            margin-bottom: 1em;
             gap: 30px;
-            background: rgba(255, 245, 230, 0.5);
             padding: 20px;
             border-radius: 20px;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .hero-images::after {
-            content: '';
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            width: 60px;
-            height: 60px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23FF9D23" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6z"/></svg>') no-repeat center;
-            background-size: contain;
-            animation: bob 3s infinite ease-in-out;
         }
 
         .hero-image-item {
@@ -255,9 +238,9 @@ $loggedIn = isset($_SESSION['user_id']);
         .hero-image-item img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             border-radius: 10px;
-            filter: brightness(1.05) contrast(1.1);
+            filter: brightness(1.05) contrast(1.1) sepia(0.2);
             transition: transform 0.4s ease, filter 0.4s ease;
         }
 
@@ -267,7 +250,7 @@ $loggedIn = isset($_SESSION['user_id']);
         }
 
         .hero-image-item:hover img {
-            filter: brightness(1.1) contrast(1.15);
+            filter: brightness(1.1) contrast(1.15) sepia(0.2);
             transform: scale(1.02);
         }
 
@@ -276,8 +259,7 @@ $loggedIn = isset($_SESSION['user_id']);
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 157, 35, 0.95);
-            color: white;
+\            color: white;
             padding: 8px 15px;
             border-radius: 12px;
             font-size: 1rem;
@@ -310,11 +292,6 @@ $loggedIn = isset($_SESSION['user_id']);
             background: #e68b1f;
             transform: scale(1.1);
             box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
-        }
-
-        @keyframes bob {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
         }
 
         /* Survey Section */
@@ -351,11 +328,6 @@ $loggedIn = isset($_SESSION['user_id']);
             opacity: 1;
         }
 
-        .survey-background.selfdev {
-            background: linear-gradient(to bottom, rgba(100, 150, 255, 0.2), rgba(255, 157, 35, 0));
-            opacity: 1;
-        }
-
         .journey-map {
             position: relative;
             height: 100px;
@@ -384,9 +356,10 @@ $loggedIn = isset($_SESSION['user_id']);
             animation: pulse 1s infinite;
         }
 
-        .journey-step:nth-child(1) { left: 10%; }
-        .journey-step:nth-child(2) { left: 40%; }
-        .journey-step:nth-child(3) { left: 70%; }
+        .journey-step:nth-child(1) { left: 5%; }
+        .journey-step:nth-child(2) { left: 30%; }
+        .journey-step:nth-child(3) { left: 55%; }
+        .journey-step:nth-child(4) { left: 80%; }
 
         @keyframes pulse {
             0% { transform: translateY(-50%) scale(1); }
@@ -484,6 +457,179 @@ $loggedIn = isset($_SESSION['user_id']);
             0% { transform: scale(1); }
             50% { transform: scale(1.03); }
             100% { transform: scale(1); }
+        }
+
+        /* Radio Button Choices */
+        .radio-choices {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .radio-choice {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            border: 2px solid #FDE5B7;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .radio-choice:hover {
+            background: #FDE5B7;
+            border-color: #FF9D23;
+        }
+
+        .radio-choice input[type="radio"] {
+            display: none;
+        }
+
+        .radio-choice label {
+            cursor: pointer;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .radio-choice input[type="radio"]:checked + label {
+            color: #FF9D23;
+        }
+
+        .radio-choice input[type="radio"]:checked ~ .radio-choice {
+            background: #FDE5B7;
+            border-color: #FF9D23;
+        }
+
+        /* Results Section (Updated for Horizontal Layout) */
+        .results {
+            margin-top: 2em;
+            padding: 0 2em;
+        }
+
+        .results h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #333;
+            text-align: center;
+            margin-bottom: 1.5em;
+        }
+
+        .grid {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            padding: 20px;
+            overflow-x: auto; /* Enable horizontal scrolling */
+            white-space: nowrap; /* Prevent wrapping */
+        }
+
+        .grid-item {
+            position: relative;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            padding-bottom: 15px;
+            transition: transform 0.3s ease;
+            min-width: 250px; /* Ensure cards have a fixed minimum width */
+            max-width: 300px; /* Ensure card doesn’t stretch too wide */
+            display: inline-block; /* Ensure items stay in a single row */
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+            display: block; /* Remove any unwanted spacing */
+        }
+
+        .grid-item .tag {
+            position: absolute;
+            top: 15px;
+            left: -10px;
+            background-color: #FF9D23;
+            color: #fff;
+            padding: 5px 15px;
+            font-size: 14px;
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .grid-item h3 {
+            font-family: 'Montserrat', sans-serif;
+            margin: 10px 5px 5px 5px;
+            font-size: 16px;
+            color: #FF9D23;
+            text-align: center;
+        }
+
+        .grid-item p {
+            font-size: 14px;
+            color: #555;
+            margin: 5px 15px;
+            text-align: center;
+        }
+
+        .grid-item .details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            margin-top: 10px;
+        }
+
+        .grid-item .price {
+            color: #333;
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-direction: row-reverse;
+        }
+
+        .riyal-icon {
+            width: 12px !important;
+            height: 12px !important;
+            vertical-align: middle;
+        }
+
+        .more-btn {
+            display: inline-block;
+            background-color: #FDE5B7;
+            color: #333;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .more-btn:hover {
+            background-color: #FF9D23;
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .no-results {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #555;
+            padding: 2em;
         }
 
         /* Responsive Design */
@@ -638,15 +784,15 @@ $loggedIn = isset($_SESSION['user_id']);
         </div>
         <div class="hero-images" data-aos="fade-up" data-aos-delay="100">
             <div class="hero-image-item" data-aos="zoom-in" data-aos-delay="100">
-                <img src="workshops/adventurer.jpg" alt="Person as Adventurer">
+                <img src="workshops/adv.png" alt="Person as Adventurer">
                 <span class="hero-image-label">Adventurer</span>
             </div>
             <div class="hero-image-item" data-aos="zoom-in" data-aos-delay="200">
-                <img src="workshops/chef.jpg" alt="Person as Chef">
+                <img src="workshops/cooc.png" alt="Person as Chef">
                 <span class="hero-image-label">Chef</span>
             </div>
             <div class="hero-image-item" data-aos="zoom-in" data-aos-delay="300">
-                <img src="workshops/artist.jpg" alt="Person as Artist">
+                <img src="workshops/arti.png" alt="Person as Artist">
                 <span class="hero-image-label">Artist</span>
             </div>
         </div>
@@ -662,24 +808,82 @@ $loggedIn = isset($_SESSION['user_id']);
             <div class="journey-step active" data-step="1">1</div>
             <div class="journey-step" data-step="2">2</div>
             <div class="journey-step" data-step="3">3</div>
+            <div class="journey-step" data-step="4">4</div>
         </div>
         <div class="survey-box" data-aos="fade-up">
-            <h2>What activities spark your passion?</h2>
-            <div class="choices">
-                <div class="choice" onclick="selectChoice('Art')" data-aos="zoom-in">
-                    <img src="workshops/art-icon.png" alt="Art">
-                    <div>Art</div>
+            <form id="survey-form">
+                <div class="question" id="question-1">
+                    <h2>What type of activity do you prefer?</h2>
+                     <div class="radio-choices">
+                        <div class="radio-choice">
+                            <input type="radio" name="day-preference" value="weekdays" id="weekdays" onclick="selectChoice('weekdays', 'day-preference')">
+                            <label for="weekdays">Art</label>
+                        </div>
+                        <div class="radio-choice">
+                            <input type="radio" name="day-preference" value="weekends" id="weekends" onclick="selectChoice('weekends', 'day-preference')">
+                            <label for="weekends">Cooking</label>
+                        </div>
+                           <div class="radio-choice">
+                            <input type="radio" name="day-preference" value="weekends" id="weekends" onclick="selectChoice('weekends', 'day-preference')">
+                            <label for="weekends">Adventure</label>
+                        </div>
+                    </div>
+                    <input type="hidden" name="activity" id="activity">
                 </div>
-                <div class="choice" onclick="selectChoice('Cooking')" data-aos="zoom-in" data-aos-delay="100">
-                    <img src="workshops/cooking-icon.png" alt="Cooking">
-                    <div>Cooking</div>
+
+                <div class="question" id="question-2" style="display: none;">
+                    <h2>Do you prefer group or individual workshops?</h2>
+                    <div class="radio-choices">
+                        <div class="radio-choice">
+                            <input type="radio" name="workshop-type" value="group" id="group" onclick="selectChoice('group', 'workshop-type')">
+                            <label for="group">Group</label>
+                        </div>
+                        <div class="radio-choice">
+                            <input type="radio" name="workshop-type" value="individual" id="individual" onclick="selectChoice('individual', 'workshop-type')">
+                            <label for="individual">Individual</label>
+                        </div>
+                    </div>
+                    <input type="hidden" name="workshop_type" id="workshop-type">
                 </div>
-                <div class="choice" onclick="selectChoice('Adventure')" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="workshops/adventure-icon.png" alt="Adventure">
-                    <div>Adventure</div>
+
+                <div class="question" id="question-3" style="display: none;">
+                    <h2>Do you prefer morning or evening sessions?</h2>
+                    <div class="radio-choices">
+                        <div class="radio-choice">
+                            <input type="radio" name="time-preference" value="morning" id="morning" onclick="selectChoice('morning', 'time-preference')">
+                            <label for="morning">Morning</label>
+                        </div>
+                        <div class="radio-choice">
+                            <input type="radio" name="time-preference" value="evening" id="evening" onclick="selectChoice('evening', 'time-preference')">
+                            <label for="evening">Evening</label>
+                        </div>
+                    </div>
+                    <input type="hidden" name="time_preference" id="time-preference">
                 </div>
-            </div>
-            <button onclick="nextQuestion()">Next</button>
+
+                <div class="question" id="question-4" style="display: none;">
+                    <h2>Do you prefer workshops on weekdays or weekends?</h2>
+                    <div class="radio-choices">
+                        <div class="radio-choice">
+                            <input type="radio" name="day-preference" value="weekdays" id="weekdays" onclick="selectChoice('weekdays', 'day-preference')">
+                            <label for="weekdays">Weekdays</label>
+                        </div>
+                        <div class="radio-choice">
+                            <input type="radio" name="day-preference" value="weekends" id="weekends" onclick="selectChoice('weekends', 'day-preference')">
+                            <label for="weekends">Weekends</label>
+                        </div>
+                    </div>
+                    <input type="hidden" name="day_preference" id="day-preference">
+                </div>
+
+                <button type="button" onclick="nextQuestion()">Next</button>
+            </form>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results" id="results" style="display: none;">
+            <h2>Your Recommended Workshops</h2>
+            <div id="results-grid"></div>
         </div>
     </section>
 
@@ -742,36 +946,62 @@ $loggedIn = isset($_SESSION['user_id']);
         }
 
         let currentStep = 1;
-        const totalSteps = 3;
-        let lastChoice = '';
+        const totalSteps = 4;
 
-        function selectChoice(choice) {
-            lastChoice = choice.toLowerCase().replace(' ', '');
-            const background = document.getElementById('survey-background');
-            background.className = 'survey-background ' + lastChoice;
+        function selectChoice(choice, field) {
+            document.getElementById(field).value = choice;
 
-            confetti({
-                particleCount: 50,
-                spread: 60,
-                origin: { y: 0.6 },
-                colors: ['#FF9D23', '#FDE5B7', '#FFFDF0']
-            });
+            // Update background for activity selection
+            if (field === 'activity') {
+                const background = document.getElementById('survey-background');
+                background.className = 'survey-background ' + choice.toLowerCase();
+
+                confetti({
+                    particleCount: 50,
+                    spread: 60,
+                    origin: { y: 0.6 },
+                    colors: ['#FF9D23', '#FDE5B7', '#FFFDF0']
+                });
+            }
         }
 
         function nextQuestion() {
             if (currentStep < totalSteps) {
+                document.getElementById(`question-${currentStep}`).style.display = 'none';
                 currentStep++;
+                document.getElementById(`question-${currentStep}`).style.display = 'block';
                 document.querySelector('.journey-step.active').classList.remove('active');
                 document.querySelector(`.journey-step[data-step="${currentStep}"]`).classList.add('active');
             } else {
+                submitSurvey();
+            }
+        }
+
+        function submitSurvey() {
+            const formData = new FormData(document.getElementById('survey-form'));
+            fetch('getRecommendations.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data); // Debug: Check the HTML returned
+                document.getElementById('results-grid').innerHTML = data;
+                document.getElementById('results').style.display = 'block';
+                document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+
                 confetti({
                     particleCount: 100,
                     spread: 70,
                     origin: { y: 0.6 },
                     colors: ['#FF9D23', '#FDE5B7', '#FFFDF0']
                 });
-                alert('Great job! Let’s explore your matches!');
-            }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('results-grid').innerHTML = '<div class="no-results">An error occurred. Please try again.</div>';
+                document.getElementById('results').style.display = 'block';
+            });
         }
     </script>
 </body>
