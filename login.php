@@ -101,7 +101,7 @@ mysqli_close($Sconnection);
             <a href="homepage.php">Home</a>
             <a href="ProfilePage.php"><?php echo $loggedIn ? 'Profile' : 'Login'; ?></a>
             <a href="exploree.php">Explore</a>
-            <a href="Survey.php">Survey</a>
+            <a href="form.php">Survey</a>
             <a href="findcategory.php">Category</a>
             
         </nav>
@@ -114,7 +114,7 @@ mysqli_close($Sconnection);
             <?php echo $loggedIn ? 'Profile' : 'Login'; ?>
         </a>
         <a href="Explore.php">Explore</a>
-        <a href="Survey.php">Survey</a>
+        <a href="form.php">Survey</a>
         <a href="findcategory.php">Category</a>
     </nav>
     </header>

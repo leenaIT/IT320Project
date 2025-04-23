@@ -13,7 +13,7 @@ $loggedIn = isset($_SESSION['user_id']);
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <link rel="stylesheet" href="header.css">
-    <!-- Google Fonts for Caveat, Playfair Display, Poppins, and Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&family=Poppins:wght@400;600&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* Consistent font application */
         .desktop-nav a,
@@ -137,161 +137,145 @@ $loggedIn = isset($_SESSION['user_id']);
             margin-top: 6px !important;
         }
 
-        /* General Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* Base Styles */
         body {
-            font-family: 'Poppins', 'Montserrat', sans-serif;
+            margin: 0;
             background-color: #FFFDF0;
             color: #333;
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* Hero Section */
-        .hero {
-            position: relative;
+        /* Main Content Styles */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Section (Aligned with Category page) */
+        .header-container {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            padding: 6em 3em;
-            background: linear-gradient(to bottom, #FFFDF0, rgba(255, 157, 35, 0.2));
-            overflow: hidden;
-            text-align: center;
+            margin: 100px auto 60px; /* Restored to original to keep images in place */
+            padding: 0 20px;
+            flex-wrap: wrap;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23FF9D23" fill-opacity="0.15" d="M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,144C672,139,768,181,864,197.3C960,213,1056,203,1152,181.3C1248,160,1344,128,1392,112L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>') no-repeat;
-            background-size: cover;
-            z-index: 0;
+        .header-text {
+            flex: 1;
+            max-width: 70%;
+            text-align: left;
+            position: relative;
+            top: -80px; /* Move the text up without affecting images */
         }
 
-        .hero-text {
-            max-width: 600px;
-            z-index: 1;
-            margin-bottom: 2em;
-        }
-
-        .hero-text h1 {
+        .header-text h1 {
             font-family: 'Playfair Display', serif;
             font-size: 2.8rem;
-            margin-bottom: 15px;
+            font-weight: bold;
             color: #333;
+            margin-bottom: 20px;
+            line-height: 1.2;
         }
 
-        .hero-text h1 .highlight {
+        .highlight {
             color: #FF9D23;
         }
 
-        .hero-text p {
+        .header-text p {
             font-size: 1.1rem;
             color: #555;
-            margin-bottom: 25px;
-            line-height: 1.6;
+            max-width: 80%;
+                        margin-bottom: 20px;
+
         }
 
-        /* Hero Images Container */
-        .hero-images {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-            margin-bottom: 1em;
-            gap: 30px;
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .hero-image-item {
-            position: relative;
-            width: 220px;
-            height: 320px;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            z-index: 2;
-            background: #FFFDF0;
-            padding: 10px;
-            border-radius: 15px;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
-            transform: rotate(-2deg);
-        }
-
-        .hero-image-item:nth-child(2) {
-            transform: rotate(2deg);
-        }
-
-        .hero-image-item:nth-child(3) {
-            transform: rotate(0deg);
-        }
-
-        .hero-image-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 10px;
-            filter: brightness(1.05) contrast(1.1) sepia(0.2);
-            transition: transform 0.4s ease, filter 0.4s ease;
-        }
-
-        .hero-image-item:hover {
-            transform: scale(1.08) rotate(0deg);
-            box-shadow: 0 8px 20px rgba(255, 157, 35, 0.4);
-        }
-
-        .hero-image-item:hover img {
-            filter: brightness(1.1) contrast(1.15) sepia(0.2);
-            transform: scale(1.02);
-        }
-
-        .hero-image-label {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-\            color: white;
-            padding: 8px 15px;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            opacity: 0;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            font-family: 'Caveat', cursive;
-        }
-
-        .hero-image-item:hover .hero-image-label {
-            opacity: 1;
-            transform: translateX(-50%) translateY(-5px);
-        }
-
-        .hero-button button {
-            background: #FF9D23;
+        /* Start Button */
+        .header-button button {
+            display: inline-block;
+            background-color: #FF9D23;
             color: white;
-            border: none;
-            padding: 16px 32px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
+            padding: 5px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            text-decoration: none;
+            font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 8px rgba(255, 157, 35, 0.3);
         }
 
-        .hero-button button:hover {
-            background: #e68b1f;
-            transform: scale(1.1);
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+        .header-button button:hover {
+            background-color: #e68a1a;
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(255, 157, 35, 0.4);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Image Cluster Section (On the Right) */
+        .header-images-right {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            max-width: 50%;
+        }
+
+        .image-cluster-container {
+            position: relative;
+            width: 400px;
+            height: 600px;
+        }
+
+        .image-cluster-item {
+            position: absolute;
+            width: 200px;
+            height: 300px;
+            border: 3px solid #FF9D23;
+            border-radius: 0;
+            overflow: hidden;
+            transition: transform 0.4s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-cluster-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-cluster-item.top-left {
+            top: 0;
+            left: 0;
+            transform: rotate(-5deg);
+        }
+
+        .image-cluster-item.top-right {
+            top: 0;
+            right: 0;
+            transform: rotate(5deg);
+        }
+
+        .image-cluster-item.bottom-center {
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) rotate(0deg);
+        }
+
+        .image-cluster-item:hover {
+            transform: scale(1.1) rotate(0deg);
+            z-index: 10;
+            box-shadow: 0 12px 25px rgba(255, 157, 35, 0.3);
         }
 
         /* Survey Section */
@@ -299,33 +283,6 @@ $loggedIn = isset($_SESSION['user_id']);
             position: relative;
             background: #FFFDF0;
             padding: 3em 2em;
-            transition: background 0.5s ease;
-        }
-
-        .survey-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(255, 157, 35, 0.1), rgba(255, 157, 35, 0));
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .survey-background.art {
-            background: linear-gradient(to bottom, rgba(255, 200, 100, 0.2), rgba(255, 157, 35, 0));
-            opacity: 1;
-        }
-
-        .survey-background.cooking {
-            background: linear-gradient(to bottom, rgba(255, 100, 100, 0.2), rgba(255, 157, 35, 0));
-            opacity: 1;
-        }
-
-        .survey-background.adventure {
-            background: linear-gradient(to bottom, rgba(100, 200, 150, 0.2), rgba(255, 157, 35, 0));
-            opacity: 1;
         }
 
         .journey-map {
@@ -338,7 +295,7 @@ $loggedIn = isset($_SESSION['user_id']);
 
         .journey-step {
             position: absolute;
-            top: 50%;
+            top: 42%;
             transform: translateY(-50%);
             width: 40px;
             height: 40px;
@@ -356,16 +313,10 @@ $loggedIn = isset($_SESSION['user_id']);
             animation: pulse 1s infinite;
         }
 
-        .journey-step:nth-child(1) { left: 5%; }
+        .journey-step:nth-child(1) { left: 15%; }
         .journey-step:nth-child(2) { left: 30%; }
         .journey-step:nth-child(3) { left: 55%; }
         .journey-step:nth-child(4) { left: 80%; }
-
-        @keyframes pulse {
-            0% { transform: translateY(-50%) scale(1); }
-            50% { transform: translateY(-50%) scale(1.1); }
-            100% { transform: translateY(-50%) scale(1); }
-        }
 
         .survey-box {
             background: white;
@@ -430,35 +381,6 @@ $loggedIn = isset($_SESSION['user_id']);
             box-shadow: 0 0 10px rgba(255, 157, 35, 0.5);
         }
 
-        .survey-box button {
-            margin-top: 2.5em;
-            background: #FDE5B7;
-            color: #333;
-            border: none;
-            padding: 12px 30px;
-            font-weight: 600;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            animation: pulse-button 2s infinite;
-        }
-
-        .survey-box button:hover {
-            background: #FF9D23;
-            color: white;
-            transform: scale(1.05);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        @keyframes pulse-button {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-            100% { transform: scale(1); }
-        }
-
         /* Radio Button Choices */
         .radio-choices {
             display: flex;
@@ -493,6 +415,14 @@ $loggedIn = isset($_SESSION['user_id']);
             font-weight: 600;
             color: #333;
         }
+        .radio-choice label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
 
         .radio-choice input[type="radio"]:checked + label {
             color: #FF9D23;
@@ -503,7 +433,7 @@ $loggedIn = isset($_SESSION['user_id']);
             border-color: #FF9D23;
         }
 
-        /* Results Section (Updated for Horizontal Layout) */
+        /* Results Section */
         .results {
             margin-top: 2em;
             padding: 0 2em;
@@ -517,16 +447,18 @@ $loggedIn = isset($_SESSION['user_id']);
             margin-bottom: 1.5em;
         }
 
-        .grid {
-            display: flex;
-            flex-direction: row;
-            gap: 20px;
-            padding: 20px;
-            overflow-x: auto; /* Enable horizontal scrolling */
-            white-space: nowrap; /* Prevent wrapping */
-        }
+     .grid {
+    display: flex;
+    flex-wrap: nowrap; /* still allows horizontal scrolling */
+    gap: 40px;          /* this now works properly */
+    padding: 20px;
+    overflow-x: auto;
+}
+
 
         .grid-item {
+                margin-right: 40px;
+
             position: relative;
             background-color: #fff;
             border-radius: 15px;
@@ -534,17 +466,22 @@ $loggedIn = isset($_SESSION['user_id']);
             overflow: hidden;
             padding-bottom: 15px;
             transition: transform 0.3s ease;
-            min-width: 250px; /* Ensure cards have a fixed minimum width */
-            max-width: 300px; /* Ensure card doesn’t stretch too wide */
-            display: inline-block; /* Ensure items stay in a single row */
+            min-width: 250px;
+            max-width: 300px;
+            display: inline-block;
         }
+
+.grid-item:last-child {
+    margin-right: 0;
+}
+
 
         .grid-item img {
             width: 100%;
             height: 220px;
             object-fit: cover;
             border-radius: 10px 10px 0 0;
-            display: block; /* Remove any unwanted spacing */
+            display: block;
         }
 
         .grid-item .tag {
@@ -633,31 +570,66 @@ $loggedIn = isset($_SESSION['user_id']);
         }
 
         /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero {
-                padding: 4em 1.5em;
+        @media (max-width: 1024px) {
+            .header-text h1 {
+                font-size: 2.4rem;
             }
 
-            .hero-text h1 {
+            .header-text p {
+                max-width: 90%;
+            }
+
+            .image-cluster-container {
+                width: 350px;
+                height: 500px;
+            }
+
+            .image-cluster-item {
+                width: 180px;
+                height: 270px;
+            }
+
+            .header-text {
+                top: -30px; /* Slightly less adjustment for smaller screens */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                margin: 60px auto 40px; /* Matches Category page */
+            }
+
+            .header-text {
+                max-width: 100%;
+                text-align: center;
+                top: -20px; /* Adjusted for smaller screens */
+            }
+
+            .header-text h1 {
                 font-size: 2rem;
             }
 
-            .hero-images {
-                flex-direction: row;
-                gap: 15px;
-                padding: 15px;
+            .header-text p {
+                max-width: 100%;
+                font-size: 1rem;
             }
 
-            .hero-image-item {
-                width: 160px;
-                height: 240px;
-                padding: 8px;
+            .header-images-right {
+                max-width: 100%;
+                justify-content: center;
             }
 
-            .hero-image-label {
-                font-size: 0.9rem;
-                padding: 6px 12px;
-                opacity: 1;
+            .image-cluster-container {
+                width: 300px;
+                height: 450px;
+            }
+
+            .image-cluster-item {
+                width: 150px;
+                height: 225px;
             }
 
             .survey-section {
@@ -705,39 +677,53 @@ $loggedIn = isset($_SESSION['user_id']);
         }
 
         @media (max-width: 480px) {
-            .hero-text h1 {
+            .header-container {
+                margin: 40px auto 30px; /* Matches Category page */
+            }
+
+            .header-text h1 {
                 font-size: 1.8rem;
+                margin-top: 60px; /* Matches Category page */
+                text-align: left;
             }
 
-            .hero-image-item {
-                width: 130px;
-                height: 190px;
-                padding: 6px;
+            .header-text p {
+                text-align: left;
+                font-size: 0.9rem;
             }
 
-            .hero-images {
-                gap: 10px;
-                padding: 10px;
+            .header-text {
+                top: -15px; /* Minimal adjustment for smallest screens */
             }
 
-            .hero-button button {
-                padding: 12px 24px;
-                font-size: 1rem;
+            .image-cluster-container {
+                width: 250px;
+                height: 400px;
+            }
+
+            .image-cluster-item {
+                width: 120px;
+                height: 180px;
+            }
+
+            .header-button button {
+                padding: 8px 20px;
+                font-size: 0.9rem;
             }
 
             .survey-box h2 {
                 font-size: 1.8rem;
             }
 
-            .choice img {
-                width: 60px;
-                height: 60px;
-            }
-
             .journey-step {
                 width: 30px;
                 height: 30px;
                 font-size: 0.8rem;
+            }
+
+            .choice img {
+                width: 60px;
+                height: 60px;
             }
         }
     </style>
@@ -760,7 +746,7 @@ $loggedIn = isset($_SESSION['user_id']);
                 <a href="homepage.php">Home</a>
                 <a href="ProfilePage.php"><?php echo $loggedIn ? 'Profile' : 'Login'; ?></a>
                 <a href="Explore.php">Explore</a>
-                <a href="Survey.php">Survey</a>
+                <a href="form.php">Survey</a>
                 <a href="findcategory.php">Category</a>
             </nav>
         </div>
@@ -771,39 +757,45 @@ $loggedIn = isset($_SESSION['user_id']);
                 <?php echo $loggedIn ? 'Profile' : 'Login'; ?>
             </a>
             <a href="Explore.php">Explore</a>
-            <a href="Survey.php">Survey</a>
+            <a href="form.php">Survey</a>
             <a href="findcategory.php">Category</a>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" data-aos="fade-up">
-        <div class="hero-text" data-aos="fade-up">
-            <h1>Embark on Your <span class="highlight">Workshop Journey</span></h1>
-            <p>Answer a few questions, and we’ll guide you to workshops that match your passions.</p>
-        </div>
-        <div class="hero-images" data-aos="fade-up" data-aos-delay="100">
-            <div class="hero-image-item" data-aos="zoom-in" data-aos-delay="100">
-                <img src="workshops/adv.png" alt="Person as Adventurer">
-                <span class="hero-image-label">Adventurer</span>
+    <!-- Header Section -->
+    <div class="main-content">
+        <div class="header-container">
+            <!-- Text Section on the Left -->
+            <div class="header-text" data-aos="fade-right">
+                <h1>Embark on Your <span class="highlight">Workshop Journey</span></h1>
+                <p>Answer a few questions, and we’ll guide you to workshops that match your passions.</p>
+                <div class="header-button" data-aos="fade-up" data-aos-delay="400">
+                    <button onclick="scrollToSurvey()">Start Your journey</button>
+                </div>
             </div>
-            <div class="hero-image-item" data-aos="zoom-in" data-aos-delay="200">
-                <img src="workshops/cooc.png" alt="Person as Chef">
-                <span class="hero-image-label">Chef</span>
-            </div>
-            <div class="hero-image-item" data-aos="zoom-in" data-aos-delay="300">
-                <img src="workshops/arti.png" alt="Person as Artist">
-                <span class="hero-image-label">Artist</span>
+
+            <!-- Image Cluster on the Right -->
+            <div class="header-images-right" data-aos="fade-left" data-aos-delay="100">
+                <div class="image-cluster-container">
+                    <!-- Top Left Image -->
+                    <div class="image-cluster-item top-left">
+                        <img src="workshops/arti.png" alt="Artist">
+                    </div>
+                    <!-- Top Right Image -->
+                    <div class="image-cluster-item top-right">
+                        <img src="workshops/adv.png" alt="Adventurer">
+                    </div>
+                    <!-- Bottom Center Image -->
+                    <div class="image-cluster-item bottom-center">
+                        <img src="workshops/cooc.png" alt="Chef">
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="hero-button" data-aos="fade-up" data-aos-delay="400">
-            <button onclick="scrollToSurvey()">Start Your Adventure</button>
-        </div>
-    </section>
+    </div>
 
     <!-- Survey Section -->
     <section class="survey-section" id="survey">
-        <div class="survey-background" id="survey-background"></div>
         <div class="journey-map">
             <div class="journey-step active" data-step="1">1</div>
             <div class="journey-step" data-step="2">2</div>
@@ -813,70 +805,92 @@ $loggedIn = isset($_SESSION['user_id']);
         <div class="survey-box" data-aos="fade-up">
             <form id="survey-form">
                 <div class="question" id="question-1">
-                    <h2>What type of activity do you prefer?</h2>
-                     <div class="radio-choices">
-                        <div class="radio-choice">
-                            <input type="radio" name="day-preference" value="weekdays" id="weekdays" onclick="selectChoice('weekdays', 'day-preference')">
-                            <label for="weekdays">Art</label>
-                        </div>
-                        <div class="radio-choice">
-                            <input type="radio" name="day-preference" value="weekends" id="weekends" onclick="selectChoice('weekends', 'day-preference')">
-                            <label for="weekends">Cooking</label>
-                        </div>
-                           <div class="radio-choice">
-                            <input type="radio" name="day-preference" value="weekends" id="weekends" onclick="selectChoice('weekends', 'day-preference')">
-                            <label for="weekends">Adventure</label>
-                        </div>
-                    </div>
+                    <h2>What do you enjoy doing in your free time</h2>
+                 <div class="radio-choices">
+    <div class="radio-choice">
+        <label>
+            <input type="radio" name="activity" value="Art" onclick="selectChoice('Art', 'activity')">
+I'm into drawing and creative hands-on projects
+
+        </label>
+    </div>
+    <div class="radio-choice">
+        <label>
+            <input type="radio" name="activity" value="Cooking" onclick="selectChoice('Cooking', 'activity')">
+           I love trying new recipes and cooking fun dishes
+
+
+        </label>
+    </div>
+    <div class="radio-choice">
+        <label>
+            <input type="radio" name="activity" value="Adventure" onclick="selectChoice('Adventure', 'activity')">
+             I enjoy outdoor adventures and exploring new places
+        </label>
+    </div>
+</div>
                     <input type="hidden" name="activity" id="activity">
                 </div>
 
                 <div class="question" id="question-2" style="display: none;">
                     <h2>Do you prefer group or individual workshops?</h2>
-                    <div class="radio-choices">
-                        <div class="radio-choice">
-                            <input type="radio" name="workshop-type" value="group" id="group" onclick="selectChoice('group', 'workshop-type')">
-                            <label for="group">Group</label>
-                        </div>
-                        <div class="radio-choice">
-                            <input type="radio" name="workshop-type" value="individual" id="individual" onclick="selectChoice('individual', 'workshop-type')">
-                            <label for="individual">Individual</label>
-                        </div>
-                    </div>
+                 <div class="radio-choices">
+    <div class="radio-choice">
+        <label>
+            <input type="radio" name="workshop-type" value="group" onclick="selectChoice('group', 'workshop-type')">
+            Group
+        </label>
+    </div>
+    <div class="radio-choice">
+        <label>
+            <input type="radio" name="workshop-type" value="individual" onclick="selectChoice('individual', 'workshop-type')">
+            Individual
+        </label>
+    </div>
+</div>
+
                     <input type="hidden" name="workshop_type" id="workshop-type">
                 </div>
 
                 <div class="question" id="question-3" style="display: none;">
                     <h2>Do you prefer morning or evening sessions?</h2>
-                    <div class="radio-choices">
-                        <div class="radio-choice">
-                            <input type="radio" name="time-preference" value="morning" id="morning" onclick="selectChoice('morning', 'time-preference')">
-                            <label for="morning">Morning</label>
-                        </div>
-                        <div class="radio-choice">
-                            <input type="radio" name="time-preference" value="evening" id="evening" onclick="selectChoice('evening', 'time-preference')">
-                            <label for="evening">Evening</label>
-                        </div>
-                    </div>
+                  <div class="radio-choices">
+    <div class="radio-choice">
+        <label>
+            <input type="radio" name="time-preference" value="morning" onclick="selectChoice('morning', 'time-preference')">
+            Morning
+        </label>
+    </div>
+    <div class="radio-choice">
+        <label>
+            <input type="radio" name="time-preference" value="evening" onclick="selectChoice('evening', 'time-preference')">
+            Evening
+        </label>
+    </div>
+</div>
+
                     <input type="hidden" name="time_preference" id="time-preference">
                 </div>
 
                 <div class="question" id="question-4" style="display: none;">
                     <h2>Do you prefer workshops on weekdays or weekends?</h2>
-                    <div class="radio-choices">
-                        <div class="radio-choice">
-                            <input type="radio" name="day-preference" value="weekdays" id="weekdays" onclick="selectChoice('weekdays', 'day-preference')">
-                            <label for="weekdays">Weekdays</label>
-                        </div>
-                        <div class="radio-choice">
-                            <input type="radio" name="day-preference" value="weekends" id="weekends" onclick="selectChoice('weekends', 'day-preference')">
-                            <label for="weekends">Weekends</label>
-                        </div>
-                    </div>
+                 <div class="radio-choices">
+    <div class="radio-choice">
+        <label>
+            <input type="radio" name="day-preference" value="weekdays" onclick="selectChoice('weekdays', 'day-preference')">
+            Weekdays
+        </label>
+    </div>
+    <div class="radio-choice">
+        <label>
+            <input type="radio" name="day-preference" value="weekends" onclick="selectChoice('weekends', 'day-preference')">
+            Weekends
+        </label>
+    </div>
+</div>
+
                     <input type="hidden" name="day_preference" id="day-preference">
                 </div>
-
-                <button type="button" onclick="nextQuestion()">Next</button>
             </form>
         </div>
 
@@ -947,21 +961,17 @@ $loggedIn = isset($_SESSION['user_id']);
 
         let currentStep = 1;
         const totalSteps = 4;
+        let hasAnswered = false;
 
         function selectChoice(choice, field) {
             document.getElementById(field).value = choice;
 
-            // Update background for activity selection
-            if (field === 'activity') {
-                const background = document.getElementById('survey-background');
-                background.className = 'survey-background ' + choice.toLowerCase();
-
-                confetti({
-                    particleCount: 50,
-                    spread: 60,
-                    origin: { y: 0.6 },
-                    colors: ['#FF9D23', '#FDE5B7', '#FFFDF0']
-                });
+            if (!hasAnswered) {
+                hasAnswered = true;
+                setTimeout(() => {
+                    nextQuestion();
+                    hasAnswered = false;
+                }, 800);
             }
         }
 
@@ -979,13 +989,13 @@ $loggedIn = isset($_SESSION['user_id']);
 
         function submitSurvey() {
             const formData = new FormData(document.getElementById('survey-form'));
-            fetch('getRecommendations.php', {
+            fetch('getrecommendation.php', {
                 method: 'POST',
                 body: formData
             })
             .then(response => response.text())
             .then(data => {
-                console.log(data); // Debug: Check the HTML returned
+                console.log(data);
                 document.getElementById('results-grid').innerHTML = data;
                 document.getElementById('results').style.display = 'block';
                 document.getElementById('results').scrollIntoView({ behavior: 'smooth' });

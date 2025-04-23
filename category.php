@@ -713,39 +713,43 @@ input[type="date"] {
 </head>
 <body>
 <div class="header" style="background: url('<?php echo $headerImage; ?>') no-repeat center center/cover;">
-        <header>
+       <header>
+    <!-- اللوقو في الوسط -->
     <div class="logo">
         <img src="workshops/logo.png" alt="logo">
     </div>
 
+    <!-- زر الهامبرغر -->
     <div class="hamburger" onclick="toggleMenu(this)">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
     </div>
 
+    <!-- قائمة الجوال -->
     <div class="mobile-nav-container">
         <nav class="mobile-nav">
             <a href="homepage.php">Home</a>
             <a href="ProfilePage.php"><?php echo $loggedIn ? 'Profile' : 'Login'; ?></a>
-            <a href="exploree.php">Explore</a>
-            <a href="Survey.php">Survey</a>
+            <a href="Explore.php">Explore</a>
+            <a href="form.php">Survey</a>
             <a href="findcategory.php">Category</a>
            
         </nav>
     </div>
 
+    <!-- قائمة سطح المكتب -->
     <nav class="desktop-nav">
         <a href="homepage.php">Home</a>
         <a href="<?php echo $loggedIn ? 'ProfilePage.php' : 'login.php'; ?>">
             <?php echo $loggedIn ? 'Profile' : 'Login'; ?>
         </a>
-            <a href="exploree.php">Explore</a>
-        <a href="Survey.php">Survey</a>
+        <a href="Explore.php">Explore</a>
+        <a href="form.php">Survey</a>
         <a href="findcategory.php">Category</a>
     </nav>
 </header>
-         <div class="header-content">
+    <div class="header-content">
             <h1>
                 <span><?php echo $headerTitle; ?></span>
                 <span class="outline-text"><?php echo $headerCategory; ?></span>
