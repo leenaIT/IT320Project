@@ -222,7 +222,7 @@ $loggedIn = isset($_SESSION['user_id']);
             <?php echo $loggedIn ? 'Profile' : 'Login'; ?>
         </a>
             <a href="exploree.php">Explore</a>
-        <a href="Survey.php">Survey</a>
+        <a href="form.php">Survey</a>
         <a href="findcategory.php">Category</a>
     </nav>
 </header>
