@@ -805,7 +805,7 @@ $loggedIn = isset($_SESSION['user_id']);
         <div class="survey-box" data-aos="fade-up">
             <form id="survey-form">
                 <div class="question" id="question-1">
-                    <h2>What do you enjoy doing in your free time</h2>
+                    <h2>What do you enjoy doing in your free time?</h2>
                  <div class="radio-choices">
     <div class="radio-choice">
         <label>
