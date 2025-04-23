@@ -285,7 +285,7 @@ $result_thumbnails = $conn->query($sql_thumbnails);
                         Ready to find the perfect workshop for you? Click the link below to take the survey and get personalized suggestions!
                     </p>
                     <br>
-                    <a href="Survey.php" class="about-btn">Take the Survey</a>
+                    <a href="form.php" class="about-btn">Take the Survey</a>
                 </div>
             </div>
         </div>
