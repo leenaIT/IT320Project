@@ -13,7 +13,6 @@ $loggedIn = isset($_SESSION['user_id']);
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <link rel="stylesheet" href="header.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&family=Poppins:wght@400;600&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* Consistent font application */
         .desktop-nav a,
@@ -159,7 +158,7 @@ $loggedIn = isset($_SESSION['user_id']);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 100px auto 60px; /* Restored to original to keep images in place */
+            margin: 100px auto 60px;
             padding: 0 20px;
             flex-wrap: wrap;
         }
@@ -169,7 +168,7 @@ $loggedIn = isset($_SESSION['user_id']);
             max-width: 70%;
             text-align: left;
             position: relative;
-            top: -80px; /* Move the text up without affecting images */
+            top: -80px;
         }
 
         .header-text h1 {
@@ -189,8 +188,7 @@ $loggedIn = isset($_SESSION['user_id']);
             font-size: 1.1rem;
             color: #555;
             max-width: 80%;
-                        margin-bottom: 20px;
-
+            margin-bottom: 20px;
         }
 
         /* Start Button */
@@ -414,15 +412,12 @@ $loggedIn = isset($_SESSION['user_id']);
             cursor: pointer;
             font-weight: 600;
             color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
         }
-        .radio-choice label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-}
-
 
         .radio-choice input[type="radio"]:checked + label {
             color: #FF9D23;
@@ -447,18 +442,16 @@ $loggedIn = isset($_SESSION['user_id']);
             margin-bottom: 1.5em;
         }
 
-     .grid {
-    display: flex;
-    flex-wrap: nowrap; /* still allows horizontal scrolling */
-    gap: 40px;          /* this now works properly */
-    padding: 20px;
-    overflow-x: auto;
-}
-
+        .grid {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 40px;
+            padding: 20px;
+            overflow-x: auto;
+        }
 
         .grid-item {
-                margin-right: 40px;
-
+            margin-right: 40px;
             position: relative;
             background-color: #fff;
             border-radius: 15px;
@@ -471,10 +464,9 @@ $loggedIn = isset($_SESSION['user_id']);
             display: inline-block;
         }
 
-.grid-item:last-child {
-    margin-right: 0;
-}
-
+        .grid-item:last-child {
+            margin-right: 0;
+        }
 
         .grid-item img {
             width: 100%;
@@ -590,7 +582,45 @@ $loggedIn = isset($_SESSION['user_id']);
             }
 
             .header-text {
-                top: -30px; /* Slightly less adjustment for smaller screens */
+                top: -30px;
+            }
+
+            /* Results Section Adjustments */
+            .results {
+                padding: 0 1.5em;
+            }
+
+            .results h2 {
+                font-size: 1.8rem;
+            }
+
+            .grid {
+                gap: 30px;
+                padding: 15px;
+            }
+
+            .grid-item {
+                margin-right: 30px;
+                min-width: 220px;
+                max-width: 260px;
+            }
+
+            .grid-item img {
+                height: 180px;
+            }
+
+            .grid-item h3 {
+                font-size: 14px;
+            }
+
+            .grid-item p {
+                font-size: 12px;
+                margin: 5px 10px;
+            }
+
+            .more-btn {
+                padding: 6px 16px;
+                font-size: 11px;
             }
         }
 
@@ -599,13 +629,13 @@ $loggedIn = isset($_SESSION['user_id']);
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
-                margin: 60px auto 40px; /* Matches Category page */
+                margin: 60px auto 40px;
             }
 
             .header-text {
                 max-width: 100%;
                 text-align: center;
-                top: -20px; /* Adjusted for smaller screens */
+                top: -20px;
             }
 
             .header-text h1 {
@@ -674,16 +704,68 @@ $loggedIn = isset($_SESSION['user_id']);
             .social-icons-1 {
                 margin: 15px 0;
             }
+
+            /* Results Section Adjustments */
+            .results {
+                padding: 0 1em;
+            }
+
+            .results h2 {
+                font-size: 1.6rem;
+                margin-bottom: 1em;
+            }
+
+            .grid {
+                gap: 20px;
+                padding: 10px;
+            }
+
+            .grid-item {
+                margin-right: 20px;
+                min-width: 200px;
+                max-width: 220px;
+            }
+
+            .grid-item img {
+                height: 150px;
+            }
+
+            .grid-item h3 {
+                font-size: 13px;
+            }
+
+            .grid-item p {
+                font-size: 11px;
+                margin: 5px 8px;
+            }
+
+            .grid-item .details {
+                padding: 0 10px;
+            }
+
+            .more-btn {
+                padding: 5px 14px;
+                font-size: 10px;
+            }
+
+            .grid-item .price {
+                font-size: 12px;
+            }
+
+            .riyal-icon {
+                width: 10px !important;
+                height: 10px !important;
+            }
         }
 
         @media (max-width: 480px) {
             .header-container {
-                margin: 40px auto 30px; /* Matches Category page */
+                margin: 40px auto 30px;
             }
 
             .header-text h1 {
                 font-size: 1.8rem;
-                margin-top: 60px; /* Matches Category page */
+                margin-top: 60px;
                 text-align: left;
             }
 
@@ -693,7 +775,7 @@ $loggedIn = isset($_SESSION['user_id']);
             }
 
             .header-text {
-                top: -15px; /* Minimal adjustment for smallest screens */
+                top: -15px;
             }
 
             .image-cluster-container {
@@ -724,6 +806,66 @@ $loggedIn = isset($_SESSION['user_id']);
             .choice img {
                 width: 60px;
                 height: 60px;
+            }
+
+            /* Results Section Adjustments */
+            .results {
+                padding: 0 0.5em;
+            }
+
+            .results h2 {
+                font-size: 1.4rem;
+                margin-bottom: 0.8em;
+            }
+
+            .grid {
+                gap: 15px;
+                padding: 8px;
+            }
+
+            .grid-item {
+                margin-right: 15px;
+                min-width: 180px;
+                max-width: 200px;
+            }
+
+            .grid-item img {
+                height: 120px;
+            }
+
+            .grid-item h3 {
+                font-size: 12px;
+                margin: 8px 5px 3px;
+            }
+
+            .grid-item p {
+                font-size: 10px;
+                margin: 3px 6px;
+            }
+
+            .grid-item .details {
+                padding: 0 8px;
+                margin-top: 8px;
+            }
+
+            .more-btn {
+                padding: 4px 12px;
+                font-size: 9px;
+            }
+
+            .grid-item .price {
+                font-size: 11px;
+            }
+
+            .riyal-icon {
+                width: 9px !important;
+                height: 9px !important;
+            }
+
+            .grid-item .tag {
+                top: 10px;
+                padding: 4px 12px;
+                font-size: 12px;
             }
         }
     </style>
@@ -806,89 +948,83 @@ $loggedIn = isset($_SESSION['user_id']);
             <form id="survey-form">
                 <div class="question" id="question-1">
                     <h2>What do you enjoy doing in your free time?</h2>
-                 <div class="radio-choices">
-    <div class="radio-choice">
-        <label>
-            <input type="radio" name="activity" value="Art" onclick="selectChoice('Art', 'activity')">
-I'm into drawing and creative hands-on projects
-
-        </label>
-    </div>
-    <div class="radio-choice">
-        <label>
-            <input type="radio" name="activity" value="Cooking" onclick="selectChoice('Cooking', 'activity')">
-           I love trying new recipes and cooking fun dishes
-
-
-        </label>
-    </div>
-    <div class="radio-choice">
-        <label>
-            <input type="radio" name="activity" value="Adventure" onclick="selectChoice('Adventure', 'activity')">
-             I enjoy outdoor adventures and exploring new places
-        </label>
-    </div>
-</div>
+                    <div class="radio-choices">
+                        <div class="radio-choice">
+                            <label>
+                                <input type="radio" name="activity" value="Art" onclick="selectChoice('Art', 'activity')">
+                                I'm into drawing and creative hands-on projects
+                            </label>
+                        </div>
+                        <div class="radio-choice">
+                            <label>
+                                <input type="radio" name="activity" value="Cooking" onclick="selectChoice('Cooking', 'activity')">
+                                I love trying new recipes and cooking fun dishes
+                            </label>
+                        </div>
+                        <div class="radio-choice">
+                            <label>
+                                <input type="radio" name="activity" value="Adventure" onclick="selectChoice('Adventure', 'activity')">
+                                I enjoy outdoor adventures and exploring new places
+                            </label>
+                        </div>
+                    </div>
                     <input type="hidden" name="activity" id="activity">
                 </div>
 
                 <div class="question" id="question-2" style="display: none;">
                     <h2>Do you prefer group or individual workshops?</h2>
-                 <div class="radio-choices">
-    <div class="radio-choice">
-        <label>
-            <input type="radio" name="workshop-type" value="group" onclick="selectChoice('group', 'workshop-type')">
-            Group
-        </label>
-    </div>
-    <div class="radio-choice">
-        <label>
-            <input type="radio" name="workshop-type" value="individual" onclick="selectChoice('individual', 'workshop-type')">
-            Individual
-        </label>
-    </div>
-</div>
-
+                    <div class="radio-choices">
+                        <div class="radio-choice">
+                            <label>
+                                <input type="radio" name="workshop-type" value="group" onclick="selectChoice('group', 'workshop-type')">
+                                Group
+                            </label>
+                        </div>
+                        <div class="radio-choice">
+                            <label>
+                                <input type="radio" name="workshop-type" value="individual" onclick="selectChoice('individual', 'workshop-type')">
+                                Individual
+                            </label>
+                        </div>
+                    </div>
                     <input type="hidden" name="workshop_type" id="workshop-type">
                 </div>
 
                 <div class="question" id="question-3" style="display: none;">
                     <h2>Do you prefer morning or evening sessions?</h2>
-                  <div class="radio-choices">
-    <div class="radio-choice">
-        <label>
-            <input type="radio" name="time-preference" value="morning" onclick="selectChoice('morning', 'time-preference')">
-            Morning
-        </label>
-    </div>
-    <div class="radio-choice">
-        <label>
-            <input type="radio" name="time-preference" value="evening" onclick="selectChoice('evening', 'time-preference')">
-            Evening
-        </label>
-    </div>
-</div>
-
+                    <div class="radio-choices">
+                        <div class="radio-choice">
+                            <label>
+                                <input type="radio" name="time-preference" value="morning" onclick="selectChoice('morning', 'time-preference')">
+                                Morning
+                            </label>
+                        </div>
+                        <div class="radio-choice">
+                            <label>
+                                <input type="radio" name="time-preference" value="evening" onclick="selectChoice('evening', 'time-preference')">
+                                Evening
+                            </label>
+                        </div>
+                    </div>
                     <input type="hidden" name="time_preference" id="time-preference">
                 </div>
 
                 <div class="question" id="question-4" style="display: none;">
                     <h2>Do you prefer workshops on weekdays or weekends?</h2>
-                 <div class="radio-choices">
-    <div class="radio-choice">
-        <label>
-            <input type="radio" name="day-preference" value="weekdays" onclick="selectChoice('weekdays', 'day-preference')">
-            Weekdays
-        </label>
-    </div>
-    <div class="radio-choice">
-        <label>
-            <input type="radio" name="day-preference" value="weekends" onclick="selectChoice('weekends', 'day-preference')">
-            Weekends
-        </label>
-    </div>
-</div>
-
+                    <div class="radio-choices">
+                        <div class="radio-choice">
+                            <label>
+                                <input type="radio" name="day-preference" value="weekdays" onclick="selectChoice('weekdays', 'day-preference')">
+                                Weekdays
+                            </label>
+                        </div>
+                        <div class="radio-choice">
+                            <label>
+                                <input type="radio" name="day-preference" value="weekends" onclick="selectChoice('weekends', 'day-preference')">
+                                Weekends
+                            </label>
+                        </div>
+                    </div>
                     <input type="hidden" name="day_preference" id="day-preference">
                 </div>
             </form>
