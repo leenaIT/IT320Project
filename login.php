@@ -114,7 +114,7 @@ mysqli_close($Sconnection);
         <a href="<?php echo $loggedIn ? 'ProfilePage.php' : 'login.php'; ?>">
             <?php echo $loggedIn ? 'Profile' : 'Login'; ?>
         </a>
-        <a href="Explore.php">Explore</a>
+        <a href="exploree.php">Explore</a>
         <a href="form.php">Survey</a>
         <a href="findcategory.php">Category</a>
     </nav>
