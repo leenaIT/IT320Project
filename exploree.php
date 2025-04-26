@@ -4,6 +4,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 require 'database.php';
 
+
 $loggedIn = isset($_SESSION['user_id']);
 
 // Query to fetch all posts with user info
@@ -51,8 +52,42 @@ function unlikePost($connection, $userID, $postID) {
 }
 
 // Handle all AJAX POST actions
+// Handle all AJAX POST actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+    // Allow 'load_comments' even if not logged in
+    if (isset($_POST['action'], $_POST['postID']) && $_POST['action'] === 'load_comments') {
+        $postID = intval($_POST['postID']);
+        $sql = "SELECT c.CommentID, c.CommentText, c.UserID, u.FirstName, u.LastName, u.ProfilePhoto
+                FROM comments c
+                JOIN users u ON c.UserID = u.UserID
+                WHERE c.PostID = ?
+                ORDER BY c.CreatedAt DESC";
+        $stmt = $connection->prepare($sql);
+        $stmt->bind_param("i", $postID);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
+        $comments = [];
+        $loggedInUser = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+
+        while ($row = $result->fetch_assoc()) {
+            $comments[] = [
+                'commentID' => $row['CommentID'],
+                'userID' => $row['UserID'],
+                'userName' => $row['FirstName'] . ' ' . $row['LastName'],
+                'userPhoto' => "uploads/" . $row['ProfilePhoto'],
+                'commentText' => $row['CommentText'],
+                'isOwnComment' => $loggedInUser && $row['UserID'] == $loggedInUser
+            ];
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($comments);
+        exit;
+    }
+
+    // 🚫 Require login for all other actions
     if (!isset($_SESSION['user_id'])) {
         http_response_code(401);
         echo 'Not logged in';
@@ -86,34 +121,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo json_encode(['status' => 'commented']);
                 exit;
             }
-        } elseif ($action === 'load_comments') {
-            $sql = "SELECT c.CommentID, c.CommentText, c.UserID, u.FirstName, u.LastName, u.ProfilePhoto
-                    FROM comments c
-                    JOIN users u ON c.UserID = u.UserID
-                    WHERE c.PostID = ?
-                    ORDER BY c.CreatedAt DESC";
-            $stmt = $connection->prepare($sql);
-            $stmt->bind_param("i", $postID);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            $comments = [];
-            while ($row = $result->fetch_assoc()) {
-                $comments[] = [
-                    'commentID' => $row['CommentID'],
-                    'userID' => $row['UserID'],
-                    'userName' => $row['FirstName'] . ' ' . $row['LastName'],
-                    'userPhoto' => "uploads/" . $row['ProfilePhoto'],
-                    'commentText' => $row['CommentText'],
-                    'isOwnComment' => $row['UserID'] == $userID
-                ];
-            }
-
-            header('Content-Type: application/json');
-            echo json_encode($comments);
-            exit;
         }
     }
+
 
     // Handle deletion
     if (isset($_POST['action']) && $_POST['action'] === 'delete_comment' && isset($_POST['commentID'])) {
@@ -154,6 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<link rel="icon" type="image/png" href="workshops/logo.png">
 
 
     <style>
@@ -437,11 +448,9 @@ header{
     position: relative; width: 100%; height: 560px;  padding-top: 30px;
 }
 
-/* POSTS ISPLAY******/
+/* POSTS DISPLAY******/
 body{
     overflow-x: hidden ;
-            background-color: #FFFDF0;
-
 }
 
 .grid {
@@ -948,7 +957,7 @@ img {
         <a href="<?php echo $loggedIn ? 'ProfilePage.php' : 'login.php'; ?>">
             <?php echo $loggedIn ? 'Profile' : 'Login'; ?>
         </a>
-        <a href="Explore.php">Explore</a>
+        <a href="exploree.php">Explore</a>
         <a href="form.php">Survey</a>
         <a href="findcategory.php">Category</a>
     </nav>
@@ -962,7 +971,7 @@ img {
         <?php $images = json_decode($row['images']); ?>
         <div class="grid-item post-card" 
      data-postid="<?php echo $row['PostID']; ?>"
-     data-liked="<?php echo userLiked($connection, $_SESSION['user_id'], $row['PostID']) ? '1' : '0'; ?>"
+data-liked="<?php echo isset($_SESSION['user_id']) && userLiked($connection, $_SESSION['user_id'], $row['PostID']) ? '1' : '0'; ?>"
      data-images='<?php echo json_encode($images); ?>'
      data-name="<?php echo $row['FirstName'] . ' ' . $row['LastName']; ?>"
      data-comment="<?php echo htmlspecialchars($row['PostComment']); ?>"
@@ -1035,7 +1044,10 @@ img {
                 <div class="profile">
                     <img id="modal-user-photo" class="user-circle">
                     <p><strong id="modal-user-name"></strong></p>
-                    <i class="heart-icon fas fa-heart" id="modal-heart" data-post-id=""></i> <!-- data-post-id will be set dynamically -->
+<i class="heart-icon fas fa-heart" id="modal-heart"
+   data-post-id=""
+   onclick="<?php echo isset($_SESSION['user_id']) ? '' : 'window.location.href=\'login.php\''; ?>">
+</i>
                 </div>
 
                 <div class="comment-section">
@@ -1046,7 +1058,10 @@ img {
 
                 <div class="add-comment-box">
                     <input type="text" id="modal-comment-input" placeholder="Add a comment..." />
-                    <button id="submit-comment"><i class="fas fa-paper-plane"></i></button>
+<button id="submit-comment"
+        onclick="<?php echo isset($_SESSION['user_id']) ? '' : 'window.location.href=\'login.php\''; ?>">
+    <i class="fas fa-paper-plane"></i>
+</button>
                 </div>
             </div>
         </div>
@@ -1195,25 +1210,32 @@ document.querySelectorAll('.heart-icon').forEach(icon => {
         formData.append('action', action);
         formData.append('postID', postId);
 
-        fetch(window.location.href, {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            icon.classList.toggle('liked', data.status === 'liked');
+       fetch(window.location.href, {
+    method: 'POST',
+    body: formData
+})
+.then(response => {
+    if (response.status === 401) {
+        window.location.href = 'login.php'; // 🚨 Redirect to login
+        return;
+    }
+    return response.json();
+})
+.then(data => {
+    if (!data) return; // No data if redirected
+    icon.classList.toggle('liked', data.status === 'liked');
+    const modalHeart = document.getElementById('modal-heart');
+    if (modalHeart && modalHeart.getAttribute('data-post-id') === postId) {
+        modalHeart.classList.toggle('liked', data.status === 'liked');
+    }
 
-            const modalHeart = document.getElementById('modal-heart');
-            if (modalHeart && modalHeart.getAttribute('data-post-id') === postId) {
-                modalHeart.classList.toggle('liked', data.status === 'liked');
-            }
+    if (data.status === 'liked') {
+        icon.classList.add('animate__animated', 'animate__tada');
+        setTimeout(() => icon.classList.remove('animate__tada'), 700);
+    }
+})
+.catch(error => console.error('Error:', error));
 
-            if (data.status === 'liked') {
-                icon.classList.add('animate__animated', 'animate__tada');
-                setTimeout(() => icon.classList.remove('animate__tada'), 700);
-            }
-        })
-        .catch(error => console.error('Error:', error));
     });
 });
 
@@ -1275,23 +1297,28 @@ document.getElementById('submit-comment').addEventListener('click', () => {
     const commentText = input.value;
 
     if (commentText.trim() !== '') {
-        fetch(window.location.href, {
-            method: 'POST',
-            body: new URLSearchParams({
-                action: 'submit_comment',
-                postID: postId,
-                comment: commentText
-            })
-        })
-        .then(res => {
-            if (res.ok) {
-                input.value = '';
-                loadComments(postId);
-            } else {
-                console.error('Failed to submit comment.');
-            }
-        })
-        .catch(err => console.error('Error submitting comment:', err));
+       fetch(window.location.href, {
+    method: 'POST',
+    body: new URLSearchParams({
+        action: 'submit_comment',
+        postID: postId,
+        comment: commentText
+    })
+})
+.then(res => {
+    if (res.status === 401) {
+        window.location.href = 'login.php'; // 🚨 Redirect to login
+        return;
+    }
+    if (res.ok) {
+        input.value = '';
+        loadComments(postId);
+    } else {
+        console.error('Failed to submit comment.');
+    }
+})
+.catch(err => console.error('Error submitting comment:', err));
+
     }
 });
 

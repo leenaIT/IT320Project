@@ -13,6 +13,8 @@ $loggedIn = isset($_SESSION['user_id']);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="header.css">
+    <link rel="icon" type="image/png" href="workshops/logo.png">
+
 
 <style>
     

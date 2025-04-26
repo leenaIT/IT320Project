@@ -13,6 +13,8 @@ $loggedIn = isset($_SESSION['user_id']);
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <link rel="stylesheet" href="header.css">
+    <link rel="icon" type="image/png" href="workshops/logo.png">
+
     <style>
         /* Consistent font application */
         .desktop-nav a,
@@ -887,7 +889,7 @@ $loggedIn = isset($_SESSION['user_id']);
             <nav class="mobile-nav">
                 <a href="homepage.php">Home</a>
                 <a href="ProfilePage.php"><?php echo $loggedIn ? 'Profile' : 'Login'; ?></a>
-                <a href="Explore.php">Explore</a>
+                <a href="exploree.php">Explore</a>
                 <a href="form.php">Survey</a>
                 <a href="findcategory.php">Category</a>
             </nav>
@@ -898,7 +900,7 @@ $loggedIn = isset($_SESSION['user_id']);
             <a href="<?php echo $loggedIn ? 'ProfilePage.php' : 'login.php'; ?>">
                 <?php echo $loggedIn ? 'Profile' : 'Login'; ?>
             </a>
-            <a href="Explore.php">Explore</a>
+            <a href="exploree.php">Explore</a>
             <a href="form.php">Survey</a>
             <a href="findcategory.php">Category</a>
         </nav>

@@ -84,6 +84,8 @@ while ($booking = $result3->fetch_assoc()) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Page </title>
     <link rel="stylesheet" href="styles2.css">
+        <link rel="icon" type="image/png" href="workshops/logo.png">
+
     <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style> 
@@ -728,7 +730,7 @@ left: 380px;
         <nav class="mobile-nav">
             <a href="homepage.php">Home</a>
             <a href="ProfilePage.php"><?php echo $loggedIn ? 'Profile' : 'Login'; ?></a>
-            <a href="Explore.php">Explore</a>
+            <a href="exploree.php">Explore</a>
             <a href="form.php">Survey</a>
             <a href="findcategory.php">Category</a>
            
@@ -741,7 +743,7 @@ left: 380px;
         <a href="<?php echo $loggedIn ? 'ProfilePage.php' : 'login.php'; ?>">
             <?php echo $loggedIn ? 'Profile' : 'Login'; ?>
         </a>
-        <a href="Explore.php">Explore</a>
+        <a href="exploree.php">Explore</a>
         <a href="form.php">Survey</a>
         <a href="findcategory.php">Category</a>
     </nav>

@@ -32,7 +32,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // ✅ التحقق من قوة الباسوورد قبل إدخاله
     elseif (!preg_match("/^(?=.*[a-zA-Z])(?=.*\d).{8,}$/", $password)) {
         $errorMessage = "❌ Password must be at least 8 characters, include 1 letter and 1 number!";
-    } 
+    } elseif (!preg_match("/^\d{10}$/", $phone)) {
+        $errorMessage = "❌ Mobile number must be exactly 10 digits!";
+    }
     else {
         // ✅ التأكد أن الإيميل غير مستخدم مسبقًا
         $checkQuery = "SELECT Email FROM users WHERE Email = ?";
@@ -111,8 +113,8 @@ $connection->close();
     <nav class="mobile-nav">
             <a href="homepage.php">Home</a>
             <a href="ProfilePage.php"><?php echo $loggedIn ? 'Profile' : 'Login'; ?></a>
-            <a href="exploree.php">Explore</a>
-            <a href="form.php">Survey</a>
+            <a href="Explore.php">Explore</a>
+            <a href="Survey.php">Survey</a>
             <a href="findcategory.php">Category</a>
             
         </nav>
@@ -124,14 +126,17 @@ $connection->close();
         <a href="<?php echo $loggedIn ? 'ProfilePage.php' : 'login.php'; ?>">
             <?php echo $loggedIn ? 'Profile' : 'Login'; ?>
         </a>
-            <a href="exploree.php">Explore</a>
-        <a href="form.php">Survey</a>
+        <a href="Explore.php">Explore</a>
+        <a href="Survey.php">Survey</a>
         <a href="findcategory.php">Category</a>
     </nav>
     </header>
 
     
+    <?php if (!empty($errorMessage)): ?>
     <div id="alert-box" class="alert"><?php echo $errorMessage; ?></div>
+   <?php endif; ?>
+
 
     <main>
         <div class="container">
@@ -139,7 +144,7 @@ $connection->close();
                 <img src="workshops/gif.gif" alt="logo" height="150" width="150">
             </div>
             <div class="signup-box">
-                <h2>Create Your Account</h2>
+                <h2>Create Your Account</h2><br>
                 <form action="signup.php" method="POST">
                     <label for="first-name">First Name</label>
                     <input type="text" name="first-name" id="first-name" value="<?php echo htmlspecialchars($_POST['first-name'] ?? ''); ?>">
@@ -154,7 +159,7 @@ $connection->close();
                     <input type="password" name="password" id="password" oninput="checkPasswordStrength()" required>
                     <p class="password-requirements" id="password-error"> 
                         Password must be at least 8 characters, include 1 letter and 1 number.
-                    </p>
+                    </p><br>
 
                     <label for="phone">Mobile Number</label>
                     <input type="tel" name="phone" id="phone" placeholder="+966 5xxxxxxxx" value="<?php echo htmlspecialchars($_POST['phone'] ?? ''); ?>">
