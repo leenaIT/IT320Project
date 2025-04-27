@@ -732,7 +732,7 @@ input[type="date"] {
         <nav class="mobile-nav">
             <a href="homepage.php">Home</a>
             <a href="ProfilePage.php"><?php echo $loggedIn ? 'Profile' : 'Login'; ?></a>
-            <a href="Explore.php">Explore</a>
+            <a href="exploree.php">Explore</a>
             <a href="form.php">Survey</a>
             <a href="findcategory.php">Category</a>
            
@@ -745,7 +745,7 @@ input[type="date"] {
         <a href="<?php echo $loggedIn ? 'ProfilePage.php' : 'login.php'; ?>">
             <?php echo $loggedIn ? 'Profile' : 'Login'; ?>
         </a>
-        <a href="Explore.php">Explore</a>
+        <a href="exploree.php">Explore</a>
         <a href="form.php">Survey</a>
         <a href="findcategory.php">Category</a>
     </nav>
